@@ -1,0 +1,49 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "TestPulse",
+  "description": "TestPulse — professional test reports from Azure DevOps Test Plans. 100% client-side, free, cloud and on-premises.",
+  "colors": { "primary": "#0F766E", "light": "#2DD4BF", "dark": "#0F766E" },
+  "favicon": "/favicon.svg",
+  "logo": { "light": "/logo/light.svg", "dark": "/logo/dark.svg" },
+  "navigation": {
+    "languages": [
+      {
+        "language": "en",
+        "groups": [
+          {
+            "group": "Getting started",
+            "icon": "rocket",
+            "pages": [
+              "en/index",
+              "en/getting-started/installation",
+              "en/getting-started/quickstart"
+            ]
+          }
+        ]
+      },
+      {
+        "language": "fr",
+        "groups": [
+          {
+            "group": "Prise en main",
+            "icon": "rocket",
+            "pages": [
+              "fr/index",
+              "fr/getting-started/installation",
+              "fr/getting-started/quickstart"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "navbar": {
+    "links": [
+      { "label": "Marketplace", "href": "https://marketplace.visualstudio.com/items?itemName=Kisskool.testpulse" }
+    ]
+  },
+  "footer": {
+    "socials": { "website": "https://atconseil.info" }
+  }
+}

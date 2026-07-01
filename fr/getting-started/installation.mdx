@@ -1,0 +1,56 @@
+---
+title: "Installation"
+description: "Installez TestPulse sur Azure DevOps Services (cloud) ou Azure DevOps Server 2022.1 (on-premises)."
+icon: "download"
+---
+
+TestPulse s'installe comme n'importe quelle extension Azure DevOps. Choisissez votre plateforme ci-dessous.
+
+<Tabs>
+  <Tab title="Cloud (Marketplace)">
+    <Steps>
+      <Step title="Ouvrir la fiche Marketplace">
+        Rendez-vous sur la [page TestPulse](https://marketplace.visualstudio.com/items?itemName=Kisskool.testpulse) du Visual Studio Marketplace.
+      </Step>
+      <Step title="Get it free">
+        Cliquez sur **Get it free**, choisissez votre organisation et confirmez. Vous devez être **Project Collection Administrator** (ou demander l'extension à l'un d'eux).
+      </Step>
+      <Step title="Ouvrir un projet">
+        Une fois installé, ouvrez un projet — TestPulse apparaît dans la zone **Test Plans** et sur les fiches de travail.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="On-premises (.vsix)">
+    <Steps>
+      <Step title="Télécharger le .vsix">
+        Récupérez l'extension packagée (`.vsix`) de votre version.
+      </Step>
+      <Step title="Uploader dans la collection">
+        Dans **Azure DevOps Server 2022.1**, ouvrez la zone **Gérer les extensions** de votre collection et uploadez le `.vsix`.
+      </Step>
+      <Step title="Installer dans la collection">
+        Installez-le dans la collection cible. Cela requiert la permission **Modifier les informations au niveau de la collection**.
+      </Step>
+    </Steps>
+    <Note>TestPulse supporte **Azure DevOps Server 2022.1**. Tout s'exécute côté client : aucun service serveur n'est installé.</Note>
+  </Tab>
+</Tabs>
+
+## Prérequis
+
+- Un projet Azure DevOps avec au moins un **plan de test** et des **cas de test**.
+- La permission d'installer des extensions (cloud) ou d'uploader dans la collection (on-premises).
+- Un navigateur récent (Edge, Chrome, Firefox).
+
+## Permissions demandées
+
+TestPulse demande des scopes de lecture, plus un scope d'écriture utilisé **uniquement** par le Coverage Builder opt-in :
+
+| Scope | Pourquoi |
+| --- | --- |
+| `vso.work` | Lire les work items (exigences, bugs). |
+| `vso.test` | Lire les plans, suites, cas et résultats de test. |
+| `vso.test_write` | **Coverage Builder uniquement** — créer des plans/suites à la demande. |
+| `vso.build`, `vso.identity` | Détails du build associé et des assignés. |
+
+<Tip>Tout sauf le Coverage Builder est en **lecture seule**. TestPulse ne modifie jamais vos résultats de test.</Tip>
