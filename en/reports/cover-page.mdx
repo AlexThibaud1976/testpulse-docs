@@ -1,0 +1,30 @@
+---
+title: "Cover page"
+description: "Dynamic layout, the header label vs the report title, and choosing which fields appear on the cover."
+icon: "file-badge"
+---
+
+The PDF **cover page** lays out at **dynamic height**: a long report title or a long field value never overlaps the badge, the info grid or the KPIs — including on older history reports that already contain long values. The title pushes the rest down, and long values wrap within their column. Short reports look exactly as before.
+
+## Two distinct "titles"
+
+<Note>These are two different things — a common source of confusion.</Note>
+
+- **Header & footer label** (Settings) replaces "TestPulse" in the header, the footer and the file name. It is **not** the report title.
+- **Report title** (form) is the large title shown on the cover page of each report.
+
+## Choose what appears on the cover
+
+In **Settings → Field configuration**, each **visible** cover field has a **"Cover page"** toggle.
+
+- By default, every visible field appears on the cover.
+- Unchecking a field removes it from the **cover only** — it stays in the body and in **every export**.
+
+There is no hard cap on the number of fields; the dynamic layout absorbs them.
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Generate a report" icon="file-text" href="/en/reports/generate-a-report">The form fields and validation.</Card>
+  <Card title="Generation & templates" icon="bolt" href="/en/reports/generation-and-templates">The generate flow, templates and views.</Card>
+</CardGroup>

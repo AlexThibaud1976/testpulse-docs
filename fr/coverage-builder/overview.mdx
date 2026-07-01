@@ -1,0 +1,37 @@
+---
+title: "Coverage Builder — des exigences vers un plan"
+description: "Partir des exigences, voir ce qui est couvert et ce qui est un trou, prévisualiser un plan de non-régression et l'exporter — entièrement en lecture seule."
+icon: "list-checks"
+---
+
+L'onglet **Couverture** part d'**exigences** (pas d'un plan) et répond à : *de quoi ai-je besoin pour tester la non-régression de ces fonctionnalités ?* Il remonte les tests liés à ces exigences, signale les **trous**, prévisualise un plan de non-régression et — après confirmation explicite — peut [créer ce plan dans Azure DevOps](/fr/coverage-builder/create-plan). Read d'abord, write ensuite : vous obtenez de la valeur **avant** de payer le coût d'écriture.
+
+## Sélectionner des exigences & lire la couverture
+
+Sélectionnez des exigences par **area path**, **itération**, **requête WIQL** ou liste d'**IDs** — vous partez des fonctionnalités à couvrir, pas d'un plan existant.
+
+Pour chaque exigence, TestPulse résout les cas de test liés via `TestedBy` et la classe :
+
+- **Couverte** — au moins un test lié.
+- **Trou** — aucun test lié.
+
+La composition n'utilise **que le graphe de liens** — aucun outcome, point ou run n'est lu, et aucune nouvelle permission n'est requise. Des cartes de synthèse résument total / couvertes / trous / tests liés.
+
+<Note>**100 % de trous est un résultat valable** — un plan fait de suites vides, prêtes à remplir. Ce n'est jamais une erreur.</Note>
+
+## « Couverte non planifiée » (opt-in)
+
+Un troisième état — *couverte non planifiée* (un test existe mais n'est dans aucun plan, on veut donc le réutiliser plutôt que le réécrire) — se trouve derrière un **toggle « Scan planification » opt-in, OFF par défaut**. Il est plus coûteux (il énumère plans → suites → cas de test), donc le coût est signalé et l'état n'est jamais affiché sans scan réel. Sans le toggle, le cœur reste à deux états nets.
+
+## Preview & export (aucune permission requise)
+
+TestPulse construit une **spec de plan** : une suite requirement-based par exigence, chacune avec ses cas de test prévus et un indicateur de trou. Une **preview** montre ce qui serait créé (ex. *« 9 suites requirement-based, 34 cas de test »*).
+
+Le bouton **Exporter la spec** est **toujours disponible et ne requiert aucune permission** — il sérialise la spec en **JSON, Markdown ou CSV**, de sorte qu'un responsable qualité sans droit d'écriture garde toute la valeur read. L'export reflète exactement la preview.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Créer le plan dans Azure DevOps" icon="square-pen" href="/fr/coverage-builder/create-plan">Le seul endroit où TestPulse écrit.</Card>
+  <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">Pourquoi c'est l'unique exception.</Card>
+</CardGroup>

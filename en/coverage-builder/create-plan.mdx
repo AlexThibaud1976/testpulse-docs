@@ -1,0 +1,36 @@
+---
+title: "Create the plan in Azure DevOps"
+description: "The one place TestPulse writes — opt-in, confirmed, create-only — and how to avoid the area-path 403."
+icon: "square-pen"
+---
+
+<Warning>Plan creation is the **only** feature of TestPulse that writes to Azure DevOps. It is opt-in, always confirmed, and create-only.</Warning>
+
+From the preview, **Create plan in ADO** opens a **confirmation dialog** recapping exactly what will be written (N requirement-based suites, M auto-populated tests, K empty gap suites). **Nothing is written before you confirm.**
+
+On confirm, TestPulse creates the plan and one requirement-based suite per requirement — ADO **auto-populates** the covered ones from `TestedBy` and leaves the gaps **empty** (living scaffolding: the day a test is written and linked, it shows up by itself).
+
+It is **creation only**: it never modifies or deletes an existing plan, suite or test. A **name collision warns** instead of overwriting, and a **partial failure reports** exactly what was created.
+
+## Choose the area path (and iteration)
+
+Before creating, pick the **area path** (and optionally the **iteration**) the new plan will live under. Leave both empty and the plan is created under the **project root**. The lists come from the project's classification nodes via the existing `vso.work` scope — no new permission — and you can always type a path by hand.
+
+## The "permission ≠ scope" 403
+
+The most common creation failure is a **403 — *you do not have the appropriate permissions to manage test plans under this area path***.
+
+<Note>This 403 is **not** a scope problem. `vso.test_write` is already granted — the error is an **area-path ACL**.</Note>
+
+Azure DevOps grants *Manage test plans* **per area path**. Create under the project root without that right and you get the 403. **Pick an area path where you hold *Manage test plans*** and creation succeeds. TestPulse names the fix precisely: a permission 403 points you to *Manage test plans on the chosen area path* (ask your administrator); the "add the scope" message appears only when the scope is genuinely the cause (for example a 401).
+
+## The write permission
+
+Creation requires the **`vso.test_write`** scope, added to the extension manifest by an **administrator**, which triggers an **extension re-approval** for the organisation. Until it is granted, the read-only analysis and export work fully — only creation is unavailable.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Coverage Builder overview" icon="list-checks" href="/en/coverage-builder/overview">Analyse and export first.</Card>
+  <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">Scopes and the write exception.</Card>
+</CardGroup>

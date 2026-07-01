@@ -1,0 +1,36 @@
+---
+title: "FAQ & dépannage"
+description: "Questions fréquentes et solutions rapides."
+icon: "circle-help"
+---
+
+## L'onglet « Test coverage » n'apparaît pas sur une fiche
+
+Une contribution toute neuve peut mettre un peu de temps à être ingérée par Azure DevOps. Faites un **rafraîchissement à froid** (Ctrl+Shift+R) sur la fiche. L'onglet est placé automatiquement et se monte au clic — voir [L'onglet Test coverage](/fr/work-item/test-coverage-tab).
+
+## Sur Server, les tests s'affichent « Non exécuté » alors qu'ils sont passés
+
+Mettez à jour vers la dernière version — la résolution plan/suite lit correctement les résultats sur Azure DevOps Server.
+
+## La création d'un plan renvoie un 403
+
+C'est une **permission d'area path**, pas un scope. Choisissez une area path où vous avez *Manage test plans* — voir [Créer le plan](/fr/coverage-builder/create-plan).
+
+## Les notifications sont bloquées en on-premise
+
+Une limite CORS du navigateur. TestPulse affiche le payload JSON pour un copier-coller dans Teams / Slack — voir [Notifications](/fr/collaboration/notifications-and-scheduling).
+
+## Le widget de dashboard affiche d'anciens chiffres
+
+Le widget lit le **dernier snapshot publié**, pas des données live. Publiez un rapport frais avec *Partager au projet* — voir [Widget Vue d'ensemble qualité](/fr/dashboard/quality-overview-widget).
+
+## Le stockage est presque plein
+
+L'historique est borné par un quota Extension Data. Supprimez d'anciens rapports (l'indicateur avertit à 80%) — voir [Historique des rapports](/fr/collaboration/history).
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Permissions & scopes" icon="key" href="/fr/security/permissions">Accès et le 403.</Card>
+  <Card title="Glossaire" icon="book-a" href="/fr/reference/glossary">Termes clés.</Card>
+</CardGroup>

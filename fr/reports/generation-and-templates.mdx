@@ -1,0 +1,41 @@
+---
+title: "Génération & templates"
+description: "Le flux de génération avec progression et annulation, plus les templates et vues sauvegardées réutilisables."
+icon: "bolt"
+---
+
+## Le flux de génération
+
+Le bouton **Générer le rapport** suit une machine d'états claire :
+
+<Steps>
+  <Step title="Générer le rapport">Inactif — cliquez pour démarrer.</Step>
+  <Step title="Démarrage…">Le bouton se désactive de façon synchrone au clic.</Step>
+  <Step title="En cours N%">Une barre de progression se met à jour pendant la récupération des données depuis Azure DevOps.</Step>
+  <Step title="Terminé / Erreur">Le rapport s'affiche, ou un message d'erreur est présenté.</Step>
+</Steps>
+
+Un bouton **Annuler** apparaît pendant la génération. Le cliquer annule tous les appels Azure DevOps en cours — **aucun fichier partiel n'est produit** — et le bouton revient à l'état inactif.
+
+<Note>La liste des plans utilise le **stale-while-revalidate** : les derniers plans connus apparaissent immédiatement avec un badge « Refreshing » pendant le chargement des données fraîches.</Note>
+
+## Templates et vues sauvegardées
+
+**Enregistrer comme template** — sauvegarde **les métadonnées uniquement** (champs du formulaire, environnement, testeur, approbateur…) sous un nom personnalisé. Le charger pré-remplit le formulaire instantanément.
+
+**Enregistrer comme vue** — sauvegarde **le plan, les suites cochées *et* toutes les métadonnées** en une action. Charger une vue :
+
+<Steps>
+  <Step title="Resélectionner le plan">Le plan sauvegardé est resélectionné et ses suites se chargent.</Step>
+  <Step title="Restaurer les suites">La sélection de suites sauvegardée est cochée — les suites supprimées depuis la sauvegarde sont ignorées silencieusement.</Step>
+  <Step title="Restaurer les champs">Tous les champs de métadonnées sont restaurés.</Step>
+</Steps>
+
+<Note>Utilisez les **vues** pour les campagnes récurrentes où le même plan, les mêmes suites et les mêmes métadonnées sont réutilisés — par exemple une régression hebdomadaire sur un périmètre fixe.</Note>
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Générer un rapport" icon="file-text" href="/fr/reports/generate-a-report">Sélection du plan, champs, validation.</Card>
+  <Card title="Page de garde" icon="file-badge" href="/fr/reports/cover-page">Mise en page et choix des champs.</Card>
+</CardGroup>

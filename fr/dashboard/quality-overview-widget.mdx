@@ -1,0 +1,35 @@
+---
+title: "Widget Vue d'ensemble qualité"
+description: "Afficher vos données qualité sur un dashboard Azure DevOps — en lecture seule, depuis le dernier rapport publié."
+icon: "layout-dashboard"
+---
+
+Le widget **TestPulse — Vue d'ensemble qualité** affiche vos données qualité directement sur un **dashboard** Azure DevOps, en lecture seule. Il lit le **dernier rapport publié au projet** (voir *Partager au projet* dans l'Historique) et **n'appelle jamais l'API Test Plans** — il s'affiche donc même pour les comptes **Stakeholder** qui voient les dashboards mais pas les Test Plans.
+
+## L'ajouter à un dashboard
+
+<Steps>
+  <Step title="Modifier le dashboard">Sur un dashboard d'équipe, cliquez sur **Modifier**, puis **Ajouter un widget**.</Step>
+  <Step title="Trouver TestPulse">Recherchez **TestPulse — Vue d'ensemble qualité** et ajoutez-le.</Step>
+  <Step title="Configurer">Choisissez le **plan de test** (seuls les plans ayant déjà un rapport publié au projet apparaissent) et la **vue** — Vue d'ensemble, KPIs, Tendance ou Couverture.</Step>
+  <Step title="Dimensionner & enregistrer">Redimensionnez la tuile en 1×1, 2×1 ou 2×2 — le contenu s'adapte — et enregistrez.</Step>
+</Steps>
+
+Un clic sur le widget ouvre le hub TestPulse.
+
+## Ce qu'il montre
+
+Toutes les valeurs proviennent du snapshot publié (aucun calcul live) :
+
+- Un **donut de taux de réussite** avec compteurs réussis / échoués / bloqués / non exécutés.
+- Une **sparkline de tendance** du pass-rate sur les rapports publiés du plan (au moins 2 pour la tracer).
+- Une **barre de couverture des exigences**.
+
+Un libellé *« publié le {date} »* indique qu'il s'agit de la dernière publication, pas du temps réel. Les états vide, erreur, traçabilité absente et tendance à un seul point se dégradent proprement — jamais d'erreur brute.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Quality Gate — grade & GO/NO-GO" icon="shield-check" href="/fr/quality/quality-gate">Le score derrière la tuile.</Card>
+  <Card title="Générer un rapport" icon="file-text" href="/fr/reports/generate-a-report">Publier un rapport d'abord.</Card>
+</CardGroup>

@@ -1,0 +1,37 @@
+---
+title: "Coverage Builder — from requirements to a plan"
+description: "Start from requirements, see what's covered and what's a gap, preview a regression plan and export it — entirely read-only."
+icon: "list-checks"
+---
+
+The **Coverage** tab starts from **requirements** (not a plan) and answers: *what do I need to test the regression of these features?* It surfaces the tests linked to those requirements, flags the **gaps**, previews a regression plan, and — after explicit confirmation — can [create that plan in Azure DevOps](/en/coverage-builder/create-plan). Read first, write later: you get value **before** paying the write cost.
+
+## Select requirements & read coverage
+
+Select requirements by **area path**, **iteration**, a **WIQL query**, or a list of **IDs** — you start from the features to cover, not from an existing plan.
+
+For each requirement, TestPulse resolves the test cases linked via `TestedBy` and classifies it:
+
+- **Covered** — at least one linked test.
+- **Gap** — no linked test.
+
+The composition uses the **link graph only** — no outcomes, points or runs are read, and no new permission is required. Metric cards summarise total / covered / gaps / linked tests.
+
+<Note>**100% gaps is a valid result** — a plan made entirely of empty suites, ready to fill. It is never an error.</Note>
+
+## "Covered but unplanned" (opt-in)
+
+A third state — *covered but unplanned* (a test exists but is in no plan, so you'd reuse it rather than rewrite it) — sits behind an **opt-in "Planning scan" toggle, off by default**. It is more expensive (it enumerates plans → suites → test cases), so the cost is signalled and the state is never shown unless a real scan ran. Without the toggle, the core stays two clean states.
+
+## Preview & export (no permission needed)
+
+TestPulse builds a **plan spec**: one requirement-based suite per requirement, each with its expected test cases and a gap flag. A **preview** shows what would be created (e.g. *"9 requirement-based suites, 34 test cases"*).
+
+The **Export spec** button is **always available and needs no permission** — it serialises the spec to **JSON, Markdown or CSV**, so a quality lead without write rights keeps the full read value. The export reflects the preview exactly.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Create the plan in Azure DevOps" icon="square-pen" href="/en/coverage-builder/create-plan">The one place TestPulse writes.</Card>
+  <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">Why this is the only exception.</Card>
+</CardGroup>

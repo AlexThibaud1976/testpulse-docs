@@ -1,0 +1,30 @@
+---
+title: "Page de garde"
+description: "Mise en page dynamique, libellé d'en-tête vs titre du rapport, et choix des champs affichés sur la cover."
+icon: "file-badge"
+---
+
+La **page de garde** PDF se met en page à **hauteur dynamique** : un titre de rapport long ou une valeur de champ longue ne chevauche jamais le badge, la grille d'infos ou les KPI — y compris sur d'anciens rapports d'historique contenant déjà des valeurs longues. Le titre pousse le reste vers le bas, et les valeurs longues wrappent dans leur colonne. Les rapports courts sont strictement identiques à avant.
+
+## Deux « titres » distincts
+
+<Note>Ce sont deux choses différentes — une source fréquente de confusion.</Note>
+
+- Le **Libellé d'en-tête & pied de page** (Paramètres) remplace « TestPulse » dans l'en-tête, le pied de page et le nom de fichier. Ce **n'est pas** le titre du rapport.
+- Le **Titre du rapport** (formulaire) est le grand titre affiché sur la page de garde de chaque rapport.
+
+## Choisir ce qui apparaît sur la cover
+
+Dans **Paramètres → Configuration des champs**, chaque champ de garde **visible** porte un toggle **« Page de garde »**.
+
+- Par défaut, tout champ visible apparaît sur la cover.
+- Décocher un champ le retire de la **cover uniquement** — il reste dans le corps et dans **tous les exports**.
+
+Aucun plafond sur le nombre de champs ; la mise en page dynamique les encaisse.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Générer un rapport" icon="file-text" href="/fr/reports/generate-a-report">Les champs du formulaire et la validation.</Card>
+  <Card title="Génération & templates" icon="bolt" href="/fr/reports/generation-and-templates">Le flux de génération, les templates et vues.</Card>
+</CardGroup>

@@ -1,0 +1,67 @@
+---
+title: "Export formats"
+description: "PDF, HTML, Word, Excel and PowerPoint — what each format contains and when to use it."
+icon: "file-export"
+---
+
+TestPulse exports the same report to five formats, each optimised for a different use.
+
+## At a glance
+
+| Format | Use case | Key features |
+| --- | --- | --- |
+| **PDF** | Formal delivery, audits | Paginated, signature page, charts, drag-and-drop section order |
+| **HTML** | Sprint reviews, dashboards | Standalone file, interactive charts, clickable ADO links |
+| **Word (.docx)** | Editable reports | Editable in Microsoft Word, signature page |
+| **Excel (.xlsx)** | Data analysis | 4 sheets: KPIs, Results, Traceability, Bugs |
+| **PowerPoint (.pptx)** | Slides for stakeholders | 5 slides: Cover, KPIs, Results, Traceability, Bugs |
+
+## PDF — the full report
+
+Up to **12 configurable sections**, reorderable by drag-and-drop (**Settings → PDF section order**), each independently on or off:
+
+- **Cover page** — project info grid, logo (PNG/JPEG/SVG), environment badge
+- **Executive summary** — the automated verdict, or a per-report custom summary
+- **KPI cards** — pass rate, execution rate, passed/failed/blocked, linked bugs
+- **Results table** — latest outcome per test case; a multi-config matrix when 2–3 configurations are detected
+- **Traceability** — Epic → User Story → Test Case → Bug (3-column table) + untraced suites
+- **Bugs** — all linked bugs with state and severity
+- **Flaky tests** — tests with a high outcome-flip rate
+- **Charts** — pass/fail donut + results-by-suite bar, rendered locally (works offline)
+- **Attachments** — PNG/JPEG inline, other files listed in a table
+- **Objectives, Entry criteria, Exit criteria** — multi-line scoping fields
+- **Signature page** — configurable signatories with pre-fill and a sign line
+
+## HTML — standalone & interactive
+
+A **single standalone file** — no server needed to open it:
+
+- Interactive charts (donut + bar) embedded inline
+- **Clickable Azure DevOps links** for work items, bugs and test cases
+- Full results table with outcome badges and suite grouping
+- Traceability matrix and bugs list
+
+## Word (.docx) — editable
+
+Fully **editable in Microsoft Word**, with six sections: cover page, KPI metrics, results table, traceability (Test Case → User Story → Epic → Bug), bugs table, and a **signature page** (if enabled).
+
+<Note>Word does not include charts or attachments — for chart-heavy reports, use PDF.</Note>
+
+## Excel (.xlsx) — data
+
+Four worksheets: **KPIs**, **Results** (outcome, suite, date, tester, configuration), **Traceability** (Test Case → User Story → Epic → Bug), and **Bugs** (state, severity, priority, assignee).
+
+## PowerPoint (.pptx) — slides
+
+A **five-slide** presentation: Cover, KPIs, Results, Traceability, Bugs.
+
+## Signatures
+
+The **signature page** is available in **PDF and Word** exports and is configured in Settings. HTML, Excel and PowerPoint do not carry a signature.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Show or hide export buttons" icon="eye" href="/en/exports/button-visibility">Control the toolbar.</Card>
+  <Card title="Generate a report" icon="file-text" href="/en/reports/generate-a-report">Build the report first.</Card>
+</CardGroup>

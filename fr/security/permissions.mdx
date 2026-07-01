@@ -1,0 +1,30 @@
+---
+title: "Permissions & scopes"
+description: "Les scopes Azure DevOps que TestPulse demande, pourquoi chacun est nécessaire, et l'unique exception d'écriture."
+icon: "key"
+---
+
+TestPulse ne demande que les scopes dont il a besoin, et il est en **lecture seule** sauf pour le [Coverage Builder](/fr/coverage-builder/create-plan) opt-in.
+
+| Scope | Pourquoi il est demandé |
+| --- | --- |
+| `vso.test` | Lire plans, suites, cas, points et résultats. |
+| `vso.work` | Lire les work items (exigences, bugs) pour la traçabilité. |
+| `vso.identity` | Résoudre testeurs et assignés par nom. |
+| `vso.build` | Lire le build associé à un rapport. |
+| `vso.test_write` | Utilisé **uniquement** par le Coverage Builder pour créer plans et suites (opt-in). |
+
+## Le scope d'écriture
+
+`vso.test_write` alimente **uniquement** l'action de création du Coverage Builder. L'ajouter au manifeste est une action **administrateur** et déclenche un **ré-approval de l'extension** pour l'organisation. En attendant, tout ce qui est en lecture seule continue de fonctionner — seule la création de plan est indisponible.
+
+## Permission ≠ scope
+
+Un **403** à la création d'un plan est presque toujours une **ACL d'area path** — la permission *Manage test plans* est accordée **par area path** — et **non** un scope manquant. Voir [Créer le plan dans Azure DevOps](/fr/coverage-builder/create-plan).
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Confidentialité & données" icon="shield" href="/fr/security/privacy">Où vivent les données.</Card>
+  <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">La frontière lecture/écriture.</Card>
+</CardGroup>

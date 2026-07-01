@@ -1,0 +1,42 @@
+---
+title: "Statuts & résultats"
+description: "Les résultats que TestPulse lit, comment il choisit le dernier, et comment ils se réduisent en un verdict d'exécution."
+icon: "list-checks"
+---
+
+TestPulse rapporte le **dernier résultat** de chaque test et les réduit en un seul **verdict d'exécution**. Voici exactement comment.
+
+## Résultats
+
+| Résultat | Signification | Compte comme |
+| --- | --- | --- |
+| **Passed** | Le test a été exécuté et réussi. | Réussi |
+| **Failed** | Le test a été exécuté et échoué. | Non OK |
+| **Blocked** | Le test n'a pas pu être exécuté (un blocage). | Non exécuté |
+| **Not Applicable** | Le test ne s'applique pas à cette portée. | Non exécuté |
+| **Not Executed** | Planifié mais pas encore exécuté. | Non exécuté |
+| **None** | Aucun résultat pour le point. | Non exécuté |
+
+## Le « dernier résultat »
+
+Un point de test peut avoir un historique de résultats. TestPulse prend le **plus récent** (par date de complétion) — c'est le résultat et la date de *dernière exécution* affichés. Changez la [portée](/fr/work-item/test-coverage-tab) et le dernier est recalculé pour ce plan, en mémoire, sans nouvelle lecture.
+
+## Des résultats à un verdict
+
+Le verdict d'exécution est une **réduction pure** à précédence stricte :
+
+1. Au moins un **Failed** → **Non OK**
+2. Sinon au moins un non-passé (Blocked, Not Applicable, Not Executed, None) → **Non exécuté**
+3. Seulement 100% **Passed** → **Réussi**
+4. Aucun test lié → **Non couvert**
+
+Pas de « partiel » : un seul échec suffit à rendre une story Non OK. Le verdict affiche toujours **icône + libellé**, pour rester lisible en thème clair ou sombre et pour les daltoniens, et il **ne recolore jamais** la pastille Couverture.
+
+<Note>**None** vs **Not Executed** : *None* signifie que le point n'a aucun objet résultat ; *Not Executed* signifie qu'un résultat existe mais que l'exécution n'a pas eu lieu. Les deux se lisent **Non exécuté**.</Note>
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="L'onglet Test coverage" icon="list-check" href="/fr/work-item/test-coverage-tab">Où le verdict apparaît.</Card>
+  <Card title="Traçabilité & hiérarchie" icon="git-branch" href="/fr/concepts/traceability">Le bug derrière un échec.</Card>
+</CardGroup>

@@ -1,0 +1,37 @@
+---
+title: "Settings & results import"
+description: "A map of the Settings screen, importing external test results, and consolidated multi-plan reports."
+icon: "settings"
+---
+
+## The Settings screen
+
+Most settings persist **per user** via Azure DevOps Extension Data; a few (a shared scale profile, project-shared reports) are **project-scoped** so a whole team sees the same thing.
+
+| Setting | What it controls |
+| --- | --- |
+| **Header & footer label** | Replaces "TestPulse" in the header, footer and file name — see [Cover page](/en/reports/cover-page). |
+| **Field configuration** | Per-field regex, soft length and the cover-page toggle — see [Generate a report](/en/reports/generate-a-report). |
+| **Visible export buttons** | Which export buttons appear — see [Show or hide export buttons](/en/exports/button-visibility). |
+| **PDF section order** | Reorder and toggle PDF sections — see [Export formats](/en/exports/formats). |
+| **Notifications** | Teams / Slack webhooks — see [Notifications](/en/collaboration/notifications-and-scheduling). |
+| **Scheduled reports** | Recurring report reminders — see [Scheduled reports](/en/collaboration/notifications-and-scheduling). |
+| **Quality scale & GO/NO-GO override** | Scale profile and the opt-in decision override — see [Quality Gate](/en/quality/quality-gate). |
+| **Assess coverage depth** | The opt-in depth analysis — see [Coverage depth](/en/quality/coverage-depth). |
+
+## Import external results
+
+Open the **Import** tab and drag-and-drop (or pick) an `.xml` file produced by **Cypress, Playwright, Surefire / Maven, NUnit 3 or xUnit 2**. The format is auto-detected from the root tag. Parsed results are previewed (name, outcome, duration, mapped) and **auto-mapped to Azure DevOps test cases by name** (case-insensitive contains); unmapped rows get a manual dropdown. Pick the target plan and click **Import** — a report is saved to History with an **[AUTO]** badge.
+
+<Note>Parsing is **purely client-side** — no network calls.</Note>
+
+## Consolidated multi-plan reports
+
+Toggle **Multi-plan mode** in the plan selector to pick several plans. A single **Generate** produces one consolidated report: **global metrics** plus a **per-plan breakdown** (each plan's total, pass rate, execution rate and counts) and a **Plan** column in the results table — on screen and in every export. Overlapping test cases are de-duplicated (most recent result wins); a note explains why per-plan totals may exceed the consolidated total. A non-blocking warning appears beyond three plans; single-plan behaviour is unchanged.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Export formats" icon="file-export" href="/en/exports/formats">What each format contains.</Card>
+  <Card title="Quality Gate — grade & GO/NO-GO" icon="shield-check" href="/en/quality/quality-gate">The scale profile lives here.</Card>
+</CardGroup>

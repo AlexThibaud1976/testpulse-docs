@@ -1,0 +1,28 @@
+---
+title: "Privacy & data"
+description: "100% client-side, no backend, and no data ever leaves your Azure DevOps tenant."
+icon: "shield"
+---
+
+TestPulse is **100% client-side**. Reports are built **in your browser** — there is **no backend server**, and **no data ever leaves your Azure DevOps tenant**.
+
+## Where your data lives
+
+- **Reports & history** — saved to Azure DevOps **Extension Data** (user-scoped; project-scoped only when you *share to project*). Nothing is sent to a third party.
+- **Preferences** — stored the same way, or in the browser for UI-only choices (for example the work-item tab's language).
+- **Attachments** — images are cached in memory and re-fetched from Azure DevOps when needed; they are stripped from saved history to respect the storage quota.
+
+## No telemetry by default
+
+TestPulse does not phone home. There is no analytics backend — the only outbound calls are to **your** Azure DevOps and, if you configure them, **your** Teams / Slack webhooks.
+
+## On-premises
+
+On Azure DevOps Server, everything runs the same way against your server. The only browser limitation is CORS on outbound webhooks — TestPulse falls back to a copy-paste payload (see [Notifications](/en/collaboration/notifications-and-scheduling)).
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Permissions & scopes" icon="key" href="/en/security/permissions">What TestPulse can access.</Card>
+  <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">And the one write exception.</Card>
+</CardGroup>

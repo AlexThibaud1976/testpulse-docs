@@ -1,0 +1,54 @@
+---
+title: "Quality Gate — grade & GO/NO-GO"
+description: "Chaque rapport porte un grade A–E, un score sur 100 et un verdict GO/NO-GO — déterministe, transparent, jamais un chiffre opaque."
+icon: "shield-check"
+---
+
+Chaque rapport porte un **score qualité** noté **A → E** avec une valeur **sur 100** et un verdict **GO / NO-GO** — dans l'en-tête du rapport, le widget de dashboard et les exports PDF / HTML. Il est calculé par un **moteur unique et déterministe** depuis les données déjà à l'écran : aucun appel supplémentaire, pas d'IA. Le badge résume les métriques ; il ne les remplace jamais.
+
+## Comment la note est construite
+
+Le composite 0–100 pondère quatre composantes :
+
+| Composante | Poids |
+| --- | --- |
+| Taux de réussite | 40 |
+| Taux d'exécution | 20 |
+| Couverture des exigences | 20 |
+| Hygiène des défauts | 20 |
+
+Grades : **A** ≥ 90 · **B** 75–89 · **C** 60–74 · **D** 40–59 · **E** < 40.
+
+Si la traçabilité est absente, la couverture est retirée et les poids restants sont **renormalisés** (un drapeau le signale). Moins de 5 tests exécutés lève un drapeau *confiance faible*.
+
+## Transparence
+
+Cliquez sur **Voir le détail** pour déplier la décomposition — chaque composante (valeur, points, poids), les plafonnements appliqués et les drapeaux. La note n'est jamais un chiffre opaque.
+
+## Invariants non négociables
+
+- **≥ 1 bug bloquant ouvert** (ouvert + Critique / Élevée) plafonne la note à **C** et force **NO-GO**.
+- Une **exigence in-scope non testée** force **NO-GO**.
+- **Aucun test exécuté** affiche *non évalué* — jamais un E.
+- Le **GO** exige aussi un score ≥ 75 et une couverture ≥ 70 %.
+
+## Profils de barème
+
+Dans les Paramètres, choisissez un barème **au niveau projet** pour que tout le monde note un rapport à l'identique :
+
+- **Strict** — une release régulée.
+- **Standard** — le barème par défaut.
+- **Rodage** — une équipe en démarrage.
+
+L'ajustement est **borné** (seuil GO 50–95, une couverture minimale, poids des composantes forcés à 100, seuils A > B > C > D) ; toute valeur hors preset devient un barème **Personnalisé**. Les invariants ci-dessus tiennent toujours.
+
+## Pondération risk-based (optionnelle)
+
+Un toggle optionnel et orthogonal affiche une **confiance pondérée** à côté du grade. Il pondère exécution et couverture par l'**importance** de ce qui manque — priorité des cas de test, risque et story points des US — via des **paliers additifs** transparents (jamais une multiplication). Le score A–E à plat n'est **jamais** modifié ; une dimension dont la donnée est absente ou uniforme s'auto-désactive et le dit.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Aide à la décision" icon="circle-check-big" href="/fr/quality/decision-support">Points de vigilance, échecs sans défaut, override.</Card>
+  <Card title="Profondeur de couverture" icon="gauge" href="/fr/quality/coverage-depth">Est-ce *bien* couvert ?</Card>
+</CardGroup>

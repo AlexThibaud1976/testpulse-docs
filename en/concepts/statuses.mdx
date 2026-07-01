@@ -1,0 +1,42 @@
+---
+title: "Statuses & results"
+description: "The outcomes TestPulse reads, how it picks the latest result, and how they reduce to an execution verdict."
+icon: "list-checks"
+---
+
+TestPulse reports the **latest result** of each test and reduces them to a single **execution verdict**. Here is exactly how.
+
+## Outcomes
+
+| Outcome | Meaning | Counts as |
+| --- | --- | --- |
+| **Passed** | The test ran and passed. | Passed |
+| **Failed** | The test ran and failed. | Not OK |
+| **Blocked** | The test could not run (a blocker). | Not Run |
+| **Not Applicable** | The test does not apply to this scope. | Not Run |
+| **Not Executed** | Scheduled but not run yet. | Not Run |
+| **None** | No result at all for the point. | Not Run |
+
+## The "latest result"
+
+A test point can have a history of results. TestPulse takes the **most recent** one (by completion date) — that is the outcome and the *last run* date you see. Change the [scope](/en/work-item/test-coverage-tab) and the latest is recomputed for that plan, in memory, with no new read.
+
+## From outcomes to a verdict
+
+The execution verdict is a **pure reduction** with strict precedence:
+
+1. Any **Failed** → **Not OK**
+2. Otherwise any non-passed (Blocked, Not Applicable, Not Executed, None) → **Not Run**
+3. Only 100% **Passed** → **Passed**
+4. No linked test → **Not covered**
+
+There is **no "partial"**: one failure is enough to make a story Not OK. The verdict always shows an **icon + label**, so it reads correctly in light or dark themes and for colour-blind users, and it **never recolours** the Coverage pill.
+
+<Note>**None** vs **Not Executed**: *None* means the point has no result object at all; *Not Executed* means a result exists but the run hasn't happened. Both read as **Not Run**.</Note>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="The Test coverage tab" icon="list-check" href="/en/work-item/test-coverage-tab">Where the verdict appears.</Card>
+  <Card title="Traceability & hierarchy" icon="git-branch" href="/en/concepts/traceability">The bug behind a failure.</Card>
+</CardGroup>

@@ -1,0 +1,30 @@
+---
+title: "Traçabilité & hiérarchie"
+description: "De l'Epic au Bug — comment TestPulse relie exigences, cas de test et défauts derrière les échecs, en lecture seule."
+icon: "git-branch"
+---
+
+TestPulse reconstruit la chaîne complète **Epic → Feature → User Story / PBI → Cas de test → Bug**, en lecture seule, à partir des liens déjà présents dans votre projet.
+
+## Les liens qu'il suit
+
+| Lien | Sens | Sert à |
+| --- | --- | --- |
+| **Tested By** | User Story → Cas de test | Quels tests couvrent une exigence — alimente l'[onglet Test coverage](/fr/work-item/test-coverage-tab) et le rapport de couverture. |
+| **Suite basée sur exigence** | Suite → User Story | Relie une suite à la story qu'elle valide. |
+| **Bug derrière un échec** | Cas de test → Bug | Le défaut lié à un test en échec, affiché à côté de son résultat. |
+
+## Où ça apparaît
+
+- **Traçabilité** dans les rapports — l'arbre **Epic → User Story → Cas de test → Bug**.
+- **Couverture** — quelles exigences sont couvertes et lesquelles sont des trous.
+- **Sur la fiche** — l'[onglet Test coverage](/fr/work-item/test-coverage-tab) lit *Tested By* pour afficher les tests liés d'une story et le bug derrière chaque échec.
+
+<Note>Un test en échec **sans** bug lié est signalé *échec sans défaut* — un trou à combler, jamais masqué.</Note>
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Le modèle Test Plans" icon="network" href="/fr/concepts/model">Plans, suites, cas, points.</Card>
+  <Card title="Statuts & résultats" icon="list-checks" href="/fr/concepts/statuses">Résultats et verdict d'exécution.</Card>
+</CardGroup>

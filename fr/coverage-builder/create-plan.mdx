@@ -1,0 +1,36 @@
+---
+title: "Créer le plan dans Azure DevOps"
+description: "Le seul endroit où TestPulse écrit — opt-in, confirmé, création seule — et comment éviter le 403 d'area path."
+icon: "square-pen"
+---
+
+<Warning>La création de plan est la **seule** fonctionnalité de TestPulse qui écrit dans Azure DevOps. Elle est opt-in, toujours confirmée, et en création seule.</Warning>
+
+Depuis la preview, **Créer le plan dans ADO** ouvre un **dialog de confirmation** récapitulant exactement ce qui sera écrit (N suites requirement-based, M tests auto-peuplés, K suites-trous vides). **Rien n'est écrit avant votre confirmation.**
+
+À la confirmation, TestPulse crée le plan et une suite requirement-based par exigence — ADO **auto-peuple** les couvertes depuis `TestedBy` et laisse les trous **vides** (échafaudage vivant : le jour où un test est écrit et lié, il apparaît tout seul).
+
+C'est de la **création seule** : jamais de modification ni de suppression d'un plan, suite ou test existant. Une **collision de nom avertit** au lieu d'écraser, et un **échec partiel rapporte** exactement ce qui a été créé.
+
+## Choisir l'area path (et l'itération)
+
+Avant de créer, choisissez l'**area path** (et en option l'**itération**) sous lequel le nouveau plan vivra. Laissez les deux vides et le plan est créé sous la **racine du projet**. Les listes viennent des classification nodes du projet via le scope `vso.work` existant — aucune nouvelle permission — et vous pouvez toujours saisir un chemin à la main.
+
+## Le 403 « permission ≠ scope »
+
+L'échec de création le plus courant est un **403 — *vous n'avez pas les permissions appropriées pour gérer les plans de test sous cet area path***.
+
+<Note>Ce 403 n'est **pas** un problème de scope. `vso.test_write` est déjà accordé — l'erreur est une **ACL d'area path**.</Note>
+
+Azure DevOps accorde *Manage test plans* **par area path**. Créez sous la racine du projet sans ce droit et vous obtenez le 403. **Choisissez une area path où vous avez *Manage test plans*** et la création réussit. TestPulse nomme le correctif précisément : un 403 de permission vous oriente vers *Manage test plans sur l'area path choisi* (à demander à votre administrateur) ; le message « ajoutez le scope » n'apparaît que lorsque le scope est réellement en cause (par exemple un 401).
+
+## La permission d'écriture
+
+La création nécessite le scope **`vso.test_write`**, ajouté au manifeste de l'extension par un **administrateur**, ce qui déclenche un **ré-approval de l'extension** pour l'organisation. Tant qu'il n'est pas accordé, l'analyse en lecture seule et l'export fonctionnent pleinement — seule la création est indisponible.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Coverage Builder — vue d'ensemble" icon="list-checks" href="/fr/coverage-builder/overview">Analyser et exporter d'abord.</Card>
+  <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">Scopes et l'exception d'écriture.</Card>
+</CardGroup>

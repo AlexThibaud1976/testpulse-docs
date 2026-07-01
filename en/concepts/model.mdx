@@ -1,0 +1,38 @@
+---
+title: "The Test Plans model"
+description: "How Azure DevOps organises Test Plans, Suites and Test Cases — and how TestPulse reads them, read-only."
+icon: "network"
+---
+
+Every TestPulse report is built from the Azure DevOps **Test Plans** model. Five entities are enough to use it well.
+
+## The hierarchy
+
+**Test Plan → Test Suite → Test Case → Test Point → Result.**
+
+| Entity | What it is |
+| --- | --- |
+| **Test Plan** | A container for a testing effort — a release, a sprint, a regression campaign. |
+| **Test Suite** | A folder of test cases inside a plan. Three kinds: **static** (hand-picked), **requirement-based** (bound to a User Story / PBI), **query-based** (filled by a work-item query). |
+| **Test Case** | The work item describing *what* to test — title, steps, expected results. One case can belong to **several suites and plans**. |
+| **Test Point** | A test case **as it appears in one suite, for one configuration**. Results attach to *points*, not to the case directly. |
+| **Result** | The outcome of running a point (Passed, Failed, …) at a moment in time. TestPulse reports the **latest** result. |
+
+## How TestPulse reads it
+
+TestPulse walks the tree **read-only**: plan → suites → cases → points → latest results. It never modifies anything (the only exception is the opt-in [Coverage Builder](/en/concepts/read-only)).
+
+<Note>Because results attach to **points**, a case that lives in several suites can have several results. TestPulse resolves the **latest** result for the points in scope.</Note>
+
+### Suite types, in practice
+
+- **Static** — you pick the cases. TestPulse reports them as-is.
+- **Requirement-based** — the suite is tied to a User Story / PBI; this is what powers [traceability](/en/concepts/traceability) and the coverage view.
+- **Query-based** — cases are resolved from a WIQL query at read time.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Traceability & hierarchy" icon="git-branch" href="/en/concepts/traceability">From Epic to Bug.</Card>
+  <Card title="Statuses & results" icon="list-checks" href="/en/concepts/statuses">How outcomes are read and reduced.</Card>
+</CardGroup>

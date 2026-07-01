@@ -1,0 +1,34 @@
+---
+title: "Aide à la décision"
+description: "Points de vigilance, échecs sans défaut et override GO/NO-GO audité — les outils qui transforment un score en décision de release."
+icon: "circle-check-big"
+---
+
+## Points de vigilance
+
+Un encart **Points de vigilance** apparaît sous le badge qualité (et dans le PDF) pour **nommer** ce qui pèse sur le verdict, au lieu de le laisser en compteurs. Trois groupes, chacun affiché seulement s'il est non vide :
+
+- **Bugs bloquants ouverts** (`#id · sévérité · titre`).
+- **Exigences in-scope sans aucun test**.
+- **User stories in-scope non exécutées**.
+
+Chaque entrée renvoie au work item. *« Bloquant »* repose sur une définition unique partagée (un bug ouvert, Critique ou Élevée). L'encart met en exergue des données **déjà calculées** — aucune nouvelle métrique, aucun appel supplémentaire. Il reste honnête : un check vert n'apparaît que sur un **GO** franc ; sur un NO-GO venu d'ailleurs, il reste neutre et renvoie au détail Qualité.
+
+## Échecs sans défaut
+
+TestPulse signale chaque test dont le dernier résultat est **Failed** mais qui n'a **aucun bug lié** (quel que soit l'état du bug, même Closed) — en lecture seule, sans appel API supplémentaire. Il apparaît comme une section dédiée (chaque test est un lien, avec un bouton **Ouvrir un bug** qui ouvre le formulaire de bug natif Azure DevOps, pré-rempli — jamais une écriture), comme compteur sur le widget, et comme critère **optionnel** du Quality Gate (désactivé par défaut ; une fois activé et si le compteur est supérieur à 0, le verdict passe **NO-GO** — le grade A–E n'est jamais plafonné par ce critère).
+
+## Override GO/NO-GO audité
+
+Le verdict GO/NO-GO est déterministe. Vous pouvez y **superposer une décision humaine** — sans jamais modifier le calcul. Activez **« Autoriser l'override de décision GO/NO-GO »** dans les Paramètres (niveau projet, OFF par défaut ; le profil Strict le laisse désactivé). Un contrôle **Décision de release** permet alors de *suivre le calcul* ou de forcer **GO** / **NO-GO**.
+
+Quand votre décision **diffère** du calcul, une **justification est obligatoire**, et l'auteur et l'horodatage sont capturés. Le rapport affiche **calculé → décidé** côte à côte (en-tête, widget, PDF, Word). Un **GO manuel franchissant un plancher dur** (un bug bloquant ouvert, une US non testée, un échec sans défaut) est **signalé en rouge avec les raisons exactes**. Le **grade A–E reste toujours celui du calcul** — seul le verdict est superposé.
+
+<Note>Un bloc **Bugs ouverts** apparaît aussi en tête de rapport dès qu'il existe au moins un bug ouvert — trié par sévérité puis priorité, et cohérent en comptage avec les Points de vigilance.</Note>
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Quality Gate — grade & GO/NO-GO" icon="shield-check" href="/fr/quality/quality-gate">Comment le verdict est calculé.</Card>
+  <Card title="Profondeur de couverture" icon="gauge" href="/fr/quality/coverage-depth">Est-ce bien couvert ?</Card>
+</CardGroup>

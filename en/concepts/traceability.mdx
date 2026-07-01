@@ -1,0 +1,30 @@
+---
+title: "Traceability & hierarchy"
+description: "From Epic to Bug — how TestPulse links requirements, test cases and the defects behind failures, read-only."
+icon: "git-branch"
+---
+
+TestPulse reconstructs the full chain **Epic → Feature → User Story / PBI → Test Case → Bug**, read-only, from the links already in your project.
+
+## The links it follows
+
+| Link | Direction | Used for |
+| --- | --- | --- |
+| **Tested By** | User Story → Test Case | Which tests cover a requirement — powers the [Test coverage tab](/en/work-item/test-coverage-tab) and the coverage report. |
+| **Requirement-based suite** | Suite → User Story | Maps a suite back to the story it validates. |
+| **Bug behind a failure** | Test Case → Bug | The defect linked to a failing test, surfaced next to its result. |
+
+## Where it shows up
+
+- **Traceability** in reports — the **Epic → User Story → Test Case → Bug** tree.
+- **Coverage** — which requirements are covered and which are gaps.
+- **On the work item** — the [Test coverage tab](/en/work-item/test-coverage-tab) reads *Tested By* to show a story's linked tests and the bug behind each failure.
+
+<Note>A failing test with **no** linked bug is flagged as *failing-with-no-defect* — a gap worth closing, never hidden.</Note>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="The Test Plans model" icon="network" href="/en/concepts/model">Plans, suites, cases, points.</Card>
+  <Card title="Statuses & results" icon="list-checks" href="/en/concepts/statuses">Outcomes and the execution verdict.</Card>
+</CardGroup>

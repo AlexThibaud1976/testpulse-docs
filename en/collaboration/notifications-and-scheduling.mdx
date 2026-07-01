@@ -1,0 +1,24 @@
+---
+title: "Notifications & scheduled reports"
+description: "Push KPIs to Teams or Slack, and get reminded to generate recurring reports."
+icon: "bell"
+---
+
+## Teams / Slack notifications
+
+In **Settings → Notifications**, configure up to **three incoming webhooks** (name + URL + Teams / Slack). Use **Test** to send a sample message. After generating a report, click **Notify** to push its KPIs to the selected channels — an Adaptive Card for Teams, Block Kit for Slack.
+
+<Note>On-premises CORS: if the browser blocks the request, TestPulse shows the JSON payload so you can copy-paste it manually.</Note>
+
+## Scheduled reports
+
+In **Settings → Scheduled reports**, schedule a plan (optionally a saved view) at a **weekly / biweekly / monthly** frequency. When a report is due, a reminder banner appears **at startup** with a **Generate now** button (it loads the saved view and generates).
+
+<Warning>There is no backend — **reminders only appear while TestPulse is open**.</Warning>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Report history & collaboration" icon="history" href="/en/collaboration/history">Save, compare, share.</Card>
+  <Card title="Generate a report" icon="file-text" href="/en/reports/generate-a-report">Build the report to notify on.</Card>
+</CardGroup>

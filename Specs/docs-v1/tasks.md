@@ -14,25 +14,26 @@
 - [ ] Ce que c'est / n'est pas · Cibles · Installation on-prem · Prérequis · **Tour du produit** (Cards). EN+FR.
 
 ## Phase 2 — Générer un rapport
-- [ ] Hub · sélecteur de plan · champs du formulaire · validation · page de garde · templates/vues · processus. EN+FR.
+- [x] Hub · sélecteur de plan · champs du formulaire · validation · page de garde · templates/vues · processus. EN+FR.
 
 ## Phase 3 — Exports
-- [ ] Comparaison · PDF · HTML · Word · Excel · PowerPoint · visibilité boutons · signature. EN+FR.
+- [x] Comparaison · PDF · HTML · Word · Excel · PowerPoint · visibilité boutons · signature. EN+FR.
 
 ## Phase 4 — Qualité & décision
-- [ ] Profondeur · Quality Gate/grade A–E · GO/NO-GO · échecs sans défaut. EN+FR.
+- [x] Profondeur · Quality Gate/grade A–E · GO/NO-GO · échecs sans défaut. EN+FR.
 
 ## Phase 5 — Fiche Work Item
 - [x] Onglet Test coverage · sélecteur de portée · verdict d'exécution. EN+FR.
 
 ## Phase 6 — Dashboard / Coverage Builder
-- [ ] Widget Quality overview + config · Coverage Builder (opt-in, écriture). EN+FR.
+- [x] Widget Quality overview + config · Coverage Builder (opt-in, écriture). EN+FR.
 
 ## Phase 7 — Tendances/collab · Configuration
-- [ ] Historique/recherche · tendances · notifications · rapports planifiés · paramètres · champs · associated build · import résultats. EN+FR.
+- [x] Historique/recherche · tendances · notifications · rapports planifiés · paramètres · champs · associated build · import résultats. EN+FR.
 
 ## Phase 8 — Concepts · Sécurité · Référence
-- [ ] Concepts (Test Plans→Suites→Cas, traçabilité, lecture seule+Coverage Builder, statuts) · Confidentialité · Permissions · FAQ/dépannage · Changelog · Glossaire. EN+FR.
+- [x] Concepts (modèle · traçabilité · lecture seule + Coverage Builder · statuts). EN+FR. **(fait, re-séquencé en premier)**
+- [x] Sécurité (confidentialité · permissions) · Référence (FAQ/dépannage · glossaire). EN+FR. **(changelog : renvoi Marketplace, non dupliqué)**
 
 ## Phase 9 — Synchro & finition
 - [ ] Condenser `doc-content.ts` → pointeurs Mintlify (patch dédié côté repo produit). Revue parité EN/FR globale · liens · termes interdits · cohérence version.

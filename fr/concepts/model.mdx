@@ -1,0 +1,38 @@
+---
+title: "Le modèle Test Plans"
+description: "Comment Azure DevOps organise les plans, suites et cas de test — et comment TestPulse les lit, en lecture seule."
+icon: "network"
+---
+
+Chaque rapport TestPulse est construit à partir du modèle **Test Plans** d'Azure DevOps. Cinq entités suffisent pour bien s'en servir.
+
+## La hiérarchie
+
+**Plan de test → Suite de test → Cas de test → Point de test → Résultat.**
+
+| Entité | Ce que c'est |
+| --- | --- |
+| **Plan de test** | Un conteneur pour un effort de test — une release, un sprint, une campagne de régression. |
+| **Suite de test** | Un dossier de cas de test dans un plan. Trois types : **statique** (choisie à la main), **basée sur exigence** (liée à une User Story / PBI), **basée sur requête** (remplie par une requête de work items). |
+| **Cas de test** | Le work item qui décrit *quoi* tester — titre, étapes, résultats attendus. Un cas peut appartenir à **plusieurs suites et plans**. |
+| **Point de test** | Un cas de test **tel qu'il apparaît dans une suite, pour une configuration**. Les résultats sont attachés aux *points*, pas au cas directement. |
+| **Résultat** | L'issue de l'exécution d'un point (Passed, Failed, …) à un instant donné. TestPulse rapporte le **dernier** résultat. |
+
+## Comment TestPulse le lit
+
+TestPulse parcourt l'arbre en **lecture seule** : plan → suites → cas → points → derniers résultats. Il ne modifie jamais rien (seule exception : le [Coverage Builder](/fr/concepts/read-only) opt-in).
+
+<Note>Comme les résultats sont attachés aux **points**, un cas présent dans plusieurs suites peut avoir plusieurs résultats. TestPulse résout le **dernier** résultat pour les points de la portée.</Note>
+
+### Les types de suites, en pratique
+
+- **Statique** — vous choisissez les cas. TestPulse les rapporte tels quels.
+- **Basée sur exigence** — la suite est liée à une User Story / PBI ; c'est ce qui alimente la [traçabilité](/fr/concepts/traceability) et la vue de couverture.
+- **Basée sur requête** — les cas sont résolus depuis une requête WIQL à la lecture.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Traçabilité & hiérarchie" icon="git-branch" href="/fr/concepts/traceability">De l'Epic au Bug.</Card>
+  <Card title="Statuts & résultats" icon="list-checks" href="/fr/concepts/statuses">Comment les résultats sont lus et réduits.</Card>
+</CardGroup>

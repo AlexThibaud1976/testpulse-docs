@@ -1,0 +1,32 @@
+---
+title: "Profondeur de couverture"
+description: "Au-delà de « est-ce couvert ? » — une évaluation déterministe, sans IA, de la qualité réelle des tests par exigence."
+icon: "gauge"
+---
+
+La couverture simple est **structurelle** : une exigence avec au moins un test lié est « couverte », même si un unique smoke test trivial tient lieu de cinq critères d'acceptation — fausse confiance.
+
+Activez **« Évaluer la profondeur de couverture »** (opt-in, **OFF par défaut** — désactivé, l'onglet Coverage est strictement inchangé). Après *Analyze coverage*, une colonne **Profondeur** apparaît avec une bande par exigence :
+
+| Bande | Signification |
+| --- | --- |
+| **Bien couverte** | Les tests semblent couvrir les critères d'acceptation. |
+| **Partielle** | Des critères ou chemins sont probablement manquants. |
+| **Superficielle** | Trop peu de tests, ou des tests sans étapes. |
+| **Trou** | Aucun test lié. |
+| **Sous-spécifiée** | Pas (ou peu) de critères d'acceptation pour évaluer. |
+
+Dépliez une ligne pour voir les **constats** (les raisons, avec liens) et des **axes d'amélioration** concrets — *« ajoutez un test négatif pour… »*, *« étoffez les tests sans étapes »*, *« confirmez qu'un test couvre X »*.
+
+## Déterministe & advisory
+
+L'analyse est **100 % déterministe et sans IA** — elle compte les critères d'acceptation, mesure la profondeur des étapes, repère les mots-clés négatif / limite (FR + EN), vérifie le recouvrement de termes et l'exécution. Elle est **purement advisory** : elle ne bloque rien, n'alimente pas le score qualité ni le GO/NO-GO, et ne change aucun résultat. Le wording reste prudent (*« possible »*, *« apparent »*) — c'est un signal *à revoir* ; **vous** décidez.
+
+Elle est **en lecture seule** (aucun nouvel appel ni scope) et se dégrade gracieusement par exigence : un test sans étapes compte quand même, et aucun critère d'acceptation donne *Sous-spécifiée* — jamais un verdict inventé.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Quality Gate — grade & GO/NO-GO" icon="shield-check" href="/fr/quality/quality-gate">Le score déterministe.</Card>
+  <Card title="L'onglet Test coverage" icon="list-check" href="/fr/work-item/test-coverage-tab">La profondeur sur la fiche.</Card>
+</CardGroup>

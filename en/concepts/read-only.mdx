@@ -1,0 +1,38 @@
+---
+title: "Read-only by design (and the one exception)"
+description: "TestPulse reads your Azure DevOps data and never writes to it — with a single, opt-in exception: the Coverage Builder."
+icon: "lock"
+---
+
+TestPulse is **read-only by design**. It reads Test Plans, results and work items to build reports and signals, and it **never writes** to your project. There is exactly **one** exception, and it is opt-in.
+
+## What "read-only" means here
+
+- No status changes, no comments, no tags, no edits to your work items or results.
+- **100% client-side**: reports are built in your browser. **No backend** — no data ever leaves your Azure DevOps tenant.
+- The on-work-item signals read **live** and change nothing.
+
+## The one write: Coverage Builder
+
+The **Coverage Builder** can *create* Test Plans and requirement-based suites from a set of requirements — **opt-in**, behind a confirmation dialog. It is **create-only**: it never overwrites or deletes, warns on a name collision, and reports partial failures honestly. Everything else stays read-only.
+
+<Warning>The Coverage Builder is the **only** feature that writes. It asks for confirmation every time and never modifies existing plans or suites.</Warning>
+
+## Permission scopes (reference)
+
+| Scope | Why it is requested |
+| --- | --- |
+| `vso.test` | Read Test Plans, suites, cases, points and results. |
+| `vso.work` | Read work items (requirements, bugs) for traceability. |
+| `vso.identity` | Resolve testers and assignees by name. |
+| `vso.build` | Read the associated build for a report. |
+| `vso.test_write` | Used **only** by the Coverage Builder to create plans and suites (opt-in). |
+
+<Note>Nothing reads comments or personal data beyond what a report needs. Full details will live on the Permissions page.</Note>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="The Test Plans model" icon="network" href="/en/concepts/model">Plans, suites, cases, points.</Card>
+  <Card title="The Test coverage tab" icon="list-check" href="/en/work-item/test-coverage-tab">The read-only signal on a story.</Card>
+</CardGroup>

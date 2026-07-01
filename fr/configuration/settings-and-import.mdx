@@ -1,0 +1,37 @@
+---
+title: "Paramètres & import de résultats"
+description: "Une carte de l'écran Paramètres, l'import de résultats de tests externes, et les rapports consolidés multi-plans."
+icon: "settings"
+---
+
+## L'écran Paramètres
+
+La plupart des paramètres sont mémorisés **par utilisateur** via Azure DevOps Extension Data ; quelques-uns (un barème partagé, les rapports partagés au projet) sont **au niveau projet** pour que toute une équipe voie la même chose.
+
+| Paramètre | Ce qu'il contrôle |
+| --- | --- |
+| **Libellé d'en-tête & pied de page** | Remplace « TestPulse » dans l'en-tête, le pied de page et le nom de fichier — voir [Page de garde](/fr/reports/cover-page). |
+| **Configuration des champs** | Regex, longueur douce et toggle page de garde par champ — voir [Générer un rapport](/fr/reports/generate-a-report). |
+| **Boutons d'export visibles** | Quels boutons d'export apparaissent — voir [Afficher ou masquer les boutons d'export](/fr/exports/button-visibility). |
+| **Ordre des sections PDF** | Réordonner et activer les sections PDF — voir [Formats d'export](/fr/exports/formats). |
+| **Notifications** | Webhooks Teams / Slack — voir [Notifications](/fr/collaboration/notifications-and-scheduling). |
+| **Rapports programmés** | Rappels de rapports récurrents — voir [Rapports planifiés](/fr/collaboration/notifications-and-scheduling). |
+| **Barème qualité & override GO/NO-GO** | Profil de barème et override de décision opt-in — voir [Quality Gate](/fr/quality/quality-gate). |
+| **Évaluer la profondeur de couverture** | L'analyse de profondeur opt-in — voir [Profondeur de couverture](/fr/quality/coverage-depth). |
+
+## Importer des résultats externes
+
+Ouvrez l'onglet **Import** et glissez-déposez (ou choisissez) un fichier `.xml` produit par **Cypress, Playwright, Surefire / Maven, NUnit 3 ou xUnit 2**. Le format est détecté automatiquement depuis le tag racine. Les résultats analysés sont prévisualisés (nom, résultat, durée, mappé) et **auto-mappés aux cas de test Azure DevOps par nom** (contains insensible à la casse) ; les lignes non mappées reçoivent une liste manuelle. Choisissez le plan cible et cliquez sur **Importer** — un rapport est sauvegardé dans l'Historique avec un badge **[AUTO]**.
+
+<Note>L'analyse est **purement côté client** — aucun appel réseau.</Note>
+
+## Rapports consolidés multi-plans
+
+Activez le **Mode multi-plans** dans le sélecteur pour cocher plusieurs plans. Un unique **Générer** produit un rapport consolidé : **métriques globales** plus un **détail par plan** (total, taux de réussite, taux d'exécution et compteurs de chaque plan) et une colonne **Plan** dans la table des résultats — à l'écran et dans chaque export. Les cas de test en recouvrement sont dédoublonnés (le résultat le plus récent gagne) ; une note explique pourquoi la somme des totaux par plan peut dépasser le consolidé. Une alerte non bloquante apparaît au-delà de trois plans ; le comportement single-plan est inchangé.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Formats d'export" icon="file-export" href="/fr/exports/formats">Ce que contient chaque format.</Card>
+  <Card title="Quality Gate — grade & GO/NO-GO" icon="shield-check" href="/fr/quality/quality-gate">Le profil de barème est ici.</Card>
+</CardGroup>

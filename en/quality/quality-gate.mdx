@@ -1,0 +1,54 @@
+---
+title: "Quality Gate — grade & GO/NO-GO"
+description: "Every report carries an A–E grade, a 0–100 score and a GO/NO-GO verdict — deterministic, transparent, never an opaque number."
+icon: "shield-check"
+---
+
+Every report carries a **quality score** graded **A → E** with a **0–100** value and a **GO / NO-GO** verdict — in the report header, the dashboard widget and the PDF / HTML exports. It is computed by a **single deterministic engine** from the data already on screen: no extra API call, no AI. The badge summarises the metrics; it never replaces them.
+
+## How the grade is built
+
+The 0–100 composite weighs four components:
+
+| Component | Weight |
+| --- | --- |
+| Pass rate | 40 |
+| Execution rate | 20 |
+| Requirements coverage | 20 |
+| Defect hygiene | 20 |
+
+Grades: **A** ≥ 90 · **B** 75–89 · **C** 60–74 · **D** 40–59 · **E** < 40.
+
+When traceability is absent, coverage is dropped and the remaining weights are **renormalised** (a flag says so). Fewer than 5 executed tests raises a *low confidence* flag.
+
+## Transparency
+
+Click **Show details** to expand the breakdown — each component (value, points, weight), the caps applied and any flags. The score is never an opaque number.
+
+## Non-negotiable invariants
+
+- **≥ 1 open blocking bug** (open + Critical / High) caps the grade at **C** and forces **NO-GO**.
+- An **untested in-scope requirement** forces **NO-GO**.
+- **No executed test** shows *not evaluated* — never an E.
+- **GO** also requires the score ≥ 75 and coverage ≥ 70%.
+
+## Scale profiles
+
+In Settings, choose a **project-level** scale so everyone scores a report identically:
+
+- **Strict** — a regulated release.
+- **Standard** — the default scale.
+- **Ramp-up** — a starting team.
+
+Tuning is **bounded** (GO threshold 50–95, a minimum coverage, component weights forced to sum to 100, A > B > C > D thresholds); any off-preset value becomes a **Custom** scale. The invariants above always hold.
+
+## Risk-based weighting (optional)
+
+An optional, orthogonal toggle shows a **weighted confidence** beside the grade. It weights execution and coverage by the **importance** of what is missing — test-case priority, story risk and story points — using transparent **additive tiers** (never a multiplication). The flat A–E score is **never** altered; a dimension whose data is absent or uniform auto-disables and says so.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Decision support" icon="circle-check-big" href="/en/quality/decision-support">Watch points, failures without a defect, override.</Card>
+  <Card title="Coverage depth" icon="gauge" href="/en/quality/coverage-depth">Is it *well* covered?</Card>
+</CardGroup>

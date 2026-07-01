@@ -1,0 +1,32 @@
+---
+title: "Coverage depth"
+description: "Beyond 'is it covered?' — a deterministic, AI-free assessment of how well each requirement is actually tested."
+icon: "gauge"
+---
+
+Plain coverage is **structural**: a requirement with at least one linked test is "covered", even if a single trivial smoke test stands in for five acceptance criteria — false confidence.
+
+Turn on **"Assess coverage depth"** (opt-in, **off by default** — when off, the Coverage tab is strictly unchanged). After *Analyze coverage*, a **Depth** column appears with a per-requirement band:
+
+| Band | Meaning |
+| --- | --- |
+| **Well covered** | The tests appear to cover the acceptance criteria. |
+| **Partial** | Criteria or paths are probably missing. |
+| **Shallow** | Too few tests, or tests without steps. |
+| **Gap** | No linked test. |
+| **Underspecified** | No (or few) acceptance criteria to assess against. |
+
+Expand a row to see the **findings** (the reasons, with links) and concrete **improvement axes** — *"add a negative test for…"*, *"flesh out the tests without steps"*, *"confirm a test covers X"*.
+
+## Deterministic & advisory
+
+The analysis is **100% deterministic and AI-free** — it counts acceptance criteria, measures step depth, looks for negative / edge keywords (FR + EN), and checks term overlap and execution. It is **advisory only**: it never blocks anything, never feeds the quality score or GO/NO-GO, and never changes an outcome. The wording stays cautious (*"possible"*, *"apparent"*) — it is a *review this* signal; **you** decide.
+
+It is **read-only** (no new API call or scope) and degrades gracefully per requirement: a test with no steps still counts, and no acceptance criteria yields *Underspecified* — never an invented verdict.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Quality Gate — grade & GO/NO-GO" icon="shield-check" href="/en/quality/quality-gate">The deterministic score.</Card>
+  <Card title="The Test coverage tab" icon="list-check" href="/en/work-item/test-coverage-tab">Depth on the work item.</Card>
+</CardGroup>

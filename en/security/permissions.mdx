@@ -1,0 +1,30 @@
+---
+title: "Permissions & scopes"
+description: "The Azure DevOps scopes TestPulse requests, why each is needed, and the one write exception."
+icon: "key"
+---
+
+TestPulse requests only the scopes it needs, and is **read-only** except for the opt-in [Coverage Builder](/en/coverage-builder/create-plan).
+
+| Scope | Why it is requested |
+| --- | --- |
+| `vso.test` | Read Test Plans, suites, cases, points and results. |
+| `vso.work` | Read work items (requirements, bugs) for traceability. |
+| `vso.identity` | Resolve testers and assignees by name. |
+| `vso.build` | Read the associated build for a report. |
+| `vso.test_write` | Used **only** by the Coverage Builder to create plans and suites (opt-in). |
+
+## The write scope
+
+`vso.test_write` powers **only** the Coverage Builder's create action. Adding it to the manifest is an **administrator** action and triggers an **extension re-approval** for the organisation. Until then, everything read-only keeps working — only plan creation is unavailable.
+
+## Permission ≠ scope
+
+A **403** when creating a plan is almost always an **area-path ACL** — the *Manage test plans* permission is granted **per area path** — **not** a missing scope. See [Create the plan in Azure DevOps](/en/coverage-builder/create-plan).
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Privacy & data" icon="shield" href="/en/security/privacy">Where data lives.</Card>
+  <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">The read/write boundary.</Card>
+</CardGroup>

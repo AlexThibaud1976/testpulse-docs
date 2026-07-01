@@ -1,0 +1,28 @@
+---
+title: "Confidentialité & données"
+description: "100% côté client, aucun backend, et aucune donnée ne quitte jamais votre tenant Azure DevOps."
+icon: "shield"
+---
+
+TestPulse est **100% côté client**. Les rapports sont construits **dans votre navigateur** — il n'y a **aucun serveur backend**, et **aucune donnée ne quitte jamais votre tenant Azure DevOps**.
+
+## Où vivent vos données
+
+- **Rapports & historique** — sauvegardés dans Azure DevOps **Extension Data** (user-scoped ; au niveau projet uniquement quand vous *partagez au projet*). Rien n'est envoyé à un tiers.
+- **Préférences** — stockées de la même façon, ou dans le navigateur pour les choix purement UI (par exemple la langue de l'onglet fiche).
+- **Pièces jointes** — les images sont cachées en mémoire et rechargées depuis Azure DevOps au besoin ; elles sont retirées de l'historique sauvegardé pour respecter le quota de stockage.
+
+## Aucune télémétrie par défaut
+
+TestPulse ne fait pas de remontée. Il n'y a pas de backend d'analytics — les seuls appels sortants vont vers **votre** Azure DevOps et, si vous les configurez, **vos** webhooks Teams / Slack.
+
+## On-premise
+
+Sur Azure DevOps Server, tout fonctionne de la même façon contre votre serveur. La seule limitation navigateur est le CORS sur les webhooks sortants — TestPulse bascule sur un payload à copier-coller (voir [Notifications](/fr/collaboration/notifications-and-scheduling)).
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Permissions & scopes" icon="key" href="/fr/security/permissions">Ce à quoi TestPulse accède.</Card>
+  <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">Et l'unique exception d'écriture.</Card>
+</CardGroup>

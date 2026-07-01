@@ -1,0 +1,24 @@
+---
+title: "Notifications & rapports planifiés"
+description: "Pousser les KPIs vers Teams ou Slack, et être rappelé de générer des rapports récurrents."
+icon: "bell"
+---
+
+## Notifications Teams / Slack
+
+Dans **Paramètres → Notifications**, configurez jusqu'à **trois webhooks entrants** (nom + URL + Teams / Slack). Utilisez **Tester** pour envoyer un message d'exemple. Après génération d'un rapport, cliquez sur **Notifier** pour pousser ses KPIs vers les canaux sélectionnés — une Adaptive Card pour Teams, du Block Kit pour Slack.
+
+<Note>CORS on-premise : si le navigateur bloque la requête, TestPulse affiche le payload JSON pour un copier-coller manuel.</Note>
+
+## Rapports planifiés
+
+Dans **Paramètres → Rapports programmés**, programmez un plan (optionnellement une vue sauvegardée) à une fréquence **hebdomadaire / bimensuelle / mensuelle**. Lorsqu'un rapport est dû, une bannière de rappel apparaît **au démarrage** avec un bouton **Générer maintenant** (il charge la vue sauvegardée et génère).
+
+<Warning>Il n'y a pas de backend — **les rappels n'apparaissent que lorsque TestPulse est ouvert**.</Warning>
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Historique des rapports & collaboration" icon="history" href="/fr/collaboration/history">Sauvegarder, comparer, partager.</Card>
+  <Card title="Générer un rapport" icon="file-text" href="/fr/reports/generate-a-report">Construire le rapport à notifier.</Card>
+</CardGroup>

@@ -1,0 +1,60 @@
+---
+title: "Generate a report"
+description: "Select a Test Plan, fill in the report fields, and generate — every field explained."
+icon: "file-text"
+---
+
+Generate a complete test report from an Azure DevOps Test Plan. TestPulse reads your data **live** — nothing is ever written back.
+
+## Select a Test Plan
+
+Use the **autocomplete** dropdown to search plans by name or iteration path. Suites load as a **tree** — child suites are indented under their parent.
+
+- **Expand all** / **Collapse all** to navigate the tree.
+- **Uncheck** any suite to exclude it from the report.
+- Plans marked **INACTIVE** are hidden by default — a toggle reveals them.
+- **Exclude empty** unchecks every suite with zero test cases in one click (suites that failed to load are never touched). A **(N hidden)** badge appears next to the suite count, and the preference is remembered.
+
+## Form fields
+
+All visible fields are required unless configured otherwise in **Settings → Field configuration**. **IT Contact**, **Business Contact**, **Tester** and **Approver** use Azure DevOps user autocomplete (type at least 2 characters).
+
+| Field | Description |
+| --- | --- |
+| **Report title** | Name displayed on the cover page. |
+| **Environment** | DEV / QA / UAT / PREPROD / PROD (configurable). |
+| **Project reference** | Project code or identifier. |
+| **Change number** | Optional — change reference. |
+| **Incident / Request** | Optional reference fields next to Change number. |
+| **Application** | Name of the tested application. |
+| **Functional domain** | Relevant domain or module. |
+| **Tested features** | Description of the covered features. |
+| **Test scope** | Testing scope and boundaries. |
+| **Objectives** | Multi-line — line breaks are preserved in exports. |
+| **Entry criteria** | Multi-line — conditions for starting the campaign. |
+| **Exit criteria** | Multi-line — conditions for stopping the campaign. |
+| **Tester** | Person who performed the tests (ADO autocomplete). |
+| **Approver** | Person approving the report (ADO autocomplete). |
+| **Approver role** | The approver's function. |
+| **Report date** | Pre-filled with today's date. |
+| **Associated build** | Link an ADO build — autocomplete from recent builds (branch and status shown); a clickable link in PDF, HTML and Word. |
+
+## Validation
+
+Each field can carry a **regex pattern** (Settings → Field configuration):
+
+- **Blocking** — generation is prevented if the field fails validation.
+- **Warning** — generation continues, with an orange alert.
+
+Validation runs **in real time** in the form (a red / orange indicator per field) and again at generation time.
+
+**Soft length** — an optional threshold per field. Beyond it, an **orange, non-blocking** hint appears (*"n / threshold — may overflow on the cover page"*). It never blocks generation and never truncates the value — it only nudges you toward a readable cover page.
+
+<Note>Contacts (IT, Business, Tester, Approver) are **Azure DevOps identities**, so they carry **no regex and no soft length** — any stored pattern is ignored. They are grouped under **"Contacts & validation"**.</Note>
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Cover page" icon="file-badge" href="/en/reports/cover-page">Header label vs report title, and choosing what appears.</Card>
+  <Card title="Generation & templates" icon="bolt" href="/en/reports/generation-and-templates">The generate flow, cancel, templates and saved views.</Card>
+</CardGroup>

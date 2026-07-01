@@ -1,0 +1,34 @@
+---
+title: "Decision support"
+description: "Watch points, failures without a defect, and an audited GO/NO-GO override — the tools that turn a score into a release call."
+icon: "circle-check-big"
+---
+
+## Watch points
+
+A **Watch points** panel sits under the quality badge (and in the PDF) to **name** what weighs on the verdict, instead of leaving it as counters. Three groups, each shown only when non-empty:
+
+- **Open blocking bugs** (`#id · severity · title`).
+- **In-scope requirements without any test**.
+- **In-scope user stories not executed**.
+
+Each entry links to the work item. *"Blocking"* uses one shared definition (an open bug, Critical or High). It highlights **already-computed** data — no new metric, no extra call. It stays honest: a green check appears only on a clear **GO**; on a NO-GO that came from elsewhere it stays neutral and points you to the Quality details.
+
+## Failures without a defect
+
+TestPulse flags every test whose latest result is **Failed** but that has **no linked bug** (any bug state, even Closed) — read-only, with no extra API call. It appears as a dedicated section (each test links out, with an **Open a bug** button that opens the native Azure DevOps bug form, pre-filled — never a write), as a counter on the widget, and as an **opt-in** Quality Gate criterion (off by default; when enabled and the count is greater than 0, the verdict becomes **NO-GO** — the A–E grade is never capped by it).
+
+## Audited GO/NO-GO override
+
+The GO/NO-GO verdict is deterministic. You can **overlay a human decision** on top of it — without ever changing the computation. Enable **"Allow GO/NO-GO decision override"** in Settings (project-level, off by default; the Strict profile keeps it disabled). A **Release decision** control then lets you *follow the computation* or force **GO** / **NO-GO**.
+
+When your decision **differs** from the computation, a **justification is mandatory**, and the author and timestamp are captured. The report shows **computed → decided** side by side (header, widget, PDF, Word). A manual **GO that crosses a hard floor** (an open blocking bug, an untested story, a failure without a defect) is **flagged in red with the exact reasons**. The **A–E grade always stays the computed one** — only the verdict is overlaid.
+
+<Note>An **Open bugs** block also appears at the top of the report whenever there is at least one open bug — sorted by severity then priority, and count-consistent with Watch points.</Note>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Quality Gate — grade & GO/NO-GO" icon="shield-check" href="/en/quality/quality-gate">How the verdict is computed.</Card>
+  <Card title="Coverage depth" icon="gauge" href="/en/quality/coverage-depth">Is it well covered?</Card>
+</CardGroup>

@@ -1,0 +1,45 @@
+---
+title: "Report history & collaboration"
+description: "Auto-saved history, compare two reports, the Draft to Approved workflow, and sharing to the project."
+icon: "history"
+---
+
+Every generated report is **auto-saved** to your Azure DevOps Extension Data (user-scoped, 5 MB quota, **synchronised cross-browser** — your history follows you to any machine). Attachments are stripped before saving and re-fetched on restore.
+
+## Reload a report
+
+Click **Load** on any history entry to restore it as the current report. The snapshot is used **directly — no re-fetch from Azure DevOps**.
+
+## Compare two reports
+
+Select **two** reports from history to compare them side by side:
+
+- **Metrics diff** — pass-rate delta, totals, passed / failed / blocked / bugs.
+- **Improved** — tests that moved to Passed.
+- **Regressed** — tests that moved from Passed to Failed / Blocked.
+- **Added / Removed** — test cases new to, or missing from, the newer report.
+
+Click **Export HTML** for a standalone comparison file.
+
+## Status workflow
+
+Each report carries a **status**: **Draft → Submitted → Approved** (and back via **Reopen**). Colour-coded badges, contextual **Submit / Approve / Reopen** buttons, every transition recorded (user + timestamp), a filter by status, and an optional **APPROVED badge** in the PDF footer.
+
+<Note>Only users with the right role should Approve. Reopen resets the status to Draft and logs a history entry.</Note>
+
+## Share to the project
+
+Toggle **Share with project** to make a report visible to all project members (a snapshot copied into the project scope). A blue **Shared** badge appears, you can filter *My / Project / All*, and **any member** can move a shared report through its workflow (written to the project copy, audited who / when). Only the **original author** can unshare. A **quota indicator warns at 80%**.
+
+<Note>Sharing publishes the snapshot that the dashboard widget reads — see the [Quality overview widget](/en/dashboard/quality-overview-widget).</Note>
+
+## CSV, notes & storage
+
+Export all history as **CSV**, keep a **500-character note** per report, and watch the **storage indicator** (green → red above 80% of quota). Delete old reports to free space.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Notifications & scheduled reports" icon="bell" href="/en/collaboration/notifications-and-scheduling">Push KPIs, get reminded.</Card>
+  <Card title="Quality overview widget" icon="layout-dashboard" href="/en/dashboard/quality-overview-widget">Where a shared report surfaces.</Card>
+</CardGroup>

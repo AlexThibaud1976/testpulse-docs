@@ -1,0 +1,41 @@
+---
+title: "Generation & templates"
+description: "The generate flow with progress and cancel, plus reusable templates and saved views."
+icon: "bolt"
+---
+
+## The generate flow
+
+The **Generate report** button follows a clear state machine:
+
+<Steps>
+  <Step title="Generate report">Idle — click to start.</Step>
+  <Step title="Starting…">The button disables synchronously on click.</Step>
+  <Step title="Generating N%">A progress bar updates as data is fetched from Azure DevOps.</Step>
+  <Step title="Done / Error">The report is displayed, or an error message is shown.</Step>
+</Steps>
+
+A **Cancel** button appears during generation. Clicking it aborts every in-flight Azure DevOps request — **no partial file is produced** — and the button returns to idle.
+
+<Note>The plan list uses **stale-while-revalidate**: the last known plans appear instantly with a "Refreshing" badge while fresh data loads.</Note>
+
+## Templates and saved views
+
+**Save as template** — saves the **metadata only** (form fields, environment, tester, approver…) under a custom name. Load it to pre-fill the form instantly.
+
+**Save as view** — saves the **plan, the selected suites *and* all metadata** in one action. Loading a view:
+
+<Steps>
+  <Step title="Re-select the plan">The saved plan is re-selected and its suites load.</Step>
+  <Step title="Restore the suites">The saved suite selection is checked — suites deleted since the save are skipped silently.</Step>
+  <Step title="Restore the fields">All metadata fields are restored.</Step>
+</Steps>
+
+<Note>Use **views** for recurring campaigns where the same plan, suites and metadata are reused — for example a weekly regression on a fixed perimeter.</Note>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Generate a report" icon="file-text" href="/en/reports/generate-a-report">Plan selection, fields, validation.</Card>
+  <Card title="Cover page" icon="file-badge" href="/en/reports/cover-page">Layout and field selection.</Card>
+</CardGroup>

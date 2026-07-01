@@ -1,0 +1,45 @@
+---
+title: "Historique des rapports & collaboration"
+description: "Historique auto-sauvegardé, comparer deux rapports, le workflow Brouillon vers Approuvé, et le partage au projet."
+icon: "history"
+---
+
+Chaque rapport généré est **auto-sauvegardé** dans votre Azure DevOps Extension Data (user-scoped, quota 5 Mo, **synchronisé cross-navigateur** — votre historique vous suit sur toutes les machines). Les pièces jointes sont retirées avant sauvegarde et rechargées à la restauration.
+
+## Recharger un rapport
+
+Cliquez sur **Charger** sur une entrée de l'historique pour la restaurer comme rapport courant. Le snapshot est utilisé **directement — aucun re-fetch vers Azure DevOps**.
+
+## Comparer deux rapports
+
+Sélectionnez **deux** rapports de l'historique pour les comparer côte à côte :
+
+- **Diff métriques** — delta de taux de réussite, totaux, passés / échoués / bloqués / bugs.
+- **Améliorés** — tests passés à Passed.
+- **Régressés** — tests passés de Passed à Failed / Blocked.
+- **Ajoutés / Supprimés** — cas de test nouveaux dans, ou absents de, le rapport le plus récent.
+
+Cliquez sur **Exporter HTML** pour un fichier de comparaison autonome.
+
+## Workflow de statut
+
+Chaque rapport porte un **statut** : **Brouillon → Soumis → Approuvé** (et retour via **Rouvrir**). Badges colorés, boutons contextuels **Soumettre / Approuver / Rouvrir**, chaque transition enregistrée (utilisateur + horodatage), un filtre par statut, et un **badge APPROUVÉ** optionnel dans le footer PDF.
+
+<Note>Seuls les utilisateurs ayant le rôle approprié doivent Approuver. Rouvrir remet le statut à Brouillon et ajoute une entrée d'historique.</Note>
+
+## Partager au projet
+
+Activez **Partager avec le projet** pour rendre un rapport visible à tous les membres du projet (un instantané copié dans le scope projet). Un badge bleu **Partagé** apparaît, vous filtrez *Mes / Projet / Tous*, et **tout membre** peut faire évoluer le statut d'un rapport partagé (écrit sur la copie projet, tracé qui / quand). Seul l'**auteur original** peut dépublier. Un **indicateur de quota avertit à 80%**.
+
+<Note>Le partage publie l'instantané que lit le widget de dashboard — voir le [Widget Vue d'ensemble qualité](/fr/dashboard/quality-overview-widget).</Note>
+
+## CSV, notes & stockage
+
+Exportez tout l'historique en **CSV**, gardez une **note de 500 caractères** par rapport, et surveillez l'**indicateur de stockage** (vert → rouge au-delà de 80% du quota). Supprimez d'anciens rapports pour libérer de l'espace.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Notifications & rapports planifiés" icon="bell" href="/fr/collaboration/notifications-and-scheduling">Pousser les KPIs, être rappelé.</Card>
+  <Card title="Widget Vue d'ensemble qualité" icon="layout-dashboard" href="/fr/dashboard/quality-overview-widget">Où un rapport partagé remonte.</Card>
+</CardGroup>

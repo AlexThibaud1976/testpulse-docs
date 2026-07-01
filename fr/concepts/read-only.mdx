@@ -1,0 +1,38 @@
+---
+title: "Lecture seule par conception (et l'unique exception)"
+description: "TestPulse lit vos données Azure DevOps et n'y écrit jamais — avec une seule exception, opt-in : le Coverage Builder."
+icon: "lock"
+---
+
+TestPulse est **en lecture seule par conception**. Il lit les plans de test, les résultats et les work items pour construire rapports et signaux, et il **n'écrit jamais** dans votre projet. Il existe exactement **une** exception, et elle est opt-in.
+
+## Ce que « lecture seule » signifie ici
+
+- Aucun changement de statut, aucun commentaire, aucun tag, aucune modification de vos work items ou résultats.
+- **100% côté client** : les rapports sont construits dans votre navigateur. **Aucun backend** — aucune donnée ne quitte votre tenant Azure DevOps.
+- Les signaux sur la fiche lisent **en direct** et ne changent rien.
+
+## L'unique écriture : le Coverage Builder
+
+Le **Coverage Builder** peut *créer* des plans de test et des suites basées sur exigence à partir d'un ensemble d'exigences — **opt-in**, derrière une boîte de confirmation. Il est **création seule** : il n'écrase ni ne supprime jamais, avertit en cas de collision de nom, et rapporte honnêtement les échecs partiels. Tout le reste demeure en lecture seule.
+
+<Warning>Le Coverage Builder est la **seule** fonctionnalité qui écrit. Il demande confirmation à chaque fois et ne modifie jamais de plans ou suites existants.</Warning>
+
+## Scopes de permission (référence)
+
+| Scope | Pourquoi il est demandé |
+| --- | --- |
+| `vso.test` | Lire plans, suites, cas, points et résultats. |
+| `vso.work` | Lire les work items (exigences, bugs) pour la traçabilité. |
+| `vso.identity` | Résoudre testeurs et assignés par nom. |
+| `vso.build` | Lire le build associé à un rapport. |
+| `vso.test_write` | Utilisé **uniquement** par le Coverage Builder pour créer plans et suites (opt-in). |
+
+<Note>Rien ne lit les commentaires ni de données personnelles au-delà de ce qu'un rapport nécessite. Le détail complet figurera sur la page Permissions.</Note>
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Le modèle Test Plans" icon="network" href="/fr/concepts/model">Plans, suites, cas, points.</Card>
+  <Card title="L'onglet Test coverage" icon="list-check" href="/fr/work-item/test-coverage-tab">Le signal en lecture seule sur une story.</Card>
+</CardGroup>

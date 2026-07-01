@@ -1,0 +1,60 @@
+---
+title: "Générer un rapport"
+description: "Sélectionner un plan de test, remplir les champs du rapport, et générer — chaque champ expliqué."
+icon: "file-text"
+---
+
+Générez un rapport de tests complet depuis un plan de test Azure DevOps. TestPulse lit vos données **en direct** — rien n'est jamais réécrit.
+
+## Sélectionner un plan de test
+
+Utilisez le menu déroulant avec **autocomplétion** pour rechercher les plans par nom ou chemin d'itération. Les suites se chargent en **arbre** — les sous-suites sont indentées sous leur parent.
+
+- **Tout développer** / **Tout réduire** pour naviguer.
+- **Décochez** une suite pour l'exclure du rapport.
+- Les plans marqués **INACTIVE** sont masqués par défaut — un toggle les affiche.
+- **Exclure vides** décoche en un clic toutes les suites sans cas de test (les suites en erreur de chargement ne sont jamais touchées). Un badge **(N masquées)** apparaît à côté du compteur, et la préférence est mémorisée.
+
+## Champs du formulaire
+
+Tous les champs visibles sont obligatoires sauf configuration contraire dans **Paramètres → Configuration des champs**. **Contact IT**, **Contact Business**, **Testeur** et **Approbateur** proposent l'autocomplétion des utilisateurs Azure DevOps (tapez au moins 2 caractères).
+
+| Champ | Description |
+| --- | --- |
+| **Titre du rapport** | Nom affiché sur la page de garde. |
+| **Environnement** | DEV / QA / UAT / PREPROD / PROD (configurable). |
+| **Référence projet** | Code ou identifiant du projet. |
+| **Numéro de change** | Optionnel — référence du changement. |
+| **Incident / Request** | Champs de référence optionnels à côté du numéro de change. |
+| **Application** | Nom de l'application testée. |
+| **Domaine fonctionnel** | Domaine ou module concerné. |
+| **Fonctionnalités testées** | Description des fonctionnalités couvertes. |
+| **Périmètre de tests** | Portée et limites des tests. |
+| **Objectifs** | Multi-lignes — les sauts de ligne sont préservés dans les exports. |
+| **Critères d'entrée** | Multi-lignes — conditions pour démarrer la campagne. |
+| **Critères de sortie** | Multi-lignes — conditions pour arrêter la campagne. |
+| **Testeur** | Personne ayant réalisé les tests (autocomplétion ADO). |
+| **Approbateur** | Personne approuvant le rapport (autocomplétion ADO). |
+| **Rôle approbateur** | Fonction de l'approbateur. |
+| **Date du rapport** | Pré-remplie à la date du jour. |
+| **Build associé** | Lier un build ADO — autocomplétion depuis les builds récents (branche et statut affichés) ; lien cliquable dans PDF, HTML et Word. |
+
+## Validation
+
+Chaque champ peut porter un **pattern regex** (Paramètres → Configuration des champs) :
+
+- **Bloquant** — la génération est impossible si le champ n'est pas conforme.
+- **Avertissement** — la génération continue, avec une alerte orange.
+
+La validation s'exécute **en temps réel** dans le formulaire (indicateur rouge / orange par champ) et à nouveau au moment de la génération.
+
+**Longueur douce** — un seuil optionnel par champ. Au-delà, un indice **orange, non bloquant** apparaît (*« n / seuil — risque de débordement sur la page de garde »*). Il ne bloque jamais la génération et ne tronque jamais la valeur — il aide seulement à garder une page de garde lisible.
+
+<Note>Les contacts (IT, Business, Testeur, Approbateur) sont des **identités Azure DevOps** : **ni regex ni longueur douce** — tout pattern stocké est ignoré. Ils sont regroupés sous **« Contacts & validation »**.</Note>
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Page de garde" icon="file-badge" href="/fr/reports/cover-page">Libellé d'en-tête vs titre du rapport, et choix des champs affichés.</Card>
+  <Card title="Génération & templates" icon="bolt" href="/fr/reports/generation-and-templates">Le flux de génération, l'annulation, les templates et vues sauvegardées.</Card>
+</CardGroup>

@@ -1,0 +1,35 @@
+---
+title: "Quality overview widget"
+description: "Surface your quality data on an Azure DevOps dashboard — read-only, from the latest published report."
+icon: "layout-dashboard"
+---
+
+The **TestPulse — Quality overview** widget surfaces your quality data directly on an Azure DevOps **dashboard**, read-only. It reads the **latest report published to the project** (see *Share to project* in History) and **never calls the Test Plans API** — so it renders even for **Stakeholder** accounts that can see dashboards but not Test Plans.
+
+## Add it to a dashboard
+
+<Steps>
+  <Step title="Edit the dashboard">On a team dashboard, click **Edit**, then **Add a widget**.</Step>
+  <Step title="Find TestPulse">Search for **TestPulse — Quality overview** and add it.</Step>
+  <Step title="Configure">Pick the **test plan** (only plans that already have a report published to the project appear) and the **view** — Overview, KPIs, Trend or Coverage.</Step>
+  <Step title="Size & save">Resize the tile to 1×1, 2×1 or 2×2 — the content adapts — and save.</Step>
+</Steps>
+
+Clicking the widget opens the TestPulse hub.
+
+## What it shows
+
+All values come from the published snapshot (no live computation):
+
+- A **pass-rate donut** with passed / failed / blocked / not-run counters.
+- A **trend sparkline** of the pass rate across the plan's published reports (needs at least 2 to draw).
+- A **requirements coverage bar**.
+
+A *"published {date}"* label makes clear the data is the last publication, not real time. Empty, error, missing-traceability and single-point-trend states all degrade gracefully — never a raw error.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Quality Gate — grade & GO/NO-GO" icon="shield-check" href="/en/quality/quality-gate">The score behind the tile.</Card>
+  <Card title="Generate a report" icon="file-text" href="/en/reports/generate-a-report">Publish a report first.</Card>
+</CardGroup>

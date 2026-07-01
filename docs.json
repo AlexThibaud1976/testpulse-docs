@@ -6,63 +6,45 @@
   "colors": { "primary": "#0F766E", "light": "#2DD4BF", "dark": "#0F766E" },
   "favicon": "/favicon.svg",
   "logo": { "light": "/logo/light.svg", "dark": "/logo/dark.svg" },
-  "seo": {
-    "metatags": {
-      "canonical": "https://docs.atconseil.info"
-    }
-  },
+  "seo": { "metatags": { "canonical": "https://docs.atconseil.info" } },
   "navigation": {
     "languages": [
       {
         "language": "en",
         "groups": [
-          {
-            "group": "Getting started",
-            "icon": "rocket",
-            "pages": [
-              "en/index",
-              "en/getting-started/installation",
-              "en/getting-started/quickstart"
-            ]
-          },
-          {
-            "group": "On the work item",
-            "icon": "list-check",
-            "pages": [
-              "en/work-item/test-coverage-tab"
-            ]
-          }
+          { "group": "Getting started", "icon": "rocket", "pages": ["en/index", "en/getting-started/installation", "en/getting-started/quickstart"] },
+          { "group": "Concepts", "icon": "book-open", "pages": ["en/concepts/model", "en/concepts/traceability", "en/concepts/read-only", "en/concepts/statuses"] },
+          { "group": "Generate a report", "icon": "file-text", "pages": ["en/reports/generate-a-report", "en/reports/cover-page", "en/reports/generation-and-templates"] },
+          { "group": "Exports", "icon": "file-export", "pages": ["en/exports/formats", "en/exports/button-visibility"] },
+          { "group": "Quality & decision", "icon": "shield-check", "pages": ["en/quality/coverage-depth", "en/quality/quality-gate", "en/quality/decision-support"] },
+          { "group": "Dashboard", "icon": "layout-dashboard", "pages": ["en/dashboard/quality-overview-widget"] },
+          { "group": "Coverage Builder", "icon": "list-checks", "pages": ["en/coverage-builder/overview", "en/coverage-builder/create-plan"] },
+          { "group": "Reports history", "icon": "history", "pages": ["en/collaboration/history", "en/collaboration/notifications-and-scheduling"] },
+          { "group": "Configuration", "icon": "settings", "pages": ["en/configuration/settings-and-import"] },
+          { "group": "On the work item", "icon": "list-check", "pages": ["en/work-item/test-coverage-tab"] },
+          { "group": "Security", "icon": "shield", "pages": ["en/security/privacy", "en/security/permissions"] },
+          { "group": "Reference", "icon": "library", "pages": ["en/reference/faq", "en/reference/glossary"] }
         ]
       },
       {
         "language": "fr",
         "groups": [
-          {
-            "group": "Prise en main",
-            "icon": "rocket",
-            "pages": [
-              "fr/index",
-              "fr/getting-started/installation",
-              "fr/getting-started/quickstart"
-            ]
-          },
-          {
-            "group": "Sur la fiche",
-            "icon": "list-check",
-            "pages": [
-              "fr/work-item/test-coverage-tab"
-            ]
-          }
+          { "group": "Prise en main", "icon": "rocket", "pages": ["fr/index", "fr/getting-started/installation", "fr/getting-started/quickstart"] },
+          { "group": "Concepts", "icon": "book-open", "pages": ["fr/concepts/model", "fr/concepts/traceability", "fr/concepts/read-only", "fr/concepts/statuses"] },
+          { "group": "Générer un rapport", "icon": "file-text", "pages": ["fr/reports/generate-a-report", "fr/reports/cover-page", "fr/reports/generation-and-templates"] },
+          { "group": "Exports", "icon": "file-export", "pages": ["fr/exports/formats", "fr/exports/button-visibility"] },
+          { "group": "Qualité & décision", "icon": "shield-check", "pages": ["fr/quality/coverage-depth", "fr/quality/quality-gate", "fr/quality/decision-support"] },
+          { "group": "Dashboard", "icon": "layout-dashboard", "pages": ["fr/dashboard/quality-overview-widget"] },
+          { "group": "Coverage Builder", "icon": "list-checks", "pages": ["fr/coverage-builder/overview", "fr/coverage-builder/create-plan"] },
+          { "group": "Historique & collaboration", "icon": "history", "pages": ["fr/collaboration/history", "fr/collaboration/notifications-and-scheduling"] },
+          { "group": "Configuration", "icon": "settings", "pages": ["fr/configuration/settings-and-import"] },
+          { "group": "Sur la fiche", "icon": "list-check", "pages": ["fr/work-item/test-coverage-tab"] },
+          { "group": "Sécurité", "icon": "shield", "pages": ["fr/security/privacy", "fr/security/permissions"] },
+          { "group": "Référence", "icon": "library", "pages": ["fr/reference/faq", "fr/reference/glossary"] }
         ]
       }
     ]
   },
-  "navbar": {
-    "links": [
-      { "label": "Marketplace", "href": "https://marketplace.visualstudio.com/items?itemName=Kisskool.testpulse" }
-    ]
-  },
-  "footer": {
-    "socials": { "website": "https://atconseil.info" }
-  }
+  "navbar": { "links": [ { "label": "Marketplace", "href": "https://marketplace.visualstudio.com/items?itemName=Kisskool.testpulse" } ] },
+  "footer": { "socials": { "website": "https://atconseil.info" } }
 }

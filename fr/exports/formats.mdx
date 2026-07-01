@@ -1,0 +1,67 @@
+---
+title: "Formats d'export"
+description: "PDF, HTML, Word, Excel et PowerPoint — ce que contient chaque format et quand l'utiliser."
+icon: "file-export"
+---
+
+TestPulse exporte le même rapport vers cinq formats, chacun optimisé pour un usage différent.
+
+## En un coup d'œil
+
+| Format | Cas d'usage | Points clés |
+| --- | --- | --- |
+| **PDF** | Livraison formelle, audits | Paginé, page de signature, graphiques, ordre des sections par drag-and-drop |
+| **HTML** | Revues sprint, tableaux de bord | Fichier autonome, graphiques interactifs, liens ADO cliquables |
+| **Word (.docx)** | Rapports éditables | Éditable dans Microsoft Word, page de signature |
+| **Excel (.xlsx)** | Analyse de données | 4 onglets : KPIs, Résultats, Traçabilité, Bugs |
+| **PowerPoint (.pptx)** | Diapositives pour la direction | 5 diapositives : Couverture, KPIs, Résultats, Traçabilité, Bugs |
+
+## PDF — le rapport complet
+
+Jusqu'à **12 sections configurables**, réordonnables par drag-and-drop (**Paramètres → Ordre des sections PDF**), chacune activable indépendamment :
+
+- **Page de garde** — grille d'infos projet, logo (PNG/JPEG/SVG), badge environnement
+- **Résumé exécutif** — le verdict automatisé, ou un résumé personnalisé par rapport
+- **KPI cards** — taux de succès, taux d'exécution, passés/échoués/bloqués, bugs liés
+- **Tableau des résultats** — dernier résultat par cas de test ; matrice multi-config si 2–3 configurations détectées
+- **Traçabilité** — Epic → User Story → Cas de test → Bug (tableau 3 colonnes) + suites non tracées
+- **Bugs** — tous les bugs liés avec état et sévérité
+- **Tests flaky** — tests avec un fort taux de bascule de résultat
+- **Graphiques** — donut pass/fail + barres par suite, rendus localement (fonctionne hors-ligne)
+- **Pièces jointes** — images PNG/JPEG intégrées, autres fichiers en tableau
+- **Objectifs, Critères d'entrée, Critères de sortie** — champs de cadrage multi-lignes
+- **Page de signature** — signataires configurables avec pré-remplissage et ligne de signature
+
+## HTML — autonome & interactif
+
+Un **fichier unique autonome** — aucun serveur nécessaire pour l'ouvrir :
+
+- Graphiques interactifs (donut + barres) intégrés
+- **Liens Azure DevOps cliquables** vers work items, bugs et cas de test
+- Tableau des résultats complet avec badges d'outcome et groupage par suite
+- Matrice de traçabilité et liste des bugs
+
+## Word (.docx) — éditable
+
+Entièrement **éditable dans Microsoft Word**, avec six sections : page de garde, métriques KPI, tableau des résultats, traçabilité (Cas de test → User Story → Epic → Bug), tableau des bugs, et une **page de signature** (si activée).
+
+<Note>Word n'inclut ni graphiques ni pièces jointes — pour les rapports riches en graphiques, utilisez le PDF.</Note>
+
+## Excel (.xlsx) — données
+
+Quatre onglets : **KPIs**, **Résultats** (outcome, suite, date, testeur, configuration), **Traçabilité** (Cas de test → User Story → Epic → Bug), et **Bugs** (état, sévérité, priorité, assigné).
+
+## PowerPoint (.pptx) — diapositives
+
+Une présentation de **cinq diapositives** : Couverture, KPIs, Résultats, Traçabilité, Bugs.
+
+## Signatures
+
+La **page de signature** est disponible dans les exports **PDF et Word** et se configure dans les Paramètres. HTML, Excel et PowerPoint ne portent pas de signature.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Afficher ou masquer les boutons d'export" icon="eye" href="/fr/exports/button-visibility">Contrôler la barre d'outils.</Card>
+  <Card title="Générer un rapport" icon="file-text" href="/fr/reports/generate-a-report">Construire le rapport d'abord.</Card>
+</CardGroup>

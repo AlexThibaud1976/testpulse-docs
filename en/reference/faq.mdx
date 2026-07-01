@@ -1,0 +1,36 @@
+---
+title: "FAQ & troubleshooting"
+description: "Common questions and quick fixes."
+icon: "circle-help"
+---
+
+## The "Test coverage" tab doesn't appear on a work item
+
+A brand-new contribution can take a short while for Azure DevOps to ingest. Do a **cold refresh** (Ctrl+Shift+R) on the work item. The tab is auto-placed and mounts on click — see [The Test coverage tab](/en/work-item/test-coverage-tab).
+
+## On Server, tests show as "Not Run" even though they passed
+
+Update to the latest version — the plan/suite resolution reads outcomes correctly on Azure DevOps Server.
+
+## Creating a plan returns a 403
+
+This is an **area-path permission**, not a scope. Pick an area path where you have *Manage test plans* — see [Create the plan](/en/coverage-builder/create-plan).
+
+## Notifications are blocked on-premises
+
+A browser CORS limit. TestPulse shows the JSON payload so you can copy-paste it into Teams / Slack — see [Notifications](/en/collaboration/notifications-and-scheduling).
+
+## The dashboard widget shows old numbers
+
+The widget reads the **latest published snapshot**, not live data. Publish a fresh report with *Share to project* — see [Quality overview widget](/en/dashboard/quality-overview-widget).
+
+## Storage is nearly full
+
+History is bounded by an Extension Data quota. Delete old reports (the storage indicator warns at 80%) — see [Report history](/en/collaboration/history).
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Permissions & scopes" icon="key" href="/en/security/permissions">Access and the 403.</Card>
+  <Card title="Glossary" icon="book-a" href="/en/reference/glossary">Key terms.</Card>
+</CardGroup>
