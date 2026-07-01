@@ -23,7 +23,7 @@
 - [ ] Profondeur · Quality Gate/grade A–E · GO/NO-GO · échecs sans défaut. EN+FR.
 
 ## Phase 5 — Fiche Work Item
-- [ ] Onglet Test coverage · sélecteur de portée · verdict d'exécution. EN+FR.
+- [x] Onglet Test coverage · sélecteur de portée · verdict d'exécution. EN+FR.
 
 ## Phase 6 — Dashboard / Coverage Builder
 - [ ] Widget Quality overview + config · Coverage Builder (opt-in, écriture). EN+FR.

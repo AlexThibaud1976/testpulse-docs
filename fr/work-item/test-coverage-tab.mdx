@@ -1,0 +1,61 @@
+---
+title: "L'onglet Test coverage (sur la fiche)"
+description: "Voir si les tests d'une user story passent — et ouvrir n'importe quel cas de test en un clic — directement sur la fiche, en lecture seule."
+icon: "list-check"
+---
+
+TestPulse ajoute un **onglet « Test coverage » en lecture seule** sur une fiche **User Story / PBI**. Il est placé automatiquement et se monte à l'ouverture de l'onglet — sans configuration, et sans jamais écrire dans vos données.
+
+Il répond à une question plus fine qu'un pourcentage de couverture : pas seulement *« est-ce couvert ? »* mais *« est-ce que ça passe — et où puis-je creuser ? »*
+
+## Le bandeau
+
+En haut, deux pastilles s'affichent instantanément :
+
+- **Couverture** — des cas de test sont-ils liés, et combien ?
+- **Profondeur** — ces tests ont-ils de vraies étapes, ou sont-ils superficiels / sous-spécifiés ? Un signal indicatif, sans IA — jamais bloquant.
+
+## Verdict d'exécution
+
+Un bandeau coloré réduit tous les résultats ci-dessous à une seule réponse :
+
+<CardGroup cols={2}>
+  <Card title="Réussi" icon="circle-check">Tous les tests passent dans la portée courante.</Card>
+  <Card title="Non OK" icon="circle-x">Au moins un test a échoué.</Card>
+  <Card title="Non exécuté" icon="circle-minus">Rien n'a échoué, mais certains tests n'ont pas été exécutés (Blocked / Not Applicable comptent comme Non exécuté).</Card>
+  <Card title="Non couvert" icon="circle-dashed">Aucun test lié — un état neutre.</Card>
+</CardGroup>
+
+Précédence stricte : au moins un **Failed** donne **Non OK** ; sinon au moins un résultat non-passé donne **Non exécuté** ; seulement 100 % **Passed** donne **Réussi** (pas de « partiel »). Toujours **icône + libellé** (jamais la couleur seule) et **ne recolore jamais** la pastille Couverture — couverture et exécution restent des axes distincts.
+
+## Sélecteur de portée
+
+<Note>Le sélecteur de portée s'affiche **dès que la fiche est couverte** — vous savez ainsi toujours que les résultats correspondent à la **dernière exécution**.</Note>
+
+Choisissez la portée du pass/fail :
+
+- **Dernière (tous plans)** — par défaut.
+- **Un plan de test précis** — recadre statut, échecs et fraîcheur sur ce plan, et masque les tests qui n'y sont pas (avec une ligne *« X sur N dans ce plan »*).
+
+Il est mémorisé **par fiche**, bascule **instantanément en mémoire** (aucune lecture nouvelle), et le **verdict d'exécution se recalcule** avec lui. Couverture, Profondeur et la liste des bugs restent **plan-indépendantes** — un bug est lié à un cas de test, pas à un plan.
+
+## #ID de test cliquables
+
+Chaque test lié affiche un **#ID cliquable** qui ouvre le **cas de test** dans un nouvel onglet — fini la chasse dans les plans et les suites.
+
+## Le tableau des résultats
+
+Pour chaque test lié : son **#ID**, son titre (avec son tag de type), son **résultat**, sa date de **dernière exécution**, et le **bug** derrière un échec — ou un indicateur *échec sans défaut* quand un test échoue sans bug lié.
+
+## Ce que ça ne fait pas
+
+- **Lecture seule.** Aucun nouvel appel API, aucun nouveau scope, aucune nouvelle dépendance.
+- Il **n'écrit jamais** dans vos données et **ne lit jamais les commentaires**.
+- Live et indépendant des rapports publiés — il réutilise les mêmes moteurs de profondeur / statut / échec.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Concepts : statuts & résultats" icon="book">Comment les résultats sont lus et réduits.</Card>
+  <Card title="Quality Gate & GO/NO-GO" icon="shield-check">Transformer les résultats en décision de release.</Card>
+</CardGroup>

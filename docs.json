@@ -24,6 +24,13 @@
               "en/getting-started/installation",
               "en/getting-started/quickstart"
             ]
+          },
+          {
+            "group": "On the work item",
+            "icon": "list-check",
+            "pages": [
+              "en/work-item/test-coverage-tab"
+            ]
           }
         ]
       },
@@ -37,6 +44,13 @@
               "fr/index",
               "fr/getting-started/installation",
               "fr/getting-started/quickstart"
+            ]
+          },
+          {
+            "group": "Sur la fiche",
+            "icon": "list-check",
+            "pages": [
+              "fr/work-item/test-coverage-tab"
             ]
           }
         ]
