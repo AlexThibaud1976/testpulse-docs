@@ -27,3 +27,33 @@
 
 ---
 *Chaque section livrée est complète (EN+FR) et le site reste déployable.*
+
+---
+
+## Runbook déploiement — domaine `docs.atconseil.info` (2026-07-01)
+
+**Choix** : sous-domaine (pas `atconseil.info/docs` en sous-chemin — le reverse-proxy Mintlify est Enterprise, incompatible mutualisé).
+
+**Autorité DNS** : **Cloudflare** (et NON OVH — la zone OVH d''atconseil.info est non-autoritaire/morte). Tout se règle chez Cloudflare.
+
+**Enregistrements (dans cet ordre)** :
+1. `TXT _acme-challenge.docs` = valeur dashboard Mintlify (autorise Let''s Encrypt).
+2. `TXT _cf-custom-hostname.docs` = valeur dashboard (prouve le contrôle du domaine).
+3. Attendre les 2 coches vertes dans Mintlify.
+4. `CNAME docs` → `cname.mintlify.builders` — **DNS only (nuage gris)**, jamais proxied.
+
+**Gotchas vérifiés** :
+- **HSTS `includeSubDomains`** actif sur l''apex ⇒ le certificat TLS doit être prêt **avant** que le CNAME serve du trafic, sinon `docs.` injoignable. L''ordre TXT→vérif→CNAME le garantit.
+- Record `docs` en **DNS only** ⇒ les réglages edge Cloudflare (SSL mode, Always Use HTTPS) **ne s''appliquent pas** au sous-domaine (trafic direct vers Mintlify) → provisioning Let''s Encrypt OK.
+- `/.well-known/acme-challenge` ne doit jamais être réécrit (réservé validation cert).
+- Aucun CAA sur atconseil.info ⇒ Let''s Encrypt non bloqué.
+
+**État final vérifié (18h45)** : `docs → cname.mintlify.builders` (DNS only, résolu 8.8.8.8/1.1.1.1) ; cert **Let''s Encrypt `CN=docs.atconseil.info`** valable → 29/09/2026 ; HTTPS `308 → /en` (scaffold EN/FR servi).
+
+**Changements associés** :
+- `docs.json` → `seo.metatags.canonical = https://docs.atconseil.info` (SEO, évite le duplicate avec l''URL `*.mintlify.app`).
+- Redirection `atconseil.info/docs → docs.atconseil.info` : `RewriteRule ^docs/?$ [R=301,L]` ajoutée au `.htaccess` du site (E:\Code\atconseil-info) — **staged**, se déploie au prochain push FTP. Alternative edge : Cloudflare Redirect Rule (n''utiliser qu''une seule des deux).
+
+**Nettoyage effectué** : restes TXT `_acme-challenge`/`_cf-custom-hostname` sur l''apex + sur `testpulse.` supprimés (on garde le trio `docs.*`).
+
+**⚠️ Hors périmètre doc — à traiter** : `_visual-studio-marketplace-kisskool TXT` (vérif éditeur Kisskool sur le Marketplace VS) n''existe **que** dans la zone OVH morte → **absent de Cloudflare (autoritaire)** → vérification éditeur potentiellement cassée. À re-poser dans Cloudflare (valeur relevée : `7dc3acae-61e1-449d-bf3a-d0361f19e7fa`, à re-confirmer sur le profil éditeur avant pose).

@@ -39,3 +39,15 @@
 
 ---
 *Chaque phase : pages EN+FR + nav + revue exactitude + `mint dev` sans lien cassé.*
+
+## Phase D — Déploiement & domaine (2026-07-01)
+- [x] Sous-domaine décidé : `docs.atconseil.info`.
+- [x] Autorité DNS identifiée : **Cloudflare** (OVH mort).
+- [x] 2 TXT (`_acme-challenge.docs`, `_cf-custom-hostname.docs`) validés.
+- [x] CNAME `docs` → `cname.mintlify.builders` en **DNS only**.
+- [x] TLS Let''s Encrypt provisionné (`CN=docs.atconseil.info`) ; HTTPS `308 → /en` OK.
+- [x] `docs.json` : `seo.metatags.canonical` = `https://docs.atconseil.info`.
+- [ ] Redirection `/docs` → sous-domaine : `.htaccess` **staged** (déploie au prochain push FTP atconseil.info).
+- [x] Nettoyage restes TXT apex + `testpulse.*`.
+- [ ] **⚠️ Hors doc** : re-poser `_visual-studio-marketplace-kisskool` TXT dans Cloudflare (vérif éditeur Marketplace).
+- [ ] Vérif build : `mint dev`/build sans lien cassé au prochain push (canonical actif).
