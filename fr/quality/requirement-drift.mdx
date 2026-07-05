@@ -1,0 +1,39 @@
+---
+title: "Dérive d'exigences & couverture périmée"
+description: "Comparez deux plans que vous jugez équivalents, repérez les exigences qui ont changé depuis l'exécution de référence — et les Passed qui ne prouvent plus rien."
+icon: "git-compare-arrows"
+---
+
+L'onglet **Dérive d'exigences** répond à une question qu'aucun taux de réussite ne couvre : *« ce que nous avons validé a-t-il changé depuis que nous l'avons validé ? »* Vous choisissez **deux plans** que vous estimez équivalents — une **baseline déjà exécutée** et un **nouveau** — et TestPulse les compare.
+
+<Note>Tout ici est **indicatif** : des indicateurs à examiner, jamais un verdict — c'est vous qui décidez. Une exigence signalée veut dire *« à revérifier »*, jamais *« obsolète »*.</Note>
+
+## Ce que la comparaison montre
+
+- **Le delta d'ensembles** — user stories **ajoutées**, **retirées** et **communes** entre les deux plans.
+- **Les candidates à la dérive** — les stories communes qui ont **changé après l'exécution de référence** de la baseline (sa dernière exécution), avec **quel champ** a bougé.
+- La comparaison travaille sur le **texte rendu** des champs de substance (titre, description, critères d'acceptation par défaut — configurables au niveau projet) : un reformatage HTML, un gras ou une typo invisible ne sont **jamais** une dérive. Un **mode rapide** (désactivé par défaut) saute le diff de texte et ne compare que les dates.
+
+Si l'historique d'une story ne peut pas être lu, elle retombe en vérification par date seule (« non vérifiée en profondeur ») pendant que le reste de l'analyse continue.
+
+## Couverture périmée
+
+L'écran de dérive porte aussi une section **« Couverture périmée »** : les exigences modifiées **strictement après la dernière exécution de leurs tests liés**. Leurs résultats verts sont formellement corrects — et ne prouvent plus rien.
+
+- Un compteur conditionnel le dit sans détour : **« N Passed ne prouvent plus rien »**. Zéro exigence périmée ? La section se replie en un neutre *« toutes à jour »* — zéro trou, zéro bruit.
+- Chaque exigence signalée affiche son statut (*Périmée — à re-tester*) et la **nature du changement** — critères d'acceptation, description ou titre, dans cet ordre de signification — résolue paresseusement, uniquement pour les signalées.
+- Des chips de filtrage avec compteurs découpent la liste, et une **option projet** permet d'ignorer les changements de titre seuls.
+- Une exigence modifiée au même instant que le dernier run n'est **pas** périmée, et une exigence dont les runs n'ont pas de date n'est jamais signalée — le signal préfère se taire dans le doute.
+
+Le même signal remonte à deux autres endroits : l'onglet **Test coverage** de la fiche gagne un badge *« Modifiée après le dernier run »*, et la **traçabilité** PDF/Word une colonne *Périmée*.
+
+## Lecture seule, comme toujours
+
+L'analyse de dérive lit l'historique des work items avec les permissions que l'extension possède déjà — aucun nouveau scope, rien d'écrit, et la baseline est implicite (la date de dernière exécution du plan baseline) : **aucune baseline n'est jamais stockée**.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Test coverage sur la fiche" icon="list-check" href="/fr/work-item/test-coverage-tab">Où le badge « périmée » apparaît.</Card>
+  <Card title="Profondeur de couverture" icon="layers" href="/fr/quality/coverage-depth">Est-ce couvert — et bien couvert ?</Card>
+</CardGroup>

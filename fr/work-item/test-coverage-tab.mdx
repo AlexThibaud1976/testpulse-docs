@@ -37,7 +37,7 @@ Choisissez la portée du pass/fail :
 - **Dernière (tous plans)** — par défaut.
 - **Un plan de test précis** — recadre statut, échecs et fraîcheur sur ce plan, et masque les tests qui n'y sont pas (avec une ligne *« X sur N dans ce plan »*).
 
-Il est mémorisé **par fiche**, bascule **instantanément en mémoire** (aucune lecture nouvelle), et le **verdict d'exécution se recalcule** avec lui. Couverture, Profondeur et la liste des bugs restent **plan-indépendantes** — un bug est lié à un cas de test, pas à un plan.
+Il est mémorisé **par fiche**, bascule **instantanément en mémoire** (aucune lecture nouvelle), et le **verdict d'exécution se recalcule** avec lui. Quand un plan précis est cadré, un lien **Exécuter dans Azure DevOps** à côté du sélecteur ouvre la **vue d'exécution** de ce plan. Couverture, Profondeur et la liste des bugs restent **plan-indépendantes** — un bug est lié à un cas de test, pas à un plan.
 
 ## #ID de test cliquables
 
@@ -46,6 +46,10 @@ Chaque test lié affiche un **#ID cliquable** qui ouvre le **cas de test** dans 
 ## Le tableau des résultats
 
 Pour chaque test lié : son **#ID**, son titre (avec son tag de type), son **résultat**, sa date de **dernière exécution**, et le **bug** derrière un échec — ou un indicateur *échec sans défaut* quand un test échoue sans bug lié.
+
+Les **cinq colonnes se trient** — cliquez un en-tête pour trier, re-cliquez pour inverser — et le tri est mémorisé **par fiche** (échecs en tête par défaut). Quand un test a un run enregistré, sa cellule **Dernière exécution mène à ce run** dans Azure DevOps.
+
+Une story modifiée **après la dernière exécution de ses tests** porte un badge **« Modifiée après le dernier run »** — ses résultats verts ne prouvent peut-être plus rien. Voir [Dérive d'exigences & couverture périmée](/fr/quality/requirement-drift).
 
 ## Ce que ça ne fait pas
 

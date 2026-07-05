@@ -1,0 +1,39 @@
+---
+title: "Requirement Drift & stale coverage"
+description: "Compare two plans you consider equivalent, spot the requirements that changed since the baseline ran — and the Passed results that no longer prove anything."
+icon: "git-compare-arrows"
+---
+
+The **Requirement Drift** tab answers a question no pass rate can: *"has what we validated changed since we validated it?"* You pick **two plans** you consider equivalent — a **baseline that already ran** and a **new one** — and TestPulse compares them.
+
+<Note>Everything here is **advisory**: indicators to review, never a verdict — you decide. A flagged requirement means *"worth a second look"*, never *"obsolete"*.</Note>
+
+## What the comparison shows
+
+- **The set delta** — user stories **added**, **removed** and **common** between the two plans.
+- **Drift candidates** — common stories that **changed after the baseline's reference execution** (the latest run of the baseline plan), with **which field** moved.
+- The comparison works on the **rendered text** of the substance fields (title, description, acceptance criteria by default — configurable at project level): an HTML reformat, a bold or an invisible typo is **never** a drift. A **fast mode** (off by default) skips the text diff and compares dates only.
+
+If a story's history cannot be read, that story degrades to a date-only check ("not deeply verified") while the rest of the analysis continues.
+
+## Stale coverage
+
+The drift screen also carries a **"Stale coverage"** section: the requirements that were modified **strictly after the last execution of their linked tests**. Their green results are formally correct — and prove nothing anymore.
+
+- A conditional counter says it plainly: **"N Passed no longer prove anything"**. Zero stale requirements? The section folds into a neutral *"all up to date"* — zero gaps, zero noise.
+- Each flagged requirement shows its status (*Stale — to re-test*) and the **nature of the change** — acceptance criteria, description or title, in that order of significance — resolved lazily, only for the flagged ones.
+- Filter chips with counters let you slice the list, and a **project option** can ignore title-only changes.
+- Modifying a requirement on the same instant as the last run is **not** stale, and a requirement whose runs carry no date is never flagged — the signal errs on the side of silence.
+
+The same signal surfaces in two other places: the work item's **Test coverage tab** gains a *"Modified after last run"* badge, and the PDF/Word **traceability** gains a *Stale* column.
+
+## Read-only, as always
+
+The drift analysis reads work item history through the permissions the extension already has — no new scope, nothing written, and the baseline is implicit (the latest execution date of the baseline plan): **no baseline is ever stored**.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Test coverage on the work item" icon="list-check" href="/en/work-item/test-coverage-tab">Where the stale badge appears.</Card>
+  <Card title="Coverage depth" icon="layers" href="/en/quality/coverage-depth">Is it covered — and covered well?</Card>
+</CardGroup>

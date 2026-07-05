@@ -1,0 +1,44 @@
+---
+title: "Suite × Configuration matrix"
+description: "Cross every suite with every configuration of the plan — a cell with no test point is an assumed gap, not a blind spot."
+icon: "grid-3x3"
+---
+
+Multi-configuration plans hide a silent risk: a suite that was never planned for one of the configurations. The **Suite × Configuration** tab of the report makes that visible by crossing **every suite with every configuration declared on the plan** — the full product, on purpose.
+
+<Note>A cell with **no test point is an assumed gap** — the matrix shows it instead of hiding it. The tab **disappears entirely** when the plan declares no configuration: no configurations, no matrix, no noise.</Note>
+
+## Reading a cell
+
+Each cell reduces to one state, in strict precedence:
+
+1. **Not applicable** — marked by your team (see below).
+2. **Never run** — points exist (or the cell is empty) but nothing has executed.
+3. **Failures** — at least one failed result.
+4. **Partially run** — some points executed, some not.
+5. **Passed** — everything executed and green.
+
+Click a cell for the detail: **n/m executed**, the last execution date, a one-click **Run in Azure DevOps** link scoped to that plan and suite, and the *not applicable* toggle.
+
+## Gaps that call you — only when they exist
+
+When gaps exist, two nudges appear: a **red count badge** on the tab, and a **clickable warning in the report Summary** that navigates straight to the matrix. Zero gaps? **Both are absent** — not greyed out, absent.
+
+## "Not applicable" — shared and reversible
+
+Some combinations are legitimately out of scope (a mobile-only suite on a desktop configuration). Mark them **not applicable**: the marking is **shared at project level** so the whole team sees the same matrix, it is **reversible**, and marked cells are **excluded from the gap counts** — an assumed exclusion stops being a gap.
+
+## Staying readable on big plans
+
+A **"gaps and failures only"** filter narrows the grid, and beyond **12 suites** the matrix folds to the suites carrying a signal, with a *show all* control.
+
+## In the exports
+
+The grid travels into the **PDF and Word** exports under the same visibility rule as the tab, with the *not applicable* markings applied.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Generate a report" icon="file-text" href="/en/reports/generate-a-report">Where the matrix tab lives.</Card>
+  <Card title="Execution Cockpit" icon="gauge" href="/en/cockpit/execution-cockpit">Track the same configurations day by day.</Card>
+</CardGroup>

@@ -1,0 +1,66 @@
+---
+title: "Changelog"
+description: "What shipped in TestPulse, version by version."
+icon: "clock"
+---
+
+<Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
+
+<Update label="v2.30.0" description="2026-07-04">
+**Insights pack.** Four deterministic signals, each in its host screen — no new screen, no new permission.
+
+- **Stale coverage** ([Requirement Drift](/en/quality/requirement-drift)) — requirements modified after the last run of their linked tests, with the plain-spoken counter *"N Passed no longer prove anything"*, the changed field, filter chips and a project option to ignore title-only changes. A *"Modified after last run"* badge on the work item tab, a *Stale* column in the PDF/Word traceability.
+- **What to run today** ([Cockpit](/en/cockpit/execution-cockpit)) — the remaining points ranked by a transparent weighted score, three fixed profiles (Strict / Standard / Onboarding) stored at project level, a per-row score breakdown and one-click execute links.
+- **[Suite × Configuration matrix](/en/reports/suite-configuration-matrix)** (Report) — the full suites × configurations grid with assumed gaps, gap nudges that only appear when gaps exist, shared reversible *not applicable* markings, and the grid in PDF/Word exports.
+- **Remaining effort** (Cockpit) — tester-days from the median of observed durations (P25–P75 range, per-suite medians), working-days finish date, two simulation sliders, assumptions always displayed — an estimate, not a commitment.
+</Update>
+
+<Update label="v2.29.5" description="2026-07-03">
+- **Coverage plan insights & execute links** — with the Planning scan on, the [Coverage Builder](/en/coverage-builder/overview) shows per requirement where its tests are planned (Plans column), expandable to each plan/suite with a *Run in Azure DevOps* link and a lazily-fetched n/m execution progress. No extra API call at table load.
+- Every application plan link now opens the **execute** view instead of the composition view.
+- **Cockpit — readable & honest burndown** — dated axis, legend and markers; the projection pauses after 14 days without execution; the progress panel always shows suites and configs; honest states replace any blank chart.
+</Update>
+
+<Update label="v2.29.4" description="2026-07-02">
+- **Cockpit on-premises fixes** — execution dates are now resolved on servers that don't expose them through the newer API (with a read-only fallback), and a completed campaign shows its real finish date instead of an empty chart. Also improves the *Last run* column and freshness signals on-premises.
+</Update>
+
+<Update label="v2.29.3" description="2026-07-02">
+- **Coverage Builder — under-counted coverage fixed** — *Tested By* links are now resolved in both directions, so a story visibly linked to several test cases no longer shows as a false gap on Azure DevOps Server.
+</Update>
+
+<Update label="v2.29.2" description="2026-07-02">
+- **Coverage Builder — Planning scan no longer loops on large repositories** — the scan resolves planning **per test case** (bounded, deduplicated, with short timeouts) instead of enumerating every plan and suite of the collection. Same semantics, usable at enterprise scale.
+</Update>
+
+<Update label="v2.29.1" description="2026-07-02">
+- Link to this online documentation added to the extension footer and docs badge.
+</Update>
+
+<Update label="v2.29.0" description="2026-07-02">
+- **[Execution Cockpit](/en/cockpit/execution-cockpit)** — a new hub tab: a per-plan execution burndown in test points (actual from daily snapshots, rebased ideal, pace projection), an honestly tracked moving perimeter, behind-pace suites/configs, a local target when the plan has no end date, and a closing nudge for stalled campaigns. Read-only; snapshots live in Extension Data — nothing leaves your tenant.
+</Update>
+
+<Update label="v2.28.0" description="2026-07-02">
+- **Test coverage tab — navigable** — all five columns sort (persisted per work item), the *Last run* cell links to the run, and a scoped plan links straight to its execution view.
+</Update>
+
+<Update label="v2.27.2" description="2026-07-01">
+- **Test coverage tab** — the scope selector shows whenever the story is covered, and each test case ID is clickable.
+</Update>
+
+<Update label="v2.26.1" description="2026-07-01">
+- **On-premises fix** — results on the Test coverage tab resolved correctly on Azure DevOps Server (tests no longer all shown as *Not run*).
+</Update>
+
+<Update label="v2.26.0" description="2026-07-01">
+- **[Execution verdict banner](/en/work-item/test-coverage-tab)** on the Test coverage tab — Passed / Not OK / Not Run / Not covered, with strict precedence, recomputed instantly with the scope.
+</Update>
+
+<Update label="v2.25.0" description="2026-07-01">
+- **[Coverage scope selector](/en/work-item/test-coverage-tab)** on the Test coverage tab — frame the pass/fail on *Latest (all plans)* or a specific plan, remembered per work item, switched in memory with no new read.
+</Update>
+
+<Update label="Earlier versions">
+Report generation and the five exports, Epic→US→TC→Bug traceability, the Quality Gate (A–E grade, GO/NO-GO verdict, profiles and risk-based weighting), the dashboard widget, Requirement Drift, the Coverage Builder, coverage depth, imports, notifications, scheduling and much more — see the [full changelog on GitHub](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).
+</Update>

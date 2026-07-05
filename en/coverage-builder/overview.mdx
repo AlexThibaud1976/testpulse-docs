@@ -21,7 +21,11 @@ The composition uses the **link graph only** — no outcomes, points or runs are
 
 ## "Covered but unplanned" (opt-in)
 
-A third state — *covered but unplanned* (a test exists but is in no plan, so you'd reuse it rather than rewrite it) — sits behind an **opt-in "Planning scan" toggle, off by default**. It is more expensive (it enumerates plans → suites → test cases), so the cost is signalled and the state is never shown unless a real scan ran. Without the toggle, the core stays two clean states.
+A third state — *covered but unplanned* (a test exists but is in no plan, so you'd reuse it rather than rewrite it) — sits behind an **opt-in "Planning scan" toggle, off by default**. The scan resolves planning **per linked test case** (one bounded, deduplicated lookup per unique test, with short timeouts) — it never enumerates the collection's plans, so it stays usable on large repositories. If a lookup fails, that test is **considered planned**: the scan never invents a false "unplanned". The state is never shown unless a real scan ran; without the toggle, the core stays two clean states.
+
+## Where are the tests planned? (Plans column & execute links)
+
+With the Planning scan on, a **Plans** column shows per requirement where its linked tests are planned: the plan name if unique, **"N plans"** if several, **"—"** for a gap (or scan off). **Expand a row** to list each (plan, suite) pair with a one-click **Run in Azure DevOps** link opening the **execute view**, plus an **n/m run** execution progress fetched lazily on expand only (once per suite, cached for the session, degrading silently — a date the server cannot provide is hidden, never invented). The plan detail is extracted from the responses the scan already receives — **no extra API call at table load**.
 
 ## Preview & export (no permission needed)
 

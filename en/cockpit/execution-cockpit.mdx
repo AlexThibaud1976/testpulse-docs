@@ -1,0 +1,60 @@
+---
+title: "Execution Cockpit — your daily campaign monitor"
+description: "A per-plan execution burndown, what to run today and the remaining effort in tester-days — honest, deterministic, read-only."
+icon: "gauge"
+---
+
+The **Cockpit** tab turns TestPulse into a **daily monitor**: while the report answers *"where do we stand?"* at a milestone, the Cockpit answers *"how is the campaign moving — and what should I do today?"*.
+
+Everything is **read-only** against your test data. The only thing the Cockpit writes is its own small snapshots, stored in Azure DevOps **Extension Data** — like your saved reports, **nothing leaves your tenant**, and no new permission is required.
+
+## The execution burndown
+
+Per plan, a burndown in **test points** (case × suite × configuration):
+
+- **Actual curve** — built from small **daily snapshots** captured on any usage (opening the hub or generating a report). One snapshot per plan per day; the campaign's first day is reconstructed from execution dates and labelled as such.
+- **Ideal line** — rebased on the **current remaining** toward the plan's end date. No end date on the plan? Set a **local target** — TestPulse never writes to the plan itself.
+- **Projection** — extrapolates your recent pace to a projected finish.
+
+The chart has dated axis ticks, a legend and point markers, and adapts to light and dark themes.
+
+### A projection that knows when to shut up
+
+<Note>When the last execution is **more than 14 days old**, the projection **pauses**: a clear banner says so and the "projected finish" KPI shows **"—"** — never an invented date.</Note>
+
+The Cockpit prefers an honest silence to a fake number. In the same spirit, it shows explicit states instead of an empty chart: **campaign complete** (with a summary), **execution dates unavailable on this instance** (some on-premises servers don't expose them — snapshots take over from there), or a **single-day** note while the curve builds up.
+
+## An honest moving perimeter
+
+Scope changes are **shown, not smoothed over**: adding, removing or resizing a suite or configuration appears as a labelled step on the curve. A suite deleted and re-created for the same requirement is reconciled as a **re-organisation** — matched by requirement only, never by name.
+
+## Progress panel
+
+Suites **and** configurations are always listed with their **executed / total** and a progress bar, least-advanced first — even when the plan has no dates. The gap against the ideal pace is only shown when the plan actually has dates to compare against.
+
+## What to run today
+
+Below the burndown, the remaining points of the plan (latest result neither Passed nor Not Applicable — failures are there to be re-run), ranked by a **deterministic weighted score** built from four signals: a failure on the last run, the priority of the linked requirement, an open blocking bug, and staleness (never executed ranks above long-untouched, which ranks above recent).
+
+- **Three fixed profiles** — Strict / Standard / Onboarding — choose how the signals are weighted. The choice is stored **at project level**, so the whole team ranks the same way. There are no free sliders: profiles keep the ranking reproducible.
+- **Never a black box** — each row can show its **score breakdown** (signal × weight), and the active profile is named in the panel.
+- **One click to act** — each row links straight to the **execute view** of its plan and suite in Azure DevOps.
+- Nothing left to run? The panel says exactly that.
+
+## Remaining effort
+
+A **tester-days** estimate of what is left, computed from the **median** of observed run durations (never the mean — one slow outlier should not skew your planning), with a P25–P75 range. Durations are taken **per suite** where enough data exists, falling back to the plan median (flagged with an asterisk).
+
+- The finish date counts **working days** — weekends excluded.
+- Two **simulation sliders** — number of testers and QA hours per day — let you play what-if scenarios. They are session-only, never stored.
+- The **assumptions are always displayed** (median used, testers, hours/day), together with the caveat that matters: *an estimate, not a commitment*.
+- Fewer than 3 usable durations? The block says **"no usable duration"** — no invented figure.
+
+A one-line echo of the estimate travels with the report header and its PDF/Word exports, and hides itself when the data is degraded or nothing remains to execute.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Quality Gate & GO/NO-GO" icon="shield-check" href="/en/quality/quality-gate">From daily steering to the release decision.</Card>
+  <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">Where snapshots live and what is never written.</Card>
+</CardGroup>

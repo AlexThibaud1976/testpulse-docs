@@ -1,0 +1,60 @@
+---
+title: "Cockpit d'exécution — votre moniteur quotidien de campagne"
+description: "Un burndown d'exécution par plan, quoi exécuter aujourd'hui et la charge restante en jours-testeur — honnête, déterministe, en lecture seule."
+icon: "gauge"
+---
+
+L'onglet **Cockpit** fait de TestPulse un **moniteur quotidien** : là où le rapport répond à *« où en est-on ? »* à un jalon, le Cockpit répond à *« comment la campagne avance — et que dois-je faire aujourd'hui ? »*.
+
+Tout est en **lecture seule** sur vos données de test. La seule chose que le Cockpit écrit, ce sont ses propres petits snapshots, stockés dans l'**Extension Data** d'Azure DevOps — comme vos rapports sauvegardés : **rien ne quitte votre tenant**, et aucune nouvelle permission n'est requise.
+
+## Le burndown d'exécution
+
+Par plan, un burndown en **test points** (cas × suite × configuration) :
+
+- **Courbe réelle** — construite à partir de petits **snapshots quotidiens** capturés à tout usage (ouverture du hub ou génération d'un rapport). Un snapshot par plan et par jour ; le premier jour de campagne est reconstruit depuis les dates d'exécution et étiqueté comme tel.
+- **Ligne idéale** — rebasée sur le **restant courant** vers la date de fin du plan. Pas de date de fin sur le plan ? Saisissez une **cible locale** — TestPulse n'écrit jamais dans le plan lui-même.
+- **Projection** — extrapole votre rythme récent vers une fin projetée.
+
+Le graphe porte des graduations datées, une légende et des marqueurs de points, et s'adapte aux thèmes clair et sombre.
+
+### Une projection qui sait se taire
+
+<Note>Quand la dernière exécution date de **plus de 14 jours**, la projection **se suspend** : un bandeau explicite le dit et le KPI « fin projetée » affiche **« — »** — jamais une date inventée.</Note>
+
+Le Cockpit préfère un silence honnête à un chiffre factice. Dans le même esprit, il affiche des états explicites plutôt qu'un graphe vide : **campagne terminée** (avec un résumé), **dates d'exécution indisponibles sur cette instance** (certains serveurs on-premises ne les exposent pas — les snapshots prennent le relais), ou une note **« jour unique »** le temps que la courbe se construise.
+
+## Un périmètre mouvant tracé honnêtement
+
+Les changements de périmètre sont **montrés, pas lissés** : ajouter, retirer ou redimensionner une suite ou une configuration apparaît comme une marche étiquetée sur la courbe. Une suite supprimée puis recréée pour la même exigence est réconciliée en **réorganisation** — appariée par exigence uniquement, jamais par nom.
+
+## Panneau de progression
+
+Les suites **et** les configurations sont toujours listées avec leur **exécutés / total** et une barre de progression, les moins avancées en tête — même quand le plan n'a pas de dates. L'écart face au rythme idéal n'apparaît que si le plan a réellement des dates à comparer.
+
+## Quoi exécuter aujourd'hui
+
+Sous le burndown, les points restants du plan (dernier résultat ni Passed ni Not Applicable — un échec est là pour être re-runné), ordonnés par un **score pondéré déterministe** construit sur quatre signaux : un échec au dernier run, la priorité de l'exigence liée, un bug bloquant ouvert, et l'ancienneté (jamais exécuté passe devant longtemps délaissé, qui passe devant récent).
+
+- **Trois profils figés** — Strict / Standard / Onboarding — choisissent la pondération des signaux. Le choix est stocké **au niveau projet** : toute l'équipe classe de la même façon. Pas de curseurs libres : les profils gardent le classement reproductible.
+- **Jamais une boîte noire** — chaque ligne peut afficher son **détail de score** (signal × pondération), et le profil actif est nommé dans le panneau.
+- **Un clic pour agir** — chaque ligne mène directement à la vue **execute** de son plan et de sa suite dans Azure DevOps.
+- Plus rien à exécuter ? Le panneau le dit tel quel.
+
+## Charge restante
+
+Une estimation en **jours-testeur** de ce qui reste, calculée sur la **médiane** des durées d'exécution observées (jamais la moyenne — un point aberrant ne doit pas fausser votre planification), avec une fourchette P25–P75. Les durées sont prises **par suite** quand la donnée suffit, avec repli sur la médiane du plan (signalé par un astérisque).
+
+- La date de fin compte en **jours ouvrés** — week-ends exclus.
+- Deux **curseurs de simulation** — nombre de testeurs et heures QA par jour — permettent de jouer des scénarios. Ils vivent en session, jamais persistés.
+- Les **hypothèses sont toujours affichées** (médiane utilisée, testeurs, heures/jour), avec la mise en garde qui compte : *une estimation, pas un engagement*.
+- Moins de 3 durées exploitables ? Le bloc affiche **« aucune durée exploitable »** — pas de chiffre inventé.
+
+Une ligne d'écho de l'estimation voyage avec l'en-tête du rapport et ses exports PDF/Word, et se masque quand la donnée est dégradée ou qu'il ne reste rien à exécuter.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Quality Gate & GO/NO-GO" icon="shield-check" href="/fr/quality/quality-gate">Du pilotage quotidien à la décision de release.</Card>
+  <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">Où vivent les snapshots et ce qui n'est jamais écrit.</Card>
+</CardGroup>

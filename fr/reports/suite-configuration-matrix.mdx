@@ -1,0 +1,44 @@
+---
+title: "Matrice Suite × Configuration"
+description: "Croisez chaque suite avec chaque configuration du plan — une cellule sans point de test est un trou assumé, pas un angle mort."
+icon: "grid-3x3"
+---
+
+Les plans multi-configurations cachent un risque silencieux : une suite jamais planifiée pour l'une des configurations. L'onglet **Suite × Configuration** du rapport le rend visible en croisant **chaque suite avec chaque configuration déclarée sur le plan** — le produit complet, à dessein.
+
+<Note>Une cellule **sans point de test est un trou assumé** — la matrice le montre au lieu de le masquer. L'onglet **disparaît entièrement** quand le plan ne déclare aucune configuration : pas de configurations, pas de matrice, pas de bruit.</Note>
+
+## Lire une cellule
+
+Chaque cellule se réduit à un état, en précédence stricte :
+
+1. **Non applicable** — marqué par votre équipe (voir plus bas).
+2. **Jamais exécutée** — des points existent (ou la cellule est vide) mais rien n'a tourné.
+3. **Échecs** — au moins un résultat en échec.
+4. **Partiellement exécutée** — des points exécutés, d'autres non.
+5. **Réussie** — tout est exécuté et vert.
+
+Cliquez une cellule pour le détail : **n/m exécutés**, la date de dernière exécution, un lien **Exécuter dans Azure DevOps** cadré sur ce plan et cette suite, et la bascule *non applicable*.
+
+## Des trous qui vous appellent — seulement s'ils existent
+
+Quand des trous existent, deux relances apparaissent : une **pastille rouge de comptage** sur l'onglet, et une **alerte cliquable dans le Résumé** du rapport qui navigue directement vers la matrice. Zéro trou ? **Les deux sont absentes** — pas grisées, absentes.
+
+## « Non applicable » — partagé et réversible
+
+Certaines combinaisons sont légitimement hors périmètre (une suite mobile sur une configuration desktop). Marquez-les **non applicables** : le marquage est **partagé au niveau projet** pour que toute l'équipe voie la même matrice, il est **réversible**, et les cellules marquées sont **exclues des comptages de trous** — une exclusion assumée cesse d'être un trou.
+
+## Rester lisible sur les gros plans
+
+Un filtre **« Trous et échecs uniquement »** resserre la grille, et au-delà de **12 suites** la matrice se replie sur les suites porteuses d'un signal, avec un contrôle *tout afficher*.
+
+## Dans les exports
+
+La grille voyage dans les exports **PDF et Word** sous la même règle de visibilité que l'onglet, marquages *non applicable* appliqués.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Générer un rapport" icon="file-text" href="/fr/reports/generate-a-report">Là où vit l'onglet matrice.</Card>
+  <Card title="Cockpit d'exécution" icon="gauge" href="/fr/cockpit/execution-cockpit">Suivre les mêmes configurations au jour le jour.</Card>
+</CardGroup>

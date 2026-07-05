@@ -1,0 +1,66 @@
+---
+title: "Changelog"
+description: "Ce que TestPulse a livré, version par version."
+icon: "clock"
+---
+
+<Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
+
+<Update label="v2.30.0" description="2026-07-04">
+**Pack Insights.** Quatre signaux déterministes, chacun dans son écran hôte — aucun nouvel écran, aucune nouvelle permission.
+
+- **Couverture périmée** ([Dérive d'exigences](/fr/quality/requirement-drift)) — les exigences modifiées après la dernière exécution de leurs tests liés, avec le compteur sans détour *« N Passed ne prouvent plus rien »*, le champ modifié, des chips de filtrage et une option projet pour ignorer les changements de titre seuls. Un badge *« Modifiée après le dernier run »* sur l'onglet de la fiche, une colonne *Périmée* dans la traçabilité PDF/Word.
+- **Quoi exécuter aujourd'hui** ([Cockpit](/fr/cockpit/execution-cockpit)) — les points restants ordonnés par un score pondéré transparent, trois profils figés (Strict / Standard / Onboarding) stockés au niveau projet, le détail du score par ligne et des liens execute en un clic.
+- **[Matrice Suite × Configuration](/fr/reports/suite-configuration-matrix)** (Rapport) — la grille complète suites × configurations avec trous assumés, des relances qui n'apparaissent que s'il y a des trous, des marquages *non applicable* partagés et réversibles, et la grille dans les exports PDF/Word.
+- **Charge restante** (Cockpit) — des jours-testeur sur la médiane des durées observées (fourchette P25–P75, médianes par suite), une date de fin en jours ouvrés, deux curseurs de simulation, les hypothèses toujours affichées — une estimation, pas un engagement.
+</Update>
+
+<Update label="v2.29.5" description="2026-07-03">
+- **Aperçu des plans & liens execute** — avec le Planning scan activé, le [Coverage Builder](/fr/coverage-builder/overview) montre par exigence où ses tests sont planifiés (colonne Plans), dépliable en couples plan/suite avec un lien *Exécuter dans Azure DevOps* et une progression n/m récupérée paresseusement. Aucun appel API supplémentaire au chargement de la table.
+- Tous les liens plan applicatifs ouvrent désormais la vue **execute** plutôt que la vue de composition.
+- **Cockpit — burndown lisible et honnête** — axe daté, légende et marqueurs ; la projection se suspend après 14 jours sans exécution ; le panneau de progression affiche toujours suites et configs ; des états honnêtes remplacent tout graphe vide.
+</Update>
+
+<Update label="v2.29.4" description="2026-07-02">
+- **Correctifs Cockpit on-premises** — les dates d'exécution sont désormais résolues sur les serveurs qui ne les exposent pas via l'API récente (repli en lecture seule), et une campagne terminée affiche sa vraie date de fin au lieu d'un graphe vide. Améliore aussi la colonne *Last run* et les signaux de fraîcheur on-premises.
+</Update>
+
+<Update label="v2.29.3" description="2026-07-02">
+- **Coverage Builder — couverture sous-comptée corrigée** — les liens *Tested By* sont résolus dans les deux sens : une story visiblement liée à plusieurs cas de test n'apparaît plus comme un faux trou sur Azure DevOps Server.
+</Update>
+
+<Update label="v2.29.2" description="2026-07-02">
+- **Coverage Builder — le Planning scan ne boucle plus sur les gros référentiels** — le scan résout la planification **par cas de test** (borné, dédupliqué, timeouts courts) au lieu d'énumérer tous les plans et suites de la collection. Même sémantique, utilisable à l'échelle entreprise.
+</Update>
+
+<Update label="v2.29.1" description="2026-07-02">
+- Lien vers cette documentation en ligne ajouté au pied de page de l'extension et au badge docs.
+</Update>
+
+<Update label="v2.29.0" description="2026-07-02">
+- **[Cockpit d'exécution](/fr/cockpit/execution-cockpit)** — un nouvel onglet du hub : un burndown d'exécution par plan en test points (réel depuis des snapshots quotidiens, idéale rebasée, projection au rythme), un périmètre mouvant tracé honnêtement, les suites/configs en retard, une cible locale quand le plan n'a pas de date de fin, et une incitation à clôturer les campagnes qui stagnent. Lecture seule ; les snapshots vivent dans l'Extension Data — rien ne quitte votre tenant.
+</Update>
+
+<Update label="v2.28.0" description="2026-07-02">
+- **Onglet Test coverage — navigable** — les cinq colonnes se trient (persistance par fiche), la cellule *Last run* mène au run, et un plan cadré ouvre directement sa vue d'exécution.
+</Update>
+
+<Update label="v2.27.2" description="2026-07-01">
+- **Onglet Test coverage** — le sélecteur de portée s'affiche dès que la story est couverte, et chaque #ID de cas de test est cliquable.
+</Update>
+
+<Update label="v2.26.1" description="2026-07-01">
+- **Correctif on-premises** — les résultats de l'onglet Test coverage se résolvent correctement sur Azure DevOps Server (les tests ne s'affichent plus tous en *Non exécuté*).
+</Update>
+
+<Update label="v2.26.0" description="2026-07-01">
+- **[Bandeau verdict d'exécution](/fr/work-item/test-coverage-tab)** sur l'onglet Test coverage — Réussi / Non OK / Non exécuté / Non couvert, précédence stricte, recalculé instantanément avec la portée.
+</Update>
+
+<Update label="v2.25.0" description="2026-07-01">
+- **[Sélecteur de portée de couverture](/fr/work-item/test-coverage-tab)** sur l'onglet Test coverage — cadrez le pass/fail sur *Dernière (tous plans)* ou un plan précis, mémorisé par fiche, basculé en mémoire sans nouvelle lecture.
+</Update>
+
+<Update label="Versions antérieures">
+La génération de rapports et les cinq exports, la traçabilité Epic→US→TC→Bug, le Quality Gate (note A–E, verdict GO/NO-GO, profils et pondération risk-based), le widget dashboard, la Dérive d'exigences, le Coverage Builder, la profondeur de couverture, les imports, les notifications, la planification et bien plus — voir le [changelog complet sur GitHub](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).
+</Update>

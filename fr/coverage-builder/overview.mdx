@@ -21,7 +21,11 @@ La composition n'utilise **que le graphe de liens** — aucun outcome, point ou 
 
 ## « Couverte non planifiée » (opt-in)
 
-Un troisième état — *couverte non planifiée* (un test existe mais n'est dans aucun plan, on veut donc le réutiliser plutôt que le réécrire) — se trouve derrière un **toggle « Scan planification » opt-in, OFF par défaut**. Il est plus coûteux (il énumère plans → suites → cas de test), donc le coût est signalé et l'état n'est jamais affiché sans scan réel. Sans le toggle, le cœur reste à deux états nets.
+Un troisième état — *couverte non planifiée* (un test existe mais n'est dans aucun plan, on veut donc le réutiliser plutôt que le réécrire) — se trouve derrière un **toggle « Scan planification » opt-in, OFF par défaut**. Le scan résout la planification **par cas de test lié** (un lookup borné et dédupliqué par test unique, avec des timeouts courts) — il n'énumère jamais les plans de la collection et reste donc utilisable sur les gros référentiels. Si un lookup échoue, ce test est **réputé planifié** : le scan n'invente jamais un faux « non planifié ». L'état n'est jamais affiché sans scan réel ; sans le toggle, le cœur reste à deux états nets.
+
+## Où les tests sont-ils planifiés ? (colonne Plans & liens execute)
+
+Avec le Scan planification activé, une colonne **Plans** montre par exigence où ses tests liés sont planifiés : le nom du plan s'il est unique, **« N plans »** s'il y en a plusieurs, **« — »** pour un trou (ou scan désactivé). **Dépliez une ligne** pour lister chaque couple (plan, suite) avec un lien **Exécuter dans Azure DevOps** ouvrant la **vue execute**, et une progression d'exécution **n/m run** récupérée paresseusement au dépliage seulement (une fois par suite, cachée en session, dégradation silencieuse — une date que le serveur ne fournit pas est masquée, jamais inventée). Le détail des plans est extrait des réponses que le scan reçoit déjà — **aucun appel API supplémentaire au chargement de la table**.
 
 ## Preview & export (aucune permission requise)
 
