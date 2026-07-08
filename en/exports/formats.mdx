@@ -18,12 +18,13 @@ TestPulse exports the same report to five formats, each optimised for a differen
 
 ## PDF — the full report
 
-Up to **12 configurable sections**, reorderable by drag-and-drop (**Settings → PDF section order**), each independently on or off:
+Up to **13 configurable sections**, reorderable by drag-and-drop (**Settings → PDF section order**), each independently on or off:
 
 - **Cover page** — project info grid, logo (PNG/JPEG/SVG), environment badge
 - **Executive summary** — the automated verdict, or a per-report custom summary
 - **KPI cards** — pass rate, execution rate, passed/failed/blocked, linked bugs
 - **Results table** — latest outcome per test case; a multi-config matrix when 2–3 configurations are detected
+- **Suite × configuration grid** — the execution matrix for multi-configuration plans, **off by default** (enable it in Settings → Report sections); auto-hidden when no configuration is declared
 - **Traceability** — Epic → User Story → Test Case → Bug (3-column table) + untraced suites
 - **Bugs** — all linked bugs with state and severity
 - **Flaky tests** — tests with a high outcome-flip rate
@@ -43,7 +44,7 @@ A **single standalone file** — no server needed to open it:
 
 ## Word (.docx) — editable
 
-Fully **editable in Microsoft Word**, with six sections: cover page, KPI metrics, results table, traceability (Test Case → User Story → Epic → Bug), bugs table, and a **signature page** (if enabled).
+Fully **editable in Microsoft Word**, with six sections: cover page, KPI metrics, results table, traceability (Test Case → User Story → Epic → Bug), bugs table, and a **signature page** (if enabled). The **suite × configuration grid** can also be included — opt-in, same toggle as the PDF (Settings → Report sections).
 
 <Note>Word does not include charts or attachments — for chart-heavy reports, use PDF.</Note>
 

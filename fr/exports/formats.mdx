@@ -18,12 +18,13 @@ TestPulse exporte le même rapport vers cinq formats, chacun optimisé pour un u
 
 ## PDF — le rapport complet
 
-Jusqu'à **12 sections configurables**, réordonnables par drag-and-drop (**Paramètres → Ordre des sections PDF**), chacune activable indépendamment :
+Jusqu'à **13 sections configurables**, réordonnables par drag-and-drop (**Paramètres → Ordre des sections PDF**), chacune activable indépendamment :
 
 - **Page de garde** — grille d'infos projet, logo (PNG/JPEG/SVG), badge environnement
 - **Résumé exécutif** — le verdict automatisé, ou un résumé personnalisé par rapport
 - **KPI cards** — taux de succès, taux d'exécution, passés/échoués/bloqués, bugs liés
 - **Tableau des résultats** — dernier résultat par cas de test ; matrice multi-config si 2–3 configurations détectées
+- **Grille suite × configuration** — la matrice d'exécution des plans multi-configurations, **désactivée par défaut** (à activer dans Paramètres → Sections d'export) ; auto-masquée si aucune configuration n'est déclarée
 - **Traçabilité** — Epic → User Story → Cas de test → Bug (tableau 3 colonnes) + suites non tracées
 - **Bugs** — tous les bugs liés avec état et sévérité
 - **Tests flaky** — tests avec un fort taux de bascule de résultat
@@ -43,7 +44,7 @@ Un **fichier unique autonome** — aucun serveur nécessaire pour l'ouvrir :
 
 ## Word (.docx) — éditable
 
-Entièrement **éditable dans Microsoft Word**, avec six sections : page de garde, métriques KPI, tableau des résultats, traçabilité (Cas de test → User Story → Epic → Bug), tableau des bugs, et une **page de signature** (si activée).
+Entièrement **éditable dans Microsoft Word**, avec six sections : page de garde, métriques KPI, tableau des résultats, traçabilité (Cas de test → User Story → Epic → Bug), tableau des bugs, et une **page de signature** (si activée). La **grille suite × configuration** peut aussi être incluse — opt-in, même toggle que le PDF (Paramètres → Sections d'export).
 
 <Note>Word n'inclut ni graphiques ni pièces jointes — pour les rapports riches en graphiques, utilisez le PDF.</Note>
 
