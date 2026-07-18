@@ -6,6 +6,19 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.34.0" description="2026-07-18">
+**Configuration-aware coverage & change detail on the work item.**
+
+- **The "Last run" now follows the story's own configuration.** When one test case covers several sibling stories that differ only by test configuration (Italy / Singapore / Korea…), the [Test coverage tab](/en/work-item/test-coverage-tab) no longer shows a sibling's more recent run: it resolves the last execution from **this story's own requirement-based suite**. The "Last run" links open the **exact result**, and each row can open the **exact executed suite** instead of a blank plan page. Scope options are labelled **plan · configuration** when a configuration is known. Stories without a requirement-based suite keep the previous behaviour.
+- **"Modified after last run" now shows what changed.** The badge gains a **Show detail** button: expanding it lists the **business fields** changed since that run — Acceptance criteria, Description, State, Priority, Iteration, Tags, Title — as *before → after*, with added wording highlighted on rich fields, a *feeds depth analysis* marker on Acceptance criteria / Description, and any attachments added or removed. The revision read is **lazy and opt-in** — nothing is fetched until you expand.
+
+Read-only throughout.
+</Update>
+<Update label="v2.33.0" description="2026-07-16">
+**Exploratory sessions — a new "Explore" tab on the work item.**
+
+Run an exploratory testing session from the user story itself: a pre-filled charter, timestamped notes, and **Ctrl+V** to paste a capture of any screen or application (desktop apps included). Each capture opens in an **annotation editor** — arrow, rectangle, text, highlighter and **blur** to mask sensitive data — and is attached to Azure DevOps only when you validate it. From the session, **create a bug, task or test case** with repro steps generated from your notes; **ending the session archives it as a Task** tagged `exploratory-session`, carrying the full report and every relation, natively queryable. Resilient by design: debounced autosave, automatic restore, non-destructive retry. Requires the new **work-items write permission** — an administrator must re-approve the extension after this update.
+</Update>
 <Update label="v2.31.0" description="2026-07-08">
 **Suite × configuration grid in exports: now opt-in.**
 

@@ -35,9 +35,9 @@ Precedence is strict: any **Failed** leads to **Not OK**; otherwise any non-pass
 Choose the scope of the pass/fail:
 
 - **Latest (all plans)** — the default.
-- **A specific test plan** — re-frames status, failures and freshness to that plan, and masks the tests that are not in it (with an *"X of N in this plan"* line).
+- **A specific plan · configuration** — each scope option is labelled with its configuration when one is known (e.g. *"SPRINT 5 · QUAL_IT"*); it re-frames status, failures and freshness to that plan, and masks the tests that are not in it (with an *"X of N in this plan"* line).
 
-It is remembered **per work item**, switches **instantly in memory** (no new read), and the **execution verdict re-computes** with it. When a specific plan is framed, a **Run in Azure DevOps** link next to the selector opens that plan's **execution view**. Coverage, Depth and the bug list stay **plan-independent** — a bug binds to a test case, not a plan.
+It is remembered **per work item**, switches **instantly in memory** (no new read), and the **execution verdict re-computes** with it. When a specific plan is framed, a **Run in Azure DevOps** link next to the selector opens that plan's **execution view**. Coverage, Depth and the bug list stay **plan-independent** — a bug binds to a test case, not a plan. When one test case covers several sibling stories that differ only by configuration, the last run is resolved from **this story's own requirement-based suite** — you see your configuration's result, never a sibling's more recent run. Stories without a requirement-based suite keep the previous "latest across configurations" behaviour.
 
 ## Clickable test IDs
 
@@ -47,13 +47,13 @@ Each linked test shows a **clickable #ID** that opens the **test case** in a new
 
 For each linked test: its **#ID**, title (with its type tag), **outcome**, **last run** date, and the **bug** behind a failure — or a *failing-with-no-defect* flag when a test fails without a linked bug.
 
-All **five columns sort** — click a header to sort, click again to reverse — and the sort is remembered **per work item** (failures first by default). When a test has a recorded run, its **Last run cell links to that run** in Azure DevOps.
+All **five columns sort** — click a header to sort, click again to reverse — and the sort is remembered **per work item** (failures first by default). When a test has a recorded run, its **Last run cell opens the exact result** in Azure DevOps, and each row can open the **exact executed suite** — no blank plan page.
 
-A story modified **after its tests last ran** carries a **"Modified after last run"** badge — its green results may no longer prove anything. See [Requirement Drift & stale coverage](/en/quality/requirement-drift).
+A story modified **after its tests last ran** carries a **"Modified after last run"** badge — its green results may no longer prove anything. A **Show detail** button expands it to list the **business fields changed since that run** — Acceptance criteria, Description, State, Priority, Iteration, Tags, Title — as *before → after*, with added wording highlighted on rich fields, a *feeds depth analysis* marker on Acceptance criteria / Description, and any attachments added or removed. The revision read is **lazy and opt-in** — nothing is fetched until you expand. See [Requirement Drift & stale coverage](/en/quality/requirement-drift).
 
 ## What it does not do
 
-- **Read-only.** No new API call, no new scope, no new dependency.
+- **Read-only.** No writes, no new scope, no new dependency. The only extra network call is the **lazy revision read** behind *Show detail* — fetched once, on demand, never on load.
 - It **never writes** to your data and **never reads comments**.
 - Live and independent of published reports — it reuses the same depth / status / failure engines.
 

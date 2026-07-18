@@ -6,6 +6,19 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.34.0" description="2026-07-18">
+**Couverture juste par configuration & détail des changements sur la fiche.**
+
+- **La « Dernière exéc. » suit désormais la configuration de l'US.** Quand un même cas de test couvre plusieurs US sœurs qui ne diffèrent que par la configuration (Italie / Singapour / Corée…), l'[onglet Test coverage](/fr/work-item/test-coverage-tab) n'affiche plus le run plus récent d'une US sœur : il résout la dernière exécution depuis **la suite basée sur l'exigence de cette US**. Les liens « Dernière exéc. » ouvrent le **résultat exact**, et chaque ligne peut ouvrir la **suite exactement exécutée** au lieu d'une page de plan vide. Les portées sont libellées **plan · configuration** quand une configuration est connue. Les US sans suite basée sur l'exigence conservent le comportement précédent.
+- **« Modifiée après le dernier run » montre désormais ce qui a changé.** Le badge gagne un bouton **Afficher le détail** : le déplier liste les **champs métier** modifiés depuis ce run — Critères d'acceptation, Description, État, Priorité, Itération, Tags, Titre — en *avant → après*, avec l'ajout surligné sur les champs riches, un marqueur *alimente l'analyse de profondeur* sur Critères d'acceptation / Description, et les pièces jointes ajoutées ou retirées. La lecture des révisions est **lazy et opt-in** — rien n'est chargé tant que vous ne dépliez pas.
+
+Lecture seule de bout en bout.
+</Update>
+<Update label="v2.33.0" description="2026-07-16">
+**Sessions exploratoires — un nouvel onglet « Explore » sur la fiche.**
+
+Menez une session de test exploratoire depuis l'US elle-même : charte pré-remplie, notes horodatées, et **Ctrl+V** pour coller une capture de n'importe quel écran ou application (applications desktop comprises). Chaque capture s'ouvre dans un **éditeur d'annotation** — flèche, rectangle, texte, surligneur et **flou** pour masquer les données sensibles — et n'est attachée à Azure DevOps qu'à la validation. Depuis la session, **créez un bug, une tâche ou un cas de test** avec des repro steps générés depuis vos notes ; **terminer la session l'archive en Task** taguée `exploratory-session`, portant le rapport complet et toutes les relations, requêtable nativement. Résiliente par conception : autosave débouncé, restauration automatique, reprise non destructive. Nécessite la nouvelle **permission d'écriture des work items** — un administrateur doit ré-approuver l'extension après cette mise à jour.
+</Update>
 <Update label="v2.31.0" description="2026-07-08">
 **Grille suite × configuration dans les exports : désormais opt-in.**
 

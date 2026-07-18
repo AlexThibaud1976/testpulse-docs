@@ -35,9 +35,9 @@ Précédence stricte : au moins un **Failed** donne **Non OK** ; sinon au moins 
 Choisissez la portée du pass/fail :
 
 - **Dernière (tous plans)** — par défaut.
-- **Un plan de test précis** — recadre statut, échecs et fraîcheur sur ce plan, et masque les tests qui n'y sont pas (avec une ligne *« X sur N dans ce plan »*).
+- **Un plan · configuration précis** — chaque portée est libellée avec sa configuration quand elle est connue (ex. *« SPRINT 5 · QUAL_IT »*) ; elle recadre statut, échecs et fraîcheur sur ce plan, et masque les tests qui n'y sont pas (avec une ligne *« X sur N dans ce plan »*).
 
-Il est mémorisé **par fiche**, bascule **instantanément en mémoire** (aucune lecture nouvelle), et le **verdict d'exécution se recalcule** avec lui. Quand un plan précis est cadré, un lien **Exécuter dans Azure DevOps** à côté du sélecteur ouvre la **vue d'exécution** de ce plan. Couverture, Profondeur et la liste des bugs restent **plan-indépendantes** — un bug est lié à un cas de test, pas à un plan.
+Il est mémorisé **par fiche**, bascule **instantanément en mémoire** (aucune lecture nouvelle), et le **verdict d'exécution se recalcule** avec lui. Quand un plan précis est cadré, un lien **Exécuter dans Azure DevOps** à côté du sélecteur ouvre la **vue d'exécution** de ce plan. Couverture, Profondeur et la liste des bugs restent **plan-indépendantes** — un bug est lié à un cas de test, pas à un plan. Quand un même cas de test couvre plusieurs US sœurs qui ne diffèrent que par la configuration, la dernière exécution est résolue depuis **la suite basée sur l'exigence de cette US** — vous voyez le résultat de *votre* configuration, jamais le run plus récent d'une US sœur. Les US sans suite basée sur l'exigence conservent le comportement précédent (« dernière toutes configurations »).
 
 ## #ID de test cliquables
 
@@ -47,13 +47,13 @@ Chaque test lié affiche un **#ID cliquable** qui ouvre le **cas de test** dans 
 
 Pour chaque test lié : son **#ID**, son titre (avec son tag de type), son **résultat**, sa date de **dernière exécution**, et le **bug** derrière un échec — ou un indicateur *échec sans défaut* quand un test échoue sans bug lié.
 
-Les **cinq colonnes se trient** — cliquez un en-tête pour trier, re-cliquez pour inverser — et le tri est mémorisé **par fiche** (échecs en tête par défaut). Quand un test a un run enregistré, sa cellule **Dernière exécution mène à ce run** dans Azure DevOps.
+Les **cinq colonnes se trient** — cliquez un en-tête pour trier, re-cliquez pour inverser — et le tri est mémorisé **par fiche** (échecs en tête par défaut). Quand un test a un run enregistré, sa cellule **Dernière exécution ouvre le résultat exact** dans Azure DevOps, et chaque ligne peut ouvrir la **suite exactement exécutée** — jamais une page de plan vide.
 
-Une story modifiée **après la dernière exécution de ses tests** porte un badge **« Modifiée après le dernier run »** — ses résultats verts ne prouvent peut-être plus rien. Voir [Dérive d'exigences & couverture périmée](/fr/quality/requirement-drift).
+Une story modifiée **après la dernière exécution de ses tests** porte un badge **« Modifiée après le dernier run »** — ses résultats verts ne prouvent peut-être plus rien. Un bouton **Afficher le détail** le déplie pour lister les **champs métier modifiés depuis ce run** — Critères d'acceptation, Description, État, Priorité, Itération, Tags, Titre — en *avant → après*, avec l'ajout surligné sur les champs riches, un marqueur *alimente l'analyse de profondeur* sur Critères d'acceptation / Description, et les pièces jointes ajoutées ou retirées. La lecture des révisions est **lazy et opt-in** — rien n'est chargé tant que vous ne dépliez pas. Voir [Dérive d'exigences & couverture périmée](/fr/quality/requirement-drift).
 
 ## Ce que ça ne fait pas
 
-- **Lecture seule.** Aucun nouvel appel API, aucun nouveau scope, aucune nouvelle dépendance.
+- **Lecture seule.** Aucune écriture, aucun nouveau scope, aucune nouvelle dépendance. Le seul appel réseau supplémentaire est la **lecture lazy des révisions** derrière *Afficher le détail* — une fois, à la demande, jamais au chargement.
 - Il **n'écrit jamais** dans vos données et **ne lit jamais les commentaires**.
 - Live et indépendant des rapports publiés — il réutilise les mêmes moteurs de profondeur / statut / échec.
 
