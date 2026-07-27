@@ -1,0 +1,26 @@
+---
+title: "Rapport de session"
+description: "Exportez un PDF signé d'une session exploratoire — charte, timeline, work items créés, captures embarquées — ou toutes les sessions closes d'une US en un seul document."
+icon: "file-text"
+---
+
+Une session archivée vit déjà dans Azure DevOps sous forme de Task requêtable. Quand vous avez besoin de quelque chose à **partager ou faire signer**, exportez-la en PDF.
+
+## Un PDF signé d'une session
+
+Une session terminée s'exporte en **PDF signé** : la charte, sa durée et son tag de campagne, la **timeline chronologique complète**, les work items créés, et une **signature du testeur avec un horodatage en pied de chaque page** — en français ou en anglais, selon la langue active. Les captures sont **embarquées en image** ; si une capture ne peut pas être récupérée (réseau, on-premises), elle est simplement **listée par son nom** — le rapport ne casse jamais. Les fichiers non-image sont toujours listés par leur nom.
+
+## Toutes les sessions closes d'une US
+
+Un second bouton, **toujours disponible** dans l'onglet, exporte **toutes les sessions closes de l'US** en un seul PDF, regroupées par work item hôte. Il lit les mêmes données archivées que la restauration de session, **sans appel Azure DevOps supplémentaire** — pratique pour un bilan de campagne ou une piste d'audit.
+
+## Clôture fiabilisée
+
+Clôturer une session est **fiable** : une session restaurée ne reste plus bloquée en « active », l'autosave en attente est annulé avant l'écriture de clôture pour éviter un writer concurrent, et les erreurs Azure DevOps sont affichées **clairement** au lieu d'un objet brut. Si une clôture échoue, la session reste active et rejouable plutôt que de risquer une restauration fantôme plus tard.
+
+## Voir aussi
+
+<CardGroup cols={2}>
+  <Card title="Vue d'ensemble d'Explore" icon="compass" href="/fr/exploratory/overview">Démarrer une session et prendre des notes.</Card>
+  <Card title="Capturer, annoter & créer" icon="pencil" href="/fr/exploratory/capture-and-create">Annoter les captures et créer des work items.</Card>
+</CardGroup>

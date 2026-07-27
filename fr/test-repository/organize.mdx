@@ -1,0 +1,43 @@
+---
+title: "Organiser à grande échelle"
+description: "Amorcez l'arborescence automatiquement, rangez les cas en masse, lisez une vue plate avec les chemins complets, et ordonnez les cas à la main — pensé pour les projets à plusieurs milliers de cas de test."
+icon: "layers"
+---
+
+Ranger les cas un par un convient à une démo, pas à un vrai projet aux centaines ou milliers de cas de test. Cette page couvre tout ce qui rend le Repository utilisable à grande échelle — le tout **additif et réversible**, sans jamais modifier Azure DevOps.
+
+## Amorcer l'arborescence automatiquement
+
+Plutôt que de bâtir l'arbre à la main, **amorcez-le** depuis une structure que vous avez déjà :
+
+- **Depuis les Area Paths** — chaque segment d'area path devient un dossier (segments trimmés, vides ignorés).
+- **Depuis la hiérarchie plans/suites** — vos plans et suites existants deviennent des dossiers. Un cas présent dans plusieurs suites est rangé une seule fois, dans la première rencontrée (règle du *dossier unique*).
+
+L'amorçage est **strictement additif** : les dossiers existants sont réutilisés par nom, jamais renommés, déplacés ni supprimés, et un cas déjà rangé n'est jamais déplacé. Il est **idempotent** — le rejouer sur son propre résultat ne change rien. Un **aperçu chiffré** (dossiers à créer ou réutiliser, cas à ranger ou déjà rangés) s'affiche avant toute écriture, et vous pouvez annuler. Aucun nouvel appel Azure DevOps n'est fait : le mapping dont l'amorçage a besoin était déjà récupéré.
+
+<Note>L'amorçage n'écrase jamais votre travail. Il ne fait qu'*ajouter* des dossiers et ranger les cas *non classés* — votre organisation manuelle est préservée.</Note>
+
+## Opérations de masse
+
+Cochez les cas par ligne pour bâtir une sélection qui **survit au défilement** et se remet à zéro au changement de dossier ou de filtre. **« Tout sélectionner »** est borné aux **résultats filtrés visibles** — jamais l'univers entier — pour que vous sachiez toujours exactement ce sur quoi vous agissez. Affectez ou retirez un lot entier en une **seule écriture atomique**, avec un compte-rendu exact ensuite (affectés / déplacés / inchangés).
+
+## Lisibilité : compteurs, vue plate, avertissements de noms
+
+- **Compteurs descendants inclus** — chaque dossier montre combien de cas il contient *y compris ses sous-dossiers*, façon Xray, pour qu'un dossier parent ne paraisse jamais vide à tort.
+- **Vue plate** — passez de l'arbre à une liste plate de **chaque cas rangé avec son chemin de dossier complet**. La recherche s'applique, et votre choix de vue est mémorisé.
+- **Avertissement de noms frères** — un avis **non bloquant** apparaît quand deux dossiers frères portent le même nom (trimmé, insensible à la casse), y compris les doublons qu'un amorçage aurait produits. Créer ou renommer reste autorisé — c'est un signalement, pas un mur.
+
+## « Non planifiés » (ex-« orphelins ADO »)
+
+Le nœud qui liste les cas planifiés nulle part est libellé **« Non planifiés »** (anglais : *Not in any plan*). L'ancien terme « orphelins ADO » se confondait trop facilement avec « non classés » — deux idées différentes. *Non classé* signifie que *vous* ne l'avez pas encore mis dans un dossier du Repository ; *Non planifié* signifie qu'**Azure DevOps** ne l'a dans aucun plan de test. La définition n'a pas changé, seulement le libellé.
+
+## Ordre manuel
+
+Dans un dossier, réordonnez les cas par **glisser-déposer** ou au **clavier** (monter / descendre). Chaque dossier a un **mode de tri** : `id` (par défaut), `title`, ou `manual`. Au premier réordonnancement, le dossier bascule en tri manuel — et repasser à un tri automatique demande une **confirmation explicite**, pour qu'un ordre manuel ne soit **jamais écrasé silencieusement**.
+
+## Voir aussi
+
+<CardGroup cols={2}>
+  <Card title="Vue d'ensemble du Repository" icon="folder-tree" href="/fr/test-repository/overview">Le concept, Non classés, recherche et « utilisé dans ».</Card>
+  <Card title="Générer un plan depuis un dossier" icon="square-pen" href="/fr/test-repository/generate-a-plan">Transformez votre dossier organisé en plan ADO réel.</Card>
+</CardGroup>

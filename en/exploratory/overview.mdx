@@ -1,0 +1,32 @@
+---
+title: "Exploratory testing — the Explore tab"
+description: "Run a full exploratory testing session from the user story itself: charter, timestamped notes, resilient autosave — and everything stays in your Azure DevOps tenant."
+icon: "compass"
+---
+
+Scripted test cases don't catch everything. The **Explore** tab, on the work item form, lets an analyst or tester run a **full exploratory session from the user story itself** — take notes, capture and annotate any screen, and turn findings into work items — then archives the whole thing back into Azure DevOps as a queryable Task.
+
+## Start a session in one screen
+
+From a user story, open **Explore** and start: a **charter** is pre-filled with the story's title, with an optional **timer** and a free **campaign tag**. Area and Iteration are **inherited from the story and editable** through filterable tree pickers. As you work, add **timestamped notes** — they become the backbone of the session report and of any bug you create.
+
+## Resilient by design
+
+A session is meant to survive real life:
+
+- **Debounced autosave** (≤ 2 s) into the extension's own storage — you don't save by hand.
+- **Automatic restore** when you reopen the work item, with the elapsed time recomputed.
+- **Abandon** asks for confirmation, and a failed close is **non-destructive and replayable** — a session is never silently lost or left in a phantom state.
+
+## Everything stays in your tenant
+
+Exploratory sessions **write to Azure DevOps** — attachments and work items — but only on **explicit action** (attach a capture, create a bug, archive the session). This is the capability that introduced the **work-items write permission**; adding it triggers a one-time **administrator re-approval** of the extension. Reads are unchanged, every write is isolated in a dedicated module, and **nothing leaves your ADO tenant** — no telemetry, no added dependency. If the permission isn't approved yet, an **explanatory banner** replaces the raw error on any refused write.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Capture, annotate & create" icon="pencil" href="/en/exploratory/capture-and-create">Paste a screenshot, annotate it, raise a bug.</Card>
+  <Card title="Session report" icon="file-text" href="/en/exploratory/session-report">Export a signed PDF of the session.</Card>
+  <Card title="Permissions" icon="shield-check" href="/en/security/permissions">The work-items write scope, and when it's used.</Card>
+  <Card title="Privacy" icon="lock" href="/en/security/privacy">What stays in your tenant.</Card>
+</CardGroup>

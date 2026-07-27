@@ -1,0 +1,42 @@
+---
+title: "Test Repository — organisez vos cas de test"
+description: "Une arborescence de dossiers gratuite et partagée au niveau projet pour organiser et retrouver vos cas de test Azure DevOps, façon Xray — sans jamais modifier les données ADO."
+icon: "folder-tree"
+---
+
+Azure DevOps range un cas de test dans une suite, dans un plan. Il n'existe aucun endroit libre pour *organiser* vos cas comme vous les pensez, aucun moyen simple de retrouver un cas, et un cas lié à rien est de fait invisible. L'onglet **Repository** comble ce manque : une arborescence de dossiers pour organiser et retrouver vos cas de test, façon Xray pour Jira — et il ne touche jamais à vos données ADO.
+
+## Une arborescence de références, pas une copie
+
+Le Repository est un **objet propre à TestPulse**, partagé au niveau **projet** et stocké dans l'espace de l'extension. Il range des **références** à vos cas de test (`testCaseId`), jamais des copies de leur contenu : titres, étapes et champs restent l'unique source de vérité dans Azure DevOps. Vous pouvez créer, renommer, déplacer et supprimer des dossiers à **toute profondeur**, par glisser-déposer natif ou via un menu **« Déplacer vers… »** accessible au clavier. Un cas vit dans **au plus un dossier** ; le retirer de son dossier le renvoie vers **Non classés**.
+
+<Note>Parce que le Repository ne range que des références, rien de ce que vous faites ici ne modifie un cas de test, une suite ou un plan dans Azure DevOps. Le seul endroit qui écrit est la [génération d'un plan depuis un dossier](/fr/test-repository/generate-a-plan), et uniquement après un aperçu explicite.</Note>
+
+## « Non classés » — les cas pas encore rangés
+
+Le nœud **Non classés** n'est pas un dossier que vous remplissez. Il est **calculé** : l'ensemble complet des cas de test du projet, moins ceux déjà rangés quelque part. Il est recalculé à chaque chargement et jamais stocké, donc il reflète toujours la réalité. Ranger un cas le retire de Non classés ; retirer un cas de son dossier l'y remet. C'est ainsi que vous vous assurez qu'aucun cas n'est oublié en silence.
+
+## Recherche sur tout le projet
+
+Cherchez par **titre, id ou tag**, insensible à la casse et aux accents, sur l'ensemble du projet — pas seulement le dossier courant. C'est le moyen le plus rapide de répondre à *« où est passé ce cas ? »* sans parcourir les plans et les suites à la main.
+
+## « Utilisé dans N emplacement(s) »
+
+Dépliez un cas pour voir **où il est planifié** — chaque paire `plan › suite` à laquelle il appartient. Cela réutilise la même résolution que le signal de couverture, sans nouveau périmètre. Notez la séparation volontaire : ce panneau montre **les emplacements de planification uniquement**, jamais un statut d'exécution. *Où un cas est planifié* et *comment il s'est exécuté la dernière fois* sont deux questions distinctes, et le Repository ne répond qu'à la première.
+
+## Orphelins — un cas présent dans aucun plan
+
+Une vue dédiée fait remonter les **orphelins** : les cas de test qui existent dans le projet mais ne sont dans aucun plan. Le scan est **toujours explicite** — vous le déclenchez par un bouton, il affiche sa progression et peut être annulé, et son résultat est mis en cache et horodaté pour le relancer quand vous voulez. Un orphelin se range comme n'importe quel cas ; être orphelin est une propriété *calculée*, orthogonale à l'endroit où vous l'avez rangé. (Ce nœud est libellé **« Non planifiés »** — voir [Organiser à grande échelle](/fr/test-repository/organize) pour comprendre le changement de nom.)
+
+## Lecture seule par conception
+
+Tout ce qui est décrit sur cette page est **en lecture seule vis-à-vis d'Azure DevOps**, ne nécessite **aucun nouveau périmètre** et n'ajoute **aucune nouvelle dépendance**. Le Repository lit une fois les cas de test du projet et réutilise des primitives que TestPulse possédait déjà. Si une lecture échoue réellement, vous obtenez une **bannière d'erreur avec le message réel** — une panne n'est jamais déguisée en projet vide.
+
+## Voir aussi
+
+<CardGroup cols={2}>
+  <Card title="Organiser à grande échelle" icon="layers" href="/fr/test-repository/organize">Amorçage, opérations de masse, vue plate et ordre manuel.</Card>
+  <Card title="Générer un plan depuis un dossier" icon="square-pen" href="/fr/test-repository/generate-a-plan">Transformez un dossier en plan ADO réel.</Card>
+  <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">Pourquoi TestPulse lit d'abord.</Card>
+  <Card title="Permissions" icon="shield-check" href="/fr/security/permissions">Quels périmètres sont utilisés, et quand.</Card>
+</CardGroup>

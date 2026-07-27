@@ -1,0 +1,37 @@
+---
+title: "Generate a plan from a folder"
+description: "Turn a Repository folder into a real Azure DevOps test plan and suites — explicit, previewed, and a snapshot rather than a mirror."
+icon: "square-pen"
+---
+
+Organizing cases in the Repository is read-only. But when a folder represents a campaign you actually want to run, you can turn it into a **real Azure DevOps plan and suites** in one action — the way Xray's context actions work. This is the **one Repository capability that writes to Azure DevOps**, and it is always explicit and previewed.
+
+## Three destinations
+
+From a folder, choose where the cases should land:
+
+- **New plan** — name it, set its **Area Path** and **Iteration Path** (empty means the project root), and optionally **mirror the folder tree into static suites**, preserving depth. With mirroring off, every case goes straight to the plan's root.
+- **Existing plan** — search for a plan; the cases are added under its root.
+- **Existing suite** — pick a plan, then navigate its suite tree (loaded **on demand**) to the exact target suite. Only **static** suites can receive cases; requirement-based suites are shown but not selectable, because they populate themselves by query.
+
+## A counted preview before anything is written
+
+Nothing is sent to Azure DevOps until you confirm a **preview** that spells out exactly what will happen: plans and suites to **create**, suites **reused** by name (a suite that already exists under the same parent is reused — never duplicated), cases to **add after de-duplication**, and cases **skipped** because they are already present. On the *existing plan* and *existing suite* paths, the preview carries a distinct **warning** that you are adding to a shared structure that may already be in use — a different tone from creating a fresh, reversible plan.
+
+<Note>**Snapshot, not mirror.** The generated plan is a photograph of the folder at that moment. It does **not** stay in sync afterwards: changing the folder later doesn't change the plan, and vice versa.</Note>
+
+## No duplicates, and honest failures
+
+Cases already present in a target suite are **de-duplicated** before anything is added, so a case is never added twice — including between same-named sibling folders. Azure DevOps has no multi-write transaction, so if a write fails partway, TestPulse does **not** attempt a rollback: it reports precisely what was created and what failed, with a link to the new plan. You are never left guessing about a half-finished state.
+
+## Permissions
+
+Plan generation uses the **plan-creation write permission** that Coverage Builder already declares — there is **no new scope**. If your organization hasn't approved that permission yet, an administrator approves it once; everything else in the Repository stays read-only.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Organize at scale" icon="layers" href="/en/test-repository/organize">Prepare the folder before you generate.</Card>
+  <Card title="Coverage Builder — create a plan" icon="list-checks" href="/en/coverage-builder/create-plan">The other place TestPulse writes.</Card>
+  <Card title="Permissions" icon="shield-check" href="/en/security/permissions">Which scope plan generation uses.</Card>
+</CardGroup>

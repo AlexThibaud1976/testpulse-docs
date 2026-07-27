@@ -1,0 +1,26 @@
+---
+title: "Session report"
+description: "Export a signed PDF of an exploratory session — charter, timeline, created work items, embedded screenshots — or all closed sessions of a story in one document."
+icon: "file-text"
+---
+
+An archived session already lives in Azure DevOps as a queryable Task. When you need something to **share or sign off**, export it as a PDF.
+
+## A signed PDF of one session
+
+A finished session exports to a **signed PDF**: the charter, its duration and campaign tag, the **full chronological timeline**, the work items you created, and a **tester signature with a timestamp in the footer of every page** — in French or English, following the active language. Screenshots are **embedded as images**; if a capture can't be fetched (network, on-premises), it is simply **listed by name** — the report never breaks. Non-image files are always listed by name.
+
+## All closed sessions of a story
+
+A second button, **always available** in the tab, exports **every closed session of the user story** as a single PDF, grouped by host work item. It reads the same archived data as session restore, with **no extra Azure DevOps call** — handy for a campaign wrap-up or an audit trail.
+
+## Reliable close
+
+Closing a session is **reliable**: a restored session no longer gets stuck in an "active" state, the pending autosave is cancelled before the closing write to avoid a concurrent writer, and Azure DevOps errors are shown **clearly** instead of a raw object. If a close fails, the session stays active and replayable rather than risking a phantom restore later.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Explore overview" icon="compass" href="/en/exploratory/overview">Start a session and take notes.</Card>
+  <Card title="Capture, annotate & create" icon="pencil" href="/en/exploratory/capture-and-create">Annotate captures and raise work items.</Card>
+</CardGroup>

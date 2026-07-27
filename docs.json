@@ -21,9 +21,11 @@
           { "group": "Cockpit", "icon": "gauge", "pages": ["en/cockpit/execution-cockpit"] },
           { "group": "Dashboard", "icon": "layout-dashboard", "pages": ["en/dashboard/quality-overview-widget"] },
           { "group": "Coverage Builder", "icon": "list-checks", "pages": ["en/coverage-builder/overview", "en/coverage-builder/create-plan"] },
+          { "group": "Test Repository", "icon": "folder-tree", "pages": ["en/test-repository/overview", "en/test-repository/organize", "en/test-repository/generate-a-plan"] },
           { "group": "Reports history", "icon": "history", "pages": ["en/collaboration/history", "en/collaboration/notifications-and-scheduling"] },
           { "group": "Configuration", "icon": "settings", "pages": ["en/configuration/settings-and-import"] },
           { "group": "On the work item", "icon": "list-checks", "pages": ["en/work-item/test-coverage-tab"] },
+          { "group": "Exploratory testing", "icon": "compass", "pages": ["en/exploratory/overview", "en/exploratory/capture-and-create", "en/exploratory/session-report"] },
           { "group": "Security", "icon": "shield", "pages": ["en/security/privacy", "en/security/permissions"] },
           { "group": "Reference", "icon": "library", "pages": ["en/reference/faq", "en/reference/glossary"] },
           { "group": "Changelog", "icon": "clock", "pages": ["en/changelog"] }
@@ -40,9 +42,11 @@
           { "group": "Cockpit", "icon": "gauge", "pages": ["fr/cockpit/execution-cockpit"] },
           { "group": "Dashboard", "icon": "layout-dashboard", "pages": ["fr/dashboard/quality-overview-widget"] },
           { "group": "Coverage Builder", "icon": "list-checks", "pages": ["fr/coverage-builder/overview", "fr/coverage-builder/create-plan"] },
+          { "group": "Test Repository", "icon": "folder-tree", "pages": ["fr/test-repository/overview", "fr/test-repository/organize", "fr/test-repository/generate-a-plan"] },
           { "group": "Historique & collaboration", "icon": "history", "pages": ["fr/collaboration/history", "fr/collaboration/notifications-and-scheduling"] },
           { "group": "Configuration", "icon": "settings", "pages": ["fr/configuration/settings-and-import"] },
           { "group": "Sur la fiche", "icon": "list-checks", "pages": ["fr/work-item/test-coverage-tab"] },
+          { "group": "Tests exploratoires", "icon": "compass", "pages": ["fr/exploratory/overview", "fr/exploratory/capture-and-create", "fr/exploratory/session-report"] },
           { "group": "Sécurité", "icon": "shield", "pages": ["fr/security/privacy", "fr/security/permissions"] },
           { "group": "Référence", "icon": "library", "pages": ["fr/reference/faq", "fr/reference/glossary"] },
           { "group": "Changelog", "icon": "clock", "pages": ["fr/changelog"] }

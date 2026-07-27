@@ -1,0 +1,42 @@
+---
+title: "Test Repository — organize your test cases"
+description: "A free, project-shared folder tree to organize and find your Azure DevOps test cases, Xray-style — without ever modifying ADO data."
+icon: "folder-tree"
+---
+
+Azure DevOps stores a test case inside a suite, inside a plan. There is no free place to *organize* your cases the way you think about them, no easy way to find a case again, and a case linked to nothing is effectively invisible. The **Repository** tab fills that gap: a folder tree to organize and retrieve your test cases, the way Xray does for Jira — and it never touches your ADO data.
+
+## A tree of references, not a copy
+
+The Repository is a **TestPulse object**, shared at the **project** level and stored in the extension's own space. It files **references** to your test cases (`testCaseId`), never copies of their content: titles, steps and fields always stay the single source of truth in Azure DevOps. You can create, rename, move and delete folders at **any depth**, using native drag & drop or a keyboard-accessible **"Move to…"** menu. A case lives in **at most one folder**; removing it from its folder sends it back to **Unfiled**.
+
+<Note>Because the Repository stores only references, nothing you do here changes a test case, a suite or a plan in Azure DevOps. The one place that writes is [generating a plan from a folder](/en/test-repository/generate-a-plan), and only after an explicit preview.</Note>
+
+## "Unfiled" — the cases not yet filed
+
+The **Unfiled** node is not a folder you fill. It is **computed**: the full set of the project's test cases, minus the ones already filed somewhere. It is recalculated on every load and never stored, so it always reflects reality. Filing a case removes it from Unfiled; removing a case from its folder puts it back. This is how you make sure no case is quietly forgotten.
+
+## Search across the whole project
+
+Search by **title, id or tag**, case- and accent-insensitive, across the entire project — not just the current folder. It is the fastest way to answer *"where did that case go?"* without walking plans and suites by hand.
+
+## "Used in N location(s)"
+
+Expand a case to see **where it is planned** — each `plan › suite` pair it belongs to. This reuses the same resolution as the coverage signal, so it costs no new permission. Note the deliberate separation: this panel shows **planning locations only**, never an execution status. *Where a case is planned* and *how it last ran* are two different questions, and the Repository answers only the first.
+
+## Orphans — a case that lives in no plan
+
+A dedicated view surfaces **orphans**: test cases that exist in the project but sit in no plan at all. The scan is **always explicit** — you trigger it with a button, it shows progress and can be cancelled, and its result is cached and timestamped so you can re-run it when you want. An orphan is filed like any other case; being an orphan is a *computed* property, orthogonal to where you filed it. (This node is labelled **"Not in any plan"** — see [Organize at scale](/en/test-repository/organize) for why the wording changed.)
+
+## Read-only by design
+
+Everything on this page is **read-only against Azure DevOps**, needs **no new permission**, and adds **no new dependency**. The Repository reads the project's test cases once and reuses primitives TestPulse already had. If a read genuinely fails, you get an **error banner with the real message** — a failure is never disguised as an empty project.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Organize at scale" icon="layers" href="/en/test-repository/organize">Auto-seed, bulk operations, flat view and manual ordering.</Card>
+  <Card title="Generate a plan from a folder" icon="square-pen" href="/en/test-repository/generate-a-plan">Turn a folder into a real ADO plan.</Card>
+  <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">Why TestPulse reads first.</Card>
+  <Card title="Permissions" icon="shield-check" href="/en/security/permissions">What scopes are used, and when.</Card>
+</CardGroup>

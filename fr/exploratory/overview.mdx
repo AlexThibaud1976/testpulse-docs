@@ -1,0 +1,32 @@
+---
+title: "Tests exploratoires — l'onglet Explore"
+description: "Menez une session de test exploratoire complète depuis l'US elle-même : charte, notes horodatées, autosave résilient — et tout reste dans votre tenant Azure DevOps."
+icon: "compass"
+---
+
+Les cas de test scriptés ne captent pas tout. L'onglet **Explore**, sur la fiche work item, permet à un analyste ou un testeur de mener une **session exploratoire complète depuis l'US elle-même** — prendre des notes, capturer et annoter n'importe quel écran, transformer les constats en work items — puis d'archiver le tout dans Azure DevOps sous forme de Task requêtable.
+
+## Démarrer une session en un écran
+
+Depuis une US, ouvrez **Explore** et démarrez : une **charte** est pré-remplie avec le titre de l'US, avec un **timer** optionnel et un **tag de campagne** libre. Area et Iteration sont **hérités de l'US et éditables** via des pickers arborescents avec filtre. Au fil de la session, ajoutez des **notes horodatées** — elles constituent l'ossature du rapport de session et de tout bug que vous créez.
+
+## Résiliente par conception
+
+Une session est faite pour survivre à la vraie vie :
+
+- **Autosave débouncé** (≤ 2 s) dans l'espace de stockage de l'extension — vous ne sauvegardez pas à la main.
+- **Restauration automatique** à la réouverture de la fiche, avec le temps écoulé recalculé.
+- L'**abandon** demande confirmation, et une clôture en échec est **non destructive et rejouable** — une session n'est jamais perdue en silence ni laissée dans un état fantôme.
+
+## Tout reste dans votre tenant
+
+Les sessions exploratoires **écrivent dans Azure DevOps** — pièces jointes et work items — mais uniquement sur **action explicite** (attacher une capture, créer un bug, archiver la session). C'est la capacité qui a introduit la **permission d'écriture des work items** ; son ajout déclenche une **ré-approbation administrateur** unique de l'extension. Les lectures sont inchangées, chaque écriture est isolée dans un module dédié, et **rien ne quitte votre tenant ADO** — aucune télémétrie, aucune dépendance ajoutée. Si la permission n'est pas encore approuvée, un **bandeau explicatif** remplace l'erreur brute sur toute écriture refusée.
+
+## Voir aussi
+
+<CardGroup cols={2}>
+  <Card title="Capturer, annoter & créer" icon="pencil" href="/fr/exploratory/capture-and-create">Collez une capture, annotez-la, créez un bug.</Card>
+  <Card title="Rapport de session" icon="file-text" href="/fr/exploratory/session-report">Exportez un PDF signé de la session.</Card>
+  <Card title="Permissions" icon="shield-check" href="/fr/security/permissions">Le périmètre d'écriture des work items, et quand il sert.</Card>
+  <Card title="Confidentialité" icon="lock" href="/fr/security/privacy">Ce qui reste dans votre tenant.</Card>
+</CardGroup>

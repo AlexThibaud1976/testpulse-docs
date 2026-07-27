@@ -1,0 +1,35 @@
+---
+title: "Capturer, annoter & créer"
+description: "Collez une capture de n'importe quel écran ou application, annotez-la (dont un flou pour masquer les données sensibles), et transformez vos constats en bug, tâche ou cas de test — avec des repro steps générés depuis vos notes."
+icon: "pencil"
+---
+
+Le cœur d'une session exploratoire, c'est transformer ce que vous *voyez* en quelque chose d'actionnable : un écran capturé, annoté, attaché — et, quand c'est un défaut, un bug dont les repro steps sont déjà écrits.
+
+## Coller une capture de n'importe quel écran ou application
+
+Appuyez sur **Ctrl+V** pour coller une capture de **n'importe quel écran ou application** — prenez-la avec **Win+Maj+S**, qui fonctionne aussi pour les applications desktop, sans rien à installer. Un fichier distinct (une vidéo **Win+G**, un log…) se joint par **glisser-déposer**.
+
+## Annoter avant l'attachement
+
+Chaque capture s'ouvre dans un **éditeur d'annotation** : **flèche, rectangle, texte, surligneur**, et un **flou** pour masquer les données sensibles. Le flou est **destructif à l'aplatissement** — une fois appliqué et attaché, les pixels masqués sont supprimés, pas seulement cachés — ce qui est exactement ce que vous voulez pour tout ce qui est confidentiel. Vous disposez de deux couleurs explicites et pouvez annuler le dernier trait. La capture n'est **attachée à Azure DevOps qu'à la validation** ; annuler l'éditeur n'uploade **rien**.
+
+<Note>Parce que le flou est destructif, une capture masquée quitte votre poste déjà caviardée — les pixels d'origine n'atteignent jamais Azure DevOps.</Note>
+
+## Créer un bug, une tâche ou un cas de test
+
+Depuis la session, créez un work item sans quitter l'écran :
+
+- **Bug** — deux champs à remplir (titre pré-rempli avec votre dernière note, plus la sévérité) ; tout le reste est **injecté, visible et éditable** : les **repro steps** générés en HTML depuis vos notes, vos captures en **cases à cocher**, les liens vers l'US et la session, et la classification héritée avec un **override replié**.
+- **Tâche** et **Cas de test** — le même flux, avec des étapes optionnelles générées depuis vos notes.
+
+## Archiver la session
+
+**Terminer la session** l'archive en **Task taguée `exploratory-session`** (plus votre tag de campagne), portant le rapport complet — charte, durée, compteurs, timeline — et ses relations vers l'US, les captures et chaque work item créé. Les sessions deviennent **requêtables nativement** dans Azure DevOps : une campagne se retrouve avec une simple requête de tag.
+
+## Voir aussi
+
+<CardGroup cols={2}>
+  <Card title="Vue d'ensemble d'Explore" icon="compass" href="/fr/exploratory/overview">Démarrer une session et pourquoi elle est résiliente.</Card>
+  <Card title="Rapport de session" icon="file-text" href="/fr/exploratory/session-report">Transformez une session terminée en PDF signé.</Card>
+</CardGroup>

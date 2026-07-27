@@ -1,0 +1,35 @@
+---
+title: "Capture, annotate & create"
+description: "Paste a screenshot of any screen or app, annotate it (including a blur to mask sensitive data), and turn findings into a bug, task or test case — with repro steps generated from your notes."
+icon: "pencil"
+---
+
+The heart of an exploratory session is turning what you *see* into something actionable: a captured screen, annotated, attached, and — when it's a defect — a bug with repro steps already written.
+
+## Paste a capture of any screen or app
+
+Press **Ctrl+V** to paste a screenshot of **any screen or application** — take it with **Win+Shift+S**, which also works for desktop apps, with nothing to install. A separate file (a **Win+G** video, a log…) attaches by **drag & drop**.
+
+## Annotate before it's attached
+
+Each capture opens in an **annotation editor**: **arrow, rectangle, text, highlighter**, and a **blur** to mask sensitive data. The blur is **destructive on flatten** — once applied and attached, the masked pixels are gone, not just hidden — which is exactly what you want for anything confidential. You get two explicit colours and can undo the last stroke. The capture is **attached to Azure DevOps only when you validate it**; cancelling the editor uploads **nothing**.
+
+<Note>Because the blur is destructive, a masked screenshot leaves your machine already redacted — the original pixels never reach Azure DevOps.</Note>
+
+## Create a bug, task or test case
+
+From the session, raise a work item without leaving the screen:
+
+- **Bug** — two fields to fill (title pre-filled with your last note, plus severity); everything else is **injected, visible and editable**: **repro steps** generated as HTML from your notes, your captures as **checkboxes**, links to the story and the session, and the inherited classification with a **collapsed override**.
+- **Task** and **Test case** — the same flow, with optional steps generated from your notes.
+
+## Archive the session
+
+**Ending the session** archives it as a **Task tagged `exploratory-session`** (plus your campaign tag), carrying the full report — charter, duration, counters, timeline — and its relations to the story, the captures and every work item you created. Sessions become **natively queryable** in Azure DevOps, so a campaign is just a tag query away.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Explore overview" icon="compass" href="/en/exploratory/overview">Start a session and why it's resilient.</Card>
+  <Card title="Session report" icon="file-text" href="/en/exploratory/session-report">Turn a finished session into a signed PDF.</Card>
+</CardGroup>

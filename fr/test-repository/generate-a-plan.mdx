@@ -1,0 +1,37 @@
+---
+title: "Générer un plan depuis un dossier"
+description: "Transformez un dossier du Repository en plan et suites Azure DevOps réels — explicite, prévisualisé, et un instantané plutôt qu'un miroir."
+icon: "square-pen"
+---
+
+Organiser les cas dans le Repository est en lecture seule. Mais quand un dossier représente une campagne que vous voulez réellement exécuter, vous pouvez le transformer en **plan et suites Azure DevOps réels** en une action — comme les actions contextuelles de Xray. C'est la **seule capacité du Repository qui écrit dans Azure DevOps**, et elle est toujours explicite et prévisualisée.
+
+## Trois destinations
+
+Depuis un dossier, choisissez où les cas doivent atterrir :
+
+- **Nouveau plan** — nommez-le, fixez son **Area Path** et son **Iteration Path** (vide = racine du projet), et, si vous le souhaitez, **reproduisez l'arborescence des dossiers en suites statiques**, profondeur préservée. Reproduction désactivée, tous les cas vont directement à la racine du plan.
+- **Plan existant** — recherchez un plan ; les cas sont ajoutés sous sa racine.
+- **Suite existante** — choisissez un plan, puis naviguez son arbre de suites (chargé **à la demande**) jusqu'à la suite cible exacte. Seules les suites **statiques** peuvent recevoir des cas ; les suites basées sur l'exigence sont affichées mais non sélectionnables, car elles se peuplent elles-mêmes par requête.
+
+## Un aperçu chiffré avant toute écriture
+
+Rien n'est envoyé à Azure DevOps tant que vous n'avez pas confirmé un **aperçu** qui détaille exactement ce qui va se passer : plans et suites à **créer**, suites **réutilisées** par nom (une suite déjà présente sous le même parent est réutilisée — jamais dupliquée), cas à **ajouter après déduplication**, et cas **ignorés** parce que déjà présents. Sur les chemins *plan existant* et *suite existante*, l'aperçu porte un **avertissement** distinct : vous ajoutez à une structure partagée, possiblement déjà en cours d'exécution — un ton différent de la création d'un plan neuf et réversible.
+
+<Note>**Instantané, pas miroir.** Le plan généré est une photographie du dossier à cet instant. Il ne reste **pas** synchronisé ensuite : modifier le dossier plus tard ne change pas le plan, et inversement.</Note>
+
+## Aucun doublon, et des échecs honnêtes
+
+Les cas déjà présents dans une suite cible sont **dédupliqués** avant tout ajout, donc un cas n'est jamais ajouté deux fois — y compris entre dossiers frères homonymes. Azure DevOps n'a pas de transaction multi-écritures : si une écriture échoue en cours de route, TestPulse ne tente **pas** de rollback ; il rapporte précisément ce qui a été créé et ce qui a échoué, avec un lien vers le nouveau plan. Vous n'êtes jamais laissé à deviner un état à moitié fini.
+
+## Permissions
+
+La génération de plan utilise la **permission de création de plan** que le Coverage Builder déclare déjà — il n'y a **aucun nouveau périmètre**. Si votre organisation n'a pas encore approuvé cette permission, un administrateur l'approuve une fois ; tout le reste du Repository demeure en lecture seule.
+
+## Voir aussi
+
+<CardGroup cols={2}>
+  <Card title="Organiser à grande échelle" icon="layers" href="/fr/test-repository/organize">Préparez le dossier avant de générer.</Card>
+  <Card title="Coverage Builder — créer un plan" icon="list-checks" href="/fr/coverage-builder/create-plan">L'autre endroit où TestPulse écrit.</Card>
+  <Card title="Permissions" icon="shield-check" href="/fr/security/permissions">Quel périmètre la génération de plan utilise.</Card>
+</CardGroup>
