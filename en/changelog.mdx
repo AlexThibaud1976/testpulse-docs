@@ -6,6 +6,49 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.40.0" description="2026-07-27">
+**A brand-new visual identity, unified across every tab.**
+
+TestPulse gets an identity of its own: a **teal palette**, **Public Sans** and **JetBrains Mono** typography, and eight tabs that are finally visually consistent. The fonts are **bundled into the extension** — the interface renders identically even on an air-gapped on-premises instance, with no external font download. This is a **purely visual refresh**: behaviour, navigation, data and Azure DevOps calls are strictly unchanged. A dark theme is prepared under the hood but not yet enabled.
+</Update>
+<Update label="v2.39.0" description="2026-07-27">
+**Repository — generate an Azure DevOps test plan from a folder.**
+
+Turn any Repository folder into real ADO plan and suites, the way Xray's context actions do. Three destinations: a **new plan** (with Area and Iteration Path, optionally mirroring the folder tree into static suites), an **existing plan**, or an **existing static suite** — its suite tree loads on demand, and requirement-based suites are shown but not selectable since they populate by query. Nothing is written until you confirm a **counted preview**: plans and suites to create, suites reused by name, cases to add after de-duplication, duplicates skipped. The result is a **snapshot, not a mirror** — no later resync. This is the first Repository capability that **writes to Azure DevOps**, always explicit and previewed; it reuses the already-declared plan-creation permission, with no new scope.
+</Update>
+<Update label="v2.38.0" description="2026-07-25">
+**Repository, now usable at scale.**
+
+- **Auto-seed the folder tree** from your **Area Paths** or your **plan/suite hierarchy** — additive and idempotent (existing folders reused by name, nothing renamed or moved), with a counted preview before any change.
+- **Bulk operations**: tick cases by row, "select all" bounded to the visible filtered results, then assign or remove a whole batch in a single atomic write with an exact report.
+- **Readability**: descendant-inclusive case counts per folder, a **flat view** listing every filed case with its full folder path, and the ADO-orphans node renamed **"Not in any plan"** to avoid confusion with "unfiled".
+- **Manual ordering**: reorder cases within a folder by drag & drop or keyboard; sort by id, title or manual — a manual order is never overwritten silently.
+</Update>
+<Update label="v2.37.2" description="2026-07-23">
+**Repository — field fixes (cloud).**
+
+A genuine WIQL failure now surfaces an **error banner** instead of a silent empty screen; the tree no longer looks like it vanished when the test-case universe read fails (the two reads are now independent); and WIT URL resolution falls back to an already-resolved base on the cloud organizations where it could otherwise fail with no recourse.
+</Update>
+<Update label="v2.37.0" description="2026-07-23">
+**Repository — reliability fixes + atomic storage.**
+
+Fixes the empty tree on-premises, the re-scan error on cloud, the WIQL 403 / empty tab on cloud, and hidden read failures that now surface as an error banner. Storage moves to a **single atomic document** (one read, one write per change), and existing repositories are **migrated automatically and without loss** on first load.
+</Update>
+<Update label="v2.36.0" description="2026-07-22">
+**A new "Repository" tab.**
+
+Organize and find your Azure DevOps test cases in a **free, project-shared folder tree**, Xray-style, **without ever modifying ADO data** — the Repository stores references, never copies. Create, rename, move and delete folders at any depth (native drag & drop), file a case with "Move to…" (keyboard equivalent throughout), and search by title, id or tag across the whole project. An **"Unfiled"** node is the set of cases not yet filed, always recomputed. Expand a case to see **"Used in N location(s)"** (plan › suite), and run an **explicit orphan scan** — never automatic — to surface cases that live in no plan. **Read-only, no new permission, no new dependency.**
+</Update>
+<Update label="v2.35.0" description="2026-07-21">
+**Exploratory sessions — reliable close + PDF report.**
+
+Closing a session is now reliable — no more sessions stuck "active" after a restore, and Azure DevOps errors are shown clearly instead of a raw object. A finished session can be exported as a **signed PDF report** (charter, full timeline, created work items, embedded screenshots, tester signature on every page) in French or English; a second button exports **all closed sessions of a story** in a single PDF. Screenshots are embedded when possible and gracefully listed by name otherwise — the report never breaks.
+</Update>
+<Update label="v2.34.1" description="2026-07-20">
+**Work-item links open correctly on-premises.**
+
+On the **Test coverage** and **Explore** tabs, external links (run, test case, bug, plan) no longer open a blank page on ADO Server 2022.1 — they now go through the host navigation service. The "Last run" column keeps a single link per row, and plan navigation stays at the Scope level, now suite-aware so it never lands on an empty plan page. No new scope, no write.
+</Update>
 <Update label="v2.34.0" description="2026-07-18">
 **Configuration-aware coverage & change detail on the work item.**
 

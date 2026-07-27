@@ -6,6 +6,49 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.40.0" description="2026-07-27">
+**Une toute nouvelle identité visuelle, unifiée sur tous les onglets.**
+
+TestPulse adopte une identité propre : une **palette teal**, une typographie **Public Sans** et **JetBrains Mono**, et huit onglets enfin cohérents visuellement. Les polices sont **embarquées dans l'extension** — l'interface s'affiche à l'identique même sur une instance on-premises sans accès Internet, sans aucun téléchargement de police externe. C'est une **refonte purement visuelle** : le comportement, la navigation, les données et les appels Azure DevOps sont strictement inchangés. Un thème sombre est préparé en coulisses mais pas encore activé.
+</Update>
+<Update label="v2.39.0" description="2026-07-27">
+**Repository — générez un plan de test Azure DevOps depuis un dossier.**
+
+Transformez n'importe quel dossier du Repository en plan et suites ADO réels, comme les actions contextuelles de Xray. Trois destinations : un **nouveau plan** (avec Area et Iteration Path, en reproduisant si vous le souhaitez l'arborescence des dossiers en suites statiques), un **plan existant**, ou une **suite statique existante** — son arbre de suites se charge à la demande, et les suites basées sur l'exigence sont affichées mais non sélectionnables puisqu'elles se peuplent par requête. Rien n'est écrit tant que vous n'avez pas confirmé un **aperçu chiffré** : plans et suites à créer, suites réutilisées par nom, cas à ajouter après déduplication, doublons ignorés. Le résultat est un **instantané, pas un miroir** — aucune resynchronisation ensuite. C'est la première capacité du Repository qui **écrit dans Azure DevOps**, toujours explicite et prévisualisée ; elle réutilise la permission de création de plan déjà déclarée, sans nouveau périmètre.
+</Update>
+<Update label="v2.38.0" description="2026-07-25">
+**Repository, désormais utilisable à grande échelle.**
+
+- **Amorcez l'arborescence automatiquement** depuis vos **Area Paths** ou votre **hiérarchie plans/suites** — de façon additive et idempotente (dossiers existants réutilisés par nom, rien n'est renommé ni déplacé), avec un aperçu chiffré avant toute modification.
+- **Opérations de masse** : cochez les cas par ligne, « tout sélectionner » borné aux résultats filtrés visibles, puis affectez ou retirez un lot entier en une seule écriture atomique avec un compte-rendu exact.
+- **Lisibilité** : compteurs de cas descendants inclus par dossier, une **vue plate** listant chaque cas rangé avec son chemin de dossier complet, et le nœud des orphelins ADO renommé **« Non planifiés »** pour éviter la confusion avec « non classé ».
+- **Ordonnancement manuel** : réordonnez les cas d'un dossier par glisser-déposer ou au clavier ; triez par id, titre ou manuel — un ordre manuel n'est jamais écrasé silencieusement.
+</Update>
+<Update label="v2.37.2" description="2026-07-23">
+**Repository — correctifs de terrain (cloud).**
+
+Une vraie panne WIQL fait désormais apparaître une **bannière d'erreur** au lieu d'un écran vide silencieux ; l'arbre ne semble plus disparaître quand la lecture de l'univers des cas échoue (les deux lectures sont désormais indépendantes) ; et la résolution d'URL WIT se replie sur une base déjà résolue sur les organisations cloud où elle pouvait échouer sans recours.
+</Update>
+<Update label="v2.37.0" description="2026-07-23">
+**Repository — fiabilisation + stockage atomique.**
+
+Corrige l'arbre vide en on-premises, l'erreur au re-scan sur le cloud, le 403 WIQL / onglet vide sur le cloud, et les pannes de lecture masquées qui remontent désormais en bannière d'erreur. Le stockage passe à un **document unique atomique** (une lecture, une écriture par modification), et les référentiels existants sont **migrés automatiquement et sans perte** au premier chargement.
+</Update>
+<Update label="v2.36.0" description="2026-07-22">
+**Un nouvel onglet « Repository ».**
+
+Organisez et retrouvez vos cas de test Azure DevOps dans une **arborescence de dossiers gratuite et partagée au niveau projet**, façon Xray, **sans jamais modifier les données ADO** — le Repository range des références, jamais de copies. Créez, renommez, déplacez et supprimez des dossiers à toute profondeur (glisser-déposer natif), rangez un cas via « Déplacer vers… » (équivalent clavier systématique), et cherchez par titre, id ou tag sur tout le projet. Un nœud **« Non classés »** est l'ensemble des cas pas encore rangés, toujours recalculé. Dépliez un cas pour voir **« Utilisé dans N emplacement(s) »** (plan › suite), et lancez un **scan des orphelins explicite** — jamais automatique — pour faire remonter les cas présents dans aucun plan. **Lecture seule, aucun nouveau périmètre, aucune nouvelle dépendance.**
+</Update>
+<Update label="v2.35.0" description="2026-07-21">
+**Sessions exploratoires — clôture fiabilisée + rapport PDF.**
+
+Clôturer une session est désormais fiable — fini les sessions bloquées en « active » après une restauration, et les erreurs Azure DevOps sont affichées clairement au lieu d'un objet brut. Une session terminée peut être exportée en **rapport PDF signé** (charte, timeline complète, work items créés, captures embarquées, signature du testeur sur chaque page) en français ou en anglais ; un second bouton exporte **toutes les sessions closes d'une US** en un seul PDF. Les captures sont embarquées quand c'est possible et sinon listées par leur nom — le rapport ne casse jamais.
+</Update>
+<Update label="v2.34.1" description="2026-07-20">
+**Les liens de la fiche s'ouvrent correctement en on-premises.**
+
+Sur les onglets **Test coverage** et **Explore**, les liens externes (run, cas de test, bug, plan) n'ouvrent plus une page blanche sur ADO Server 2022.1 — ils passent désormais par le service de navigation de l'hôte. La colonne « Dernière exéc. » garde un seul lien par ligne, et la navigation vers le plan reste au niveau du Scope, désormais suite-aware pour ne jamais tomber sur une page de plan vide. Aucun nouveau périmètre, aucune écriture.
+</Update>
 <Update label="v2.34.0" description="2026-07-18">
 **Couverture juste par configuration & détail des changements sur la fiche.**
 
