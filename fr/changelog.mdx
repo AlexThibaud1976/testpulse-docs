@@ -6,6 +6,11 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.42.0" description="2026-07-28">
+**Génération de plan guidée, progression en direct et retry honnête.**
+
+Générer un plan de test depuis un dossier devient un flux guidé. Un **indicateur d'étapes** montre où vous en êtes (trois étapes pour un nouveau plan, deux pour une cible existante), et un bouton **Précédent** permet de revenir sur vos choix sans perdre ce que vous avez déjà saisi. Le nom du plan est **pré-rempli depuis le dossier**, et vos derniers réglages Area/Iteration Path et « reproduire l'arborescence » sont **mémorisés** pour la prochaine fois. Avant toute écriture, un **résumé en clair** détaille exactement ce qui va être créé, aux côtés d'une ventilation par couleur **et** libellé de ce qui est créé, réutilisé ou ignoré. Pendant l'écriture, un **indicateur de progression en direct** (« Création de la suite 2/4… ») remplace l'ancien figement sur les gros dossiers. Ensuite, l'écran de résultat distingue clairement **succès complet et échec partiel** avec des compteurs réels, donne un **lien direct vers le plan**, et — si des écritures ont échoué — un bouton **Réessayer** qui relance le flux et repasse toujours par l'aperçu avant toute nouvelle écriture. Aucune nouvelle permission Azure DevOps ; toujours en lecture seule hormis la création de plan que vous confirmez.
+</Update>
 <Update label="v2.40.0" description="2026-07-27">
 **Une toute nouvelle identité visuelle, unifiée sur tous les onglets.**
 

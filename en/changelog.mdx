@@ -6,6 +6,11 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.42.0" description="2026-07-28">
+**Guided plan generation, live progress, and honest retry.**
+
+Generating a test plan from a folder is now a guided flow. A **step indicator** shows where you are (three steps for a new plan, two for an existing target), and a **Back** button lets you revise earlier choices without losing what you already typed. The plan name is **pre-filled from the folder**, and your last Area/Iteration Path and "reproduce the tree" settings are **remembered** for next time. Before anything is written, a **plain-language summary** spells out exactly what will be created, alongside a colour-and-label breakdown of what is created, reused, or skipped. During the write, a **live progress indicator** ("Creating suite 2/4…") replaces the old freeze on large folders. Afterwards, the result screen clearly separates **full success from partial failure** with real counts, gives you a **direct link to the plan**, and — if some writes failed — a **Retry** button that re-runs the flow and always goes back through the preview before writing again. No new Azure DevOps permissions; still read-only apart from the plan creation you confirm.
+</Update>
 <Update label="v2.40.0" description="2026-07-27">
 **A brand-new visual identity, unified across every tab.**
 
