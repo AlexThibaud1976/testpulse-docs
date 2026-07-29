@@ -6,6 +6,26 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.44.1" description="2026-07-30">
+**Diagnostic Hygiène du référentiel.**
+
+Un référentiel de test vieillit mal : des cas se dupliquent entre équipes qui ne se parlent pas, d'autres sont créés puis jamais rédigés, certains sont planifiés sans jamais être exécutés — et rien dans Azure DevOps ne le dit. Une troisième bascule **Hygiène** rejoint Vue arbre et Vue plate et pose un diagnostic **strictement en lecture seule** : TestPulse constate, ne corrige jamais. Aucune suppression, aucune fusion, aucun nettoyage automatique, pas même sur action explicite — le vocabulaire d'action est toujours **« à revoir »**, jamais un verbe impératif. Ce sont des indicateurs à examiner, jamais un verdict : c'est vous qui décidez.
+
+Cinq constats sont **immédiats** et ne coûtent aucun appel supplémentaire à Azure DevOps, car ils travaillent sur les données déjà chargées par l'onglet : cas quasi-doublons (titre et étapes strictement identiques après normalisation — un simple écart de mise en forme ne crée pas de doublon), cas au même titre mais aux étapes différentes (souvent une variante légitime, à vérifier d'un œil), coquilles vides (ni étape ni description), références mortes (cas rangés dans l'arbre TestPulse mais supprimés côté Azure DevOps) et dossiers vides. Trois constats supplémentaires demandent la lecture des plans, suites et résultats : ils vivent dans une section **Analyse des plans** derrière leur propre bouton, avec leur coût annoncé avant lancement. L'analyse ne démarre jamais toute seule.
+
+Chaque constat s'ouvre dans une fenêtre qui affiche **son critère de détection en clair** — contester un résultat ne demande pas d'ouvrir la documentation. Les doublons y sont **regroupés** (l'action se décide groupe par groupe, pas cas par cas), chaque cas est cliquable vers Azure DevOps dans un nouvel onglet, et « Voir dans la vue plate » bascule vers un filtre visible et réversible. Quand un constat n'a pas pu être évalué, il l'indique — jamais un zéro qui ressemblerait à un référentiel sain. Tout s'exporte en **Excel** : un onglet de synthèse plus un onglet par constat, et l'export porte toujours l'intégralité des lignes, même celles que l'écran ne montre pas. Le résultat est volontairement **éphémère** : revenir sur l'onglet repart d'une analyse non lancée, jamais d'un diagnostic périmé.
+</Update>
+
+<Update label="v2.43.0" description="2026-07-29">
+**Arbre du référentiel : lisibilité et pliage mémorisé.**
+
+L'arbre du Repository était complet mais austère : du texte nu, aucun moyen de replier une branche, et une profondeur illisible au-delà de deux niveaux. Chaque dossier porte désormais une **icône à trois états** — replié en gris, déplié ou sélectionné en teal — et un **chevron distinct de l'icône**, pour plier sans risquer de sélectionner. Des **guides d'indentation** d'un pixel rattachent visuellement chaque enfant à son parent, les compteurs de cas passent en police à chasse fixe, et toutes les lignes ont la même hauteur.
+
+Surtout, les branches se **replient**, à la souris comme au clavier (flèches droite et gauche), et **l'état est mémorisé par utilisateur** : vous retrouvez votre arbre tel que vous l'avez laissé, sans replier les mêmes branches à chaque ouverture. L'arbre s'ouvre là où l'action se passe — sélectionner un dossier déplie ses parents, créer un sous-dossier dans un dossier replié le déplie. Et un dossier replié **reste une cible de dépôt valide** : le survoler pendant un glisser l'ouvre au bout d'un instant. Par défaut, l'arbre s'affiche replié, comme un explorateur de fichiers.
+
+« Non classés » et « Non planifiés » se distinguent enfin des vrais dossiers — icônes neutres, libellés en italique, séparateur — et rejoignent l'arbre pour former **une seule navigation clavier cohérente** au lieu de trois îlots isolés. « Non planifiés » n'affiche aucun compteur tant qu'aucun scan n'a eu lieu : l'absence de scan ne vaut pas zéro. Le menu « Déplacer vers… » affiche désormais le **chemin complet** de chaque dossier, pour ne plus confondre deux dossiers homonymes.
+</Update>
+
 <Update label="v2.42.0" description="2026-07-28">
 **Génération de plan guidée, progression en direct et retry honnête.**
 

@@ -6,6 +6,26 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.44.1" description="2026-07-30">
+**Repository Hygiene diagnostics.**
+
+A test repository ages badly: cases get duplicated between teams that never spoke to each other, others are created and never written, some are planned and never executed — and nothing in Azure DevOps tells you. A third toggle, **Hygiene**, joins Tree view and Flat view and produces a **strictly read-only** diagnosis: TestPulse reports, it never repairs. No deletion, no merge, no automatic cleanup, not even on explicit request — the action wording is always **“to review”**, never an imperative verb. These are indicators to examine, never a verdict: you decide.
+
+Five findings are **immediate** and cost no extra Azure DevOps call, because they work on data the tab has already loaded: near-duplicate cases (title and steps strictly identical once normalized — a mere formatting difference does not create a duplicate), cases sharing a title but with different steps (often a legitimate variant, worth a quick check), empty shells (neither steps nor description), dead references (cases filed in the TestPulse tree but deleted on the Azure DevOps side) and empty folders. Three further findings require reading plans, suites and results: they live in a **Plan analysis** section behind their own button, with their cost stated before you start. The analysis never runs on its own.
+
+Each finding opens in a dialog that states **its detection criterion in plain language** — challenging a result does not require opening the documentation. Duplicates are **grouped** there (the decision is made group by group, not case by case), every case links out to Azure DevOps in a new tab, and “View in flat view” switches to a visible, reversible filter. When a finding could not be evaluated, it says so — never a zero that would look like a healthy repository. Everything exports to **Excel**: one summary sheet plus one sheet per finding, and the export always carries every row, including those the screen does not show. The result is deliberately **ephemeral**: coming back to the tab starts from “no analysis run”, never from a stale diagnosis.
+</Update>
+
+<Update label="v2.43.0" description="2026-07-29">
+**Repository tree: readability and remembered collapse state.**
+
+The Repository tree was complete but austere: bare text, no way to collapse a branch, and depth that became unreadable past two levels. Every folder now carries a **three-state icon** — grey when collapsed, teal when expanded or selected — and a **chevron separate from the icon**, so you can collapse without risking a selection. **Indentation guides** one pixel wide tie each child visually to its parent, case counts move to a monospaced font, and every row shares the same height.
+
+More importantly, branches **collapse**, by mouse and by keyboard (right and left arrows), and **the state is remembered per user**: you find your tree exactly as you left it, without collapsing the same branches every time you open it. The tree opens where the action happens — selecting a folder expands its parents, creating a subfolder inside a collapsed folder expands it. And a collapsed folder **remains a valid drop target**: hovering it during a drag opens it after a moment. By default the tree shows collapsed, like a file explorer.
+
+“Unclassified” and “Not in any plan” are finally distinguishable from real folders — neutral icons, italic labels, a separator — and join the tree to form **a single coherent keyboard navigation** instead of three isolated islands. “Not in any plan” shows no count until a scan has run: the absence of a scan does not mean zero. The “Move to…” menu now shows each folder's **full path**, so two folders with the same name can no longer be confused.
+</Update>
+
 <Update label="v2.42.0" description="2026-07-28">
 **Guided plan generation, live progress, and honest retry.**
 
