@@ -18,9 +18,14 @@ A second button, **always available** in the tab, exports **every closed session
 
 Closing a session is **reliable**: a restored session no longer gets stuck in an "active" state, the pending autosave is cancelled before the closing write to avoid a concurrent writer, and Azure DevOps errors are shown **clearly** instead of a raw object. If a close fails, the session stays active and replayable rather than risking a phantom restore later.
 
+## Your branding, your title
+
+Exploratory reports follow the **branding you configured in Settings** — header and footer label, theme colour, cover page logo — so they look like the rest of your reports rather than like the tool. Exports launched from the **Sessions hub** open a dialog with a **pre-filled title**: accept it as-is, or rewrite it. Cancelling the dialog cancels the export, with no partial file.
+
 ## Related
 
 <CardGroup cols={2}>
   <Card title="Explore overview" icon="compass" href="/en/exploratory/overview">Start a session and take notes.</Card>
   <Card title="Capture, annotate & create" icon="pencil" href="/en/exploratory/capture-and-create">Annotate captures and raise work items.</Card>
+  <Card title="Sessions hub" icon="layout-list" href="/en/exploratory/sessions-hub">Find every session of the project.</Card>
 </CardGroup>

@@ -6,6 +6,44 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.47.0" description="2026-07-31">
+**Sessions exploratoires : un work item supprimé ne vide plus le reste de la liste.**
+
+Supprimer un seul work item faisait perdre d'un coup, à tous les autres groupes de l'onglet Explore, leur titre, leur type et le nom de leur testeur : Azure DevOps rejette une lecture groupée entière dès qu'un identifiant n'existe plus, et l'onglet se repliait sur « rien » plutôt que sur « le reste ». Les identifiants morts sont désormais **omis**, et tous les work items encore présents se résolvent normalement. La même protection a été appliquée aux lectures groupées de couverture, qui portaient le même défaut latent.
+
+Deux correctifs de filtres arrivent en même temps. Chaque option d'un filtre porte maintenant **son propre compteur de résultats**, au lieu de répéter le même total générique sur toutes les entrées. Et les filtres **area path et iteration path retiennent les sous-chemins** : choisir une racine ramène tout ce qui se trouve dessous, comme Azure DevOps traite lui-même ces chemins — sans jamais attraper par erreur un chemin qui commencerait simplement par les mêmes lettres.
+</Update>
+
+<Update label="v2.46.0" description="2026-07-31">
+**Sessions exploratoires : uniquement des valeurs vraies, et des rapports à votre charte.**
+
+Une session laissée ouverte affichait `NaN min`. Un testeur apparaissait sous la forme d'un descripteur d'identité brut plutôt que d'un nom. Et un indicateur annonçant des *user stories couvertes* comptait en réalité tous les types de work item, y compris les Tasks d'archivage que TestPulse crée elle-même — un chiffre qui disait autre chose que ce qu'il mesurait. Les trois sont corrigés : le nom du testeur est récupéré depuis la Task archivée lorsqu'elle existe et reste délibérément neutre sinon, les Tasks d'archivage sont signalées comme telles et exclues de la couverture, et l'indicateur est renommé honnêtement quand les types de work item ne peuvent être déterminés.
+
+**L'effort total disparaît, la durée par session reste.** Une session laissée ouverte une nuit produit une durée arithmétiquement exacte et pratiquement dénuée de sens ; sommée sur un périmètre, elle rendait le chiffre indigne de confiance. Plutôt que de corriger la donnée en silence, l'agrégat est retiré — le rapport agrégé compte désormais des **sessions** par area et par iteration, ce qu'aucune session non close ne peut fausser. La durée de chaque session reste affichée à côté de sa charte, là où un humain peut en juger.
+
+Enfin, les rapports exploratoires **suivent la charte configurée dans les Réglages** — libellé d'en-tête et de pied, couleur de thème, logo de page de garde — au lieu des couleurs de l'outil, et chaque export depuis le hub ouvre une boîte de dialogue avec un **titre pré-rempli** que vous pouvez accepter ou réécrire.
+</Update>
+
+<Update label="v2.45.5" description="2026-07-31">
+**Sessions exploratoires : une liste lisible, et l'onglet remonte.**
+
+La première version de l'onglet hub fusionnait un work item et ses sessions sur une seule ligne : une story explorée deux fois affichait deux pastilles de statut côte à côte, sans moyen de savoir laquelle était laquelle, ni d'agir sur l'une d'elles. Les groupes se déplient maintenant en **une ligne par session** — statut, charte, testeur, durée, compteurs, lien vers la Task archivée — et chaque session portant au moins une entrée propose son propre bouton **Exporter la session**. Les statuts portent une **couleur et une icône distincte**, ce qui garde la liste lisible en thème sombre et pour les lecteurs daltoniens.
+
+La ligne de groupe elle-même est devenue informative — nombre de sessions, activité cumulée, date de dernière activité — avec un chevron conventionnel à la place du signe plus ambigu. Les indicateurs de périmètre remontent en tête en chiffres lisibles plutôt qu'en pastilles grises indiscernables des filtres, et l'avertissement « compteurs possiblement en retard » n'apparaît que si le périmètre contient réellement une session active. **Explore passe en deuxième position** dans le hub, juste après Rapport.
+</Update>
+
+<Update label="v2.45.0" description="2026-07-31">
+**Sessions exploratoires : un onglet hub pour retrouver toutes les sessions d'un projet, et des rapports présentables.**
+
+Jusqu'ici, une session exploratoire n'était accessible que depuis le work item sur lequel elle avait été menée — pratique quand on se souvient de quelle story, inutile quand la question est *qu'a-t-on réellement exploré sur ce projet ?* Un nouvel onglet **Explore** dans le hub liste **toutes les sessions du projet**, groupées par work item, avec des filtres sur area path, iteration path, tag de campagne, testeur et période, plus un interrupteur pour les sessions archivées. L'onglet est **strictement en lecture seule** : il lit et exporte, il n'écrit jamais.
+
+Au-delà d'un seuil, les sessions anciennes quittent la vue par défaut — elles sont **archivées à l'affichage uniquement**. TestPulse ne supprime jamais une session : l'interrupteur les fait revenir et le total réel reste affiché.
+
+Les rapports ont été reconstruits sur les mêmes fondations que le reste de TestPulse : le rapport de session porte désormais la **page de garde et la mise en page de tous les autres rapports** au lieu de son habillage séparé, et un nouveau **rapport agrégé de périmètre** couvre tout un périmètre filtré — synthèse, sessions par area et par iteration, une section par work item, une annexe. Un rapport exploratoire n'affiche délibérément **ni taux de réussite ni verdict d'exécution** : le test exploratoire n'en a pas, et afficher des zéros structurels aurait induit en erreur. Ses indicateurs sont la couverture et les découvertes.
+
+En arrière-plan, le stockage des sessions a été refondu pour tenir l'historique complet d'un projet sans tout relire à chaque visite, et les sessions existantes sont migrées sans perte — rien n'est supprimé, et une session dont la clôture avait échoué est signalée plutôt que réinventée en silence. Sur la fiche work item, l'onglet **Explore adopte l'identité TestPulse**, hérite de l'Area et de l'Iteration de la story, et restaure une session de façon fiable après un rechargement de page.
+</Update>
+
 <Update label="v2.44.1" description="2026-07-30">
 **Diagnostic Hygiène du référentiel.**
 

@@ -6,6 +6,44 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.47.0" description="2026-07-31">
+**Exploratory sessions: a deleted work item no longer blanks the rest of the list.**
+
+Deleting a single work item made every other group in the Explore tab lose its title, its type and its tester name at once — Azure DevOps rejects a whole batch read as soon as one identifier no longer exists, and the tab fell back to showing nothing rather than showing the rest. Dead identifiers are now **omitted**, and every work item that still exists resolves normally. The same protection was applied to the coverage batches, which carried the same latent flaw.
+
+Two filter fixes ship alongside. Each option in a filter now carries **its own result count** instead of repeating the same generic total on every entry. And the **area path and iteration path filters now match sub-paths**: picking a root brings back everything underneath it, the way Azure DevOps itself treats these paths — while a path that merely starts with the same letters is never caught by mistake.
+</Update>
+
+<Update label="v2.46.0" description="2026-07-31">
+**Exploratory sessions: only true values, and reports in your own branding.**
+
+A session left open showed `NaN min`. A tester appeared as a raw identity descriptor rather than a name. And an indicator announcing *covered user stories* was in fact counting every kind of work item, including the archive Tasks TestPulse creates itself — a figure that said something other than what it measured. All three are fixed: the tester name is recovered from the archived Task when there is one and stays deliberately neutral when there is none, archive Tasks are marked as such and excluded from coverage, and the indicator is renamed honestly when the work item types cannot be determined.
+
+**Total effort disappears, per-session duration stays.** A session left open overnight produces a duration that is arithmetically exact and practically meaningless; summed across a scope, it made the figure untrustworthy. Rather than silently correct the data, the aggregate is gone — the aggregated report now counts **sessions** by area and by iteration, which no unclosed session can distort. The duration of each individual session remains next to its charter, where a human can judge it.
+
+Finally, exploratory reports **follow the branding you configured in Settings** — header and footer label, theme colour, cover page logo — instead of the tool's own colours, and every export from the hub opens a dialog with a **pre-filled title** you can accept or rewrite.
+</Update>
+
+<Update label="v2.45.5" description="2026-07-31">
+**Exploratory sessions: a readable list, and the tab moves up.**
+
+The first version of the hub tab merged a work item and its sessions into a single row: a story explored twice showed two status badges side by side, with no way to tell which was which, and no way to act on either. Groups now expand into **one row per session** — status, charter, tester, duration, counts, link to the archived Task — and each session holding at least one entry offers its own **Export session** button. Statuses carry a **colour and a distinct icon**, so the list stays readable in dark mode and for colour-blind readers.
+
+The group row itself became informative — session count, cumulative activity, last activity date — with a conventional chevron replacing the ambiguous plus sign. The scope indicators moved to the top in legible figures instead of grey chips indistinguishable from filters, and the "counters may be stale" notice only appears when the scope actually contains an active session. **Explore moves to second position** in the hub, right after Report.
+</Update>
+
+<Update label="v2.45.0" description="2026-07-31">
+**Exploratory sessions: a hub tab to find every session of a project, and reports worth sharing.**
+
+Until now an exploratory session was only reachable from the work item it was run on — fine when you remember which story, useless when the question is *what has actually been explored on this project?* A new **Explore** tab in the hub lists **every session of the project**, grouped by work item, with filters on area path, iteration path, campaign tag, tester and period, plus a switch for archived sessions. The tab is **strictly read-only**: it reads and exports, it never writes.
+
+Older sessions leave the default view beyond a threshold — **archived for display only**. TestPulse never deletes a session; the switch brings them back and the real total is always shown.
+
+Reports were rebuilt on the same foundations as the rest of TestPulse: the session report now carries the **cover page and layout of every other report** instead of its own separate styling, and a new **aggregated scope report** covers a whole filtered scope — summary, sessions by area and by iteration, a section per work item, an appendix. An exploratory report deliberately shows **no pass rate and no execution verdict**: exploratory testing has neither, and displaying structural zeros would have been misleading. Its indicators are coverage and discoveries.
+
+Behind the scenes, session storage was rebuilt to hold a project's full history without reading everything on every visit, and existing sessions are migrated without loss — nothing is deleted, and a session whose close had previously failed is flagged rather than silently reinvented. On the work item form, the **Explore tab adopts the TestPulse identity**, inherits Area and Iteration from the story, and restores a session reliably after a page reload.
+</Update>
+
 <Update label="v2.44.1" description="2026-07-30">
 **Repository Hygiene diagnostics.**
 

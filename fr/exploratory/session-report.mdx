@@ -18,9 +18,14 @@ Un second bouton, **toujours disponible** dans l'onglet, exporte **toutes les se
 
 Clôturer une session est **fiable** : une session restaurée ne reste plus bloquée en « active », l'autosave en attente est annulé avant l'écriture de clôture pour éviter un writer concurrent, et les erreurs Azure DevOps sont affichées **clairement** au lieu d'un objet brut. Si une clôture échoue, la session reste active et rejouable plutôt que de risquer une restauration fantôme plus tard.
 
+## Votre charte, votre titre
+
+Les rapports exploratoires suivent la **charte configurée dans les Réglages** — libellé d'en-tête et de pied, couleur de thème, logo de page de garde — afin de ressembler à vos autres rapports plutôt qu'à l'outil. Les exports lancés depuis le **Hub des sessions** ouvrent une boîte de dialogue avec un **titre pré-rempli** : acceptez-le tel quel, ou réécrivez-le. Annuler la boîte de dialogue annule l'export, sans fichier partiel.
+
 ## Voir aussi
 
 <CardGroup cols={2}>
   <Card title="Vue d'ensemble d'Explore" icon="compass" href="/fr/exploratory/overview">Démarrer une session et prendre des notes.</Card>
   <Card title="Capturer, annoter & créer" icon="pencil" href="/fr/exploratory/capture-and-create">Annoter les captures et créer des work items.</Card>
+  <Card title="Hub des sessions" icon="layout-list" href="/fr/exploratory/sessions-hub">Retrouver toutes les sessions du projet.</Card>
 </CardGroup>

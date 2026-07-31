@@ -1,0 +1,56 @@
+---
+title: "Hub des sessions"
+description: "Retrouvez toutes les sessions exploratoires d'un projet au même endroit : filtrez par périmètre, lisez l'issue de chaque session, exportez une session ou tout le périmètre en PDF."
+icon: "layout-list"
+---
+
+Une session archivée sur une user story se retrouve facilement — à condition de se souvenir de quelle story. L'onglet **Explore** du hub TestPulse répond à l'autre question : *qu'a-t-on réellement exploré sur ce projet ?*
+
+## Toutes les sessions du projet, groupées par work item
+
+L'onglet liste **toutes les sessions exploratoires du projet**, groupées par le work item sur lequel elles ont été menées, activité la plus récente en tête. Chaque groupe affiche son work item, son **type**, le nombre de sessions qu'il porte et la date de sa dernière activité — puis se déplie en **une ligne par session**.
+
+C'est cette ligne qui compte : **statut**, charte, testeur, durée, nombre de notes, de captures, de fichiers et de bugs, et un lien vers la Task archivée. Une story explorée trois fois affiche trois lignes distinctes, et non un empilement de pastilles fusionnées.
+
+## Lire le statut d'un coup d'œil
+
+Chaque session porte un **statut avec sa couleur et sa propre icône** — complète, active, interrompue, abandonnée ou incomplète. La couleur n'est jamais le seul signal : la liste reste lisible en thème sombre et pour les lecteurs daltoniens.
+
+**Incomplète** mérite une précision : ce statut marque une session dont la clôture n'est pas allée à son terme. Rien n'est perdu — la Task archivée porte la vérité — et la ligne renvoie directement vers elle.
+
+## Restreindre le périmètre
+
+Les filtres couvrent **area path, iteration path, tag de campagne, testeur et période**, plus un interrupteur pour inclure les sessions archivées. Les filtres d'area et d'iteration **retiennent les sous-chemins** : choisir une racine ramène tout ce qui se trouve dessous, comme Azure DevOps traite lui-même ces chemins.
+
+Chaque option de filtre porte **son propre compteur de résultats**, ce qui permet de juger sa sélectivité avant de la choisir.
+
+## Archivées, jamais supprimées
+
+Au-delà d'un seuil, les sessions anciennes quittent la vue par défaut — elles sont **archivées à l'affichage uniquement**. TestPulse **ne supprime jamais une session** : l'interrupteur les fait revenir, et le total réel reste affiché.
+
+## Exporter une session, ou tout le périmètre
+
+Toute session portant au moins une entrée propose **Exporter la session** — le même PDF signé que depuis la fiche work item. Une session sans rien de consigné n'affiche aucun bouton, puisqu'il n'y aurait rien à rapporter.
+
+**Exporter le rapport** produit le **rapport agrégé de périmètre** : page de garde, synthèse, sessions par area et par iteration, une section par work item, et une annexe. Les deux exports ouvrent une boîte de dialogue avec un **titre pré-rempli** que vous acceptez tel quel ou réécrivez, et tous deux suivent la **charte configurée dans les Réglages** — libellé, couleur de thème et logo de page de garde.
+
+## Ce que les indicateurs disent — et ne disent pas
+
+L'onglet affiche les **work items couverts**, les **découvertes** et les **sessions interrompues**. Il n'y a délibérément **pas d'effort total** : une session laissée ouverte une nuit produit une durée arithmétiquement exacte et pratiquement dénuée de sens, et la sommer aurait rendu le chiffre indigne de confiance. La durée par session, elle, reste affichée à côté de sa charte, là où un humain peut en juger.
+
+Les work items créés par TestPulse pour archiver une session sont **signalés comme tels** et exclus de la couverture : ce sont des enregistrements, pas des sujets d'exploration.
+
+Des indicateurs à examiner, jamais un verdict : c'est vous qui décidez.
+
+## Strictement en lecture seule
+
+L'onglet **lit et exporte**. Il n'écrit jamais dans Azure DevOps — attacher un rapport à un work item reste sur la fiche, là où vit la session.
+
+## Voir aussi
+
+<CardGroup cols={2}>
+  <Card title="Vue d'ensemble Explore" icon="compass" href="/fr/exploratory/overview">Démarrer une session depuis une user story.</Card>
+  <Card title="Rapport de session" icon="file-text" href="/fr/exploratory/session-report">Ce que contient le PDF exporté.</Card>
+  <Card title="Capturer, annoter & créer" icon="pencil" href="/fr/exploratory/capture-and-create">Annoter des captures et créer des work items.</Card>
+  <Card title="Confidentialité" icon="lock" href="/fr/security/privacy">Ce qui reste dans votre tenant.</Card>
+</CardGroup>
