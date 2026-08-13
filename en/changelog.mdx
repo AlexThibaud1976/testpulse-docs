@@ -6,6 +6,41 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.50.0" description="2026-08-13">
+**The pass rate could have been computed on partial data — the endpoint carrying every test case's outcome was fetched in a single call, with no way of knowing whether it had returned everything.**
+
+A truncation there wouldn't have hidden a row you'd notice missing: it would have produced a wrong number, indistinguishable from a correct one. A probe run against both Azure DevOps Services and an on-premises Server 2022.1 instance found the paging parameters honoured identically on both, and an implicit server ceiling that exists but is unspecified. TestPulse no longer depends on it — outcomes are fetched page by page until the collection is exhausted, which stays correct whatever that ceiling turns out to be, and stays correct if Azure DevOps changes it.
+
+Suites holding fewer than 200 test cases — the overwhelming majority — still make exactly one round-trip, so nothing loads slower than before. And if outcomes still can't be retrieved in full, a small non-blocking banner says so on the report, with a distinct message depending on whether some are known to be missing or exhaustivity simply couldn't be verified. Never inside an export.
+</Update>
+
+<Update label="v2.49.1" description="2026-08-13">
+**The completeness warning introduced the day before could claim suites were missing when TestPulse had no way of knowing — and stay silent when nothing had been retrieved at all.**
+
+Both now read correctly. "Suites are missing" appears only when a loss is actually confirmed; "completeness could not be verified" appears when exhaustivity is simply unknown; and a plan whose suites couldn't be retrieved at all is never presented as an empty plan that was checked. Two different situations, two different messages, never conflated — because a report is only worth what its weakest claim is worth.
+</Update>
+
+<Update label="v2.49.0" description="2026-08-13">
+**A test plan with more than 200 suites silently lost everything past the 200th — and showed the rest in the wrong order, with a broken hierarchy.**
+
+On a 426-suite plan, 227 suites were absent and nothing said so: the suite counter read as though everything was there. Suites were also sorted alphabetically instead of the order you arranged them in Azure Test Plans, and hiding empty suites detached their children and promoted them to the top level.
+
+The three are fixed together. Suites now load **exhaustively**, in **Azure Test Plans' own display order**, with their **native hierarchy** — an empty parent holding a visible child is never dropped, whatever your display filters. Loading a large plan stays as fast as before despite fetching far more than it used to.
+
+Three additions come with it: **empty suites are shown by default** (an explicit choice to hide them is always remembered), a **filter on suite names** that keeps every ancestor of a match visible so you never lose your place in the tree, and **searching a test plan by its numeric ID** in the existing search field.
+</Update>
+
+<Update label="v2.48.0" description="2026-08-12">
+**The Explore tab on a work item no longer fails to load on Azure DevOps Server 2022.1.**
+
+Since 2.46.0, opening it on-premises showed "TestPulse failed to load" and nothing else. On that platform the work-item tab runs inside a sandboxed frame where browser storage is unavailable, and a single unguarded read of it stopped the tab before it could even start. Every other module kept working, which is exactly what made it hard to spot.
+
+Your report colour and logo now reach that tab on-premises as well, synced through your Azure DevOps preferences rather than the storage that frame can't use. The tab renders immediately with default branding, then applies yours a moment later; if it can't be retrieved, a discreet notice says so rather than letting you export in the wrong colours without knowing.
+
+A custom logo too large to sync quickly is now shrunk automatically — you're told when that happens — and rejected with a clear message if it's still too large after reduction, keeping your previous logo rather than losing it.
+</Update>
+
+
 <Update label="v2.47.0" description="2026-07-31">
 **Exploratory sessions: a deleted work item no longer blanks the rest of the list.**
 

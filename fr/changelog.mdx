@@ -6,6 +6,41 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.50.0" description="2026-08-13">
+**Le taux de passage pouvait être calculé sur des données partielles — l'endpoint qui porte le résultat d'exécution de chaque cas était interrogé en un seul appel, sans aucun moyen de savoir s'il avait tout renvoyé.**
+
+Une troncature à cet endroit n'aurait pas masqué une ligne qu'on aurait remarquée manquante : elle aurait produit un **chiffre faux**, indiscernable d'un chiffre juste. Une sonde jouée sur Azure DevOps Services **et** sur une instance Server 2022.1 on-premises a montré des paramètres de pagination honorés à l'identique sur les deux, et un plafond serveur implicite qui existe mais n'est pas spécifié. TestPulse n'en dépend plus : les résultats sont récupérés page par page jusqu'à épuisement de la collection — ce qui reste juste quelle que soit la valeur de ce plafond, et le reste si Azure DevOps la modifie.
+
+Les suites de moins de 200 cas de test — l'immense majorité — font toujours exactement un aller-retour : rien ne charge plus lentement qu'avant. Et si les résultats ne peuvent toujours pas être récupérés intégralement, un bandeau discret et non bloquant le signale sur le rapport, avec un message distinct selon qu'on **sait** qu'il en manque ou qu'on n'a simplement **pas pu vérifier**. Jamais dans un export.
+</Update>
+
+<Update label="v2.49.1" description="2026-08-13">
+**L'avertissement de complétude introduit la veille pouvait affirmer que des suites manquaient alors que TestPulse n'en savait rien — et rester muet quand rien n'avait été récupéré du tout.**
+
+Les deux cas s'énoncent désormais correctement. « Des suites manquent » n'apparaît que lorsqu'une perte est réellement constatée ; « l'exhaustivité n'a pas pu être vérifiée » apparaît quand elle est simplement inconnue ; et un plan dont les suites n'ont pas pu être récupérées n'est jamais présenté comme un plan vide qui aurait été vérifié. Deux situations différentes, deux messages différents, jamais confondus — parce qu'un rapport ne vaut que ce que vaut son affirmation la plus faible.
+</Update>
+
+<Update label="v2.49.0" description="2026-08-13">
+**Un plan de test de plus de 200 suites perdait silencieusement tout ce qui suivait la 200ᵉ — et affichait le reste dans le mauvais ordre, avec une hiérarchie disloquée.**
+
+Sur un plan de 426 suites, 227 étaient absentes et rien ne le signalait : le compteur de suites se lisait comme si tout était là. Les suites étaient par ailleurs triées par ordre alphabétique au lieu de l'ordre dans lequel vous les avez rangées dans Azure Test Plans, et masquer les suites vides détachait leurs enfants en les remontant au premier niveau.
+
+Les trois sont corrigés ensemble. Les suites se chargent désormais **intégralement**, dans **l'ordre d'affichage d'Azure Test Plans**, avec leur **hiérarchie native** — une suite parente vide qui porte un enfant visible n'est jamais retirée, quels que soient vos filtres d'affichage. Le chargement d'un gros plan reste aussi rapide qu'avant, malgré un volume récupéré bien supérieur.
+
+Trois ajouts l'accompagnent : les **suites vides sont affichées par défaut** (un choix explicite de les masquer est toujours respecté), un **filtre sur le nom des suites** qui conserve visible chaque ancêtre d'une correspondance pour ne jamais perdre votre place dans l'arbre, et la **recherche d'un plan de test par son identifiant** dans le champ de recherche existant.
+</Update>
+
+<Update label="v2.48.0" description="2026-08-12">
+**L'onglet Explore d'une fiche de travail ne reste plus bloqué au chargement sur Azure DevOps Server 2022.1.**
+
+Depuis la 2.46.0, l'ouvrir en on-premises affichait « TestPulse failed to load », et rien d'autre. Sur cette plateforme, l'onglet de fiche s'exécute dans un cadre isolé où le stockage du navigateur est indisponible, et une seule lecture non protégée de ce stockage arrêtait l'onglet avant même son démarrage. Tous les autres modules continuaient de fonctionner, ce qui est précisément ce qui rendait le défaut difficile à repérer.
+
+Votre couleur de rapport et votre logo atteignent désormais cet onglet en on-premises également, synchronisés via vos préférences Azure DevOps plutôt que par le stockage que ce cadre ne peut pas utiliser. L'onglet s'affiche immédiatement avec la charte par défaut, puis applique la vôtre un instant plus tard ; si elle ne peut pas être récupérée, un avis discret le signale plutôt que de vous laisser exporter aux mauvaises couleurs sans le savoir.
+
+Un logo trop volumineux pour se synchroniser rapidement est maintenant réduit automatiquement — vous en êtes informé — et refusé avec un message clair s'il reste trop lourd après réduction, en conservant votre logo précédent plutôt qu'en le perdant.
+</Update>
+
+
 <Update label="v2.47.0" description="2026-07-31">
 **Sessions exploratoires : un work item supprimé ne vide plus le reste de la liste.**
 
