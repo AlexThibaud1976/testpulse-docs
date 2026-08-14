@@ -6,6 +6,51 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.53.0" description="2026-08-14">
+**Every run shown in a report is now one click away from the execution that produced it.**
+
+The Results table carried a "Run" column that had always shown a dash: the link was simply never wired up. Full History showed a plain run number, added the day before, that you could read but not follow. Both now show the same thing — the run number as a link — and both open the **exact result**, not just the run it belonged to. When the result identifier isn't available, the link falls back to the run itself rather than inventing one.
+
+Those links now leave through the same door as everywhere else in the product. On Azure DevOps Server, the extension runs inside a sandboxed frame where an ordinary new-tab link opens a blank page; the report was still using one in three places, including the failing-tests-without-a-defect panel. All three now delegate to the host, so a new tab opens on-premises as it does in the cloud. A right-click still works as you'd expect.
+</Update>
+
+<Update label="v2.52.0" description="2026-08-14">
+**Full History now tells you which run each row came from — and a report survives a side-by-side check against Azure DevOps.**
+
+Opening the same test case in both tools could show nine rows here and five there, with no way to explain the gap. Both were right: Azure DevOps hides runs that published no outcome, TestPulse keeps them. But nothing in the report let you establish that, and a number you can't reconstruct is a number you have to take on faith. Each row now carries its run number, and hovering a `None` status explains what it means — the run exists, Azure DevOps published no outcome for that case.
+
+The **Flaky tests** tab count now follows the active filter, matching Results and Full History. Filtering to a single test case no longer leaves it announcing the whole plan.
+
+Behind the scenes, the completeness safeguard introduced across the previous releases has nothing left to watch: every collection this product reads has now been measured against a live server. Four were paginated, three were shown to have no truncation mechanism at all. The safeguard stays in place for whatever gets added next.
+</Update>
+
+<Update label="v2.51.1" description="2026-08-13">
+**A report's execution history could collapse to a single run, hiding the very flaky-test fix shipped hours earlier.**
+
+Azure DevOps numbers test results **per run**, not globally: four runs of the same 300 cases all carry the identifiers 100000 to 100299. The report used that identifier alone to avoid listing the current result twice — which silently removed every historical result instead. On a plan with 1200 results, the history tab showed 300 and every case reported a single run.
+
+Deduplication now keys on the run and the result together. History returns in full, and the instability calculation finally has something to work with.
+</Update>
+
+<Update label="v2.51.0" description="2026-08-13">
+**A test executed once could be reported as 100% unstable.**
+
+Instability was computed over every recorded outcome, including test points that had never been executed. A single run preceded by one of those produced a "None → Passed" transition — counted as a flip, on a test that had never varied. On a plan replayed with a blocked pass, all 300 cases came out unstable.
+
+Only real executions now count — Passed, Failed, Blocked, Inconclusive. Blocked stays in: the tester tried and recorded an obstacle. A case needs two genuine executions before instability means anything.
+
+The calculation itself lived in **five** places, two of which used a hard-coded threshold instead of the one configured in Settings — so the same report could call a test unstable in its PDF and stable in its notification. There is now one implementation, one threshold, and a guard that fails if a sixth copy appears.
+</Update>
+
+<Update label="v2.50.1" description="2026-08-13">
+**The in-product documentation no longer shows internal development codes.**
+
+The help content carried 198 references to internal feature identifiers, several in section titles a reader sees first — "Generate a plan from a folder (F-53)". They mean nothing outside the codebase and made the documentation read like an internal draft left in production. All of them are gone, along with internal release-wave labels, and a guard now fails if any reappear.
+
+The help also documents the completeness guarantee on execution outcomes, alongside the one on suites.
+</Update>
+
+
 <Update label="v2.50.0" description="2026-08-13">
 **The pass rate could have been computed on partial data — the endpoint carrying every test case's outcome was fetched in a single call, with no way of knowing whether it had returned everything.**
 

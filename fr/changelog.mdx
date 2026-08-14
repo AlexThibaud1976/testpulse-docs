@@ -6,6 +6,51 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.53.0" description="2026-08-14">
+**Chaque exécution affichée dans un rapport est désormais à un clic de l'exécution qui l'a produite.**
+
+Le tableau Résultats portait une colonne « Run » qui affichait invariablement un tiret : le lien n'avait tout simplement jamais été branché. L'Historique complet montrait un numéro de run, ajouté la veille, qu'on pouvait lire mais pas suivre. Les deux affichent maintenant la même chose — le numéro de run cliquable — et ouvrent le **résultat exact**, pas seulement le run qui le contient. Quand l'identifiant du résultat n'est pas disponible, le lien se rabat sur le run plutôt que d'en inventer un.
+
+Ces liens sortent désormais par la même porte que partout ailleurs dans le produit. Sur Azure DevOps Server, l'extension s'exécute dans un cadre isolé où un lien « nouvel onglet » ordinaire ouvre une page blanche ; le rapport en utilisait encore un à trois endroits, dont le panneau des tests en échec sans défaut tracé. Les trois délèguent maintenant à l'hôte : un nouvel onglet s'ouvre en on-premises comme dans le cloud. Le clic droit continue de fonctionner comme attendu.
+</Update>
+
+<Update label="v2.52.0" description="2026-08-14">
+**L'Historique complet indique désormais de quelle exécution vient chaque ligne — et un rapport résiste à une comparaison côte à côte avec Azure DevOps.**
+
+Ouvrir le même cas de test dans les deux outils pouvait afficher neuf lignes ici et cinq là, sans aucun moyen d'expliquer l'écart. Les deux avaient raison : Azure DevOps masque les exécutions qui n'ont publié aucune issue, TestPulse les conserve. Mais rien dans le rapport ne permettait de l'établir, et un chiffre qu'on ne peut pas reconstituer est un chiffre qu'il faut croire sur parole. Chaque ligne porte maintenant son numéro d'exécution, et survoler un statut `None` en explique le sens — l'exécution existe, Azure DevOps n'a publié aucune issue pour ce cas.
+
+Le compteur de l'onglet **Tests instables** suit désormais le filtre actif, comme Résultats et Historique complet. Filtrer sur un seul cas de test ne le laisse plus annoncer le plan entier.
+
+En coulisses, le garde-fou de complétude introduit au fil des versions précédentes n'a plus rien à surveiller : toutes les collections que ce produit lit ont été mesurées contre un serveur réel. Quatre paginaient, trois se sont révélées dépourvues de tout mécanisme de troncature. Le garde-fou reste en place pour ce qui sera ajouté ensuite.
+</Update>
+
+<Update label="v2.51.1" description="2026-08-13">
+**L'historique d'exécution d'un rapport pouvait se réduire à une seule exécution, masquant le correctif d'instabilité livré quelques heures plus tôt.**
+
+Azure DevOps numérote les résultats de test **par exécution**, pas globalement : quatre exécutions des mêmes 300 cas portent toutes les identifiants 100000 à 100299. Le rapport utilisait cet identifiant seul pour éviter de lister deux fois le résultat courant — ce qui supprimait silencieusement la totalité des résultats historiques. Sur un plan de 1200 résultats, l'onglet Historique en affichait 300 et chaque cas déclarait une seule exécution.
+
+La déduplication s'appuie désormais sur le couple exécution + résultat. L'historique revient au complet, et le calcul d'instabilité a enfin de quoi travailler.
+</Update>
+
+<Update label="v2.51.0" description="2026-08-13">
+**Un test exécuté une seule fois pouvait être signalé instable à 100 %.**
+
+L'instabilité était calculée sur toutes les issues enregistrées, y compris les points de test jamais exécutés. Une seule exécution précédée de l'un d'eux produisait une transition « None → Passed » — comptée comme une bascule, sur un test qui n'avait jamais varié. Sur un plan rejoué avec un passage bloqué, les 300 cas ressortaient instables.
+
+Seules les exécutions réelles comptent désormais — Passed, Failed, Blocked, Inconclusive. Blocked reste dedans : le testeur a tenté et constaté un obstacle. Il faut deux exécutions véritables pour que l'instabilité veuille dire quelque chose.
+
+Le calcul lui-même vivait en **cinq** exemplaires, dont deux avec un seuil codé en dur au lieu de celui configuré dans les Paramètres — si bien qu'un même rapport pouvait déclarer un test instable dans son PDF et stable dans sa notification. Il n'y a plus qu'une implémentation, un seuil, et une garde qui échoue si un sixième exemplaire apparaît.
+</Update>
+
+<Update label="v2.50.1" description="2026-08-13">
+**La documentation embarquée n'affiche plus de codes de développement internes.**
+
+L'aide en ligne portait 198 références à des identifiants internes de fonctionnalité, dont plusieurs dans des titres de section qu'un lecteur voit en premier — « Générer un plan depuis un dossier (F-53) ». Ils ne veulent rien dire hors du code et donnaient à la documentation l'allure d'un brouillon interne oublié en production. Ils ont tous disparu, ainsi que les libellés de vague internes, et une garde échoue désormais si l'un d'eux réapparaît.
+
+L'aide documente aussi la garantie de complétude sur les résultats d'exécution, à côté de celle sur les suites.
+</Update>
+
+
 <Update label="v2.50.0" description="2026-08-13">
 **Le taux de passage pouvait être calculé sur des données partielles — l'endpoint qui porte le résultat d'exécution de chaque cas était interrogé en un seul appel, sans aucun moyen de savoir s'il avait tout renvoyé.**
 
