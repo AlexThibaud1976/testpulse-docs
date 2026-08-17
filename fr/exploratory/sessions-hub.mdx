@@ -10,7 +10,9 @@ Une session archivée sur une user story se retrouve facilement — à condition
 
 L'onglet liste **toutes les sessions exploratoires du projet**, groupées par le work item sur lequel elles ont été menées, activité la plus récente en tête. Chaque groupe affiche son work item, son **type**, le nombre de sessions qu'il porte et la date de sa dernière activité — puis se déplie en **une ligne par session**.
 
-C'est cette ligne qui compte : **statut**, charte, testeur, durée, nombre de notes, de captures, de fichiers et de bugs, et un lien vers la Task archivée. Une story explorée trois fois affiche trois lignes distinctes, et non un empilement de pastilles fusionnées.
+C'est cette ligne qui compte : **statut**, charte, testeur, durée, nombre de notes, de captures, de fichiers et de bugs, et un lien — vers la Task archivée une fois la session close, ou vers la fiche elle-même tant qu'elle est en cours, où l'onglet Explore la reprend.
+
+Pour une session active, ce lien vous dit si elle est **la vôtre** : la vôtre affiche votre nom et propose de la reprendre, celle d'un collègue ouvre seulement la fiche. Azure DevOps ne restaure une session qu'au compte qui l'a démarrée : promettre davantage serait promettre ce qui ne peut pas arriver. Une story explorée trois fois affiche trois lignes distinctes, et non un empilement de pastilles fusionnées.
 
 ## Lire le statut d'un coup d'œil
 
@@ -24,6 +26,10 @@ Les filtres couvrent **area path, iteration path, tag de campagne, testeur et p�
 
 Chaque option de filtre porte **son propre compteur de résultats**, ce qui permet de juger sa sélectivité avant de la choisir.
 
+Le filtre **Testeur** se positionne sur vous à l'ouverture du hub, avec une puce visible **« Filtré sur mes sessions »** retirable en un clic. **Les sessions actives y échappent** : une session ne reçoit sa tâche de suivi — et donc un nom de testeur résolvable — qu'à la clôture, si bien qu'un filtre par testeur masquerait sinon toutes les sessions en cours, y compris les vôtres. Tous les autres filtres continuent de s'y appliquer.
+
+<Warning>Ce filtre réduit le bruit ; il n'apporte aucune confidentialité. Les sessions sont stockées au **scope projet** et lisibles par toute personne ayant accès au projet, indépendamment des équipes Azure DevOps.</Warning>
+
 ## Archivées, jamais supprimées
 
 Au-delà d'un seuil, les sessions anciennes quittent la vue par défaut — elles sont **archivées à l'affichage uniquement**. TestPulse **ne supprime jamais une session** : l'interrupteur les fait revenir, et le total réel reste affiché.
@@ -36,7 +42,9 @@ Toute session portant au moins une entrée propose **Exporter la session** — l
 
 ## Ce que les indicateurs disent — et ne disent pas
 
-L'onglet affiche les **work items couverts**, les **découvertes** et les **sessions interrompues**. Il n'y a délibérément **pas d'effort total** : une session laissée ouverte une nuit produit une durée arithmétiquement exacte et pratiquement dénuée de sens, et la sommer aurait rendu le chiffre indigne de confiance. La durée par session, elle, reste affichée à côté de sa charte, là où un humain peut en juger.
+L'onglet affiche les **work items couverts**, un **compteur de sessions** et les **sessions interrompues**. Ce compteur correspond aux lignes réellement listées — sessions incomplètes comprises — donc vérifiable en les comptant.
+
+Un indicateur **« Découvertes »** figurait ici, additionnant les work items créés depuis une session. Il a été retiré en v2.57.2 : un testeur qui saisissait les mêmes constats directement dans Azure DevOps comptait zéro, si bien que le nombre n'a jamais mesuré ce que son nom promettait. Il n'y a délibérément **pas d'effort total** : une session laissée ouverte une nuit produit une durée arithmétiquement exacte et pratiquement dénuée de sens, et la sommer aurait rendu le chiffre indigne de confiance. La durée par session, elle, reste affichée à côté de sa charte, là où un humain peut en juger.
 
 Les work items créés par TestPulse pour archiver une session sont **signalés comme tels** et exclus de la couverture : ce sont des enregistrements, pas des sujets d'exploration.
 

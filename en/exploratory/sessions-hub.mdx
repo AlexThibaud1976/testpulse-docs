@@ -10,7 +10,9 @@ A session archived on a user story is easy to find — as long as you remember w
 
 The tab lists **all exploratory sessions of the project**, grouped by the work item they were run on, most recent activity first. Each group shows its work item, its **type**, the number of sessions it carries, and the date of its last activity — then expands into **one row per session**.
 
-That row is the unit that matters: **status**, charter, tester, duration, counts of notes, captures, files and bugs, and a link to the archived Task. A story explored three times shows three distinct rows, not a pile of merged badges.
+That row is the unit that matters: **status**, charter, tester, duration, counts of notes, captures, files and bugs, and a link — to the archived Task once the session is closed, or to the work item itself while it is still running, where the Explore tab picks it back up.
+
+For an active session, that link tells you whether it is **yours**: your own shows your name and offers to resume it, a colleague's only opens the work item. Azure DevOps restores a session solely to the account that started it, so promising more would be promising something that cannot happen. A story explored three times shows three distinct rows, not a pile of merged badges.
 
 ## Read the status at a glance
 
@@ -24,6 +26,10 @@ Filters cover **area path, iteration path, campaign tag, tester and period**, pl
 
 Each filter option carries **its own result count**, so you can judge how selective a choice is before making it.
 
+The **Tester** filter pre-sets itself to you when the hub opens, with a visible **"Filtered to my sessions"** chip you can remove in one click. **Active sessions are exempt from it**: a session only gets a tracking Task — and with it a resolvable tester name — at closure, so filtering by tester would otherwise hide every session in progress, your own included. Every other filter still applies to them.
+
+<Warning>This filter reduces noise; it grants no confidentiality. Sessions are stored at **project scope** and readable by anyone with access to the project, regardless of Azure DevOps teams.</Warning>
+
 ## Archived, never deleted
 
 Beyond a threshold, older sessions leave the default view — they are **archived for display only**. TestPulse **never deletes a session**: the switch brings them back, and the real total is always shown.
@@ -36,7 +42,9 @@ Any session holding at least one entry offers **Export session** — the same si
 
 ## What the indicators say — and don't
 
-The tab shows **covered work items**, **discoveries** and **interrupted sessions**. There is deliberately **no total effort**: a session left open overnight produces a duration that is arithmetically exact and practically meaningless, and summing it would have made the figure untrustworthy. Per-session duration remains, next to its charter, where a human can judge it.
+The tab shows **covered work items**, a **session count** and **interrupted sessions**. The session count matches the rows actually listed — incomplete sessions included — so you can verify it by counting them.
+
+A **"Discoveries"** tile used to sit here, summing the work items created from inside a session. It was retired in v2.57.2: a tester who logged the same findings straight into Azure DevOps by hand scored zero, so the number never measured what its name promised. There is deliberately **no total effort**: a session left open overnight produces a duration that is arithmetically exact and practically meaningless, and summing it would have made the figure untrustworthy. Per-session duration remains, next to its charter, where a human can judge it.
 
 Work items created by TestPulse to archive a session are **marked as such** and excluded from coverage — they are records, not subjects of exploration.
 

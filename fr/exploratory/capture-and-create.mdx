@@ -23,6 +23,10 @@ Depuis la session, créez un work item sans quitter l'écran :
 - **Bug** — deux champs à remplir (titre pré-rempli avec votre dernière note, plus la sévérité) ; tout le reste est **injecté, visible et éditable** : les **repro steps** générés en HTML depuis vos notes, vos captures en **cases à cocher**, les liens vers l'US et la session, et la classification héritée avec un **override replié**.
 - **Tâche** et **Cas de test** — le même flux, avec des étapes optionnelles générées depuis vos notes.
 
+Une capture peut aussi dire **ce qu'elle montre** : *une étape à réaliser*, ou *un résultat obtenu*. Le choix se fait au moment de la prise — quand vous savez encore pourquoi vous l'avez faite — et se modifie ensuite depuis la frise. Les fichiers ne sont jamais typés : la distinction n'a de sens que pour une capture d'écran.
+
+Ce choix façonne le cas de test généré. L'ordre de la frise est conservé : chaque note ouvre une étape, et les captures qui la suivent se rattachent à **cette** étape plutôt qu'au work item en général. Une capture marquée **résultat** renseigne le résultat attendu de son étape avec *« Voir copie d'écran »* et en fait une étape de validation — comme Azure DevOps distingue lui-même une action d'une vérification. Une capture prise avant toute note n'a pas d'étape à rejoindre : elle s'attache au work item seul. Une session sans aucun marquage produit exactement le cas de test qu'elle produisait avant.
+
 Un **cas de test** créé ainsi se lit comme **« Tests »** l'exigence — le sens qu'Azure DevOps affiche du point de vue du test lui-même. Les liens créés avant la v2.55.0 se lisent dans l'autre sens et **ne sont pas réécrits** : seuls les nouveaux ont changé.
 
 Les captures **et les fichiers** déposés sur la frise sont proposés à l'attache. Une pièce dont le téléversement ne peut pas être résolu s'affiche **grisée avec sa raison** plutôt que de disparaître discrètement de la liste.

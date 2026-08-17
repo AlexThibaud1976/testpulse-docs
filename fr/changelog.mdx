@@ -6,6 +6,47 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.58.0" description="2026-08-18">
+**Le hub distingue désormais votre propre session active de celle d'un collègue — et cesse de promettre une reprise qu'il ne pouvait pas tenir.**
+
+Une session active n'a pas encore de tâche de suivi : elle s'affichait donc « Testeur non identifié », avec le même lien quel que soit son auteur. L'appartenance se règle maintenant en comparant directement les identifiants de compte, confrontés à la valeur exacte inscrite à la création de la session — jamais un nom d'affichage, l'écart précis qui avait rendu le filtre de la 2.57.0 silencieusement inopérant. Trois issues, jamais un booléen : votre session porte votre nom et propose de la reprendre ; celle d'un collègue ouvre seulement la fiche, Azure DevOps ne restaurant une session qu'au compte qui l'a démarrée ; et quand l'appartenance est indéterminable, le lien reste neutre plutôt que de trancher.
+
+**L'historique exploratoire d'une exigence n'est plus invisible depuis sa propre fiche.** Ouvrir l'onglet Explore sur une exigence explorée trois fois n'affichait que « Aucune session exploratoire active » — vrai du présent, faux du passé. Les sessions closes y sont désormais listées, chacune renvoyant à sa tâche de suivi, le formulaire de démarrage restant à sa place. Dans l'onglet **Test coverage**, l'analyse de profondeur gagne une ligne informative indiquant leur nombre et nommant l'onglet Explore — jamais un avertissement, et sans toucher à la pastille de couverture : une session exploratoire n'est pas un cas de test, et lui créditer de la couverture gonflerait un chiffre indéfendable.
+
+**Les captures peuvent dire ce qu'elles montrent.** Marquez une capture comme *une étape à réaliser* ou *un résultat obtenu* — au moment de la prise, quand vous savez encore pourquoi vous l'avez faite, et modifiable ensuite depuis la frise. La génération d'un cas de test respecte alors l'ordre de la frise : chaque note ouvre une étape, et les captures qui la suivent se rattachent à **cette** étape plutôt qu'au work item en général. Une capture marquée « résultat » renseigne le résultat attendu de l'étape avec « Voir copie d'écran » et en fait une étape de validation, comme Azure DevOps distingue lui-même les deux. Une session sans aucun marquage produit exactement le cas de test qu'elle produisait avant.
+</Update>
+
+<Update label="v2.57.2" description="2026-08-18">
+**L'indicateur « Découvertes » du hub est retiré — de l'écran comme du rapport PDF consolidé.**
+
+Il additionnait les work items créés *depuis une session*. Un testeur qui saisit les mêmes constats directement dans Azure DevOps comptait zéro : le nombre n'a jamais mesuré ce que son nom promettait. Supprimé plutôt que rebaptisé en quelque chose d'exact mais toujours sans valeur. Un **compteur de sessions** prend sa place à l'écran — celui-là correspond aux lignes réellement affichées, sessions incomplètes comprises, donc vérifiable en les comptant. Le tableau de synthèse du PDF perd simplement la ligne.
+
+**Une session active se rouvre désormais directement depuis le hub**, par un lien vers sa propre fiche où l'onglet Explore la reprend.
+
+Pour que ce lien soit seulement atteignable, les sessions sans tâche de suivi — c'est-à-dire toutes les sessions actives, la tâche n'étant créée qu'à la clôture — échappent maintenant au filtre Testeur. Sans cela, la vue « mes sessions » introduite en 2.57.0 aurait masqué précisément celles pour lesquelles ce lien existe. Tous les autres filtres continuent de s'y appliquer.
+</Update>
+
+<Update label="v2.57.1" description="2026-08-18">
+**Le filtre « mes sessions » livré la veille ne s'appliquait jamais.**
+
+Le hub lisait l'**adresse e-mail** du compte, et la comparait à des noms de testeur résolus depuis la tâche de suivi de chaque session. Les typings du SDK installé sont sans ambiguïté — un champ porte l'e-mail, l'autre le nom d'affichage — donc aucune correspondance n'était possible, et le filtre restait vide à chaque fois, indiscernable du cas d'un utilisateur n'ayant réellement aucune session.
+
+Une ligne a changé. Aucun repli sur l'autre champ n'a été ajouté : une adresse e-mail n'est jamais une clé valide ici, et un repli aurait échoué silencieusement au lieu de laisser le filtre vide — le comportement correct quand un nom ne peut pas être résolu.
+
+La régression était invisible aux tests parce que le mock portait la même hypothèse fausse que le code : un seul champ, contenant un nom d'affichage. Il porte désormais les deux, distincts, de sorte qu'un test échoue si le mauvais est relu un jour.
+</Update>
+
+<Update label="v2.57.0" description="2026-08-17">
+**Le hub Explore s'ouvre désormais sur vos propres sessions au lieu de lister tout le projet à chaque visite.**
+
+Chez le client de référence, un projet Azure DevOps unique regroupe toutes les équipes : ouvrir le hub revenait à voir les sessions de tout le monde et à filtrer à la main. Le filtre Testeur se positionne maintenant sur votre nom résolu — appliqué **exactement une fois**, au moment où arrivent les métadonnées dont il dépend, et jamais ensuite : un drapeau empêche qu'il revienne après que vous l'avez retiré ou changé. Aucune session résolue à votre nom, ou identité indisponible : le filtre démarre vide, exactement comme avant, plutôt qu'actif sur une valeur qui ne correspond à rien.
+
+Une puce visible **« Filtré sur mes sessions »** figure à côté des filtres, retirable en un clic — jamais enfouie comme valeur pré-sélectionnée dans une liste déroulante, que personne ne remarquerait et qui vous laisserait conclure que personne d'autre n'explore.
+
+<Note>Ce filtre réduit le bruit ; il n'apporte aucune confidentialité. Les sessions exploratoires sont stockées au **scope projet**, lisibles par toute personne ayant accès au projet, indépendamment des équipes Azure DevOps. La page Confidentialité le dit désormais en clair.</Note>
+</Update>
+
+
 <Update label="v2.56.0" description="2026-08-17">
 **Clôturer une session exploratoire n'oblige plus à retourner dans Azure DevOps pour affecter la tâche qui vient d'être créée.**
 

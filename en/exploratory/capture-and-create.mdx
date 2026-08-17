@@ -23,6 +23,10 @@ From the session, raise a work item without leaving the screen:
 - **Bug** — two fields to fill (title pre-filled with your last note, plus severity); everything else is **injected, visible and editable**: **repro steps** generated as HTML from your notes, your captures as **checkboxes**, links to the story and the session, and the inherited classification with a **collapsed override**.
 - **Task** and **Test case** — the same flow, with optional steps generated from your notes.
 
+A capture can also say **what it shows**: *a step to perform*, or *an obtained result*. You choose at capture time — while you still remember why you took it — and can change it afterwards from the timeline. Files are never typed: the distinction only makes sense for a screenshot.
+
+That choice shapes the generated test case. The timeline's own order is kept: each note opens a step, and the captures following it attach to **that** step rather than to the work item at large. A capture marked as a **result** fills its step's expected result with *"See screen capture"* and turns it into a validation step — the way Azure DevOps itself tells an action from a check. A capture taken before any note has no step to join, so it attaches to the work item alone. Sessions with nothing typed produce exactly the test case they did before.
+
 A **Test Case** created this way reads as **"Tests"** the story — the direction Azure DevOps shows from the test's own point of view. Links created before v2.55.0 read the other way round and are **not rewritten**: only newly created ones changed.
 
 Both captures **and files** dropped onto the timeline are offered for attachment. A piece whose upload can't be resolved is shown **greyed out with the reason** rather than quietly dropped from the list.

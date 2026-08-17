@@ -11,6 +11,11 @@ TestPulse is **100% client-side**. Reports are built **in your browser** — the
 - **Reports & history** — saved to Azure DevOps **Extension Data** (user-scoped; project-scoped only when you *share to project*). Nothing is sent to a third party.
 - **Preferences** — stored the same way, or in the browser for UI-only choices (for example the work-item tab's language).
 - **Attachments** — images are cached in memory and re-fetched from Azure DevOps when needed; they are stripped from saved history to respect the storage quota.
+- **Exploratory sessions** — stored at **project scope**, so that a session started on one screen can be found from another and listed in the hub.
+
+<Warning>
+Project scope means exactly that: **anyone with access to the project can read any session's notes and captures**, whatever Azure DevOps team they belong to. Team-level segregation does not apply to this storage. The hub's Tester filter reduces noise; it grants no confidentiality. Keep out of session notes anything you would not put in a work item comment.
+</Warning>
 
 ## No telemetry by default
 

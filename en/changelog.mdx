@@ -6,6 +6,47 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.58.0" description="2026-08-18">
+**The hub now tells your own active session apart from a colleague's — and stops promising a resume it couldn't deliver.**
+
+An active session has no tracking Task yet, so it read *"Tester: not identified"* with the same link whoever started it. Ownership is now settled by comparing account identifiers directly, matched against the identical value the session was stamped with at creation — never a display name, the exact mismatch that left the 2.57.0 filter silently inert. Three outcomes, never a boolean: your own session shows your name and offers to resume it; a colleague's only opens the work item, since Azure DevOps restores a session solely to the account that started it; and when ownership can't be determined, the link stays neutral rather than picking a side.
+
+**A requirement's exploratory history is no longer invisible from its own work item.** Opening the Explore tab on a story explored three times used to say only *"No active exploratory session"* — true of the present, false of the past. Closed sessions are now listed there, each linking to its tracking Task, with the start form still right where it was. On the **Test coverage** tab, the depth analysis gains one informational line naming the count and pointing at the Explore tab — never a warning, and never touching the coverage pill: an exploratory session is not a test case, and crediting coverage for it would inflate a number nobody could defend.
+
+**Screenshots can now say what they show.** Mark a capture as *a step to perform* or *an obtained result* — at capture time, when you still remember why you took it, and editable afterwards from the timeline. Generating a test case then keeps the timeline's own order: each note opens a step, and the captures following it attach to **that** step rather than to the work item at large. A capture marked as a result fills the step's expected result with "See screen capture" and turns it into a validation step, the way Azure DevOps itself distinguishes the two. Sessions with nothing marked produce exactly the test case they did before.
+</Update>
+
+<Update label="v2.57.2" description="2026-08-18">
+**The hub's "Discoveries" tile is retired — from the screen and from the consolidated PDF report alike.**
+
+It summed the work items created *from inside a session*. A tester who logs the same findings straight into Azure DevOps by hand scored zero, so the number never measured what its name promised. Removed outright rather than relabelled to something accurate but still useless. A **session count** takes its place on screen — matching the rows actually listed, incomplete sessions included, so you can verify it by counting. The PDF's synthesis table simply loses the row.
+
+**An active session can now be reopened straight from the hub**, through a link to its own work item where the Explore tab picks it back up.
+
+For that link to be reachable at all, sessions without a tracking Task — which is every active one, since the Task is only created at closure — are now exempt from the Tester filter. Without it, the default *"my sessions"* view introduced in 2.57.0 would have hidden the very sessions the link exists for. Every other filter still applies to them.
+</Update>
+
+<Update label="v2.57.1" description="2026-08-18">
+**The "Filtered to my sessions" default shipped the day before never actually applied.**
+
+The hub read the account's **email**, and compared it against tester names resolved from each session's tracking Task. The installed SDK's own typings are unambiguous — one field is the email/login, the other the display name — so no match was ever possible, and the filter stayed empty every time, indistinguishable from someone who genuinely had no session yet.
+
+One line changed. No fallback to the other field was added: an email is never a valid key here, and a fallback would have failed silently instead of leaving the filter empty, which is the correct behaviour when a name truly can't be resolved.
+
+The regression was invisible to the tests because the mock carried the same wrong assumption as the code — a single field, holding a display name. It now carries both, distinct, so a test fails if the wrong one is ever read again.
+</Update>
+
+<Update label="v2.57.0" description="2026-08-17">
+**The Explore hub now opens on your own sessions instead of listing the whole project every time.**
+
+At the reference client one Azure DevOps project spans every team, so opening the hub meant seeing everyone's sessions and filtering down by hand. The Tester filter now pre-sets itself to your own resolved name — applied **exactly once**, the moment the metadata it depends on arrives, and never again: a one-time flag stops it creeping back after you remove it or pick someone else. No session resolved to your name yet, or no identity available: the filter starts empty, exactly as before, rather than active on a value matching nothing.
+
+A visible **"Filtered to my sessions"** chip sits next to the filters, removable in one click — never buried as a pre-selected value in a dropdown, which nobody would notice and which would leave you concluding that no one else explores.
+
+<Note>This filter reduces noise; it grants no confidentiality. Exploratory sessions are stored at **project scope**, readable by anyone with access to the project regardless of Azure DevOps teams. The Privacy page now says so plainly.</Note>
+</Update>
+
+
 <Update label="v2.56.0" description="2026-08-17">
 **Closing an exploratory session no longer means going back to Azure DevOps to assign the Task it just created.**
 
