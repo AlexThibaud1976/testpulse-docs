@@ -34,6 +34,22 @@ There is **no "partial"**: one failure is enough to make a story Not OK. The ver
 
 <Note>**None** vs **Not Executed**: *None* means the point has no result object at all; *Not Executed* means a result exists but the run hasn't happened. Both read as **Not Run**.</Note>
 
+## Unstable tests
+
+A test is flagged **unstable** when its outcome flips between consecutive runs often enough to cross your configured threshold.
+
+Only **real executions** count — Passed, Failed, Blocked, Inconclusive. **Blocked is an execution**: the tester tried and recorded an obstacle. `None` and `Not Executed` are *absences* of execution, and an absence cannot be a flip: a test run once, preceded by a point that was never executed, is no longer reported as 100% unstable.
+
+A case needs **two genuine executions** before instability means anything at all.
+
+<Note>The same calculation and the same threshold now drive every surface — the report tab, the notification, the executive summary, the HTML export and the PDF. Before v2.51.0 two of them used a hardcoded threshold, so the same report could call a test unstable in its PDF and stable in its notification.</Note>
+
+## Full history
+
+The **Full history** tab lists every result TestPulse could read, one row per execution, each carrying its **run number** — so a row can be traced straight back to Azure DevOps.
+
+You may see **more rows here than Azure DevOps shows** on the test point itself. Both are right: Azure DevOps hides runs that published no outcome, TestPulse keeps them, marked `None`. Hovering that status says so explicitly. The instability calculation ignores them, which is why a case can show, say, nine history rows and five runs.
+
 ## Related
 
 <CardGroup cols={2}>

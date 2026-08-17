@@ -1,38 +1,56 @@
 ---
-title: "Lecture seule par conception (et l'unique exception)"
-description: "TestPulse lit vos données Azure DevOps et n'y écrit jamais — avec une seule exception, opt-in : le Coverage Builder."
+title: "Lecture seule par conception (et là où l'extension écrit)"
+description: "TestPulse lit vos données Azure DevOps et n'y écrit pas — sauf à trois endroits que vous déclenchez vous-même, tous en création d'abord, tous confirmés."
 icon: "lock"
 ---
 
-TestPulse est **en lecture seule par conception**. Il lit les plans de test, les résultats et les work items pour construire rapports et signaux, et il **n'écrit jamais** dans votre projet. Il existe exactement **une** exception, et elle est opt-in.
+TestPulse est en **lecture seule par conception**. Il lit les plans de test, les résultats et les work items pour construire rapports et signaux, et n'écrit rien de lui-même. Chaque écriture du produit est **déclenchée par un geste explicite de votre part**, et il y en a exactement trois.
 
 ## Ce que « lecture seule » signifie ici
 
-- Aucun changement de statut, aucun commentaire, aucun tag, aucune modification de vos work items ou résultats.
-- **100% côté client** : les rapports sont construits dans votre navigateur. **Aucun backend** — aucune donnée ne quitte votre tenant Azure DevOps.
-- Les signaux sur la fiche lisent **en direct** et ne changent rien.
+- **Jamais d'écriture en arrière-plan.** Ouvrir un rapport, un tableau de bord ou l'onglet couverture ne change rien dans votre projet.
+- **Aucun changement de statut, commentaire, tag ou modification** sur un work item que TestPulse n'a pas créé lui-même.
+- **100 % côté client** : les rapports sont construits dans votre navigateur. **Aucun backend** — aucune donnée ne quitte votre tenant Azure DevOps.
+- Les signaux sur fiche lisent **en direct** et ne modifient rien.
 
-## L'unique écriture : le Coverage Builder
+## Les trois endroits où l'extension écrit
 
-Le **Coverage Builder** peut *créer* des plans de test et des suites basées sur exigence à partir d'un ensemble d'exigences — **opt-in**, derrière une boîte de confirmation. Il est **création seule** : il n'écrase ni ne supprime jamais, avertit en cas de collision de nom, et rapporte honnêtement les échecs partiels. Tout le reste demeure en lecture seule.
+### 1. Coverage Builder — crée des plans et des suites
 
-<Warning>Le Coverage Builder est la **seule** fonctionnalité qui écrit. Il demande confirmation à chaque fois et ne modifie jamais de plans ou suites existants.</Warning>
+Crée des plans de test et des suites requirement-based à partir d'un ensemble d'exigences, derrière un dialogue de confirmation. **Création seule** : jamais d'écrasement ni de suppression, avertissement en cas de collision de nom, et rapport honnête des échecs partiels. Scope : `vso.test_write`.
+
+### 2. Test exploratoire — crée les work items que vous demandez
+
+Pendant une session exploratoire, et après sa clôture, vous pouvez déposer un **Bug** ou un **cas de test** à partir de ce que vous avez observé. Clôturer une session crée aussi une **tâche** qui porte toute la session : rapport, captures, fichiers, et liens vers tout ce que vous avez déposé. Les captures et fichiers que vous attachez sont téléversés dans Azure DevOps en pièces jointes.
+
+Tout cela est **créé**, jamais modifié : TestPulse relie le nouveau work item à votre exigence, il ne touche pas à l'exigence elle-même. Scope : `vso.work_write`.
+
+### 3. Clôture de session — pose l'état de la tâche qu'il vient de créer
+
+À la clôture d'une session, un dialogue facultatif propose d'affecter la tâche de suivi et de lui donner un état initial. Si Azure DevOps refuse de créer la tâche directement dans cet état — certains processus le font —, TestPulse pose l'état en une seconde étape, **une seule fois**, et ne réessaie jamais.
+
+C'est le **seul** endroit du produit où un work item est modifié après sa création, et il s'agit toujours de **la tâche que TestPulse vient de créer quelques secondes plus tôt, dans le même geste**. Passer le dialogue produit une tâche octet pour octet identique à celle construite avant l'existence de cette fonctionnalité. Scope : `vso.work_write`.
+
+<Warning>
+TestPulse ne modifie ni ne supprime jamais un work item, plan, suite ou cas de test qui existait avant votre geste. L'unique écriture postérieure à une création est bornée à la tâche qu'il vient lui-même de créer, à votre demande.
+</Warning>
 
 ## Scopes de permission (référence)
 
 | Scope | Pourquoi il est demandé |
 | --- | --- |
-| `vso.test` | Lire plans, suites, cas, points et résultats. |
-| `vso.work` | Lire les work items (exigences, bugs) pour la traçabilité. |
-| `vso.identity` | Résoudre testeurs et assignés par nom. |
+| `vso.test` | Lire les plans de test, suites, cas, points et résultats. |
+| `vso.work` | Lire les work items (exigences, bugs) pour la traçabilité, et lire les états d'un type de work item. |
+| `vso.identity` | Résoudre testeurs et assignés par leur nom. |
 | `vso.build` | Lire le build associé à un rapport. |
-| `vso.test_write` | Utilisé **uniquement** par le Coverage Builder pour créer plans et suites (opt-in). |
+| `vso.test_write` | Utilisé **uniquement** par le Coverage Builder pour créer plans et suites. |
+| `vso.work_write` | Utilisé **uniquement** par le test exploratoire : créer bugs, cas de test et la tâche de session, téléverser leurs pièces jointes, et poser l'état de cette tâche à la clôture. |
 
-<Note>Rien ne lit les commentaires ni de données personnelles au-delà de ce qu'un rapport nécessite. Le détail complet figurera sur la page Permissions.</Note>
+<Note>Rien ne lit les commentaires ni de données personnelles au-delà de ce dont un rapport a besoin. Voir la page Permissions pour le détail complet.</Note>
 
-## À suivre
+## À lire ensuite
 
 <CardGroup cols={2}>
   <Card title="Le modèle Test Plans" icon="network" href="/fr/concepts/model">Plans, suites, cas, points.</Card>
-  <Card title="L'onglet Test coverage" icon="list-checks" href="/fr/work-item/test-coverage-tab">Le signal en lecture seule sur une story.</Card>
+  <Card title="Capturer et créer" icon="camera" href="/fr/exploratory/capture-and-create">Ce que le test exploratoire dépose, et quand.</Card>
 </CardGroup>

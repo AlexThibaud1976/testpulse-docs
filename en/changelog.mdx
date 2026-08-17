@@ -6,6 +6,37 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.56.0" description="2026-08-17">
+**Closing an exploratory session no longer means going back to Azure DevOps to assign the Task it just created.**
+
+A small dialog now opens right after the "End session" confirmation, offering two things: who the tracking Task goes to, and what state it starts in. The assignee field reuses the same identity search as the report's contacts, and stays typable when that search isn't available — on some on-premises setups it simply isn't. The status list is read from your own work item type's **state categories**, never from a hardcoded name: if your process says "Terminé", that's what you see. The `Removed` category is always excluded — offering "delete" as a closing status is a trap, and irreversible in some processes. When your process has no completed-category state at all, nothing is pre-selected rather than something guessed.
+
+There's a **Skip** button, and it's the part that mattered most. Skipping doesn't produce a slightly different Task: it produces a byte-for-byte identical patch to the one built before this feature existed, asserted by a dedicated test. An optional step that quietly changes your data isn't optional.
+
+If your process refuses the requested transition, the Task is still created and the session still closes exactly as before. A separate, non-blocking warning names that one failure — using Azure DevOps' own message rather than a generic "update failed" — and the transition is never retried, because a workflow rule isn't a network glitch.
+</Update>
+
+<Update label="v2.55.0" description="2026-08-17">
+**A Test Case created from an exploratory session read as "Tested By" its story instead of "Tests" it.**
+
+Azure DevOps interprets a link from the point of view of the work item being patched — here, the Test Case. The relation now emitted makes it read the right way round. **Existing links are not rewritten**: only newly created ones change, and the in-product help says so, rather than leaving you to wonder why old and new work items disagree.
+
+Two other things about that same panel. **Files dropped onto the session timeline had no checkbox at all** — only captures were offered for attachment, even though the files had already uploaded and their URL was already known. The gap was in the panel's own collection, not in what it built. Captures and files are now offered alike.
+
+And **the panel is available after a session ends**, not only while it's running. Reopen the session's tracking Task and the same gesture is there, reading the closed session back from storage. A piece that can't be attached is now shown greyed out with the reason, instead of silently vanishing from the list.
+</Update>
+
+<Update label="v2.54.0" description="2026-08-17">
+**Generating a report on a whole test plan could crash on Azure DevOps Server — never on the cloud.**
+
+Measured on a real on-premises instance: asking a batch of work items to skip dead ids doesn't skip them there. It returns `null` in their place, and counts them. The cloud genuinely omits them, which is what the code assumed. Suites imported from older requirement-based plans carry orphaned requirement ids that no longer resolve; checking every child of an empty parent suite pulls the parent's own orphaned ids into the batch, and that was enough to stop the whole report.
+
+Fixed at the source rather than where it happened to break, so none of that primitive's twenty callers can receive a `null` whichever code path answers. Two more independent batches on the work item Coverage tab had the same latent flaw and were fixed with it. Nothing changes when every work item still exists — the overwhelming majority of cases, and the entirety of the cloud.
+
+Alongside it, **traceability gained a "Requirement suites only" scope**, next to "Include inactive plans". By default it still combines requirement-based suites and the direct links carried by test cases, exactly as before. On a regression plan replayed for years, that second source can drag in links to long-closed stories that have nothing to do with the current campaign — the toggle leaves them out. The choice is remembered per project and changeable without leaving the report screen. A question mark next to it explains what each mode includes, and why the quality score redistributes its coverage weight when nothing is left to measure.
+</Update>
+
+
 <Update label="v2.53.0" description="2026-08-14">
 **Every run shown in a report is now one click away from the execution that produced it.**
 

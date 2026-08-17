@@ -6,6 +6,37 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.56.0" description="2026-08-17">
+**Clôturer une session exploratoire n'oblige plus à retourner dans Azure DevOps pour affecter la tâche qui vient d'être créée.**
+
+Un petit dialogue s'ouvre désormais juste après la confirmation de fin de session, et propose deux choses : à qui revient la tâche de suivi, et dans quel état elle démarre. Le champ d'affectation réutilise la même recherche d'identités que les contacts du rapport, et reste saisissable quand cette recherche n'est pas disponible — sur certaines installations on-premises, elle ne l'est simplement pas. La liste des statuts est lue depuis les **catégories d'état** de votre propre type de work item, jamais depuis un nom codé en dur : si votre processus dit « Terminé », c'est « Terminé » qui s'affiche. La catégorie `Removed` est systématiquement exclue — proposer « supprimer » comme statut de clôture est un piège, et irréversible dans certains processus. Si votre processus n'a aucun état de catégorie terminale, rien n'est présélectionné plutôt qu'une valeur devinée.
+
+Il y a un bouton **Passer**, et c'est la partie qui comptait le plus. Le passer ne produit pas une tâche légèrement différente : il produit un patch **octet pour octet identique** à celui construit avant l'existence de cette fonctionnalité, vérifié par un test dédié. Une étape facultative qui modifierait discrètement vos données ne serait pas facultative.
+
+Si votre processus refuse la transition demandée, la tâche est quand même créée et la session se clôt exactement comme avant. Un avertissement distinct et non bloquant nomme ce seul échec — avec le message d'Azure DevOps lui-même plutôt qu'un « échec de la mise à jour » générique —, et la transition n'est jamais rejouée : une règle de processus n'est pas un aléa réseau.
+</Update>
+
+<Update label="v2.55.0" description="2026-08-17">
+**Un cas de test créé depuis une session exploratoire apparaissait comme « Testé par » son exigence au lieu de la « Tester ».**
+
+Azure DevOps interprète un lien du point de vue du work item que l'on modifie — ici le cas de test. La relation désormais émise le fait lire dans le bon sens. **Les liens existants ne sont pas réécrits** : seuls les nouveaux changent, et l'aide embarquée le dit, plutôt que de vous laisser vous demander pourquoi anciens et nouveaux work items divergent.
+
+Deux autres points sur ce même panneau. **Les fichiers déposés sur la frise de session n'avaient aucune case à cocher** — seules les captures étaient proposées à l'attache, alors que ces fichiers étaient déjà téléversés et leur URL déjà connue. L'écart venait de la collecte du panneau, pas de ce qu'il construisait. Captures et fichiers sont maintenant proposés à l'identique.
+
+Et **le panneau est disponible après la fin d'une session**, plus seulement pendant. Rouvrez la tâche de suivi de la session et le même geste s'y trouve, en relisant la session close depuis le stockage. Une pièce qui ne peut pas être attachée s'affiche désormais grisée avec sa raison, au lieu de disparaître silencieusement de la liste.
+</Update>
+
+<Update label="v2.54.0" description="2026-08-17">
+**Générer un rapport sur un plan de test entier pouvait échouer sur Azure DevOps Server — jamais dans le cloud.**
+
+Mesuré sur une instance on-premises réelle : demander à un lot de work items d'ignorer les identifiants morts ne les ignore pas. Il renvoie `null` à leur place, et les compte. Le cloud, lui, les omet réellement — ce que le code supposait. Les suites importées d'anciens plans requirement-based conservent des identifiants d'exigence orphelins qui ne résolvent plus ; cocher toutes les enfants d'une suite parente vide fait entrer les identifiants orphelins de la parente dans le lot, et cela suffisait à arrêter tout le rapport.
+
+Corrigé à la source plutôt qu'à l'endroit où ça cassait, de sorte qu'aucun des vingt appelants de cette primitive ne peut recevoir de `null`, quel que soit le chemin qui répond. Deux autres lots indépendants de l'onglet Couverture d'une fiche portaient le même défaut latent et ont été corrigés avec. Rien ne change quand tous les work items existent — l'immense majorité des cas, et la totalité du cloud.
+
+En parallèle, **la traçabilité gagne un périmètre « Suites d'exigences uniquement »**, à côté de « Inclure les plans inactifs ». Par défaut, elle combine toujours les suites requirement-based et les liens directs portés par les cas de test, exactement comme avant. Sur un plan de non-régression rejoué pendant des années, cette seconde source peut ramener des liens vers des exigences closes depuis longtemps, sans rapport avec la campagne en cours — l'option les écarte. Le choix est mémorisé par projet et modifiable sans quitter l'écran du rapport. Un point d'interrogation explique ce que chaque mode inclut, et pourquoi le score qualité redistribue le poids de la couverture quand il n'y a plus rien à mesurer.
+</Update>
+
+
 <Update label="v2.53.0" description="2026-08-14">
 **Chaque exécution affichée dans un rapport est désormais à un clic de l'exécution qui l'a produite.**
 

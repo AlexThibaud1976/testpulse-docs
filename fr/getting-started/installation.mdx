@@ -44,13 +44,14 @@ TestPulse s'installe comme n'importe quelle extension Azure DevOps. Choisissez v
 
 ## Permissions demandées
 
-TestPulse demande des scopes de lecture, plus un scope d'écriture utilisé **uniquement** par le Coverage Builder opt-in :
+TestPulse demande des scopes de lecture, plus deux scopes d'écriture, chacun borné à une action de création que vous déclenchez vous-même :
 
 | Scope | Pourquoi |
 | --- | --- |
 | `vso.work` | Lire les work items (exigences, bugs). |
 | `vso.test` | Lire les plans, suites, cas et résultats de test. |
 | `vso.test_write` | **Coverage Builder uniquement** — créer des plans/suites à la demande. |
+| `vso.work_write` | **Test exploratoire uniquement** — créer les bugs, cas de test et la tâche de session que vous déposez, et leurs pièces jointes. |
 | `vso.build`, `vso.identity` | Détails du build associé et des assignés. |
 
-<Tip>Tout sauf le Coverage Builder est en **lecture seule**. TestPulse ne modifie jamais vos résultats de test.</Tip>
+<Tip>TestPulse n'écrit jamais de lui-même : chaque écriture suit un geste explicite. Il ne modifie jamais un work item, plan, suite ou résultat antérieur à ce geste — voir [Permissions & scopes](/fr/security/permissions).</Tip>

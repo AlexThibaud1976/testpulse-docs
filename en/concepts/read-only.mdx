@@ -1,38 +1,56 @@
 ---
-title: "Read-only by design (and the one exception)"
-description: "TestPulse reads your Azure DevOps data and never writes to it — with a single, opt-in exception: the Coverage Builder."
+title: "Read-only by design (and where it writes)"
+description: "TestPulse reads your Azure DevOps data and never writes to it — except in three places you trigger yourself, all create-first, all confirmed."
 icon: "lock"
 ---
 
-TestPulse is **read-only by design**. It reads Test Plans, results and work items to build reports and signals, and it **never writes** to your project. There is exactly **one** exception, and it is opt-in.
+TestPulse is **read-only by design**. It reads Test Plans, results and work items to build reports and signals, and it writes nothing on its own. Every write in the product is **triggered by an explicit gesture on your part**, and there are exactly three of them.
 
 ## What "read-only" means here
 
-- No status changes, no comments, no tags, no edits to your work items or results.
+- **No background writes, ever.** Opening a report, a dashboard or the coverage tab changes nothing in your project.
+- **No status changes, comments, tags or edits** to work items TestPulse did not create itself.
 - **100% client-side**: reports are built in your browser. **No backend** — no data ever leaves your Azure DevOps tenant.
 - The on-work-item signals read **live** and change nothing.
 
-## The one write: Coverage Builder
+## The three places it writes
 
-The **Coverage Builder** can *create* Test Plans and requirement-based suites from a set of requirements — **opt-in**, behind a confirmation dialog. It is **create-only**: it never overwrites or deletes, warns on a name collision, and reports partial failures honestly. Everything else stays read-only.
+### 1. Coverage Builder — creates plans and suites
 
-<Warning>The Coverage Builder is the **only** feature that writes. It asks for confirmation every time and never modifies existing plans or suites.</Warning>
+Creates Test Plans and requirement-based suites from a set of requirements, behind a confirmation dialog. **Create-only**: it never overwrites or deletes, warns on a name collision, and reports partial failures honestly. Scope: `vso.test_write`.
+
+### 2. Exploratory testing — creates work items you asked for
+
+While running an exploratory session, and after closing it, you can file a **Bug** or a **Test Case** from what you observed. Closing a session also creates a **Task** carrying the whole session: report, captures, files, and links to everything you filed. Captures and files you attach are uploaded to Azure DevOps as attachments.
+
+All of it is **created**, never modified: TestPulse links the new work item to your story, it does not touch the story itself. Scope: `vso.work_write`.
+
+### 3. Session closure — sets the state of the Task it just created
+
+When you close a session, an optional dialog offers to assign the tracking Task and give it an initial state. If Azure DevOps refuses to create the Task directly in that state — some processes do — TestPulse sets the state in a second step, **once**, and never retries.
+
+This is the **only** place in the product where a work item is modified after creation, and it is always **the Task TestPulse created seconds earlier, in the same gesture**. Skipping the dialog produces a Task byte-for-byte identical to the one built before this feature existed. Scope: `vso.work_write`.
+
+<Warning>
+TestPulse never modifies or deletes a work item, plan, suite or test case that existed before your gesture. The single post-creation write is bounded to the Task it just created, at your request.
+</Warning>
 
 ## Permission scopes (reference)
 
 | Scope | Why it is requested |
 | --- | --- |
 | `vso.test` | Read Test Plans, suites, cases, points and results. |
-| `vso.work` | Read work items (requirements, bugs) for traceability. |
+| `vso.work` | Read work items (requirements, bugs) for traceability, and read a work item type's states. |
 | `vso.identity` | Resolve testers and assignees by name. |
 | `vso.build` | Read the associated build for a report. |
-| `vso.test_write` | Used **only** by the Coverage Builder to create plans and suites (opt-in). |
+| `vso.test_write` | Used **only** by the Coverage Builder to create plans and suites. |
+| `vso.work_write` | Used **only** by exploratory testing: create Bugs, Test Cases and the session Task, upload their attachments, and set that Task's state at closure. |
 
-<Note>Nothing reads comments or personal data beyond what a report needs. Full details will live on the Permissions page.</Note>
+<Note>Nothing reads comments or personal data beyond what a report needs. See the Permissions page for the full breakdown.</Note>
 
 ## Related
 
 <CardGroup cols={2}>
   <Card title="The Test Plans model" icon="network" href="/en/concepts/model">Plans, suites, cases, points.</Card>
-  <Card title="The Test coverage tab" icon="list-checks" href="/en/work-item/test-coverage-tab">The read-only signal on a story.</Card>
+  <Card title="Capture and create" icon="camera" href="/en/exploratory/capture-and-create">What exploratory testing files, and when.</Card>
 </CardGroup>

@@ -14,6 +14,13 @@ Utilisez le menu déroulant avec **autocomplétion** pour rechercher les plans p
 - **Décochez** une suite pour l'exclure du rapport.
 - Les plans marqués **INACTIVE** sont masqués par défaut — un toggle les affiche.
 - **Exclure vides** décoche en un clic toutes les suites sans cas de test (les suites en erreur de chargement ne sont jamais touchées). Un badge **(N masquées)** apparaît à côté du compteur, et la préférence est mémorisée.
+- **Filtrer les suites par nom** — saisissez dans le champ de filtre pour réduire l'arbre (accents et casse ignorés). Tout ancêtre d'une correspondance reste visible, pour ne jamais perdre le repère dans la hiérarchie.
+- **Rechercher un plan par son identifiant** dans le même champ d'autocomplétion. S'il est introuvable, vous êtes invité à inclure les plans inactifs.
+- **Suites d'exigences uniquement** restreint la [traçabilité](/fr/concepts/traceability) aux suites basées sur exigence — utile sur un plan de non-régression dont les cas de test portent des années de liens sans rapport. Désactivée par défaut ; un point d'interrogation explique les deux modes.
+
+**Les suites vides s'affichent par défaut**, et la hiérarchie affichée correspond toujours à Azure DevOps : une suite parente vide portant un enfant visible n'est jamais retirée, et une suite masquée n'est jamais remontée au mauvais niveau.
+
+<Note>Les suites, les cas de test, les résultats d'exécution et l'historique des exécutions sont chacun lus **jusqu'à épuisement**. Si l'un d'eux ne peut pas être confirmé complet, son propre bandeau distinct le signale sur le rapport — jamais dans un export. Un bandeau sur le contenu des cas n'implique jamais que le taux de passage soit affecté, et celui sur l'historique n'implique jamais que la liste des suites le soit.</Note>
 
 ## Champs du formulaire
 
@@ -51,6 +58,12 @@ La validation s'exécute **en temps réel** dans le formulaire (indicateur rouge
 **Longueur douce** — un seuil optionnel par champ. Au-delà, un indice **orange, non bloquant** apparaît (*« n / seuil — risque de débordement sur la page de garde »*). Il ne bloque jamais la génération et ne tronque jamais la valeur — il aide seulement à garder une page de garde lisible.
 
 <Note>Les contacts (IT, Business, Testeur, Approbateur) sont des **identités Azure DevOps** : **ni regex ni longueur douce** — tout pattern stocké est ignoré. Ils sont regroupés sous **« Contacts & validation »**.</Note>
+
+## Lire le rapport généré
+
+- **Résultats** affiche le dernier résultat par cas de test ; **Historique complet** liste chaque exécution, une ligne par exécution.
+- Les deux portent une colonne **Run** : le numéro d'exécution, cliquable, qui ouvre le **résultat exact** dans Azure DevOps — pas seulement l'exécution qui le contenait. Les liens passent par la navigation d'Azure DevOps elle-même, donc fonctionnent aussi depuis une fiche work item sandboxée on-premises.
+- Les compteurs d'onglets suivent le filtre actif : filtrer sur un seul cas de test ne laisse plus l'un d'eux annoncer le plan entier.
 
 ## À suivre
 

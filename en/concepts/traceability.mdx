@@ -14,6 +14,19 @@ TestPulse reconstructs the full chain **Epic → Feature → User Story / PBI �
 | **Requirement-based suite** | Suite → User Story | Maps a suite back to the story it validates. |
 | **Bug behind a failure** | Test Case → Bug | The defect linked to a failing test, surfaced next to its result. |
 
+## Two sources, and how to narrow them
+
+Traceability is built from **two** sources, combined by default:
+
+1. **Requirement-based suites** — the suite itself names the story it validates.
+2. **Direct links carried by test cases** — a *Tested By* link between a story and a test, wherever that test lives.
+
+The second source is what gives most teams their traceability: plans organised by functional domain rarely use requirement-based suites at all. But on a **regression plan replayed for years**, it can drag in links to long-closed stories that have nothing to do with the current campaign.
+
+**"Requirement suites only"**, next to *Include inactive plans* in the plan selection panel, restricts traceability to the first source. Off — the default — nothing changes. The choice is remembered per project and changeable without leaving the report screen; a question mark next to it explains both modes.
+
+<Note>With the toggle on and no requirement-based suite in scope, there is nothing left to measure. The quality score then flags **coverage unavailable** and redistributes that weight across the other criteria, rather than scoring you zero on a dimension you deliberately excluded.</Note>
+
 ## Where it shows up
 
 - **Traceability** in reports — the **Epic → User Story → Test Case → Bug** tree.

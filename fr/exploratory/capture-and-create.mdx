@@ -23,9 +23,19 @@ Depuis la session, créez un work item sans quitter l'écran :
 - **Bug** — deux champs à remplir (titre pré-rempli avec votre dernière note, plus la sévérité) ; tout le reste est **injecté, visible et éditable** : les **repro steps** générés en HTML depuis vos notes, vos captures en **cases à cocher**, les liens vers l'US et la session, et la classification héritée avec un **override replié**.
 - **Tâche** et **Cas de test** — le même flux, avec des étapes optionnelles générées depuis vos notes.
 
+Un **cas de test** créé ainsi se lit comme **« Tests »** l'exigence — le sens qu'Azure DevOps affiche du point de vue du test lui-même. Les liens créés avant la v2.55.0 se lisent dans l'autre sens et **ne sont pas réécrits** : seuls les nouveaux ont changé.
+
+Les captures **et les fichiers** déposés sur la frise sont proposés à l'attache. Une pièce dont le téléversement ne peut pas être résolu s'affiche **grisée avec sa raison** plutôt que de disparaître discrètement de la liste.
+
+<Note>Depuis la v2.55.0, ce panneau est aussi disponible **après** la fin d'une session : rouvrez la tâche de suivi de la session et le même geste s'y trouve, en relisant la session close depuis le stockage.</Note>
+
 ## Archiver la session
 
 **Terminer la session** l'archive en **Task taguée `exploratory-session`** (plus votre tag de campagne), portant le rapport complet — charte, durée, compteurs, timeline — et ses relations vers l'US, les captures et chaque work item créé. Les sessions deviennent **requêtables nativement** dans Azure DevOps : une campagne se retrouve avec une simple requête de tag.
+
+Depuis la v2.56.0, un court dialogue propose ensuite d'**affecter** cette tâche et de lui donner un **état initial**. La liste des statuts provient des catégories d'état de votre propre type de work item : un processus qui dit *Terminé* affiche *Terminé*, et la catégorie `Removed` n'est jamais proposée. Les deux champs sont pré-remplis, et **Passer** les contourne en un clic — en produisant une tâche octet pour octet identique à celle construite avant l'existence de ce dialogue.
+
+Si votre processus refuse l'état demandé, la tâche est quand même créée et la session se clôt quand même. Un avertissement distinct et non bloquant nomme ce seul échec avec le message d'Azure DevOps lui-même, et la transition n'est jamais rejouée.
 
 ## Voir aussi
 

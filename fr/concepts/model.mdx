@@ -20,7 +20,7 @@ Chaque rapport TestPulse est construit à partir du modèle **Test Plans** d'Azu
 
 ## Comment TestPulse le lit
 
-TestPulse parcourt l'arbre en **lecture seule** : plan → suites → cas → points → derniers résultats. Il ne modifie jamais rien (seule exception : le [Coverage Builder](/fr/concepts/read-only) opt-in).
+TestPulse parcourt l'arbre en **lecture seule** : plan → suites → cas → points → derniers résultats. Il ne modifie jamais rien qu'il n'ait créé lui-même (voir [Coverage Builder](/fr/concepts/read-only) opt-in).
 
 <Note>Comme les résultats sont attachés aux **points**, un cas présent dans plusieurs suites peut avoir plusieurs résultats. TestPulse résout le **dernier** résultat pour les points de la portée.</Note>
 

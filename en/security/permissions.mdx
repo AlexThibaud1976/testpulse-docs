@@ -1,22 +1,33 @@
 ---
 title: "Permissions & scopes"
-description: "The Azure DevOps scopes TestPulse requests, why each is needed, and the one write exception."
+description: "The Azure DevOps scopes TestPulse requests, why each is needed, and exactly what it writes."
 icon: "key"
 ---
 
-TestPulse requests only the scopes it needs, and is **read-only** except for the opt-in [Coverage Builder](/en/coverage-builder/create-plan).
+TestPulse requests only the scopes it needs. It **never writes on its own**: every write is triggered by an explicit gesture on your part, and each one is bounded to what it creates.
 
-| Scope | Why it is requested |
-| --- | --- |
-| `vso.test` | Read Test Plans, suites, cases, points and results. |
-| `vso.work` | Read work items (requirements, bugs) for traceability. |
-| `vso.identity` | Resolve testers and assignees by name. |
-| `vso.build` | Read the associated build for a report. |
-| `vso.test_write` | Used **only** by the Coverage Builder to create plans and suites (opt-in). |
+| Scope | Read / Write | Why it is requested |
+| --- | --- | --- |
+| `vso.test` | read | Test Plans, suites, cases, points and results. |
+| `vso.work` | read | Work items (requirements, bugs) for traceability, and a work item type's available states. |
+| `vso.identity` | read | Resolve testers and assignees by name. |
+| `vso.build` | read | The associated build for a report. |
+| `vso.test_write` | **write** | Coverage Builder only — create Test Plans and suites. |
+| `vso.work_write` | **write** | Exploratory testing only — create Bugs, Test Cases and the session Task, upload their attachments, and set that Task's state at closure. |
 
-## The write scope
+## The two write scopes
 
-`vso.test_write` powers **only** the Coverage Builder's create action. Adding it to the manifest is an **administrator** action and triggers an **extension re-approval** for the organisation. Until then, everything read-only keeps working — only plan creation is unavailable.
+### `vso.test_write` — Coverage Builder
+
+Powers **only** the Coverage Builder's create action. Create-only: it never overwrites or deletes an existing plan or suite.
+
+### `vso.work_write` — exploratory testing
+
+Powers **only** what an exploratory session files at your request: a Bug, a Test Case, the session's tracking Task, and their attachments. All created, never modified — TestPulse links a new work item to your story, it does not touch the story.
+
+One narrow exception: at session closure, an optional dialog can set the state of **the Task TestPulse just created**, in the same gesture. That is the only post-creation write in the product, and it never applies to anything that existed before.
+
+<Note>Adding a write scope to the manifest is an **administrator** action and triggers an **extension re-approval** for the organisation. Until then, everything read-only keeps working — only the corresponding create action is unavailable.</Note>
 
 ## Permission ≠ scope
 
@@ -26,5 +37,5 @@ A **403** when creating a plan is almost always an **area-path ACL** — the *Ma
 
 <CardGroup cols={2}>
   <Card title="Privacy & data" icon="shield" href="/en/security/privacy">Where data lives.</Card>
-  <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">The read/write boundary.</Card>
+  <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">The read/write boundary in detail.</Card>
 </CardGroup>

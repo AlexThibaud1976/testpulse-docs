@@ -14,7 +14,13 @@ Use the **autocomplete** dropdown to search plans by name or iteration path. Sui
 - **Uncheck** any suite to exclude it from the report.
 - Plans marked **INACTIVE** are hidden by default — a toggle reveals them.
 - **Exclude empty** unchecks every suite with zero test cases in one click (suites that failed to load are never touched). A **(N hidden)** badge appears next to the suite count, and the preference is remembered.
+- **Filter suites by name** — type in the filter field to narrow the tree (accents and case ignored). Every ancestor of a match stays visible, so you never lose your place in the hierarchy.
+- **Search a plan by its numeric ID** in the same autocomplete field. If it isn't found, you're invited to include inactive plans.
+- **Requirement suites only** restricts [traceability](/en/concepts/traceability) to requirement-based suites — useful on a regression plan whose test cases carry years of unrelated links. Off by default; a question mark explains both modes.
 
+**Empty suites are shown by default**, and the displayed hierarchy always matches Azure DevOps: an empty parent holding a visible child is never dropped, and a hidden suite is never promoted to the wrong level.
+
+<Note>Suites, test cases, execution results and run history are each read **to exhaustion**. If any of them can't be confirmed complete, its own distinct banner says so on the report — never inside an export. A banner about case content never implies the pass rate is affected, and one about history never implies the suite list is.</Note>
 ## Form fields
 
 All visible fields are required unless configured otherwise in **Settings → Field configuration**. **IT Contact**, **Business Contact**, **Tester** and **Approver** use Azure DevOps user autocomplete (type at least 2 characters).
@@ -51,6 +57,12 @@ Validation runs **in real time** in the form (a red / orange indicator per field
 **Soft length** — an optional threshold per field. Beyond it, an **orange, non-blocking** hint appears (*"n / threshold — may overflow on the cover page"*). It never blocks generation and never truncates the value — it only nudges you toward a readable cover page.
 
 <Note>Contacts (IT, Business, Tester, Approver) are **Azure DevOps identities**, so they carry **no regex and no soft length** — any stored pattern is ignored. They are grouped under **"Contacts & validation"**.</Note>
+
+## Reading the generated report
+
+- **Results** shows the latest outcome per test case; **Full history** lists every execution, one row each.
+- Both carry a **Run** column: the run number, clickable, opening the **exact result** in Azure DevOps — not just the run it belonged to. Links open through Azure DevOps' own navigation, so they also work from a sandboxed on-premises frame.
+- Tab counters follow the active filter, so filtering to a single test case no longer leaves one of them announcing the whole plan.
 
 ## Next
 

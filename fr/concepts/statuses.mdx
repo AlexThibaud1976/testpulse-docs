@@ -34,6 +34,22 @@ Pas de « partiel » : un seul échec suffit à rendre une story Non OK. Le verd
 
 <Note>**None** vs **Not Executed** : *None* signifie que le point n'a aucun objet résultat ; *Not Executed* signifie qu'un résultat existe mais que l'exécution n'a pas eu lieu. Les deux se lisent **Non exécuté**.</Note>
 
+## Tests instables
+
+Un test est signalé **instable** quand son résultat bascule entre exécutions consécutives assez souvent pour franchir le seuil que vous avez configuré.
+
+Seules les **exécutions réelles** comptent — Passed, Failed, Blocked, Inconclusive. **Blocked est une exécution** : le testeur a tenté et constaté un obstacle. `None` et `Not Executed` sont des *absences* d'exécution, et une absence ne peut pas constituer une bascule : un test exécuté une seule fois, précédé d'un point jamais exécuté, n'est plus signalé instable à 100 %.
+
+Il faut **deux exécutions véritables** pour que l'instabilité veuille dire quelque chose.
+
+<Note>Le même calcul et le même seuil pilotent désormais toutes les surfaces — l'onglet du rapport, la notification, la synthèse exécutive, l'export HTML et le PDF. Avant la v2.51.0, deux d'entre elles utilisaient un seuil codé en dur : un même rapport pouvait déclarer un test instable dans son PDF et stable dans sa notification.</Note>
+
+## Historique complet
+
+L'onglet **Historique complet** liste chaque résultat que TestPulse a pu lire, une ligne par exécution, chacune portant son **numéro d'exécution** — de sorte qu'une ligne se retrace directement dans Azure DevOps.
+
+Vous pouvez y voir **plus de lignes qu'Azure DevOps n'en affiche** sur le test point lui-même. Les deux ont raison : Azure DevOps masque les exécutions qui n'ont publié aucune issue, TestPulse les conserve, marquées `None`. Survoler ce statut le dit explicitement. Le calcul d'instabilité les ignore — c'est pourquoi un cas peut afficher, par exemple, neuf lignes d'historique et cinq exécutions.
+
 ## À suivre
 
 <CardGroup cols={2}>

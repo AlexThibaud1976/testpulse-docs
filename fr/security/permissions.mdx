@@ -1,30 +1,41 @@
 ---
 title: "Permissions & scopes"
-description: "Les scopes Azure DevOps que TestPulse demande, pourquoi chacun est nécessaire, et l'unique exception d'écriture."
+description: "Les scopes Azure DevOps demandés par TestPulse, pourquoi chacun est nécessaire, et exactement ce qu'il écrit."
 icon: "key"
 ---
 
-TestPulse ne demande que les scopes dont il a besoin, et il est en **lecture seule** sauf pour le [Coverage Builder](/fr/coverage-builder/create-plan) opt-in.
+TestPulse ne demande que les scopes dont il a besoin. Il **n'écrit jamais de lui-même** : chaque écriture est déclenchée par un geste explicite de votre part, et chacune est bornée à ce qu'elle crée.
 
-| Scope | Pourquoi il est demandé |
-| --- | --- |
-| `vso.test` | Lire plans, suites, cas, points et résultats. |
-| `vso.work` | Lire les work items (exigences, bugs) pour la traçabilité. |
-| `vso.identity` | Résoudre testeurs et assignés par nom. |
-| `vso.build` | Lire le build associé à un rapport. |
-| `vso.test_write` | Utilisé **uniquement** par le Coverage Builder pour créer plans et suites (opt-in). |
+| Scope | Lecture / Écriture | Pourquoi il est demandé |
+| --- | --- | --- |
+| `vso.test` | lecture | Plans de test, suites, cas, points et résultats. |
+| `vso.work` | lecture | Work items (exigences, bugs) pour la traçabilité, et les états disponibles d'un type de work item. |
+| `vso.identity` | lecture | Résoudre testeurs et assignés par leur nom. |
+| `vso.build` | lecture | Le build associé à un rapport. |
+| `vso.test_write` | **écriture** | Coverage Builder uniquement — créer plans de test et suites. |
+| `vso.work_write` | **écriture** | Test exploratoire uniquement — créer bugs, cas de test et la tâche de session, téléverser leurs pièces jointes, et poser l'état de cette tâche à la clôture. |
 
-## Le scope d'écriture
+## Les deux scopes d'écriture
 
-`vso.test_write` alimente **uniquement** l'action de création du Coverage Builder. L'ajouter au manifeste est une action **administrateur** et déclenche un **ré-approval de l'extension** pour l'organisation. En attendant, tout ce qui est en lecture seule continue de fonctionner — seule la création de plan est indisponible.
+### `vso.test_write` — Coverage Builder
+
+Alimente **uniquement** l'action de création du Coverage Builder. Création seule : jamais d'écrasement ni de suppression d'un plan ou d'une suite existante.
+
+### `vso.work_write` — test exploratoire
+
+Alimente **uniquement** ce qu'une session exploratoire dépose à votre demande : un bug, un cas de test, la tâche de suivi de la session, et leurs pièces jointes. Tout est créé, jamais modifié — TestPulse relie un nouveau work item à votre exigence, il ne touche pas à l'exigence.
+
+Une exception étroite : à la clôture d'une session, un dialogue facultatif peut poser l'état de **la tâche que TestPulse vient de créer**, dans le même geste. C'est la seule écriture postérieure à une création dans le produit, et elle ne s'applique jamais à quoi que ce soit d'antérieur.
+
+<Note>Ajouter un scope d'écriture au manifeste est une action d'**administrateur** et déclenche une **ré-approbation de l'extension** pour l'organisation. Jusque-là, tout ce qui est en lecture continue de fonctionner — seule l'action de création correspondante est indisponible.</Note>
 
 ## Permission ≠ scope
 
-Un **403** à la création d'un plan est presque toujours une **ACL d'area path** — la permission *Manage test plans* est accordée **par area path** — et **non** un scope manquant. Voir [Créer le plan dans Azure DevOps](/fr/coverage-builder/create-plan).
+Un **403** à la création d'un plan est presque toujours une **ACL d'area path** — la permission *Manage test plans* se donne **par area path** — et **non** un scope manquant. Voir [Créer le plan dans Azure DevOps](/fr/coverage-builder/create-plan).
 
 ## À suivre
 
 <CardGroup cols={2}>
   <Card title="Confidentialité & données" icon="shield" href="/fr/security/privacy">Où vivent les données.</Card>
-  <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">La frontière lecture/écriture.</Card>
+  <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">La frontière lecture/écriture en détail.</Card>
 </CardGroup>

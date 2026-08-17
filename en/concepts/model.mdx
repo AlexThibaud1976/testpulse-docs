@@ -20,7 +20,7 @@ Every TestPulse report is built from the Azure DevOps **Test Plans** model. Five
 
 ## How TestPulse reads it
 
-TestPulse walks the tree **read-only**: plan → suites → cases → points → latest results. It never modifies anything (the only exception is the opt-in [Coverage Builder](/en/concepts/read-only)).
+TestPulse walks the tree **read-only**: plan → suites → cases → points → latest results. It never modifies anything it did not create itself (see [what TestPulse writes](/en/concepts/read-only)).
 
 <Note>Because results attach to **points**, a case that lives in several suites can have several results. TestPulse resolves the **latest** result for the points in scope.</Note>
 

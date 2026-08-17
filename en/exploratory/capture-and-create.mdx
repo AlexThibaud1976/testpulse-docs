@@ -23,9 +23,19 @@ From the session, raise a work item without leaving the screen:
 - **Bug** — two fields to fill (title pre-filled with your last note, plus severity); everything else is **injected, visible and editable**: **repro steps** generated as HTML from your notes, your captures as **checkboxes**, links to the story and the session, and the inherited classification with a **collapsed override**.
 - **Task** and **Test case** — the same flow, with optional steps generated from your notes.
 
+A **Test Case** created this way reads as **"Tests"** the story — the direction Azure DevOps shows from the test's own point of view. Links created before v2.55.0 read the other way round and are **not rewritten**: only newly created ones changed.
+
+Both captures **and files** dropped onto the timeline are offered for attachment. A piece whose upload can't be resolved is shown **greyed out with the reason** rather than quietly dropped from the list.
+
+<Note>Since v2.55.0 this panel is also available **after** a session ends: reopen the session's tracking Task and the same gesture is there, reading the closed session back from storage.</Note>
+
 ## Archive the session
 
 **Ending the session** archives it as a **Task tagged `exploratory-session`** (plus your campaign tag), carrying the full report — charter, duration, counters, timeline — and its relations to the story, the captures and every work item you created. Sessions become **natively queryable** in Azure DevOps, so a campaign is just a tag query away.
+
+Since v2.56.0, a short dialog then offers to **assign** that Task and give it an **initial state**. The status list comes from your own work item type's state categories, so a process that says *Terminé* shows *Terminé*; the `Removed` category is never offered. Both fields are pre-filled, and **Skip** bypasses them in one click — producing a Task byte-for-byte identical to the one built before this dialog existed.
+
+If your process refuses the requested state, the Task is still created and the session still closes. A separate, non-blocking warning names that one failure using Azure DevOps' own message, and the transition is never retried.
 
 ## Related
 

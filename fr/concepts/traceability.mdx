@@ -14,6 +14,19 @@ TestPulse reconstruit la chaîne complète **Epic → Feature → User Story / P
 | **Suite basée sur exigence** | Suite → User Story | Relie une suite à la story qu'elle valide. |
 | **Bug derrière un échec** | Cas de test → Bug | Le défaut lié à un test en échec, affiché à côté de son résultat. |
 
+## Deux sources, et comment les restreindre
+
+La traçabilité est construite à partir de **deux** sources, combinées par défaut :
+
+1. **Les suites basées sur exigence** — la suite nomme elle-même l'exigence qu'elle valide.
+2. **Les liens directs portés par les cas de test** — un lien *Tested By* entre une exigence et un test, où que ce test se trouve.
+
+C'est la seconde source qui donne leur traçabilité à la plupart des équipes : un plan organisé par domaine fonctionnel n'utilise souvent aucune suite basée sur exigence. Mais sur un **plan de non-régression rejoué pendant des années**, elle peut ramener des liens vers des exigences closes depuis longtemps, sans rapport avec la campagne en cours.
+
+**« Suites d'exigences uniquement »**, à côté de *Inclure les plans inactifs* dans le panneau de sélection, restreint la traçabilité à la première source. Désactivée — le défaut — rien ne change. Le choix est mémorisé par projet et modifiable sans quitter l'écran du rapport ; un point d'interrogation explique les deux modes.
+
+<Note>Avec l'option activée et aucune suite basée sur exigence dans le périmètre, il ne reste rien à mesurer. Le score qualité signale alors **couverture indisponible** et redistribue ce poids sur les autres critères, plutôt que de vous noter zéro sur une dimension que vous avez délibérément exclue.</Note>
+
 ## Où ça apparaît
 
 - **Traçabilité** dans les rapports — l'arbre **Epic → User Story → Cas de test → Bug**.
