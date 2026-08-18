@@ -28,6 +28,28 @@ The widget reads the **latest published snapshot**, not live data. Publish a fre
 
 History is bounded by an Extension Data quota. Delete old reports (the storage indicator warns at 80%) — see [Report history](/en/collaboration/history).
 
+## A write is refused, with a banner instead of an error
+
+Exploratory sessions write to Azure DevOps — attachments, work items, the archived Task. That capability introduced the **work-items write permission**, and adding a permission requires a **one-time administrator re-approval** of the extension. Until an administrator approves it, every write is refused and TestPulse shows an explanatory banner rather than a raw error. Reading is unaffected. See [Permissions](/en/security/permissions).
+
+## I can't resume a colleague's active session
+
+You can't, and this isn't a bug. An in-progress session lives in Azure DevOps Extension Data, which restores it **only to the account that started it**. The hub tells the two cases apart: your own session offers to resume, a colleague's only opens the work item. A session becomes fully shared once it's closed and archived as a Task.
+
+## I can't delete a capture from a session timeline
+
+Three reasons, and the interface names the one that applies. The capture was **already sent to a bug, task or test case** — removing it would make the timeline disagree with what was actually transmitted. The session is **closed**: a closed session is a record, and nothing in it is editable. Or the session was started **before this capability shipped**, so TestPulse can't establish whether the capture was ever transmitted — it refuses rather than guessing it safe.
+
+Note that deleting an entry only removes it from your session. **The attachment itself stays in Azure DevOps** — TestPulse never deletes anything there.
+
+## A capture or file is greyed out when I close the session
+
+Its upload couldn't be resolved, and the reason is shown next to it. TestPulse leaves it visible and greyed rather than dropping it from the list, so you know something didn't make it rather than discovering the gap later in the report.
+
+## A session's verdict doesn't appear in my report or quality gate
+
+By design. A verdict — Passed, Failed or Blocked — is a tester's judgement on a session, not a test result. It is **counted nowhere**: no report indicator, no quality gate, no coverage. It shows in the Explore hub, is filterable there, and is written as a tag on the archived Task for Azure DevOps queries. See [Sessions hub](/en/exploratory/sessions-hub).
+
 ## Related
 
 <CardGroup cols={2}>

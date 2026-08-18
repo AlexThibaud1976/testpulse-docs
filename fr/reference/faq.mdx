@@ -28,6 +28,28 @@ Le widget lit le **dernier snapshot publié**, pas des données live. Publiez un
 
 L'historique est borné par un quota Extension Data. Supprimez d'anciens rapports (l'indicateur avertit à 80%) — voir [Historique des rapports](/fr/collaboration/history).
 
+## Une écriture est refusée, avec un bandeau au lieu d'une erreur
+
+Les sessions exploratoires écrivent dans Azure DevOps — pièces jointes, work items, Task archivée. Cette capacité a introduit la **permission d'écriture des work items**, et l'ajout d'une permission impose une **ré-approbation administrateur unique** de l'extension. Tant qu'un administrateur ne l'a pas approuvée, toute écriture est refusée et TestPulse affiche un bandeau explicatif plutôt qu'une erreur brute. La lecture n'est pas affectée. Voir [Permissions](/fr/security/permissions).
+
+## Je ne peux pas reprendre la session active d'un collègue
+
+C'est impossible, et ce n'est pas un défaut. Une session en cours vit dans l'Extension Data d'Azure DevOps, qui ne la restaure qu'au **compte qui l'a démarrée**. Le hub distingue les deux cas : votre session propose une reprise, celle d'un collègue ouvre seulement la fiche. Une session devient pleinement partagée une fois close et archivée en Task.
+
+## Je ne peux pas supprimer une capture de la frise
+
+Trois raisons possibles, et l'interface nomme celle qui s'applique. La capture a **déjà été transmise à un bug, une tâche ou un cas de test** — la retirer ferait diverger la frise de ce qui a réellement été transmis. La session est **close** : une session close est un enregistrement, plus rien n'y est modifiable. Ou la session a été démarrée **avant l'arrivée de cette capacité**, TestPulse ne peut donc pas établir si la capture a été transmise — il refuse plutôt que de la supposer libre.
+
+À noter : supprimer une entrée la retire de votre session uniquement. **La pièce jointe, elle, reste dans Azure DevOps** — TestPulse n'y supprime jamais rien.
+
+## Une capture ou un fichier est grisé à la clôture
+
+Son téléversement n'a pas pu être résolu, et la raison est affichée à côté. TestPulse le laisse visible et grisé plutôt que de le retirer de la liste : vous savez que quelque chose n'est pas passé, au lieu de découvrir le manque plus tard dans le rapport.
+
+## Le verdict d'une session n'apparaît pas dans mon rapport ni dans le quality gate
+
+C'est délibéré. Un verdict — Réussi, Échoué ou Bloqué — est le jugement d'un testeur sur une session, pas un résultat de test. Il n'est **compté nulle part** : aucun indicateur de rapport, aucun quality gate, aucune couverture. Il s'affiche dans le hub Explore, y est filtrable, et est écrit en tag sur la Task archivée pour les requêtes Azure DevOps. Voir [Hub des sessions](/fr/exploratory/sessions-hub).
+
 ## À suivre
 
 <CardGroup cols={2}>
