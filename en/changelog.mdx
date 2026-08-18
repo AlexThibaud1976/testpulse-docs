@@ -6,6 +6,22 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.60.0" description="2026-08-18">
+**A closed exploratory session can now carry a verdict — and it deliberately counts for nothing.**
+
+Passed, Failed or Blocked, chosen at closure, optional, nothing preselected: skip it and the session closes exactly as it did before. The verdict appears as its own badge in the hub, beside the status badge rather than in its place, and a new **Verdict** filter narrows the list — including down to sessions carrying none, which is a distinct answer from "all". The same value lands as a tag on the tracking Task, so you can query it from Azure DevOps itself.
+
+Three limits, stated plainly because the vocabulary is borrowed from test outcomes and would otherwise suggest the opposite. The verdict is **final once the session is closed**. It **never reaches the report indicators or the quality gate** — a session marked Failed increments no failure count anywhere, by design and by test. And the tag on the Task is an informative mirror: if someone edits it by hand in Azure DevOps, the session document remains what TestPulse reads.
+</Update>
+
+<Update label="v2.59.0" description="2026-08-18">
+**The blur now shows you the blur.**
+
+The annotation editor used to draw a dashed frame and apply the real blur only once you attached the capture — you were validating a mask you had never seen. The blurred region is now rendered live, by the very same painter that produces the final image, so what you check is what gets attached. The dashed frame survives as a drag indicator while the mouse button is held. Nothing changed about *when* the blur is baked: it is still destructive at attach time, and the original pixels still never leave your machine.
+
+**And a session's timeline is no longer append-only.** Correct a note's wording or its type, fix a caption, remove an entry you did not mean to keep — while the session is still active. Deleting removes the reference from your session; the attachment itself stays in Azure DevOps, and the confirmation says so rather than implying a cleanup TestPulse never performs. Entries tracing a real bug, task or test case cannot be edited or deleted at all — they exist in Azure DevOps and belong there. Neither can a capture already sent to one. Once a session is closed, nothing is editable.
+</Update>
+
 <Update label="v2.58.0" description="2026-08-18">
 **The hub now tells your own active session apart from a colleague's — and stops promising a resume it couldn't deliver.**
 

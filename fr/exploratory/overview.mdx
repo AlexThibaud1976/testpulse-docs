@@ -18,6 +18,12 @@ Une session est faite pour survivre à la vraie vie :
 - **Restauration automatique** à la réouverture de la fiche, avec le temps écoulé recalculé.
 - L'**abandon** demande confirmation, et une clôture en échec est **non destructive et rejouable** — une session n'est jamais perdue en silence ni laissée dans un état fantôme.
 
+## Clôturer avec un verdict — ou sans
+
+La clôture archive la session sous forme de Task. Depuis la v2.60.0, le dialogue de clôture propose aussi un **verdict** facultatif — Réussi, Échoué ou Bloqué — sans présélection : le passer clôt la session exactement comme avant. Le verdict s'affiche dans le hub Explore comme son propre badge, y est filtrable, et est écrit en tag sur la Task archivée pour qu'Azure DevOps puisse le requêter.
+
+Deux choses qu'il n'est délibérément pas. Il est **définitif** — une session close est un enregistrement, pas un brouillon. Et il n'est **compté nulle part** : aucun indicateur de rapport, aucun quality gate. Le vocabulaire est emprunté aux résultats de test pour que les testeurs le lisent sans mode d'emploi ; la contrepartie est cette note, qui dit franchement ce qu'il ne fait pas.
+
 ## Tout reste dans votre tenant
 
 Les sessions exploratoires **écrivent dans Azure DevOps** — pièces jointes et work items — mais uniquement sur **action explicite** (attacher une capture, créer un bug, archiver la session). C'est la capacité qui a introduit la **permission d'écriture des work items** ; son ajout déclenche une **ré-approbation administrateur** unique de l'extension. Les lectures sont inchangées, chaque écriture est isolée dans un module dédié, et **rien ne quitte votre tenant ADO** — aucune télémétrie, aucune dépendance ajoutée. Si la permission n'est pas encore approuvée, un **bandeau explicatif** remplace l'erreur brute sur toute écriture refusée.

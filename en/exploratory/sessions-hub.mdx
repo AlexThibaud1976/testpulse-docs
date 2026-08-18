@@ -14,6 +14,12 @@ That row is the unit that matters: **status**, charter, tester, duration, counts
 
 For an active session, that link tells you whether it is **yours**: your own shows your name and offers to resume it, a colleague's only opens the work item. Azure DevOps restores a session solely to the account that started it, so promising more would be promising something that cannot happen. A story explored three times shows three distinct rows, not a pile of merged badges.
 
+## The verdict, when there is one
+
+Since v2.60.0 a closed session can carry a **verdict** — Passed, Failed or Blocked — chosen by the tester at closure. It renders as its own badge **beside** the status badge, never in its place: the status says where the session stands in its life, the verdict says how it went. The **Verdict** filter narrows the list to one value, or to sessions carrying **none** — a distinct answer from "all", since the verdict is optional and skipping it is legitimate.
+
+<Warning>A verdict is **never counted anywhere**. A session marked Failed increments no failure indicator, in no report and in no quality gate — it is a tester's judgement on a session, not a test result. The same value is written as a tag on the tracking Task so you can query it from Azure DevOps; if someone edits that tag by hand, the session document is what TestPulse reads.</Warning>
+
 ## Read the status at a glance
 
 Each session carries a **status with its own colour and its own icon** — complete, active, interrupted, abandoned, or incomplete. Colour alone is never the signal, so the list stays readable in dark mode and for colour-blind readers.
@@ -22,7 +28,7 @@ Each session carries a **status with its own colour and its own icon** — compl
 
 ## Narrow the scope
 
-Filters cover **area path, iteration path, campaign tag, tester and period**, plus a switch to include archived sessions. Area and iteration filters **match sub-paths**: pick a root and you get everything underneath it, the way Azure DevOps itself treats these paths.
+Filters cover **area path, iteration path, campaign tag, tester, period and verdict**, plus a switch to include archived sessions. Area and iteration filters **match sub-paths**: pick a root and you get everything underneath it, the way Azure DevOps itself treats these paths.
 
 Each filter option carries **its own result count**, so you can judge how selective a choice is before making it.
 

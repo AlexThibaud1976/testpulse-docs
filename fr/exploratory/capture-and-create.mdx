@@ -12,7 +12,7 @@ Appuyez sur **Ctrl+V** pour coller une capture de **n'importe quel écran ou app
 
 ## Annoter avant l'attachement
 
-Chaque capture s'ouvre dans un **éditeur d'annotation** : **flèche, rectangle, texte, surligneur**, et un **flou** pour masquer les données sensibles. Le flou est **destructif à l'aplatissement** — une fois appliqué et attaché, les pixels masqués sont supprimés, pas seulement cachés — ce qui est exactement ce que vous voulez pour tout ce qui est confidentiel. Vous disposez de deux couleurs explicites et pouvez annuler le dernier trait. La capture n'est **attachée à Azure DevOps qu'à la validation** ; annuler l'éditeur n'uploade **rien**.
+Chaque capture s'ouvre dans un **éditeur d'annotation** : **flèche, rectangle, texte, surligneur**, et un **flou** pour masquer les données sensibles. Depuis la v2.59.0, la zone floutée est **rendue en direct pendant que vous la dessinez**, par le peintre exact qui produit l'image finale — vous vérifiez le masque avant de le valider, au lieu de vous fier à un cadre en pointillés, lequel subsiste comme repère tant que le bouton reste enfoncé. Le flou est **destructif à l'aplatissement** — une fois appliqué et attaché, les pixels masqués sont supprimés, pas seulement cachés — ce qui est exactement ce que vous voulez pour tout ce qui est confidentiel. Vous disposez de deux couleurs explicites et pouvez annuler le dernier trait. La capture n'est **attachée à Azure DevOps qu'à la validation** ; annuler l'éditeur n'uploade **rien**.
 
 <Note>Parce que le flou est destructif, une capture masquée quitte votre poste déjà caviardée — les pixels d'origine n'atteignent jamais Azure DevOps.</Note>
 
@@ -31,13 +31,15 @@ Un **cas de test** créé ainsi se lit comme **« Tests »** l'exigence — le s
 
 Les captures **et les fichiers** déposés sur la frise sont proposés à l'attache. Une pièce dont le téléversement ne peut pas être résolu s'affiche **grisée avec sa raison** plutôt que de disparaître discrètement de la liste.
 
+Depuis la v2.59.0, la frise n'est plus en ajout seul **tant que la session est active** : le texte ou le type d'une note, et la légende d'une capture, se corrigent sur place, et une entrée peut être retirée. Retirer une entrée la sort de votre session seulement — la pièce jointe, elle, **reste dans Azure DevOps**, et la confirmation le dit plutôt que de laisser croire à un nettoyage que TestPulse n'effectue pas. Une entrée traçant un bug, une tâche ou un cas de test réel n'est ni modifiable ni supprimable, une capture déjà transmise à l'un d'eux non plus. Une fois la session close, plus rien n'est modifiable : la tâche archivée fait foi.
+
 <Note>Depuis la v2.55.0, ce panneau est aussi disponible **après** la fin d'une session : rouvrez la tâche de suivi de la session et le même geste s'y trouve, en relisant la session close depuis le stockage.</Note>
 
 ## Archiver la session
 
 **Terminer la session** l'archive en **Task taguée `exploratory-session`** (plus votre tag de campagne), portant le rapport complet — charte, durée, compteurs, timeline — et ses relations vers l'US, les captures et chaque work item créé. Les sessions deviennent **requêtables nativement** dans Azure DevOps : une campagne se retrouve avec une simple requête de tag.
 
-Depuis la v2.56.0, un court dialogue propose ensuite d'**affecter** cette tâche et de lui donner un **état initial**. La liste des statuts provient des catégories d'état de votre propre type de work item : un processus qui dit *Terminé* affiche *Terminé*, et la catégorie `Removed` n'est jamais proposée. Les deux champs sont pré-remplis, et **Passer** les contourne en un clic — en produisant une tâche octet pour octet identique à celle construite avant l'existence de ce dialogue.
+Depuis la v2.56.0, un court dialogue propose ensuite d'**affecter** cette tâche et de lui donner un **état initial** — et, depuis la v2.60.0, un **verdict** facultatif pour la session elle-même : Réussi, Échoué ou Bloqué, sans présélection. Le verdict est définitif une fois la session close, et il n'est compté nulle part : il n'entre ni dans un indicateur de rapport, ni dans le quality gate. La liste des statuts provient des catégories d'état de votre propre type de work item : un processus qui dit *Terminé* affiche *Terminé*, et la catégorie `Removed` n'est jamais proposée. Les deux champs sont pré-remplis, et **Passer** les contourne en un clic — en produisant une tâche octet pour octet identique à celle construite avant l'existence de ce dialogue.
 
 Si votre processus refuse l'état demandé, la tâche est quand même créée et la session se clôt quand même. Un avertissement distinct et non bloquant nomme ce seul échec avec le message d'Azure DevOps lui-même, et la transition n'est jamais rejouée.
 

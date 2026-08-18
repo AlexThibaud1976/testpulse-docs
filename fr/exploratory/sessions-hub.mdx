@@ -14,6 +14,12 @@ C'est cette ligne qui compte : **statut**, charte, testeur, durée, nombre de no
 
 Pour une session active, ce lien vous dit si elle est **la vôtre** : la vôtre affiche votre nom et propose de la reprendre, celle d'un collègue ouvre seulement la fiche. Azure DevOps ne restaure une session qu'au compte qui l'a démarrée : promettre davantage serait promettre ce qui ne peut pas arriver. Une story explorée trois fois affiche trois lignes distinctes, et non un empilement de pastilles fusionnées.
 
+## Le verdict, quand il y en a un
+
+Depuis la v2.60.0, une session close peut porter un **verdict** — Réussi, Échoué ou Bloqué — choisi par le testeur à la clôture. Il s'affiche comme son propre badge **à côté** du badge de statut, jamais à sa place : le statut dit où en est la session dans sa vie, le verdict dit comment elle s'est passée. Le filtre **Verdict** restreint la liste à une valeur, ou aux sessions qui n'en portent **aucun** — une réponse distincte de « tous », le verdict étant facultatif et le passer parfaitement légitime.
+
+<Warning>Un verdict n'est **compté nulle part**. Une session marquée Échoué n'incrémente aucun indicateur d'échec, dans aucun rapport et dans aucun quality gate — c'est le jugement d'un testeur sur une session, pas un résultat de test. La même valeur est écrite en tag sur la tâche de suivi pour être requêtable depuis Azure DevOps ; si quelqu'un modifie ce tag à la main, c'est le document de session que TestPulse lit.</Warning>
+
 ## Lire le statut d'un coup d'œil
 
 Chaque session porte un **statut avec sa couleur et sa propre icône** — complète, active, interrompue, abandonnée ou incomplète. La couleur n'est jamais le seul signal : la liste reste lisible en thème sombre et pour les lecteurs daltoniens.
@@ -22,7 +28,7 @@ Chaque session porte un **statut avec sa couleur et sa propre icône** — compl
 
 ## Restreindre le périmètre
 
-Les filtres couvrent **area path, iteration path, tag de campagne, testeur et période**, plus un interrupteur pour inclure les sessions archivées. Les filtres d'area et d'iteration **retiennent les sous-chemins** : choisir une racine ramène tout ce qui se trouve dessous, comme Azure DevOps traite lui-même ces chemins.
+Les filtres couvrent **area path, iteration path, tag de campagne, testeur, période et verdict**, plus un interrupteur pour inclure les sessions archivées. Les filtres d'area et d'iteration **retiennent les sous-chemins** : choisir une racine ramène tout ce qui se trouve dessous, comme Azure DevOps traite lui-même ces chemins.
 
 Chaque option de filtre porte **son propre compteur de résultats**, ce qui permet de juger sa sélectivité avant de la choisir.
 

@@ -6,6 +6,22 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.60.0" description="2026-08-18">
+**Une session exploratoire close peut désormais porter un verdict — et il ne compte volontairement pour rien.**
+
+Réussi, Échoué ou Bloqué, choisi à la clôture, facultatif, sans présélection : le passer clôt la session exactement comme avant. Le verdict s'affiche comme son propre badge dans le hub, à côté du badge de statut et jamais à sa place, et un nouveau filtre **Verdict** restreint la liste — y compris aux sessions qui n'en portent aucun, ce qui est une réponse distincte de « tous ». La même valeur est posée en tag sur la tâche de suivi, pour être requêtable depuis Azure DevOps.
+
+Trois limites, énoncées franchement parce que le vocabulaire est emprunté aux résultats de test et suggérerait sinon l'inverse. Le verdict est **définitif une fois la session close**. Il **n'entre jamais dans les indicateurs du rapport ni dans le quality gate** — une session marquée Échoué n'incrémente aucun compteur d'échec, par décision et par test. Et le tag sur la tâche est un miroir informatif : si quelqu'un le modifie à la main dans Azure DevOps, c'est le document de session que TestPulse lit.
+</Update>
+
+<Update label="v2.59.0" description="2026-08-18">
+**Le flou vous montre enfin le flou.**
+
+L'éditeur d'annotation traçait un cadre en pointillés et n'appliquait le vrai flou qu'au moment d'attacher la capture : vous validiez un masque que vous n'aviez jamais vu. La zone floutée est maintenant rendue en direct, par le peintre exact qui produit l'image finale — ce que vous vérifiez est ce qui sera attaché. Le cadre en pointillés subsiste comme repère pendant le tracé, tant que le bouton reste enfoncé. Rien ne change sur le *moment* où le flou est gravé : il reste destructif à l'attachement, et les pixels d'origine ne quittent toujours pas votre poste.
+
+**Et la frise d'une session n'est plus en ajout seul.** Corrigez le texte ou le type d'une note, rectifiez une légende, retirez une entrée que vous ne vouliez pas garder — tant que la session est active. Supprimer retire la référence de votre session ; la pièce jointe, elle, reste dans Azure DevOps, et la confirmation le dit plutôt que de laisser croire à un nettoyage que TestPulse n'effectue pas. Les entrées traçant un bug, une tâche ou un cas de test réel ne sont ni modifiables ni supprimables — ils existent dans Azure DevOps et s'y traitent. Une capture déjà transmise à l'un d'eux non plus. Une fois la session close, plus rien n'est modifiable.
+</Update>
+
 <Update label="v2.58.0" description="2026-08-18">
 **Le hub distingue désormais votre propre session active de celle d'un collègue — et cesse de promettre une reprise qu'il ne pouvait pas tenir.**
 

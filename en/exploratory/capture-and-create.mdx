@@ -12,7 +12,7 @@ Press **Ctrl+V** to paste a screenshot of **any screen or application** — take
 
 ## Annotate before it's attached
 
-Each capture opens in an **annotation editor**: **arrow, rectangle, text, highlighter**, and a **blur** to mask sensitive data. The blur is **destructive on flatten** — once applied and attached, the masked pixels are gone, not just hidden — which is exactly what you want for anything confidential. You get two explicit colours and can undo the last stroke. The capture is **attached to Azure DevOps only when you validate it**; cancelling the editor uploads **nothing**.
+Each capture opens in an **annotation editor**: **arrow, rectangle, text, highlighter**, and a **blur** to mask sensitive data. The blur is **destructive on flatten** — once applied and attached, the masked pixels are gone, not just hidden — which is exactly what you want for anything confidential. Since v2.59.0 the blurred region is **rendered live as you draw it**, by the very same painter that produces the final image — you check the mask before validating it, instead of trusting a dashed frame. That frame remains as a drag indicator while the mouse button is held. You get two explicit colours and can undo the last stroke. The capture is **attached to Azure DevOps only when you validate it**; cancelling the editor uploads **nothing**.
 
 <Note>Because the blur is destructive, a masked screenshot leaves your machine already redacted — the original pixels never reach Azure DevOps.</Note>
 
@@ -31,13 +31,15 @@ A **Test Case** created this way reads as **"Tests"** the story — the directio
 
 Both captures **and files** dropped onto the timeline are offered for attachment. A piece whose upload can't be resolved is shown **greyed out with the reason** rather than quietly dropped from the list.
 
+Since v2.59.0 the timeline is no longer append-only **while the session is active**: a note's wording or type, and a capture's caption, can be corrected in place, and an entry can be removed. Removing an entry drops it from your session only — the attachment itself **stays in Azure DevOps**, and the confirmation says so rather than implying a cleanup TestPulse never performs. An entry tracing a real bug, task or test case can be neither edited nor deleted, and neither can a capture already sent to one. Once the session is closed, nothing is editable: the archived Task is the record.
+
 <Note>Since v2.55.0 this panel is also available **after** a session ends: reopen the session's tracking Task and the same gesture is there, reading the closed session back from storage.</Note>
 
 ## Archive the session
 
 **Ending the session** archives it as a **Task tagged `exploratory-session`** (plus your campaign tag), carrying the full report — charter, duration, counters, timeline — and its relations to the story, the captures and every work item you created. Sessions become **natively queryable** in Azure DevOps, so a campaign is just a tag query away.
 
-Since v2.56.0, a short dialog then offers to **assign** that Task and give it an **initial state**. The status list comes from your own work item type's state categories, so a process that says *Terminé* shows *Terminé*; the `Removed` category is never offered. Both fields are pre-filled, and **Skip** bypasses them in one click — producing a Task byte-for-byte identical to the one built before this dialog existed.
+Since v2.56.0, a short dialog then offers to **assign** that Task and give it an **initial state** — and, since v2.60.0, an optional **verdict** for the session itself: Passed, Failed or Blocked, nothing preselected. The verdict is final once the session closes, and it is counted nowhere: it never reaches a report indicator or the quality gate. The status list comes from your own work item type's state categories, so a process that says *Terminé* shows *Terminé*; the `Removed` category is never offered. Both fields are pre-filled, and **Skip** bypasses them in one click — producing a Task byte-for-byte identical to the one built before this dialog existed.
 
 If your process refuses the requested state, the Task is still created and the session still closes. A separate, non-blocking warning names that one failure using Azure DevOps' own message, and the transition is never retried.
 

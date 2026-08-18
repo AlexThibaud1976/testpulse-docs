@@ -18,6 +18,12 @@ A session is meant to survive real life:
 - **Automatic restore** when you reopen the work item, with the elapsed time recomputed.
 - **Abandon** asks for confirmation, and a failed close is **non-destructive and replayable** — a session is never silently lost or left in a phantom state.
 
+## Close with a verdict — or without one
+
+Closing archives the session as a Task. Since v2.60.0 the closure dialog also offers an optional **verdict** — Passed, Failed or Blocked — with nothing preselected: skipping it closes the session exactly as before. The verdict shows in the Explore hub as its own badge, is filterable there, and is written as a tag on the archived Task so Azure DevOps can query it.
+
+Two things it deliberately is not. It is **final** — a closed session is a record, not a draft. And it is **counted nowhere**: no report indicator, no quality gate. The vocabulary is borrowed from test outcomes so that testers read it without a manual; the trade-off is this note, saying plainly what it does not do.
+
 ## Everything stays in your tenant
 
 Exploratory sessions **write to Azure DevOps** — attachments and work items — but only on **explicit action** (attach a capture, create a bug, archive the session). This is the capability that introduced the **work-items write permission**; adding it triggers a one-time **administrator re-approval** of the extension. Reads are unchanged, every write is isolated in a dedicated module, and **nothing leaves your ADO tenant** — no telemetry, no added dependency. If the permission isn't approved yet, an **explanatory banner** replaces the raw error on any refused write.
