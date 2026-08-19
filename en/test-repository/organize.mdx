@@ -11,7 +11,8 @@ Filing cases one by one is fine for a demo, not for a real project with hundreds
 Rather than build the tree by hand, **seed it** from a structure you already have:
 
 - **From Area Paths** — each area path segment becomes a folder (trimmed, empty segments ignored).
-- **From the plan/suite hierarchy** — your existing plans and suites become folders. A case that appears in several suites is filed once, in the first one encountered (the *single folder* rule).
+
+<Note>A second source — seeding from the plan/suite hierarchy — was removed in **v2.61.0**, and the source picker went with it: a single remaining option had nothing left to choose, so the dialog now opens straight on the counted preview. On a real, plan-heavy project it produced a tree several times more crowded than the same project's Area Paths, from far more requests — not through an implementation defect, but because a tree with **one parent per folder** cannot structurally mirror plans that share their test cases. Anything you already seeded from it is untouched.</Note>
 
 Seeding is **strictly additive**: existing folders are reused by name, never renamed, moved or deleted, and a case already filed is never moved. It is **idempotent** — running it again on its own result changes nothing. A **counted preview** (folders to create or reuse, cases to file or already filed) is shown before anything is written, and you can cancel. No new Azure DevOps call is made: the mapping the seed needs was already fetched.
 

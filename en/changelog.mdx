@@ -6,6 +6,21 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.61.0" description="2026-08-19">
+**The Repository now offers only the tree-seeding source that actually works.**
+
+Seeding used to ask you to choose between your Area Paths and your plan/suite hierarchy. On a real, plan-heavy project the plan/suite option produced a tree several times more crowded than the same project's Area Paths, from far more requests — and not through an implementation defect: a tree with **one parent per folder** cannot structurally mirror plans that share their test cases, so making those requests faster would still have produced the same unusable tree. That option is gone, and the source picker with it: a single remaining option had nothing left to choose, so the dialog opens straight on the counted preview and confirmation. Nothing you already seeded from either source is migrated, purged or rewritten, and the Coverage Builder, the "used in" panel and the orphan scan keep working exactly as before.
+
+**And the tree finally has room to breathe.** A folder's four row actions stay out of the way until you hover the row, select it, or reach it with the keyboard — their space is always held in reserve, so nothing jumps when they appear. A long folder name truncates to one line, with the full name a hover away. A **draggable divider** between the tree and the case list lets you choose how the width is split, adjustable with the arrow keys too, and remembered for you personally rather than for the whole project. With nothing selected, the tree takes the full width instead of leaving half the screen to an empty panel — and selecting a folder restores the width you chose, never resetting it.
+</Update>
+
+<Update label="v2.60.1" description="2026-08-19">
+**The hub now tells you when TestPulse itself has been updated.**
+
+TestPulse updates automatically, and until now nothing on the product side ever said so. A small notice above the hub reports announces a new version, with a short summary and a link to What is new — shown only when the major or minor version changes, so a patch release stays silent. Closing it is **per user**: a colleague dismissing it never hides it for you, and it does not come back until the next meaningful version.
+
+It also stays quiet when it should. Opening TestPulse for the first time never claims an update happened, and reinstalling an older build on a server never announces one either.
+</Update>
 <Update label="v2.60.0" description="2026-08-18">
 **A closed exploratory session can now carry a verdict — and it deliberately counts for nothing.**
 

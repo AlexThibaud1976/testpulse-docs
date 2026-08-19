@@ -11,7 +11,8 @@ Ranger les cas un par un convient à une démo, pas à un vrai projet aux centai
 Plutôt que de bâtir l'arbre à la main, **amorcez-le** depuis une structure que vous avez déjà :
 
 - **Depuis les Area Paths** — chaque segment d'area path devient un dossier (segments trimmés, vides ignorés).
-- **Depuis la hiérarchie plans/suites** — vos plans et suites existants deviennent des dossiers. Un cas présent dans plusieurs suites est rangé une seule fois, dans la première rencontrée (règle du *dossier unique*).
+
+<Note>Une seconde source — l'amorçage depuis la hiérarchie plans/suites — a été retirée en **v2.61.0**, et le sélecteur de source avec elle : une seule option restante n'avait plus rien à choisir, le dialogue ouvre donc directement sur l'aperçu chiffré. Sur un projet réel très chargé en plans, elle produisait un arbre plusieurs fois plus encombré que les mêmes Area Paths, au prix de bien plus de requêtes — non par défaut d'implémentation, mais parce qu'un arbre à **un seul parent par dossier** ne peut structurellement pas refléter des plans qui partagent leurs cas. Tout ce que vous aviez déjà amorcé depuis elle reste intact.</Note>
 
 L'amorçage est **strictement additif** : les dossiers existants sont réutilisés par nom, jamais renommés, déplacés ni supprimés, et un cas déjà rangé n'est jamais déplacé. Il est **idempotent** — le rejouer sur son propre résultat ne change rien. Un **aperçu chiffré** (dossiers à créer ou réutiliser, cas à ranger ou déjà rangés) s'affiche avant toute écriture, et vous pouvez annuler. Aucun nouvel appel Azure DevOps n'est fait : le mapping dont l'amorçage a besoin était déjà récupéré.
 

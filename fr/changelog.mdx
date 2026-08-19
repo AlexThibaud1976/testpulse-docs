@@ -6,6 +6,21 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.61.0" description="2026-08-19">
+**Le Repository ne propose plus que la source d'amorçage qui fonctionne vraiment.**
+
+Amorcer l'arbre demandait jusqu'ici de choisir entre vos Area Paths et votre hiérarchie plans/suites. Sur un projet réel très chargé en plans, l'option plans/suites produisait un arbre plusieurs fois plus encombré que les mêmes Area Paths, au prix de bien plus de requêtes — et non par défaut d'implémentation : un arbre à **un seul parent par dossier** ne peut structurellement pas refléter des plans qui partagent leurs cas, si bien qu'accélérer ces requêtes aurait produit le même arbre inexploitable. Cette option a disparu, et le sélecteur de source avec elle : une seule option restante n'avait plus rien à choisir, le dialogue ouvre donc directement sur l'aperçu chiffré et la confirmation. Rien de ce que vous aviez déjà amorcé depuis l'une ou l'autre source n'est migré, purgé ni réécrit, et le Coverage Builder, le panneau « utilisé dans » et le scan d'orphelins continuent de fonctionner exactement comme avant.
+
+**Et l'arbre respire enfin.** Les quatre actions d'une ligne restent à l'écart tant que vous ne survolez pas la ligne, ne la sélectionnez pas ou ne l'atteignez pas au clavier — leur espace reste réservé, rien ne saute à leur apparition. Un nom de dossier long se tronque sur une ligne, le nom complet à portée de survol. Un **séparateur glissable** entre l'arbre et la liste des cas laisse choisir le partage de la largeur, ajustable aux flèches également, et mémorisé pour vous personnellement plutôt que pour tout le projet. Sans rien de sélectionné, l'arbre occupe toute la largeur au lieu de laisser un demi-écran à un panneau vide — et sélectionner un dossier restaure la largeur que vous aviez choisie, sans jamais la réinitialiser.
+</Update>
+
+<Update label="v2.60.1" description="2026-08-19">
+**Le hub vous dit désormais quand TestPulse a été mis à jour.**
+
+TestPulse se met à jour automatiquement et, jusqu ici, rien côté produit ne le signalait. Un petit bandeau au-dessus des rapports du hub annonce la nouvelle version, avec un résumé court et un lien vers les nouveautés — affiché uniquement quand la version majeure ou mineure change, un correctif restant silencieux. Le fermer est **propre à chaque utilisateur** : un collègue qui le ferme ne le masque jamais pour vous, et il ne revient pas avant la prochaine version significative.
+
+Il sait aussi se taire quand il le faut. Ouvrir TestPulse pour la première fois n annonce jamais une mise à jour, et réinstaller une version plus ancienne sur un serveur n en annonce pas davantage.
+</Update>
 <Update label="v2.60.0" description="2026-08-18">
 **Une session exploratoire close peut désormais porter un verdict — et il ne compte volontairement pour rien.**
 
