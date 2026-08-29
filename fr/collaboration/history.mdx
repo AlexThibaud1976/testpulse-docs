@@ -8,7 +8,9 @@ Chaque rapport généré est **auto-sauvegardé** dans votre Azure DevOps Extens
 
 ## Recharger un rapport
 
-Cliquez sur **Charger** sur une entrée de l'historique pour la restaurer comme rapport courant. Le snapshot est utilisé **directement — aucun re-fetch vers Azure DevOps**.
+Cliquez sur **Charger** sur une entrée de l'historique et TestPulse ouvre l'onglet **Rapport** avec ce rapport affiché. Le snapshot est utilisé **directement — aucun re-fetch vers Azure DevOps**.
+
+Le contexte est replacé avec lui : le plan de test du rapport est de nouveau sélectionné et ses suites recochées, ce qui permet de régénérer ou d'ajuster le périmètre sans reconstruire la sélection à la main. Une suite supprimée d'Azure DevOps depuis la construction du rapport est ignorée en silence. Un rapport consolidant plusieurs plans de test bascule l'affichage en mode multi-plans et coche tous ses plans — le mode multi-plans ne propose pas de sélection de suites, aucune n'y est donc restaurée. Les rapports enregistrés avant ce comportement se rechargent aussi bien : le plan et les suites sont lus dans le rapport lui-même.
 
 ## Comparer deux rapports
 

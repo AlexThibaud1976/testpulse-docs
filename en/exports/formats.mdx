@@ -6,6 +6,8 @@ icon: "file-output"
 
 TestPulse exports the same report to five formats, each optimised for a different use.
 
+<Note>All five formats follow the language selected in the extension — sheet names, column headers and labels included.</Note>
+
 ## At a glance
 
 | Format | Use case | Key features |
@@ -13,7 +15,7 @@ TestPulse exports the same report to five formats, each optimised for a differen
 | **PDF** | Formal delivery, audits | Paginated, signature page, charts, drag-and-drop section order |
 | **HTML** | Sprint reviews, dashboards | Standalone file, interactive charts, clickable ADO links |
 | **Word (.docx)** | Editable reports | Editable in Microsoft Word, signature page |
-| **Excel (.xlsx)** | Data analysis | 4 sheets: KPIs, Results, Traceability, Bugs |
+| **Excel (.xlsx)** | Data analysis | Up to 6 sheets: KPIs, Results, Traceability, Bugs, plus 2 more when consolidating several plans |
 | **PowerPoint (.pptx)** | Slides for stakeholders | 5 slides: Cover, KPIs, Results, Traceability, Bugs |
 
 ## PDF — the full report
@@ -51,6 +53,8 @@ Fully **editable in Microsoft Word**, with six sections: cover page, KPI metrics
 ## Excel (.xlsx) — data
 
 Four worksheets: **KPIs**, **Results** (outcome, suite, date, tester, configuration), **Traceability** (Test Case → User Story → Epic → Bug), and **Bugs** (state, severity, priority, assignee).
+
+When the report consolidates **several test plans**, two more sheets are added: **Per plan breakdown** (totals, pass rate and execution rate plan by plan) and **Quality per plan** (verdict, requirement coverage and marked steps per plan, with a consolidated row).
 
 ## PowerPoint (.pptx) — slides
 

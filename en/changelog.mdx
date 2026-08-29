@@ -6,6 +6,35 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.62.0" description="2026-08-29">
+**Loading a report from your history now actually takes you to it.**
+
+Clicking **Load** restored the report into memory and left you sitting on the History tab, with no visible sign that anything had happened and the plan selector still showing whatever was there before. It now opens the **Report** tab with the report displayed, and puts the context back with it: the report's plan is selected again, and its suites are re-checked. A suite deleted from Azure DevOps since the report was built is skipped silently rather than raising an error. For a report consolidating several test plans, TestPulse switches to multi-plan mode and ticks all of the report's plans — no suite selection is restored there, because multi-plan mode does not offer one in the first place. Reports saved long before this release restore just as well: the plan and suites are read from the report itself, so nothing had to be migrated.
+
+**And the plan you had just chosen is no longer wiped by the list refreshing behind you.**
+
+At start-up the plan list appears immediately from cache while fresh data loads in the background. That background refresh used to replace the entire selection state, so anything you picked during that window — through a saved view, a template, the list itself, or the automatic first selection — was silently lost, and you had to choose again. Your selection is now kept whenever the plan is still there in the fresh list; only the list itself is replaced. When the plan has genuinely disappeared from the project, the previous behaviour is preserved exactly and the selection is cleared.
+
+We considered simply disabling the "load a view" and "load a template" buttons during the refresh. We rejected it: it would have covered two of the four ways of choosing a plan, left the most common one — picking from the list — still broken, and locked you out for the whole refresh, which is longest on Azure DevOps Server, precisely where the problem was most visible.
+
+**A dozen labels now follow the language you chose.** Cancel and OK buttons in several dialogs, the History status column, the screen shown when a tab fails to render, and the three messages shown when TestPulse cannot start were written in French whatever your language; three screen-reader labels were written in English. All of them now follow your setting — including the start-up messages, which read your stored preference synchronously and stay translated even when it is the initialisation itself that failed.
+</Update>
+
+<Update label="v2.61.2" description="2026-08-29">
+**Excel exports came out in French whatever language you had selected.**
+
+A customer working in English received a workbook entirely in French, on every one of its sheets — sheet names, column headers, KPI labels, even the Yes/No cells. Of the five export formats only Excel was affected, which is why the anomaly survived so long: PDF, HTML, Word and PowerPoint were already correct, so testing any of them showed nothing wrong.
+
+There were two distinct causes. The report workbook received your language and deliberately ignored it. The Repository hygiene workbook resolved its dictionary **once, in French, when the module loaded** — a value fixed at start-up, from which even the sheet names derived. Both now resolve the language for each export, and the history CSV export follows too, its column headers and its file name included.
+
+Nothing changes if you work in French: the workbook you receive is identical, cell for cell and sheet name for sheet name. `GO`/`NO-GO`, `OK`, `NOK` and `N/A` stay untranslated in both languages, as everywhere else in the product. Sheet names are now also cleaned of the characters Excel rejects and shortened to its 31-character limit before the file is built, so a translation can never make an export fail — and an existing shortened name is reproduced exactly as it has always been, never quietly "corrected".
+</Update>
+
+<Update label="v2.61.1" description="2026-08-19">
+**The update notice showed raw asterisks and ran four lines long.**
+
+The notice that announces a new version was reading the first entry of the What's New panel word for word — a text written for documentation, not for a single line. Markdown syntax appeared literally on screen, and the sentence ran to whatever length its author had given it. Each release now carries a short, plain-text sentence written specifically for the notice. When none is available in your language, the notice simply shows no second line rather than falling back to the other language or to documentation text. The What's New panel itself is unchanged.
+</Update>
 <Update label="v2.61.0" description="2026-08-19">
 **The Repository now offers only the tree-seeding source that actually works.**
 

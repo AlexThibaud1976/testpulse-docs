@@ -8,7 +8,9 @@ Every generated report is **auto-saved** to your Azure DevOps Extension Data (us
 
 ## Reload a report
 
-Click **Load** on any history entry to restore it as the current report. The snapshot is used **directly — no re-fetch from Azure DevOps**.
+Click **Load** on any history entry and TestPulse opens the **Report** tab with that report displayed. The snapshot is used **directly — no re-fetch from Azure DevOps**.
+
+The context is put back with it: the report's test plan is selected again and its suites are re-checked, so you can regenerate or adjust the scope without rebuilding the selection by hand. A suite deleted from Azure DevOps since the report was built is skipped silently. A report consolidating several test plans switches the view to multi-plan mode and ticks all of its plans — multi-plan mode offers no suite selection, so none is restored there. Reports saved before this behaviour existed reload just as well: the plan and suites are read from the report itself.
 
 ## Compare two reports
 

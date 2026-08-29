@@ -6,6 +6,35 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.62.0" description="2026-08-29">
+**Charger un rapport depuis l'historique vous y amène enfin.**
+
+Le clic sur **Charger** restaurait le rapport en mémoire et vous laissait sur l'onglet Historique, sans signe visible que quoi que ce soit s'était produit, et avec le sélecteur de plan affichant toujours ce qui s'y trouvait avant. Il ouvre désormais l'onglet **Rapport** avec le rapport affiché, et y replace le contexte : le plan du rapport est de nouveau sélectionné, et ses suites recochées. Une suite supprimée d'Azure DevOps depuis la construction du rapport est ignorée en silence plutôt que de provoquer une erreur. Pour un rapport consolidant plusieurs plans de test, TestPulse bascule en mode multi-plans et coche tous les plans du rapport — aucune sélection de suites n'y est restaurée, tout simplement parce que le mode multi-plans n'en propose pas. Les rapports enregistrés bien avant cette version se restaurent aussi bien : le plan et les suites sont lus dans le rapport lui-même, rien n'a eu besoin d'être migré.
+
+**Et le plan que vous veniez de choisir n'est plus effacé par l'actualisation de la liste dans votre dos.**
+
+Au démarrage, la liste des plans s'affiche immédiatement depuis le cache pendant que les données fraîches se chargent en arrière-plan. Cette actualisation remplaçait toute la sélection : ce que vous choisissiez pendant cette fenêtre — par une vue enregistrée, un modèle, la liste elle-même ou la première sélection automatique — était perdu en silence, et il fallait recommencer. Votre sélection est désormais conservée dès lors que le plan figure toujours dans la liste fraîche ; seule la liste est remplacée. Quand le plan a réellement disparu du projet, le comportement précédent est préservé à l'identique et la sélection est vidée.
+
+Nous avions envisagé de simplement désactiver les boutons « charger une vue » et « charger un modèle » pendant l'actualisation. Nous l'avons écarté : cela n'aurait couvert que deux des quatre façons de choisir un plan, aurait laissé cassée la plus courante — choisir dans la liste — et vous aurait bloqué pendant toute l'actualisation, la plus longue sur Azure DevOps Server, précisément là où le problème se voyait le plus.
+
+**Une douzaine de libellés suivent maintenant la langue que vous avez choisie.** Les boutons Annuler et OK de plusieurs dialogues, la colonne Statut de l'historique, l'écran affiché quand un onglet ne parvient pas à s'afficher et les trois messages affichés quand TestPulse ne peut pas démarrer étaient écrits en français quelle que soit votre langue ; trois libellés destinés aux lecteurs d'écran étaient écrits en anglais. Tous suivent désormais votre réglage — y compris les messages de démarrage, qui lisent votre préférence enregistrée de façon synchrone et restent traduits même quand c'est l'initialisation elle-même qui a échoué.
+</Update>
+
+<Update label="v2.61.2" description="2026-08-29">
+**Les exports Excel sortaient en français quelle que soit la langue sélectionnée.**
+
+Un client travaillant en anglais recevait un classeur intégralement en français, sur la totalité de ses onglets — noms d'onglets, en-têtes de colonnes, libellés de KPI, jusqu'aux cellules Oui/Non. Sur les cinq formats d'export, seul Excel était touché, ce qui explique que l'anomalie ait survécu si longtemps : PDF, HTML, Word et PowerPoint étaient déjà corrects, tester l'un d'eux ne montrait donc rien.
+
+Il y avait deux causes distinctes. Le classeur de rapport recevait votre langue et l'ignorait délibérément. Le classeur du diagnostic Hygiène du Repository résolvait son dictionnaire **une seule fois, en français, au chargement du module** — une valeur figée au démarrage, dont dérivaient jusqu'aux noms d'onglets. Les deux résolvent désormais la langue à chaque export, et l'export CSV de l'historique suit également, en-têtes de colonnes et nom de fichier compris.
+
+Rien ne change si vous travaillez en français : le classeur que vous recevez est identique, cellule par cellule et nom d'onglet par nom d'onglet. `GO`/`NO-GO`, `OK`, `NOK` et `N/A` restent non traduits dans les deux langues, comme partout ailleurs dans le produit. Les noms d'onglets sont par ailleurs désormais débarrassés des caractères qu'Excel refuse et ramenés à sa limite de 31 caractères avant la construction du fichier, si bien qu'une traduction ne peut jamais faire échouer un export — et un nom déjà raccourci est reproduit exactement tel qu'il l'a toujours été, jamais « corrigé » en douce.
+</Update>
+
+<Update label="v2.61.1" description="2026-08-19">
+**Le bandeau de mise à jour affichait des astérisques à nu et s'étalait sur quatre lignes.**
+
+Le bandeau qui annonce une nouvelle version reprenait mot pour mot la première entrée du panneau Nouveautés — un texte écrit pour la documentation, pas pour une ligne unique. La syntaxe Markdown apparaissait littéralement à l'écran, et la phrase s'étirait sur la longueur que son auteur lui avait donnée. Chaque version porte désormais une phrase courte, en texte brut, écrite spécifiquement pour le bandeau. Quand aucune n'est disponible dans votre langue, le bandeau n'affiche simplement pas de deuxième ligne, plutôt que de basculer vers l'autre langue ou vers un texte de documentation. Le panneau Nouveautés lui-même est inchangé.
+</Update>
 <Update label="v2.61.0" description="2026-08-19">
 **Le Repository ne propose plus que la source d'amorçage qui fonctionne vraiment.**
 
