@@ -12,6 +12,12 @@ Click **Load** on any history entry and TestPulse opens the **Report** tab with 
 
 The context is put back with it: the report's test plan is selected again and its suites are re-checked, so you can regenerate or adjust the scope without rebuilding the selection by hand. A suite deleted from Azure DevOps since the report was built is skipped silently. A report consolidating several test plans switches the view to multi-plan mode and ticks all of its plans — multi-plan mode offers no suite selection, so none is restored there. Reports saved before this behaviour existed reload just as well: the plan and suites are read from the report itself.
 
+## Which project a report came from
+
+Personal history is stored per user across the **whole organisation**, so anyone working on several projects sees them all in one list. A **Project** column sits immediately after Test plan, and a **Project** filter sits between the status filter and *My reports*. It opens on your **current project**, or on **All projects** when that one has nothing to show. The header count switches to *{n} of {total} reports* whenever a project filter is active.
+
+Reports saved since v2.63.0 record their project. Older ones are **derived at display time** from the Azure DevOps links they already carry — underlined with a dotted rule, naming their source on hover, so a derived value never carries the authority of a stored one. Where neither is possible they are grouped under **Unknown project**, an entry of its own with its count. Nothing is dropped, and no report is rewritten.
+
 ## Compare two reports
 
 Select **two** reports from history to compare them side by side:
@@ -31,7 +37,7 @@ Each report carries a **status**: **Draft → Submitted → Approved** (and back
 
 ## Share to the project
 
-Toggle **Share with project** to make a report visible to all project members (a snapshot copied into the project scope). A blue **Shared** badge appears, you can filter *My / Project / All*, and **any member** can move a shared report through its workflow (written to the project copy, audited who / when). Only the **original author** can unshare. A **quota indicator warns at 80%**.
+Toggle **Share with project** to make a report visible to all project members (a snapshot copied into the project scope). A blue **Shared** badge appears next to the plan name, with a **Shared by** line under it carrying the sharer's initials and name — your own reports read *Shared by you*. You can filter *My / Project / All*, and **any member** can move a shared report through its workflow (written to the project copy, audited who / when). Only the **original author** can unshare. A **quota indicator warns at 80%**.
 
 <Note>Sharing publishes the snapshot that the dashboard widget reads — see the [Quality overview widget](/en/dashboard/quality-overview-widget).</Note>
 

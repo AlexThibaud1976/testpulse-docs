@@ -23,14 +23,17 @@ Si la traçabilité est absente, la couverture est retirée et les poids restant
 
 ## Transparence
 
-Cliquez sur **Voir le détail** pour déplier la décomposition — chaque composante (valeur, points, poids), les plafonnements appliqués et les drapeaux. La note n'est jamais un chiffre opaque.
+Cliquez sur **Voir le détail** pour déplier la décomposition — chaque composante (valeur, points, poids), les plafonnements appliqués et les drapeaux. La note n'est jamais un chiffre opaque. Sous la note, une ligne nomme le **barème en vigueur** et le **seuil GO réellement appliqué**, et porte la réserve *confiance faible* quand moins de cinq tests ont été exécutés — de quoi défendre un verdict sans ouvrir les Réglages. À l'écran uniquement : les exports ne gagnent aucune ligne.
 
 ## Invariants non négociables
 
 - **≥ 1 bug bloquant ouvert** (ouvert + Critique / Élevée) plafonne la note à **C** et force **NO-GO**.
 - Une **exigence in-scope non testée** force **NO-GO**.
 - **Aucun test exécuté** affiche *non évalué* — jamais un E.
-- Le **GO** exige aussi un score ≥ 75 et une couverture ≥ 70 %.
+- Le **GO** exige aussi que le composite atteigne le **seuil GO** du barème et la couverture son **minimum**.
+- Un **taux de réussite sous le plancher du barème** plafonne la note à **C** et force le **NO-GO**. Les autres composantes ne peuvent pas le compenser — une moyenne compense, un plancher non.
+- Un **taux d'exécution sous ce même plancher** fait de même : satisfaire le taux de réussite en exécutant moins n'achète plus un GO. Un cas marqué *Non applicable* n'est **pas** un cas non exécuté.
+- Un **test en échec sans défaut lié** plafonne la note à **C** et force le **NO-GO** (actif par défaut depuis la v2.64.0).
 
 ## Profils de barème
 
@@ -39,6 +42,8 @@ Dans les Paramètres, choisissez un barème **au niveau projet** pour que tout l
 - **Strict** — une release régulée.
 - **Standard** — le barème par défaut.
 - **Rodage** — une équipe en démarrage.
+
+Le seuil GO de chaque barème sert aussi de **plancher de taux de réussite** et de **plancher de taux d'exécution** — 0,85 Strict · 0,75 Standard · 0,65 Rodage — il n'y a donc aucune valeur distincte à régler.
 
 L'ajustement est **borné** (seuil GO 50–95, une couverture minimale, poids des composantes forcés à 100, seuils A > B > C > D) ; toute valeur hors preset devient un barème **Personnalisé**. Les invariants ci-dessus tiennent toujours.
 

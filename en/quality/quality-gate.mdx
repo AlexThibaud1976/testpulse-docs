@@ -23,14 +23,17 @@ When traceability is absent, coverage is dropped and the remaining weights are *
 
 ## Transparency
 
-Click **Show details** to expand the breakdown — each component (value, points, weight), the caps applied and any flags. The score is never an opaque number.
+Click **Show details** to expand the breakdown — each component (value, points, weight), the caps applied and any flags. The score is never an opaque number. Under the grade, one line names the **scale in force** and the **GO threshold actually applied**, and carries the *low confidence* reserve when fewer than five tests ran — so a verdict can be defended without opening Settings. On screen only: the exports gain no new line.
 
 ## Non-negotiable invariants
 
 - **≥ 1 open blocking bug** (open + Critical / High) caps the grade at **C** and forces **NO-GO**.
 - An **untested in-scope requirement** forces **NO-GO**.
 - **No executed test** shows *not evaluated* — never an E.
-- **GO** also requires the score ≥ 75 and coverage ≥ 70%.
+- **GO** also requires the composite to reach the scale's **GO threshold** and coverage to reach its **minimum**.
+- A **pass rate below the scale's floor** caps the grade at **C** and forces **NO-GO**. The other components cannot compensate for it — an average compensates, a floor does not.
+- An **execution rate below that same floor** does the same: satisfying the pass rate by running less no longer buys a GO. A case marked *Not Applicable* is **not** a skipped case.
+- A **failed test with no linked defect** caps the grade at **C** and forces **NO-GO** (on by default since v2.64.0).
 
 ## Scale profiles
 
@@ -39,6 +42,8 @@ In Settings, choose a **project-level** scale so everyone scores a report identi
 - **Strict** — a regulated release.
 - **Standard** — the default scale.
 - **Ramp-up** — a starting team.
+
+Each scale's GO threshold doubles as its **pass-rate floor** and its **execution-rate floor** — 0.85 Strict · 0.75 Standard · 0.65 Ramp-up — so there is no separate number to set.
 
 Tuning is **bounded** (GO threshold 50–95, a minimum coverage, component weights forced to sum to 100, A > B > C > D thresholds); any off-preset value becomes a **Custom** scale. The invariants above always hold.
 

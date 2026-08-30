@@ -6,6 +6,33 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.64.0" description="2026-08-30">
+
+**Le verdict qualité durcit, délibérément — et certains rapports passeront désormais en NO-GO.**
+
+Deux nouveaux planchers, et un critère activé. Le score composite est une moyenne pondérée, et une moyenne compense : avec l'exécution, la couverture et l'hygiène des anomalies au maximum, un plan dont la plupart des tests **échouaient** — ou dont la plupart n'avaient tout simplement **jamais été exécutés** — pouvait encore franchir le seuil GO. Chaque barème porte désormais un **plancher de taux de réussite** et un **plancher de taux d'exécution**, tous deux calés sur son propre seuil GO (0,85 Strict · 0,75 Standard · 0,65 Rodage) : aucun nombre nouveau à retenir. Sous l'un ou l'autre, le verdict est **NO-GO** et la note est **plafonnée à C**. Un cas marqué *Non applicable* n'est pas un cas non exécuté — sortir volontairement quelque chose du périmètre ne coûte rien. Un rapport **sans aucun test exécuté** reste *non évalué*, jamais un E.
+
+Le critère **échec sans défaut lié** est désormais **actif par défaut** sur les trois barèmes, et son déclenchement plafonne également la note à C. L'hygiène des anomalies n'a jamais compté que les bugs *déclarés* : un test en échec sans bug lié obtenait un 20/20 parfait, alors que déclarer le bug correctement coûtait des points — l'incitation fonctionnait à l'envers.
+
+**Le barème qui décide est maintenant visible sur le rapport.** Une ligne discrète sous la note nomme le barème en vigueur et le seuil GO réellement appliqué, ce qui permet de défendre un verdict sans ouvrir les Réglages — et elle porte la réserve *confiance faible* quand moins de cinq tests ont été exécutés, au lieu de la garder pour elle. À l'écran uniquement : les exports PDF, Word et HTML ne gagnent aucune ligne. Le réglage du barème remonte par ailleurs en tête de la page Réglages, avec une phrase disant ce qu'il décide.
+
+**Les rapports déjà enregistrés conservent leur verdict.** Chacun porte le barème capturé au moment de sa génération et est relu sous celui-ci. Les rapports générés avant l'existence des barèmes projet (avant la v2.15.0) n'en portent aucun et sont relus sous le barème courant : ceux-là peuvent changer à la réouverture.
+
+Voir [Quality Gate](/fr/quality/quality-gate) et [Aide à la décision](/fr/quality/decision-support).
+
+</Update>
+
+<Update label="v2.63.0" description="2026-08-30">
+
+**L'historique indique désormais de quel projet vient chaque rapport.** L'historique personnel est stocké par utilisateur à l'échelle de **toute l'organisation** : quiconque travaille sur plusieurs projets voyait tous ses rapports dans une liste indifférenciée. Une colonne **Projet** se place juste après le plan de test, et un filtre **Projet** s'intercale entre le filtre de statut et *Mes rapports*. Il s'ouvre sur votre **projet courant**, ou sur **Tous les projets** quand celui-ci n'a rien à montrer — une liste vide se lirait comme une perte de données. Le compteur d'en-tête passe à *{n} sur {total} rapports* dès qu'un filtre projet est actif.
+
+Les rapports enregistrés à partir de maintenant retiennent leur projet. Les plus anciens sont **déduits à l'affichage** des liens Azure DevOps qu'ils portent déjà — soulignés en pointillés, avec leur source au survol, pour qu'une valeur déduite n'ait jamais l'autorité d'une valeur enregistrée. Quand ni l'un ni l'autre n'est possible, les rapports sont regroupés sous **Projet inconnu**, une entrée à part entière avec son compte. Rien n'est écarté.
+
+**Vous voyez aussi qui a partagé un rapport avant de l'approuver.** Le badge **Partagé** vient se placer à côté du nom du plan, avec en dessous une ligne **Partagé par** portant les initiales et le nom ; vos propres rapports affichent *Partagé par vous*. Les rapports non partagés ne gagnent rien.
+
+Aucun nouvel appel Azure DevOps, aucune nouvelle permission, aucun rapport réécrit, et l'export CSV de l'historique est inchangé. Voir [Historique des rapports](/fr/collaboration/history).
+
+</Update>
 <Update label="v2.62.0" description="2026-08-29">
 **Charger un rapport depuis l'historique vous y amène enfin.**
 

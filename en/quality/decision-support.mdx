@@ -16,7 +16,7 @@ Each entry links to the work item. *"Blocking"* uses one shared definition (an o
 
 ## Failures without a defect
 
-TestPulse flags every test whose latest result is **Failed** but that has **no linked bug** (any bug state, even Closed) — read-only, with no extra API call. It appears as a dedicated section (each test links out, with an **Open a bug** button that opens the native Azure DevOps bug form, pre-filled — never a write), as a counter on the widget, and as an **opt-in** Quality Gate criterion (off by default; when enabled and the count is greater than 0, the verdict becomes **NO-GO** — the A–E grade is never capped by it).
+TestPulse flags every test whose latest result is **Failed** but that has **no linked bug** (any bug state, even Closed) — read-only, with no extra API call. It appears as a dedicated section (each test links out, with an **Open a bug** button that opens the native Azure DevOps bug form, pre-filled — never a write), as a counter on the widget, and as a Quality Gate criterion. Since **v2.64.0 it is on by default** on all three scales: when the count is greater than 0, the verdict becomes **NO-GO** and the grade is **capped at C**. Defect hygiene only ever counted *declared* bugs, so a failed test with no linked bug used to score full marks while declaring the bug properly cost points — the incentive ran backwards.
 
 ## Audited GO/NO-GO override
 

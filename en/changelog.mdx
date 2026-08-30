@@ -6,6 +6,33 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.64.0" description="2026-08-30">
+
+**The quality verdict is stricter, on purpose — and some reports will now read NO-GO.**
+
+Two new floors, and a criterion switched on. The composite score is a weighted average, and an average compensates: with execution, coverage and defect hygiene at their maximum, a plan where most tests **failed** — or where most were simply **never run** — could still clear the GO threshold. Each scale now carries a **pass-rate floor** and an **execution-rate floor**, both set to that scale's own GO threshold (0.85 Strict · 0.75 Standard · 0.65 Ramp-up), so there is no new number to learn. Below either one the verdict is **NO-GO** and the grade is **capped at C**. A case marked *Not Applicable* is not a skipped case — taking something out of scope costs nothing. A report with **no executed test** stays *not evaluated*, never an E.
+
+The **failure without a linked defect** criterion is now **on by default** on all three scales, and triggering it caps the grade at C as well. Defect hygiene only ever counted *declared* bugs, so a failed test with no linked bug scored a perfect 20/20, while declaring the bug properly cost points — the incentive ran backwards.
+
+**The scale that decides is now visible on the report.** One discreet line under the grade names the scale in force and the GO threshold actually applied, so a verdict can be defended without opening Settings — and it carries the *low confidence* reserve when fewer than five tests ran, instead of keeping it to itself. On screen only: PDF, Word and HTML gain no new line. The scale settings also move to the top of the Settings page, with a sentence stating what they decide.
+
+**Reports already saved keep their verdict.** Each carries the scale captured when it was generated and is re-read under that one. Reports generated before project scales existed at all (before v2.15.0) have no captured scale and are re-read under the current one, so those can change on reopening.
+
+See [Quality Gate](/en/quality/quality-gate) and [Decision support](/en/quality/decision-support).
+
+</Update>
+
+<Update label="v2.63.0" description="2026-08-30">
+
+**Your report history now says which project each report came from.** Personal history is stored per user across the **whole organisation**, so anyone working on several projects saw every report in one undifferentiated list. A **Project** column now sits immediately after Test plan, and a **Project** filter sits between the status filter and *My reports*. It opens on your **current project**, or on **All projects** when that one has nothing to show — an empty list would read as data loss. The header count switches to *{n} of {total} reports* whenever a project filter is active.
+
+Reports saved from now on record their project. Older ones are **derived at display time** from the Azure DevOps links they already carry — shown with a dotted underline, naming their source on hover, so a derived value never carries the authority of a stored one. Where neither is possible, reports are grouped under **Unknown project**, an entry of its own with its count. Nothing is dropped.
+
+**You can also see who shared a report before approving it.** The **Shared** badge moves next to the plan name, with a **Shared by** line under it carrying the sharer's initials and name; your own reports read *Shared by you*. Reports that are not shared gain nothing.
+
+No new Azure DevOps call, no new permission, no report rewritten, and the history CSV export is unchanged. See [Report history](/en/collaboration/history).
+
+</Update>
 <Update label="v2.62.0" description="2026-08-29">
 **Loading a report from your history now actually takes you to it.**
 

@@ -12,6 +12,12 @@ Cliquez sur **Charger** sur une entrée de l'historique et TestPulse ouvre l'ong
 
 Le contexte est replacé avec lui : le plan de test du rapport est de nouveau sélectionné et ses suites recochées, ce qui permet de régénérer ou d'ajuster le périmètre sans reconstruire la sélection à la main. Une suite supprimée d'Azure DevOps depuis la construction du rapport est ignorée en silence. Un rapport consolidant plusieurs plans de test bascule l'affichage en mode multi-plans et coche tous ses plans — le mode multi-plans ne propose pas de sélection de suites, aucune n'y est donc restaurée. Les rapports enregistrés avant ce comportement se rechargent aussi bien : le plan et les suites sont lus dans le rapport lui-même.
 
+## De quel projet vient un rapport
+
+L'historique personnel est stocké par utilisateur à l'échelle de **toute l'organisation** : quiconque travaille sur plusieurs projets les voit tous dans une même liste. Une colonne **Projet** se place juste après le plan de test, et un filtre **Projet** s'intercale entre le filtre de statut et *Mes rapports*. Il s'ouvre sur votre **projet courant**, ou sur **Tous les projets** quand celui-ci n'a rien à montrer. Le compteur d'en-tête passe à *{n} sur {total} rapports* dès qu'un filtre projet est actif.
+
+Les rapports enregistrés depuis la v2.63.0 retiennent leur projet. Les plus anciens sont **déduits à l'affichage** des liens Azure DevOps qu'ils portent déjà — soulignés en pointillés, avec leur source au survol, pour qu'une valeur déduite n'ait jamais l'autorité d'une valeur enregistrée. Quand ni l'un ni l'autre n'est possible, ils sont regroupés sous **Projet inconnu**, une entrée à part entière avec son compte. Rien n'est écarté, aucun rapport n'est réécrit.
+
 ## Comparer deux rapports
 
 Sélectionnez **deux** rapports de l'historique pour les comparer côte à côte :
@@ -31,7 +37,7 @@ Chaque rapport porte un **statut** : **Brouillon → Soumis → Approuvé** (et 
 
 ## Partager au projet
 
-Activez **Partager avec le projet** pour rendre un rapport visible à tous les membres du projet (un instantané copié dans le scope projet). Un badge bleu **Partagé** apparaît, vous filtrez *Mes / Projet / Tous*, et **tout membre** peut faire évoluer le statut d'un rapport partagé (écrit sur la copie projet, tracé qui / quand). Seul l'**auteur original** peut dépublier. Un **indicateur de quota avertit à 80%**.
+Activez **Partager avec le projet** pour rendre un rapport visible à tous les membres du projet (un instantané copié dans le scope projet). Un badge bleu **Partagé** apparaît à côté du nom du plan, avec en dessous une ligne **Partagé par** portant les initiales et le nom — vos propres rapports affichent *Partagé par vous*. Vous filtrez *Mes / Projet / Tous*, et **tout membre** peut faire évoluer le statut d'un rapport partagé (écrit sur la copie projet, tracé qui / quand). Seul l'**auteur original** peut dépublier. Un **indicateur de quota avertit à 80%**.
 
 <Note>Le partage publie l'instantané que lit le widget de dashboard — voir le [Widget Vue d'ensemble qualité](/fr/dashboard/quality-overview-widget).</Note>
 

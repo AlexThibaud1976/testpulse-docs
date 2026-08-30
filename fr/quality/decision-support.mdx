@@ -16,7 +16,7 @@ Chaque entrée renvoie au work item. *« Bloquant »* repose sur une définition
 
 ## Échecs sans défaut
 
-TestPulse signale chaque test dont le dernier résultat est **Failed** mais qui n'a **aucun bug lié** (quel que soit l'état du bug, même Closed) — en lecture seule, sans appel API supplémentaire. Il apparaît comme une section dédiée (chaque test est un lien, avec un bouton **Ouvrir un bug** qui ouvre le formulaire de bug natif Azure DevOps, pré-rempli — jamais une écriture), comme compteur sur le widget, et comme critère **optionnel** du Quality Gate (désactivé par défaut ; une fois activé et si le compteur est supérieur à 0, le verdict passe **NO-GO** — le grade A–E n'est jamais plafonné par ce critère).
+TestPulse signale chaque test dont le dernier résultat est **Failed** mais qui n'a **aucun bug lié** (quel que soit l'état du bug, même Closed) — en lecture seule, sans appel API supplémentaire. Il apparaît comme une section dédiée (chaque test est un lien, avec un bouton **Ouvrir un bug** qui ouvre le formulaire de bug natif Azure DevOps, pré-rempli — jamais une écriture), comme compteur sur le widget, et comme critère du Quality Gate. Depuis la **v2.64.0 il est actif par défaut** sur les trois barèmes : si le compteur est supérieur à 0, le verdict passe **NO-GO** et la note est **plafonnée à C**. L'hygiène des anomalies n'a jamais compté que les bugs *déclarés* : un test en échec sans bug lié obtenait la note maximale, alors que déclarer le bug correctement coûtait des points — l'incitation fonctionnait à l'envers.
 
 ## Override GO/NO-GO audité
 
