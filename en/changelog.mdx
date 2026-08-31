@@ -6,6 +6,33 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.66.0" description="2026-08-31">
+
+**Bulk reassignment gets usable at real volumes.** Two selectors that worked on a demo plan did not survive 175 plans and a 172-suite tree.
+
+- **Search the plan list instead of scrolling it.** The scope step now has a search field, in both single-plan and multi-plan modes, matching on plan name, iteration, or an exact identifier. It filters the list already loaded — it never goes out to look for anything. Filtering hides, it never deselects: a selected plan that the search masks stays selected, and the counter keeps showing the real total.
+- **Pick a starting suite from the tree, not from a flat list.** Suites are now rendered hierarchically, with expand/collapse per node plus expand-all and collapse-all, and a name search that keeps a match visible together with its ancestors. Each node shows the same figures as before — sub-suites and points of its subtree — only somewhere more readable.
+- **A suite with no test point of its own no longer hides its children.** The flat list was built from the test points, so a suite holding none simply was not in it — harmless as a list, but as a tree it made every descendant unreachable. The tree is now built from the parent-child relation instead. A suite whose whole subtree holds no point is shown disabled and says so in words, not by colour alone.
+- **An inconsistent suite hierarchy no longer empties the picker.** A parent chain looping back on itself — possible on an older on-premises server — left the tree with no root and every suite off screen. Such a chain is now broken at one point and the suites are shown at top level.
+
+</Update>
+
+<Update label="v2.65.0" description="2026-08-31">
+
+<Note>Recorded after the fact: this version shipped without release notes. Its content is described here.</Note>
+
+**Reassign the tester or the configuration of a whole test plan in one pass.** Azure DevOps can assign testers at the level of a single suite, but the action does not cascade into child suites — so a plan of 172 suites meant opening up to 172 of them for 296 points. Neither CSV import nor the bulk-edit grid can reach these two properties either: they belong to the **test point**, not to the Test Case work item.
+
+- **A new [Bulk reassignment](/en/reports/bulk-reassignment) tab** walks the plan, inventories what is there, and applies the change in one pass — across a single plan or up to ten at once.
+- **See the current distribution before deciding anything.** Testers and configurations side by side, sorted by volume, each row showing its point count, how many already carry an execution result, and its share of the scope. A configuration accounting for less than 2% of the points is marked residual. **Unassigned** is a row of its own, not an absence. Nothing is cached: the inventory is rebuilt on every analysis and carries the timestamp it was read at.
+- **Three ways to define what changes** — replace one or more values with another, apply to the whole scope, or apply to a suite and all its child suites, recursively and at any depth.
+- **A mandatory review before anything is written.** Points affected, suites touched, points already run, cases skipped, and the estimated number of API calls — plus the operation in plain language and the exact endpoint that will be called. The apply button stays disabled while the impact is nil, and the prior state can be exported as CSV first.
+- **Changing a tester and changing a configuration are not the same operation, and the interface says so.** Changing the tester keeps the test point and its result attached. Changing the configuration rewrites the test case's assignments, which Azure DevOps may implement by destroying the point and recreating it — taking its result with it. Different endpoints, different warnings, and a different subtitle on the "include points already run" choice.
+- **A test case already carrying the destination configuration is skipped, never merged** — merging would delete one of its assignments. Such cases are listed with their suite and identifier, and exportable as CSV.
+- **The operation cannot be undone, and says so.** Azure DevOps offers no undo and TestPulse keeps no prior state — a deliberate decision, not an omission. See [Read-only by default](/en/concepts/read-only).
+- **A partial failure is a valid outcome, not a corrupted one.** Nothing is rolled back: points already reassigned stay reassigned. The report lists each failure with its HTTP status and a plain-language cause, and a retry button replays only the failures.
+
+</Update>
 <Update label="v2.64.0" description="2026-08-30">
 
 **The quality verdict is stricter, on purpose — and some reports will now read NO-GO.**

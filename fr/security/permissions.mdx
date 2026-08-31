@@ -12,14 +12,20 @@ TestPulse ne demande que les scopes dont il a besoin. Il **n'écrit jamais de lu
 | `vso.work` | lecture | Work items (exigences, bugs) pour la traçabilité, et les états disponibles d'un type de work item. |
 | `vso.identity` | lecture | Résoudre testeurs et assignés par leur nom. |
 | `vso.build` | lecture | Le build associé à un rapport. |
-| `vso.test_write` | **écriture** | Coverage Builder uniquement — créer plans de test et suites. |
+| `vso.test_write` | **écriture** | Créer plans de test et suites depuis le Coverage Builder, et réaffecter testeurs ou configurations depuis la réaffectation en masse. |
 | `vso.work_write` | **écriture** | Test exploratoire uniquement — créer bugs, cas de test et la tâche de session, téléverser leurs pièces jointes, et poser l'état de cette tâche à la clôture. |
 
 ## Les deux scopes d'écriture
 
-### `vso.test_write` — Coverage Builder
+### `vso.test_write` — Coverage Builder et réaffectation en masse
 
-Alimente **uniquement** l'action de création du Coverage Builder. Création seule : jamais d'écrasement ni de suppression d'un plan ou d'une suite existante.
+Alimente deux actions, toutes deux déclenchées par vous.
+
+**Coverage Builder — création.** Crée des plans de test et des suites requirement-based. Création seule : jamais d'écrasement ni de suppression d'un plan ou d'une suite existante.
+
+**Réaffectation en masse — modification.** Change le **testeur** ou la **configuration** des test points d'un périmètre que vous avez défini. C'est le seul endroit du produit où TestPulse modifie des données de test antérieures à votre geste, et c'est précisément l'objet de l'action. Elle affiche toujours un récapitulatif d'impact complet au préalable — points concernés, suites touchées, points déjà exécutés, cas ignorés — et le bouton d'application reste désactivé tant que l'impact est nul.
+
+<Warning>La réaffectation en masse est irréversible : Azure DevOps ne propose aucune annulation et TestPulse ne conserve aucun état antérieur. Changer une **configuration** réécrit les affectations du cas de test, ce qu'Azure DevOps peut implémenter en recréant le test point, emportant son résultat d'exécution. L'écran de récapitulatif l'énonce et permet d'exclure les points portant déjà un résultat ; l'état antérieur peut être exporté en CSV au préalable. Voir [Lecture seule par défaut](/fr/concepts/read-only).</Warning>
 
 ### `vso.work_write` — test exploratoire
 

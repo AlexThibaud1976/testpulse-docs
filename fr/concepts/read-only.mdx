@@ -1,39 +1,40 @@
 ---
-title: "Lecture seule par conception (et là où l'extension écrit)"
-description: "TestPulse lit vos données Azure DevOps et n'y écrit pas — sauf à trois endroits que vous déclenchez vous-même, tous en création d'abord, tous confirmés."
+title: "Lecture seule par défaut (et là où l'extension écrit)"
+description: "TestPulse lit vos données Azure DevOps et n'écrit rien de lui-même — il n'écrit que lorsque vous déclenchez vous-même une action d'écriture."
 icon: "lock"
 ---
 
-TestPulse est en **lecture seule par conception**. Il lit les plans de test, les résultats et les work items pour construire rapports et signaux, et n'écrit rien de lui-même. Chaque écriture du produit est **déclenchée par un geste explicite de votre part**, et il y en a exactement trois.
+TestPulse est en **lecture seule par défaut**. Il lit les plans de test, les résultats et les work items pour construire rapports et signaux, et **n'écrit rien de lui-même**. Chaque écriture du produit suit une **action que vous déclenchez vous-même**, depuis un écran qui vous annonce au préalable ce qu'il s'apprête à faire.
 
-## Ce que « lecture seule » signifie ici
+## Ce que « lecture seule par défaut » signifie ici
 
 - **Jamais d'écriture en arrière-plan.** Ouvrir un rapport, un tableau de bord ou l'onglet couverture ne change rien dans votre projet.
-- **Aucun changement de statut, commentaire, tag ou modification** sur un work item que TestPulse n'a pas créé lui-même.
-- **100 % côté client** : les rapports sont construits dans votre navigateur. **Aucun backend** — aucune donnée ne quitte votre tenant Azure DevOps.
-- Les signaux sur fiche lisent **en direct** et ne modifient rien.
+- **Rien ne se produit sans votre geste.** Aucune tâche planifiée, aucune synchronisation, aucune correction silencieuse.
+- **Rien n'est écrit qu'un écran n'ait annoncé avant.** Chaque action d'écriture vous montre son périmètre — et, quand elle modifie des données existantes, son impact exact — avant confirmation.
+- **100 % client-side** : les rapports sont construits dans votre navigateur. **Aucun backend** — aucune donnée ne quitte votre tenant Azure DevOps.
+- Les signaux posés sur les work items lisent **en direct** et ne changent rien.
 
-## Les trois endroits où l'extension écrit
+## Deux natures d'action d'écriture
 
-### 1. Coverage Builder — crée des plans et des suites
+### Les actions qui créent
 
-Crée des plans de test et des suites requirement-based à partir d'un ensemble d'exigences, derrière un dialogue de confirmation. **Création seule** : jamais d'écrasement ni de suppression, avertissement en cas de collision de nom, et rapport honnête des échecs partiels. Scope : `vso.test_write`.
+Elles ajoutent de nouveaux objets et ne touchent jamais à l'existant.
 
-### 2. Test exploratoire — crée les work items que vous demandez
+- **Le Coverage Builder** crée des plans de test et des suites requirement-based à partir d'un ensemble d'exigences, derrière un dialogue de confirmation. Jamais d'écrasement ni de suppression, avertissement en cas de collision de nom, et rapport honnête des échecs partiels. Scope : `vso.test_write`.
+- **Le test exploratoire** dépose un **bug** ou un **cas de test** à partir de ce que vous avez observé, et la clôture d'une session crée une **tâche** portant l'ensemble de la session — rapport, captures, fichiers, et liens vers tout ce que vous avez déposé. Tout est créé, jamais modifié : TestPulse relie le nouveau work item à votre exigence, il ne touche pas à l'exigence elle-même. Scope : `vso.work_write`.
+- **La clôture de session** peut poser l'état de la tâche de suivi qu'elle vient de créer, si vous le demandez dans le dialogue de clôture. Cette écriture est bornée à cette tâche, dans le même geste, et n'est jamais réessayée. Scope : `vso.work_write`.
 
-Pendant une session exploratoire, et après sa clôture, vous pouvez déposer un **Bug** ou un **cas de test** à partir de ce que vous avez observé. Clôturer une session crée aussi une **tâche** qui porte toute la session : rapport, captures, fichiers, et liens vers tout ce que vous avez déposé. Les captures et fichiers que vous attachez sont téléversés dans Azure DevOps en pièces jointes.
+### L'action qui modifie ce que vous avez sélectionné
 
-Tout cela est **créé**, jamais modifié : TestPulse relie le nouveau work item à votre exigence, il ne touche pas à l'exigence elle-même. Scope : `vso.work_write`.
+Une action modifie des données antérieures à votre geste, parce que c'est précisément ce que vous lui demandez.
 
-### 3. Clôture de session — pose l'état de la tâche qu'il vient de créer
-
-À la clôture d'une session, un dialogue facultatif propose d'affecter la tâche de suivi et de lui donner un état initial. Si Azure DevOps refuse de créer la tâche directement dans cet état — certains processus le font —, TestPulse pose l'état en une seconde étape, **une seule fois**, et ne réessaie jamais.
-
-C'est le **seul** endroit du produit où un work item est modifié après sa création, et il s'agit toujours de **la tâche que TestPulse vient de créer quelques secondes plus tôt, dans le même geste**. Passer le dialogue produit une tâche octet pour octet identique à celle construite avant l'existence de cette fonctionnalité. Scope : `vso.work_write`.
+- **La réaffectation en masse** change le **testeur** ou la **configuration** des test points du périmètre que vous avez défini — un plan, une suite et ses enfants, ou une valeur remplacée par une autre. C'est le seul endroit où TestPulse modifie des données de test existantes, elle ne s'exécute jamais sans confirmation explicite, et elle affiche toujours un récapitulatif d'impact complet au préalable : points concernés, suites touchées, points déjà exécutés, cas ignorés. Scope : `vso.test_write`.
 
 <Warning>
-TestPulse ne modifie ni ne supprime jamais un work item, plan, suite ou cas de test qui existait avant votre geste. L'unique écriture postérieure à une création est bornée à la tâche qu'il vient lui-même de créer, à votre demande.
+La réaffectation en masse est **irréversible**. Azure DevOps ne propose aucune annulation et TestPulse ne conserve aucun état antérieur — un choix délibéré, énoncé à l'écran au-dessus du bouton d'application. Changer une **configuration** réécrit les affectations du cas de test, ce qu'Azure DevOps peut implémenter en recréant le test point, emportant son résultat d'exécution ; l'écran de récapitulatif le dit et permet d'exclure les points portant déjà un résultat. Exportez l'état antérieur en CSV avant d'appliquer si vous voulez en garder une trace.
 </Warning>
+
+<Note>En dehors de cette action, TestPulse ne modifie ni ne supprime jamais un work item, plan, suite ou cas de test qui existait avant votre geste.</Note>
 
 ## Scopes de permission (référence)
 
@@ -43,7 +44,7 @@ TestPulse ne modifie ni ne supprime jamais un work item, plan, suite ou cas de t
 | `vso.work` | Lire les work items (exigences, bugs) pour la traçabilité, et lire les états d'un type de work item. |
 | `vso.identity` | Résoudre testeurs et assignés par leur nom. |
 | `vso.build` | Lire le build associé à un rapport. |
-| `vso.test_write` | Utilisé **uniquement** par le Coverage Builder pour créer plans et suites. |
+| `vso.test_write` | Créer plans et suites depuis le Coverage Builder, et réaffecter testeurs ou configurations depuis la réaffectation en masse. |
 | `vso.work_write` | Utilisé **uniquement** par le test exploratoire : créer bugs, cas de test et la tâche de session, téléverser leurs pièces jointes, et poser l'état de cette tâche à la clôture. |
 
 <Note>Rien ne lit les commentaires ni de données personnelles au-delà de ce dont un rapport a besoin. Voir la page Permissions pour le détail complet.</Note>
@@ -52,5 +53,5 @@ TestPulse ne modifie ni ne supprime jamais un work item, plan, suite ou cas de t
 
 <CardGroup cols={2}>
   <Card title="Le modèle Test Plans" icon="network" href="/fr/concepts/model">Plans, suites, cas, points.</Card>
-  <Card title="Capturer et créer" icon="camera" href="/fr/exploratory/capture-and-create">Ce que le test exploratoire dépose, et quand.</Card>
+  <Card title="Réaffectation en masse" icon="users" href="/fr/reports/bulk-reassignment">Réaffecter un testeur ou une configuration sur tout un plan.</Card>
 </CardGroup>

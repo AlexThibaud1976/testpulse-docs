@@ -1,0 +1,74 @@
+---
+title: "Bulk reassignment"
+description: "Reassign the tester or the configuration of a whole plan, a suite and its children, or one value replaced by another — with a full impact review before anything is written."
+icon: "users"
+---
+
+Azure DevOps can assign testers at the level of a single suite, but **the action does not cascade into child suites**. On a plan of 172 suites holding 296 test points, reassigning a tester means opening up to 172 suites by hand.
+
+CSV import and the bulk-edit grid cannot help either: they edit **Test Case work item fields**, while the tester and the configuration belong to the **test point**. There is no native way around it.
+
+The **Bulk reassignment** tab closes that gap. It walks the plan, shows what is actually there, and applies the change in one pass.
+
+## Five steps
+
+<Steps>
+  <Step title="Scope">
+    Pick one plan, or up to ten at once. A search field filters the list already loaded, matching on plan name, iteration, or an exact identifier. Filtering **hides, it never deselects** — a selected plan the search masks stays selected, and the counter keeps showing the real total.
+  </Step>
+  <Step title="Inventory">
+    Testers and configurations side by side, sorted by volume. Each row shows its point count, how many of those already carry an execution result, and its share of the scope. A configuration accounting for less than 2% of the points is marked **residual** — usually a leftover worth normalising. **Unassigned** is a row of its own, not an absence.
+
+    Nothing is cached. The inventory is rebuilt on every analysis and carries the timestamp it was read at, because acting on a stale view is the real risk here.
+  </Step>
+  <Step title="Operation">
+    Choose what to reassign — **tester** or **configuration** — then one of three modes:
+
+    - **Replace everywhere** — one or more current values replaced by another
+    - **Whole scope** — every point that does not already carry the destination
+    - **A suite and its children** — recursively, at any depth
+
+    Suites are shown as a tree, with expand/collapse and a name search that keeps a match visible together with its ancestors. A suite holding no point of its own still appears as a branch, so its descendants stay reachable.
+  </Step>
+  <Step title="Review">
+    Points affected, suites touched, points already run, cases skipped, and the estimated number of API calls — plus the operation in plain language and the exact endpoint that will be called. The apply button stays disabled while the impact is nil.
+
+    Here you also choose what happens to points that already carry a result, and you can export the prior state as CSV.
+  </Step>
+  <Step title="Result">
+    How many points were reassigned out of how many, the duration, and every failure with its HTTP status and a plain-language cause. A retry button replays **only** the failures.
+  </Step>
+</Steps>
+
+## Tester and configuration are not the same operation
+
+This is the part worth reading twice.
+
+| | Tester | Configuration |
+| --- | --- | --- |
+| What happens | The test point is kept, only its tester changes | The test case's assignments are rewritten |
+| Execution result | **Preserved** | Azure DevOps may recreate the point, **taking the result with it** |
+| "Include points already run" | *The result stays attached to the point* | *The result will be lost* |
+
+Presenting these as one mechanism would be the easiest way to lose someone's execution history, so the interface keeps them visibly apart.
+
+<Warning>
+**The operation cannot be undone.** Azure DevOps offers no undo and TestPulse keeps no prior state — a deliberate decision, stated on screen above the apply button. The CSV export of the prior state is the trace to keep. See [Read-only by default](/en/concepts/read-only).
+</Warning>
+
+## Two behaviours that surprise people
+
+**A test case already carrying the destination configuration is skipped, never merged.** Merging it into the source would delete one of its assignments. Skipped cases are listed with their suite and identifier, and exportable as CSV.
+
+**A partial failure is a valid outcome, not a corrupted one.** Nothing is rolled back: points already reassigned stay reassigned. This is intended — a rollback would need a prior state that TestPulse deliberately does not keep.
+
+## Permissions
+
+Bulk reassignment uses the **`vso.test_write`** scope that the Coverage Builder already declares — no new permission is requested. A **403** on a suite is almost always an area-path ACL rather than a missing scope; the report names the suite so you can check.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Read-only by default" icon="lock" href="/en/concepts/read-only">Where TestPulse writes, and what it never touches.</Card>
+  <Card title="Permissions & scopes" icon="key" href="/en/security/permissions">Every scope and exactly what it powers.</Card>
+</CardGroup>

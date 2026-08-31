@@ -6,6 +6,33 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.66.0" description="2026-08-31">
+
+**La réaffectation en masse devient utilisable aux volumes réels.** Deux sélecteurs qui tenaient sur un plan de démonstration n'ont pas survécu à 175 plans et à un arbre de 172 suites.
+
+- **Rechercher un plan au lieu de faire défiler la liste.** L'étape Périmètre porte désormais un champ de recherche, en mode mono-plan comme en multi-plans, qui filtre sur le nom du plan, l'itération ou un identifiant exact. Il filtre la liste **déjà chargée** — il ne va jamais rien chercher au dehors. Le filtre **masque, il ne désélectionne jamais** : un plan sélectionné que la recherche cache reste sélectionné, et le compteur continue d'afficher le total réel.
+- **Choisir une suite de départ dans son arborescence, plus dans une liste plate.** Les suites s'affichent hiérarchiquement, avec repli et dépli par nœud, tout déplier et tout replier, et une recherche par nom qui garde un résultat visible **avec ses ancêtres**. Chaque nœud affiche les mêmes chiffres qu'avant — sous-suites et points de son sous-arbre — simplement à un endroit plus lisible.
+- **Une suite sans test point ne masque plus ses enfants.** La liste plate était bâtie sur les test points : une suite n'en portant aucun n'y figurait pas. Sans conséquence en liste, mais en arborescence cela rendait chaque descendant inatteignable. L'arbre est désormais construit sur la relation parent-enfant. Une suite dont **tout** le sous-arbre est vide s'affiche désactivée et le dit en toutes lettres, pas seulement par la couleur.
+- **Une hiérarchie de suites incohérente ne vide plus le sélecteur.** Une chaîne de parents qui boucle sur elle-même — possible sur un serveur on-premises ancien — laissait l'arbre sans racine et faisait disparaître toutes les suites de l'écran. Une telle chaîne est maintenant rompue en un point et les suites sont affichées au premier niveau.
+
+</Update>
+
+<Update label="v2.65.0" description="2026-08-31">
+
+<Note>Consigné après coup : cette version a été publiée sans note de version. Son contenu est décrit ici.</Note>
+
+**Réaffecter le testeur ou la configuration de tout un plan de test en une passe.** Azure DevOps sait assigner des testeurs au niveau d'une suite, mais l'action ne cascade pas vers les suites enfants — un plan de 172 suites imposait donc d'en ouvrir jusqu'à 172 pour 296 points. Ni l'import CSV ni la grille d'édition en masse ne peuvent atteindre ces deux propriétés : elles appartiennent au **test point**, pas au work item Cas de test.
+
+- **Un nouvel onglet [Réaffectation en masse](/fr/reports/bulk-reassignment)** parcourt le plan, inventorie l'existant et applique le changement en une passe — sur un plan, ou jusqu'à dix à la fois.
+- **Voir la répartition actuelle avant de décider quoi que ce soit.** Testeurs et configurations côte à côte, triés par volume, chaque ligne indiquant son nombre de points, combien portent déjà un résultat d'exécution, et sa part du périmètre. Une configuration pesant moins de 2 % des points est marquée résiduelle. **Non assigné** est une ligne à part entière, pas une absence. Rien n'est mis en cache : l'inventaire est reconstruit à chaque analyse et porte l'horodatage de sa lecture.
+- **Trois manières de définir ce qui change** — remplacer une ou plusieurs valeurs par une autre, appliquer à tout le périmètre, ou appliquer à une suite et à toutes ses sous-suites, récursivement et à n'importe quelle profondeur.
+- **Un récapitulatif obligatoire avant toute écriture.** Points concernés, suites touchées, points déjà exécutés, cas ignorés et nombre d'appels API estimé — plus l'opération en langage clair et l'endpoint exact qui sera appelé. Le bouton d'application reste désactivé tant que l'impact est nul, et l'état antérieur peut être exporté en CSV au préalable.
+- **Changer un testeur et changer une configuration ne sont pas la même opération, et l'interface le dit.** Changer le testeur conserve le test point et son résultat. Changer la configuration réécrit les affectations du cas de test, ce qu'Azure DevOps peut implémenter en détruisant le point et en le recréant — emportant son résultat. Endpoints différents, avertissements différents, et sous-titre différent sur le choix « inclure les points déjà exécutés ».
+- **Un cas de test portant déjà la configuration cible est ignoré, jamais fusionné** — fusionner supprimerait l'une de ses affectations. Ces cas sont listés avec leur suite et leur identifiant, et exportables en CSV.
+- **L'opération est irréversible, et le dit.** Azure DevOps ne propose aucune annulation et TestPulse ne conserve aucun état antérieur — une décision délibérée, pas un oubli. Voir [Lecture seule par défaut](/fr/concepts/read-only).
+- **Un échec partiel est un résultat valide, pas un état corrompu.** Rien n'est annulé : les points déjà réaffectés le restent. Le rapport liste chaque échec avec son code HTTP et une cause en clair, et un bouton de reprise ne rejoue **que** les échecs.
+
+</Update>
 <Update label="v2.64.0" description="2026-08-30">
 
 **Le verdict qualité durcit, délibérément — et certains rapports passeront désormais en NO-GO.**

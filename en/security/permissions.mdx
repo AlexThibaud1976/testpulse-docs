@@ -12,14 +12,20 @@ TestPulse requests only the scopes it needs. It **never writes on its own**: eve
 | `vso.work` | read | Work items (requirements, bugs) for traceability, and a work item type's available states. |
 | `vso.identity` | read | Resolve testers and assignees by name. |
 | `vso.build` | read | The associated build for a report. |
-| `vso.test_write` | **write** | Coverage Builder only — create Test Plans and suites. |
+| `vso.test_write` | **write** | Create Test Plans and suites from the Coverage Builder, and reassign testers or configurations from Bulk reassignment. |
 | `vso.work_write` | **write** | Exploratory testing only — create Bugs, Test Cases and the session Task, upload their attachments, and set that Task's state at closure. |
 
 ## The two write scopes
 
-### `vso.test_write` — Coverage Builder
+### `vso.test_write` — Coverage Builder and Bulk reassignment
 
-Powers **only** the Coverage Builder's create action. Create-only: it never overwrites or deletes an existing plan or suite.
+Powers two actions, both triggered by you.
+
+**Coverage Builder — create.** Creates Test Plans and requirement-based suites. Create-only: it never overwrites or deletes an existing plan or suite.
+
+**Bulk reassignment — modify.** Changes the **tester** or the **configuration** of the test points in a scope you defined. This is the only place in the product where TestPulse modifies test data that existed before your gesture, and it is exactly what the action is for. It always shows a full impact review first — points affected, suites touched, points already run, cases skipped — and the apply button stays disabled while the impact is nil.
+
+<Warning>Bulk reassignment cannot be undone: Azure DevOps offers no undo and TestPulse keeps no prior state. Changing a **configuration** rewrites the test case's assignments, which Azure DevOps may implement by recreating the test point, taking its execution result with it. The review screen states this and lets you exclude points that already carry a result; the prior state can be exported as CSV first. See [Read-only by default](/en/concepts/read-only).</Warning>
 
 ### `vso.work_write` — exploratory testing
 

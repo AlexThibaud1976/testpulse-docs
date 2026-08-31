@@ -1,39 +1,40 @@
 ---
-title: "Read-only by design (and where it writes)"
-description: "TestPulse reads your Azure DevOps data and never writes to it — except in three places you trigger yourself, all create-first, all confirmed."
+title: "Read-only by default (and where it writes)"
+description: "TestPulse reads your Azure DevOps data and writes nothing on its own — it writes only when you trigger a write action yourself."
 icon: "lock"
 ---
 
-TestPulse is **read-only by design**. It reads Test Plans, results and work items to build reports and signals, and it writes nothing on its own. Every write in the product is **triggered by an explicit gesture on your part**, and there are exactly three of them.
+TestPulse is **read-only by default**. It reads Test Plans, results and work items to build reports and signals, and it **writes nothing on its own**. Every write in the product follows an **action you trigger yourself**, from a screen that tells you beforehand what it is about to do.
 
-## What "read-only" means here
+## What "read-only by default" means here
 
 - **No background writes, ever.** Opening a report, a dashboard or the coverage tab changes nothing in your project.
-- **No status changes, comments, tags or edits** to work items TestPulse did not create itself.
+- **Nothing happens without your gesture.** There is no scheduled job, no sync, no silent correction.
+- **Nothing is written that a screen did not announce first.** Every write action shows you its scope — and, when it modifies existing data, its exact impact — before you confirm.
 - **100% client-side**: reports are built in your browser. **No backend** — no data ever leaves your Azure DevOps tenant.
 - The on-work-item signals read **live** and change nothing.
 
-## The three places it writes
+## Two kinds of write action
 
-### 1. Coverage Builder — creates plans and suites
+### Actions that create
 
-Creates Test Plans and requirement-based suites from a set of requirements, behind a confirmation dialog. **Create-only**: it never overwrites or deletes, warns on a name collision, and reports partial failures honestly. Scope: `vso.test_write`.
+These add new objects and never touch what already exists.
 
-### 2. Exploratory testing — creates work items you asked for
+- **Coverage Builder** creates Test Plans and requirement-based suites from a set of requirements, behind a confirmation dialog. It never overwrites or deletes, warns on a name collision, and reports partial failures honestly. Scope: `vso.test_write`.
+- **Exploratory testing** files a **Bug** or a **Test Case** from what you observed, and closing a session creates a **Task** carrying the whole session — report, captures, files, and links to everything you filed. All created, never modified: TestPulse links the new work item to your story, it does not touch the story itself. Scope: `vso.work_write`.
+- **Session closure** can set the state of the tracking Task it just created, if you ask for it in the closing dialog. This write is bounded to that Task, in the same gesture, and never retried. Scope: `vso.work_write`.
 
-While running an exploratory session, and after closing it, you can file a **Bug** or a **Test Case** from what you observed. Closing a session also creates a **Task** carrying the whole session: report, captures, files, and links to everything you filed. Captures and files you attach are uploaded to Azure DevOps as attachments.
+### Actions that modify what you selected
 
-All of it is **created**, never modified: TestPulse links the new work item to your story, it does not touch the story itself. Scope: `vso.work_write`.
+One action modifies data that existed before your gesture, because that is precisely what you asked it for.
 
-### 3. Session closure — sets the state of the Task it just created
-
-When you close a session, an optional dialog offers to assign the tracking Task and give it an initial state. If Azure DevOps refuses to create the Task directly in that state — some processes do — TestPulse sets the state in a second step, **once**, and never retries.
-
-This is the **only** place in the product where a work item is modified after creation, and it is always **the Task TestPulse created seconds earlier, in the same gesture**. Skipping the dialog produces a Task byte-for-byte identical to the one built before this feature existed. Scope: `vso.work_write`.
+- **Bulk reassignment** changes the **tester** or the **configuration** of the test points in the scope you defined — a plan, a suite and its children, or one value replaced by another. It is the only place where TestPulse modifies existing test data, it never runs without an explicit confirmation, and it always shows a full impact review first: points affected, suites touched, points already run, cases skipped. Scope: `vso.test_write`.
 
 <Warning>
-TestPulse never modifies or deletes a work item, plan, suite or test case that existed before your gesture. The single post-creation write is bounded to the Task it just created, at your request.
+Bulk reassignment **cannot be undone**. Azure DevOps offers no undo and TestPulse keeps no prior state — a deliberate choice, stated on screen above the apply button. Changing a **configuration** rewrites the test case's assignments, which Azure DevOps may implement by recreating the test point, taking its execution result with it; the review screen says so and lets you exclude points that already carry a result. Export the prior state as CSV before applying if you want a trace.
 </Warning>
+
+<Note>Outside that action, TestPulse never modifies or deletes a work item, plan, suite or test case that existed before your gesture.</Note>
 
 ## Permission scopes (reference)
 
@@ -43,7 +44,7 @@ TestPulse never modifies or deletes a work item, plan, suite or test case that e
 | `vso.work` | Read work items (requirements, bugs) for traceability, and read a work item type's states. |
 | `vso.identity` | Resolve testers and assignees by name. |
 | `vso.build` | Read the associated build for a report. |
-| `vso.test_write` | Used **only** by the Coverage Builder to create plans and suites. |
+| `vso.test_write` | Create plans and suites from the Coverage Builder, and reassign testers or configurations from Bulk reassignment. |
 | `vso.work_write` | Used **only** by exploratory testing: create Bugs, Test Cases and the session Task, upload their attachments, and set that Task's state at closure. |
 
 <Note>Nothing reads comments or personal data beyond what a report needs. See the Permissions page for the full breakdown.</Note>
@@ -52,5 +53,5 @@ TestPulse never modifies or deletes a work item, plan, suite or test case that e
 
 <CardGroup cols={2}>
   <Card title="The Test Plans model" icon="network" href="/en/concepts/model">Plans, suites, cases, points.</Card>
-  <Card title="Capture and create" icon="camera" href="/en/exploratory/capture-and-create">What exploratory testing files, and when.</Card>
+  <Card title="Bulk reassignment" icon="users" href="/en/reports/bulk-reassignment">Reassign a tester or a configuration across a plan.</Card>
 </CardGroup>
