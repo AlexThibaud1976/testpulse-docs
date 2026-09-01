@@ -28,7 +28,7 @@ Un bouton **Annuler** apparaît pendant la génération. Le cliquer annule tous 
 <Steps>
   <Step title="Resélectionner le plan">Le plan sauvegardé est resélectionné et ses suites se chargent.</Step>
   <Step title="Restaurer les suites">La sélection de suites sauvegardée est cochée — les suites supprimées depuis la sauvegarde sont ignorées silencieusement.</Step>
-  <Step title="Restaurer les champs">Tous les champs de métadonnées sont restaurés.</Step>
+  <Step title="Restaurer les champs">Tous les champs de métadonnées sont restaurés — **sauf la date du rapport**, qui est posée au jour même. Une vue est un modèle réutilisable, pas un instantané : une vue enregistrée en juin et rouverte en août générerait sinon un rapport daté de juin, et un fichier Excel nommé d'après cette date. Un bandeau non bloquant énonce les deux dates et propose de restaurer celle enregistrée ; il reste muet si la vue a été enregistrée le jour même, et disparaît dès que vous modifiez la date vous-même. Un rapport programmé porte la date de l'exécution qui l'a produit.</Step>
 </Steps>
 
 <Note>Utilisez les **vues** pour les campagnes récurrentes où le même plan, les mêmes suites et les mêmes métadonnées sont réutilisés — par exemple une régression hebdomadaire sur un périmètre fixe.</Note>

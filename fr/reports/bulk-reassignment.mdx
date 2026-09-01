@@ -19,7 +19,7 @@ L'onglet **Réaffectation en masse** comble ce trou. Il parcourt le plan, montre
   <Step title="Inventaire">
     Testeurs et configurations côte à côte, triés par volume. Chaque ligne indique son nombre de points, combien d'entre eux portent déjà un résultat d'exécution, et sa part du périmètre. Une configuration pesant moins de 2 % des points est marquée **résiduelle** — le plus souvent un héritage à normaliser. **Non assigné** est une ligne à part entière, pas une absence.
 
-    Rien n'est mis en cache. L'inventaire est reconstruit à chaque analyse et porte l'horodatage de sa lecture, parce qu'agir sur une vue périmée est le vrai risque ici.
+    Rien n'est mis en cache. L'inventaire est reconstruit à chaque analyse et porte l'horodatage de sa lecture, parce qu'agir sur une vue périmée est le vrai risque ici. Enchaîner une réaffectation vous ramène à **Périmètre**, rien de présélectionné et la liste des plans relue — et les suites que l'opération précédente a touchées sont relues, au lieu d'être servies d'avant l'écriture.
   </Step>
   <Step title="Opération">
     Choisissez quoi réaffecter — **testeur** ou **configuration** — puis l'un des trois modes :
@@ -27,6 +27,8 @@ L'onglet **Réaffectation en masse** comble ce trou. Il parcourt le plan, montre
     - **Remplacer partout** — une ou plusieurs valeurs actuelles remplacées par une autre
     - **Tout le périmètre** — chaque point ne portant pas déjà la valeur cible
     - **Une suite et ses enfants** — récursivement, à n'importe quelle profondeur
+
+    **La destination ne se limite pas à ce que le périmètre porte déjà.** Pour une configuration, c'est tout le catalogue projet — celle qu'aucun point du périmètre ne porte le dit en toutes lettres et reste sélectionnable, et celle marquée inactive dans le projet se place en fin de liste, signalée. Pour un testeur, le champ recherche les identités et résout votre choix vers une identité réelle, jamais vers le texte tapé ; les testeurs déjà présents sont proposés sans saisie, et **Non assigné** reste disponible. Là où la recherche d'identités est restreinte — c'est possible sur Azure DevOps Server — le champ le dit et retombe sur les testeurs qu'il connaît.
 
     Les suites s'affichent en arborescence, avec repli et dépli, et une recherche par nom qui garde un résultat visible avec ses ancêtres. Une suite ne portant aucun point apparaît quand même comme branche, pour que ses descendants restent atteignables.
   </Step>

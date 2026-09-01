@@ -6,6 +6,49 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.67.3" description="2026-09-01">
+
+**Reading the same plan after a reassignment showed the state from before.** Returning to the first step worked and the plan list was read again, but picking the same plan brought back exactly what you had seen before applying — only a full page reload showed reality.
+
+- The test points of a suite were held in memory for the whole session and nothing ever discarded them, so the second read was served from a snapshot taken before the write. The suites an operation touches are now dropped from that memory as soon as it finishes.
+- **Suites the operation failed on are dropped too.** A conflict means the suite moved; a permission error leaves a doubt about what actually went through. Re-reading costs one call, a wrong figure costs more.
+- Everything else stays in memory: plans the operation never touched open as fast as before, and replaying failed points behaves the same way.
+- The same now applies when test cases are added to an existing suite from the repository — that suite's contents are read afresh rather than from before the write.
+
+</Update>
+
+<Update label="v2.67.2" description="2026-08-31">
+
+**Starting another reassignment takes you back to the first step, on a freshly read plan list.** And a saved view no longer produces a report dated months ago.
+
+- v2.67.0 kept the scope you had chosen and rebuilt its inventory behind a dedicated screen. In real use that proved disorienting — you landed on an inventory with no way of telling whether it showed the state before or after what you had just applied. You now return to **Scope**, nothing pre-selected, plan list read again, so a plan created, renamed or deleted meanwhile shows up as it is now.
+- **The dedicated rebuild screen is gone.** The scan it duplicated is the one *Analyse the scope* has always announced, with the same per-suite progress and the same cancel button. Two clicks more, and you always know where you are.
+- **Opening a saved view now sets the report date to today.** A view stores the metadata it was saved with, report date included, and re-applied it on opening: a view saved in June and reopened in August generated a June report — and an Excel file named after that date, since the filename derives from it. A view is a **reusable model, not a snapshot**.
+- Nothing is written back to the view: its saved date stays its own until you save it again. A non-blocking banner names **both dates** and offers to restore the saved one, for the rare case of regenerating a past report — and says nothing at all when the view was saved today. Editing the date by hand dismisses it: you have decided.
+- A **scheduled** report carries the date of the run that produced it, with no banner — nobody is in front of the screen. The date read is the **local** one, so a report generated at half past eleven at night is not dated tomorrow.
+
+</Update>
+
+<Update label="v2.67.1" description="2026-08-31">
+
+<Warning>The configuration catalogue announced in v2.67.0 was never actually loaded. The call reading a project's configurations had been answering `404` since the feature that introduced it, and the failure was swallowed silently.</Warning>
+
+- **The project configuration catalogue is read again.** The call targeted the legacy area with an api-version that area does not know, and returned `404` on cloud and on-premises alike. It now targets the test-plan route, with the legacy one in v5.0 as a fallback — the same pattern already used for plans, suites and points. Not an extra call: the same call, at the right address.
+- When **both** routes fail, the screen says so and falls back to the configurations of the scope, instead of the silent empty list you got until now.
+- Beyond bulk reassignment, the **Covered configurations** indicator of the report (`X / Y`) recovers its `Y`, which had been stuck at zero.
+- **A configuration marked inactive in the project is now shown as such.** It stays selectable — hiding it would surprise as much as offering it without warning — but it says so in words and sits at the end of the destination list, behind everything still active.
+
+</Update>
+
+<Update label="v2.67.0" description="2026-08-31">
+
+**Bulk reassignment could only reassign towards someone — or something — already there.** Both destination lists were built from the scope itself, so a configuration defined in the project but carried by no point yet, and a tester holding no point at all, simply could not be chosen.
+
+- **Any configuration defined in the project can now be a destination.** The destination list is the project catalogue rather than the inventory of what the scope already carries. Each entry shows how many points of the scope carry it, and one carried by none says so **in words**, not by colour alone — and stays selectable. The list you replace *from* is unchanged: it remains the inventory of what is really there, because that is a different question.
+- **Any tester can now be a destination.** The tester field searches identities — 500 ms after you stop typing, from three characters — and resolves your pick to a real identity rather than to the text you typed. Reassigning a test point requires the identity itself, so a name that was never resolved would have failed only *after* the review screen, once you were convinced the operation would go through.
+- Testers already present in the scope are offered straight away, without typing and without a search, and **Unassigned** remains available. Where identity search is restricted — it can be, on Azure DevOps Server — the field says so and falls back to those known testers instead of leaving an empty box.
+
+</Update>
 <Update label="v2.66.0" description="2026-08-31">
 
 **Bulk reassignment gets usable at real volumes.** Two selectors that worked on a demo plan did not survive 175 plans and a 172-suite tree.

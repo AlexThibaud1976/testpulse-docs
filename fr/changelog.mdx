@@ -6,6 +6,49 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.67.3" description="2026-09-01">
+
+**Relire le même plan après une réaffectation affichait l'état d'avant.** Revenir à la première étape fonctionnait et la liste des plans était bien relue, mais resélectionner le même plan ramenait exactement ce que vous aviez vu avant d'appliquer — seul un rechargement complet de la page montrait la réalité.
+
+- Les test points d'une suite étaient gardés en mémoire pour toute la session et rien ne les effaçait jamais : la seconde lecture servait un instantané pris avant l'écriture. Les suites qu'une opération touche sont désormais évincées de cette mémoire dès qu'elle se termine.
+- **Les suites en échec le sont aussi.** Un conflit signifie que la suite a bougé ; une erreur de droits laisse un doute sur ce qui est réellement passé. Une relecture coûte un appel, un chiffre faux coûte plus cher.
+- Tout le reste demeure en mémoire : les plans que l'opération n'a pas touchés s'ouvrent aussi vite qu'avant, et rejouer les points en échec se comporte de la même manière.
+- Cela vaut désormais aussi quand des cas de test sont ajoutés à une suite existante depuis le référentiel — le contenu de cette suite est relu, plutôt que servi d'avant l'écriture.
+
+</Update>
+
+<Update label="v2.67.2" description="2026-08-31">
+
+**Enchaîner une réaffectation ramène à la première étape, sur une liste de plans fraîche.** Et une vue sauvegardée ne produit plus un rapport daté d'il y a des mois.
+
+- La v2.67.0 conservait le périmètre choisi et reconstruisait son inventaire derrière un écran dédié. À l'usage, c'était désorientant : on atterrissait sur un inventaire sans savoir s'il montrait l'état d'avant ou d'après l'opération qu'on venait d'appliquer. Vous revenez maintenant à **Périmètre**, rien de présélectionné, liste des plans relue — un plan créé, renommé ou supprimé entre-temps apparaît tel qu'il est.
+- **L'écran de reconstruction dédié disparaît.** Le balayage qu'il dupliquait est celui qu'*Analyser le périmètre* annonce depuis toujours, avec la même progression par suite et le même bouton d'annulation. Deux clics de plus, et on sait toujours où l'on est.
+- **Ouvrir une vue sauvegardée pose désormais la date du jour.** Une vue enregistre les métadonnées avec lesquelles elle a été sauvegardée, date du rapport comprise, et les réappliquait à l'ouverture : une vue enregistrée en juin et rouverte en août générait un rapport daté de juin — et un fichier Excel nommé d'après cette date, puisque le nom en dérive. Une vue est un **modèle réutilisable, pas un instantané**.
+- Rien n'est réécrit dans la vue : sa date enregistrée lui reste acquise jusqu'à un nouvel enregistrement. Un bandeau non bloquant énonce **les deux dates** et propose de restaurer celle enregistrée, pour le cas rare d'un rapport passé à régénérer — et ne dit rien du tout si la vue a été enregistrée le jour même. Modifier la date à la main le fait disparaître : vous avez tranché.
+- Un rapport **programmé** porte la date de l'exécution qui l'a produit, sans bandeau — personne n'est devant l'écran. La date lue est la date **locale**, un rapport généré à onze heures et demie du soir n'est donc pas daté de demain.
+
+</Update>
+
+<Update label="v2.67.1" description="2026-08-31">
+
+<Warning>Le catalogue de configurations annoncé en v2.67.0 n'a jamais été réellement chargé. L'appel qui lit les configurations d'un projet répondait `404` depuis la fonctionnalité qui l'a introduit, et l'échec était avalé en silence.</Warning>
+
+- **Le catalogue de configurations du projet est de nouveau lu.** L'appel visait la zone historique avec une version d'API qu'elle ne connaît pas, et renvoyait `404` aussi bien dans le cloud qu'en on-premises. Il vise maintenant la route des plans de test, avec l'historique en v5.0 en repli — le motif déjà employé pour les plans, les suites et les points. Ce n'est pas un appel de plus : c'est le même appel, à la bonne adresse.
+- Quand les **deux** routes échouent, l'écran le dit et retombe sur les configurations du périmètre, au lieu de la liste vide silencieuse d'avant.
+- Au-delà de la réaffectation en masse, l'indicateur **Configurations couvertes** du rapport (`X / Y`) retrouve son `Y`, bloqué à zéro jusqu'ici.
+- **Une configuration marquée inactive dans le projet est désormais signalée comme telle.** Elle reste sélectionnable — la masquer surprendrait autant que l'offrir sans avertissement — mais elle le dit en toutes lettres et se place en fin de liste de destination, derrière tout ce qui est encore actif.
+
+</Update>
+
+<Update label="v2.67.0" description="2026-08-31">
+
+**La réaffectation en masse ne savait réaffecter que vers quelqu'un — ou quelque chose — de déjà présent.** Les deux listes de destination étaient bâties sur le périmètre lui-même : une configuration définie dans le projet mais portée par aucun point, et un testeur ne portant aucun point, ne pouvaient tout simplement pas être choisis.
+
+- **Toute configuration définie dans le projet peut désormais être une destination.** La liste de destination est le catalogue projet, et non l'inventaire de ce que le périmètre porte déjà. Chaque entrée indique combien de points du périmètre la portent, et celle qui n'en porte aucun le dit **en toutes lettres**, pas seulement par la couleur — tout en restant sélectionnable. La liste depuis laquelle vous remplacez ne change pas : elle reste l'inventaire du réel, parce que c'est une autre question.
+- **Tout testeur peut désormais être une destination.** Le champ recherche les identités — 500 ms après la fin de la saisie, à partir de trois caractères — et résout votre choix vers une identité réelle plutôt que vers le texte tapé. Réaffecter un test point exige l'identité elle-même : un nom jamais résolu n'aurait échoué qu'**après** le récapitulatif, une fois convaincu que l'opération allait passer.
+- Les testeurs déjà présents dans le périmètre sont proposés d'emblée, sans saisie ni recherche, et **Non assigné** reste disponible. Là où la recherche d'identités est restreinte — c'est possible sur Azure DevOps Server — le champ le dit et retombe sur ces testeurs connus, au lieu de laisser un champ vide.
+
+</Update>
 <Update label="v2.66.0" description="2026-08-31">
 
 **La réaffectation en masse devient utilisable aux volumes réels.** Deux sélecteurs qui tenaient sur un plan de démonstration n'ont pas survécu à 175 plans et à un arbre de 172 suites.

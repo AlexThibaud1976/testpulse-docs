@@ -28,7 +28,7 @@ A **Cancel** button appears during generation. Clicking it aborts every in-fligh
 <Steps>
   <Step title="Re-select the plan">The saved plan is re-selected and its suites load.</Step>
   <Step title="Restore the suites">The saved suite selection is checked — suites deleted since the save are skipped silently.</Step>
-  <Step title="Restore the fields">All metadata fields are restored.</Step>
+  <Step title="Restore the fields">All metadata fields are restored — **except the report date**, which is set to today. A view is a reusable model, not a snapshot: a view saved in June and reopened in August would otherwise generate a June report, and an Excel file named after that date. A non-blocking banner names both dates and offers to restore the saved one; it stays silent when the view was saved today, and disappears once you edit the date yourself. A scheduled report carries the date of the run that produced it.</Step>
 </Steps>
 
 <Note>Use **views** for recurring campaigns where the same plan, suites and metadata are reused — for example a weekly regression on a fixed perimeter.</Note>

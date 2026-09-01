@@ -19,7 +19,7 @@ The **Bulk reassignment** tab closes that gap. It walks the plan, shows what is 
   <Step title="Inventory">
     Testers and configurations side by side, sorted by volume. Each row shows its point count, how many of those already carry an execution result, and its share of the scope. A configuration accounting for less than 2% of the points is marked **residual** — usually a leftover worth normalising. **Unassigned** is a row of its own, not an absence.
 
-    Nothing is cached. The inventory is rebuilt on every analysis and carries the timestamp it was read at, because acting on a stale view is the real risk here.
+    Nothing is cached. The inventory is rebuilt on every analysis and carries the timestamp it was read at, because acting on a stale view is the real risk here. Starting another reassignment brings you back to **Scope** with nothing pre-selected and the plan list read again — and the suites the previous operation touched are re-read rather than served from before the write.
   </Step>
   <Step title="Operation">
     Choose what to reassign — **tester** or **configuration** — then one of three modes:
@@ -27,6 +27,8 @@ The **Bulk reassignment** tab closes that gap. It walks the plan, shows what is 
     - **Replace everywhere** — one or more current values replaced by another
     - **Whole scope** — every point that does not already carry the destination
     - **A suite and its children** — recursively, at any depth
+
+    **The destination is not limited to what the scope already carries.** For a configuration, it is the whole project catalogue — one carried by no point of the scope says so in words and stays selectable, and one marked inactive in the project sits at the end of the list, labelled. For a tester, the field searches identities and resolves your pick to a real identity, never to the text you typed; testers already in the scope are offered without typing, and **Unassigned** stays available. Where identity search is restricted — it can be, on Azure DevOps Server — the field says so and falls back to the testers it knows.
 
     Suites are shown as a tree, with expand/collapse and a name search that keeps a match visible together with its ancestors. A suite holding no point of its own still appears as a branch, so its descendants stay reachable.
   </Step>
