@@ -6,6 +6,10 @@ icon: "folder-tree"
 
 Azure DevOps stores a test case inside a suite, inside a plan. There is no free place to *organize* your cases the way you think about them, no easy way to find a case again, and a case linked to nothing is effectively invisible. The **Repository** tab fills that gap: a folder tree to organize and retrieve your test cases, the way Xray does for Jira — and it never touches your ADO data.
 
+<Frame caption="The Repository opens on the Hygiene view, before any analysis is run.">
+  <img src="/images/en/repository-hygiene.png" alt="Test Repository tab on the Hygiene view before analysis" />
+</Frame>
+
 ## A tree of references, not a copy
 
 The Repository is a **TestPulse object**, shared at the **project** level and stored in the extension's own space. It files **references** to your test cases (`testCaseId`), never copies of their content: titles, steps and fields always stay the single source of truth in Azure DevOps. You can create, rename, move and delete folders at **any depth**, using native drag & drop or a keyboard-accessible **"Move to…"** menu. A case lives in **at most one folder**; removing it from its folder sends it back to **Unfiled**.

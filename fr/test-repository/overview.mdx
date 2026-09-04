@@ -6,6 +6,10 @@ icon: "folder-tree"
 
 Azure DevOps range un cas de test dans une suite, dans un plan. Il n'existe aucun endroit libre pour *organiser* vos cas comme vous les pensez, aucun moyen simple de retrouver un cas, et un cas lié à rien est de fait invisible. L'onglet **Repository** comble ce manque : une arborescence de dossiers pour organiser et retrouver vos cas de test, façon Xray pour Jira — et il ne touche jamais à vos données ADO.
 
+<Frame caption="Le Repository s''ouvre sur la vue Hygiène, avant toute analyse.">
+  <img src="/images/fr/repository-hygiene.png" alt="Onglet Repository sur la vue Hygiène avant analyse" />
+</Frame>
+
 ## Une arborescence de références, pas une copie
 
 Le Repository est un **objet propre à TestPulse**, partagé au niveau **projet** et stocké dans l'espace de l'extension. Il range des **références** à vos cas de test (`testCaseId`), jamais des copies de leur contenu : titres, étapes et champs restent l'unique source de vérité dans Azure DevOps. Vous pouvez créer, renommer, déplacer et supprimer des dossiers à **toute profondeur**, par glisser-déposer natif ou via un menu **« Déplacer vers… »** accessible au clavier. Un cas vit dans **au plus un dossier** ; le retirer de son dossier le renvoie vers **Non classés**.

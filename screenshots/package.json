@@ -1,0 +1,14 @@
+{
+  "name": "testpulse-docs-screenshots",
+  "private": true,
+  "type": "module",
+  "description": "Capture reproductible des visuels de la documentation TestPulse. Hors périmètre de publication Mintlify.",
+  "scripts": {
+    "auth": "node auth.mjs",
+    "capture": "node capture.mjs",
+    "capture:one": "node capture.mjs --only"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

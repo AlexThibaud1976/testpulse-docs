@@ -8,6 +8,10 @@ icon: "settings"
 
 La plupart des paramètres sont mémorisés **par utilisateur** via Azure DevOps Extension Data ; quelques-uns (un barème partagé, les rapports partagés au projet) sont **au niveau projet** pour que toute une équipe voie la même chose.
 
+<Frame caption="L''écran Paramètres, sur la section Marque & page de garde.">
+  <img src="/images/fr/settings-branding.png" alt="Écran Paramètres de TestPulse, section Marque et page de garde" />
+</Frame>
+
 | Paramètre | Ce qu'il contrôle |
 | --- | --- |
 | **Libellé d'en-tête & pied de page** | Remplace « TestPulse » dans l'en-tête, le pied de page et le nom de fichier — voir [Page de garde](/fr/reports/cover-page). |
@@ -22,6 +26,10 @@ La plupart des paramètres sont mémorisés **par utilisateur** via Azure DevOps
 ## Importer des résultats externes
 
 Ouvrez l'onglet **Import** et glissez-déposez (ou choisissez) un fichier `.xml` produit par **Cypress, Playwright, Surefire / Maven, NUnit 3 ou xUnit 2**. Le format est détecté automatiquement depuis le tag racine. Les résultats analysés sont prévisualisés (nom, résultat, durée, mappé) et **auto-mappés aux cas de test Azure DevOps par nom** (contains insensible à la casse) ; les lignes non mappées reçoivent une liste manuelle. Choisissez le plan cible et cliquez sur **Importer** — un rapport est sauvegardé dans l'Historique avec un badge **[AUTO]**.
+
+<Frame caption="La zone de dépôt d'import : fichiers XML JUnit, Cypress, Playwright, Surefire, NUnit 3 et xUnit 2.">
+  <img src="/images/fr/import-dropzone.png" alt="Zone de dépôt d'import des résultats listant les formats XML pris en charge" />
+</Frame>
 
 <Note>L'analyse est **purement côté client** — aucun appel réseau.</Note>
 

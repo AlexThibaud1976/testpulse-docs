@@ -8,6 +8,10 @@ icon: "settings"
 
 Most settings persist **per user** via Azure DevOps Extension Data; a few (a shared scale profile, project-shared reports) are **project-scoped** so a whole team sees the same thing.
 
+<Frame caption="The Settings screen, on the Brand & cover page section.">
+  <img src="/images/en/settings-branding.png" alt="TestPulse Settings screen showing the branding and cover page section" />
+</Frame>
+
 | Setting | What it controls |
 | --- | --- |
 | **Header & footer label** | Replaces "TestPulse" in the header, footer and file name — see [Cover page](/en/reports/cover-page). |
@@ -22,6 +26,10 @@ Most settings persist **per user** via Azure DevOps Extension Data; a few (a sha
 ## Import external results
 
 Open the **Import** tab and drag-and-drop (or pick) an `.xml` file produced by **Cypress, Playwright, Surefire / Maven, NUnit 3 or xUnit 2**. The format is auto-detected from the root tag. Parsed results are previewed (name, outcome, duration, mapped) and **auto-mapped to Azure DevOps test cases by name** (case-insensitive contains); unmapped rows get a manual dropdown. Pick the target plan and click **Import** — a report is saved to History with an **[AUTO]** badge.
+
+<Frame caption="The import drop zone: JUnit, Cypress, Playwright, Surefire, NUnit 3 and xUnit 2 XML files.">
+  <img src="/images/en/import-dropzone.png" alt="Results import drop zone listing the supported XML formats" />
+</Frame>
 
 <Note>Parsing is **purely client-side** — no network calls.</Note>
 

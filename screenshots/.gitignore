@@ -1,0 +1,4 @@
+node_modules/
+.profile/
+auth.json
+*.local.mjs
