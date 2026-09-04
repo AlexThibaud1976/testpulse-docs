@@ -6,6 +6,25 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.69.0" description="2026-09-04">
+
+**Dans le rapport standard, le nom d'un fichier joint est désormais un lien, et son type est lisible.** Un fichier attaché à un résultat de test apparaissait déjà dans le PDF, dans un tableau Fichier / Type / Taille — mais le nom était du texte mort, et le seul moyen de l'ouvrir était d'aller le chercher à la main dans Azure DevOps. Le rapport HTML, lui, porte ce lien depuis toujours : l'écart était entre nos propres surfaces.
+
+- Le nom du fichier est rendu en **lien** vers la pièce jointe. **Toute** pièce jointe est cliquable, quelle que soit son extension — une extension que nous ne reconnaissons pas change le libellé, jamais le lien. Une limite de notre propre table ne doit pas vous coûter votre accès.
+- La colonne Type affichait `application/octet-stream` pour tout ce qui n'était pas une image, cette valeur venant d'une table qui ne connaissait que six extensions, toutes des formats d'image. Elle affiche maintenant un libellé lisible dérivé du **nom de fichier** : PDF, Word, Excel, PowerPoint, CSV, JSON, XML, Archive, E-mail, Texte, Log, Image, et un simple **Fichier** pour le reste. Cette table **n'est pas exhaustive et ne prétend pas l'être** — le repli est le comportement nominal, pas un défaut.
+- Le lien n'est omis que lorsqu'il n'y a rien à lier : URL absente, ou protocole autre que `http` ou `https`. Le nom est alors en texte simple.
+- Les images embarquées, le partage images / non-images de la page, l'estimation de hauteur et la pagination sont inchangés.
+
+**La section Pièces jointes est désormais affichée par défaut, sur le PDF comme sur le rapport HTML.**
+
+- Tout ce qu'elle montre était déjà lu dans Azure DevOps à chaque génération : **rien de plus n'est récupéré** — le rapport cesse simplement de jeter une donnée déjà payée.
+- Énoncé plutôt que découvert après coup : si vous n'aviez jamais touché à la liste des sections, vos rapports porteront désormais une page Pièces jointes, et le rapport HTML affichera la sienne.
+- **Rien de ce que vous avez enregistré n'est réécrit.** Un rapport dont vous aviez déjà choisi les sections conserve votre choix, y compris une section que vous aviez volontairement désactivée.
+- Le bouton **Réinitialiser** des paramètres renvoie maintenant les défauts réels, au lieu d'une liste recopiée à la main qui aurait continué d'indiquer *Pièces jointes : désactivé*.
+- Les captures d'écran des **étapes** relèvent d'un réglage distinct et ne sont pas touchées.
+
+</Update>
+
 <Update label="v2.68.0" description="2026-09-04">
 
 **Les preuves d'une session sont désormais listées dans le rapport, et le PDF permet de les ouvrir.** Un fichier déposé dans une session exploratoire part bien dans Azure DevOps en pièce jointe du work item — mais le rapport se contentait de le mentionner au passage : il annonçait une preuve sans donner aucun moyen d'y accéder.

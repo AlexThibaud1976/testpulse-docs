@@ -6,6 +6,25 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.69.0" description="2026-09-04">
+
+**In the standard report, the name of an attached file is now a link, and its type is readable.** A file attached to a test result already appeared in the PDF, in a File / Type / Size table — but the name was dead text, and the only way to open it was to go and find it by hand in Azure DevOps. The HTML report has carried the link since it existed: the gap was between our own surfaces.
+
+- The file name is rendered as a **link** to the attachment. **Every** attachment is clickable, whatever its extension — an extension we do not recognise changes the label, never the link. A limit of our own lookup table must not cost you your access.
+- The Type column read `application/octet-stream` for everything that was not an image, because that value came from a table that only ever knew six extensions, all image formats. It now shows a readable label derived from the **file name**: PDF, Word, Excel, PowerPoint, CSV, JSON, XML, Archive, Email, Text, Log, Image, and a plain **File** for anything else. That table is **not exhaustive and does not pretend to be** — the fallback is nominal behaviour, not a defect.
+- A link is omitted only when there is nothing to link to: a missing URL, or one using neither `http` nor `https`. The name is then plain text.
+- Embedded images, the image / non-image split of the page, height estimation and pagination are unchanged.
+
+**The Attachments section is now shown by default, on the PDF and the HTML report alike.**
+
+- Everything it shows was already read from Azure DevOps on every generation, so **nothing extra is fetched** — the report simply stops throwing away data it had already paid for.
+- Stated rather than discovered later: if you had never touched the section list, your reports will now carry an Attachments page, and the HTML report shows its section too.
+- **Nothing you saved is rewritten.** A report whose sections you had already chosen keeps your choice, including a section you had deliberately turned off.
+- The **Reset** button in the settings now returns the stored defaults instead of a hand-copied list that would have kept saying *Attachments: off*.
+- Screenshots of individual **steps** are a different setting and are untouched.
+
+</Update>
+
 <Update label="v2.68.0" description="2026-09-04">
 
 **Session evidence is now listed in the report, and the PDF makes it reachable.** A file dropped into an exploratory session is uploaded to Azure DevOps as an attachment of the work item — but the report only mentioned it in passing, announcing a proof without giving any way to open it.
