@@ -10,6 +10,16 @@ An archived session already lives in Azure DevOps as a queryable Task. When you 
 
 A finished session exports to a **signed PDF**: the charter, its duration and campaign tag, the **full chronological timeline**, the work items you created, and a **tester signature with a timestamp in the footer of every page** — in French or English, following the active language. Screenshots are **embedded as images**; if a capture can't be fetched (network, on-premises), it is simply **listed by name** — the report never breaks. Non-image files are always listed by name.
 
+## Evidence produced during the session
+
+Both the report written into the tracking Task and the exported PDF carry an **Evidence** section listing every attachment of the session — files you dropped and captures you pasted alike — with its name, time and size, in chronological order. A session without attachments shows no section at all.
+
+The two surfaces do different jobs. The report in the Task is a **register**: written once at closing and never revisited, it lists what was produced and carries **no link** — real access is one tab away on the same work item, and that tab always reflects reality. The **PDF** is the access surface, the only one that travels outside Azure DevOps, so that is where the links live.
+
+When the PDF is generated, **one grouped call** reads which attachments are still linked to the Task. One that is no longer there reads *Attachment unavailable* instead of offering a link that leads nowhere. If that call fails, or the session was never materialised, nothing is concluded and every link renders as usual — a network incident must never look like evidence being deleted.
+
+<Note>An image you **dropped** stays an attachment line rather than becoming a thumbnail. Only pasted captures are embedded in the PDF, and that distinction is deliberate.</Note>
+
 ## All closed sessions of a story
 
 A second button, **always available** in the tab, exports **every closed session of the user story** as a single PDF, grouped by host work item. It reads the same archived data as session restore, with **no extra Azure DevOps call** — handy for a campaign wrap-up or an audit trail.

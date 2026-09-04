@@ -6,6 +6,30 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.68.0" description="2026-09-04">
+
+**Les preuves d'une session sont désormais listées dans le rapport, et le PDF permet de les ouvrir.** Un fichier déposé dans une session exploratoire part bien dans Azure DevOps en pièce jointe du work item — mais le rapport se contentait de le mentionner au passage : il annonçait une preuve sans donner aucun moyen d'y accéder.
+
+- Les deux surfaces portent maintenant une section **Preuves** listant chaque pièce jointe de la session, fichiers déposés et captures collées confondus, avec son nom, son horodatage et sa taille, en ordre chronologique. Pas de pièce jointe, pas de section.
+- Le rapport écrit dans la tâche de suivi est un **registre** : écrit une seule fois à la clôture et jamais repris, il liste ce qui a été produit et ne porte **aucun lien**. L'accès réel est à un onglet de là, sur le même work item, et cet onglet reflète toujours la réalité.
+- Le **PDF** est la surface d'accès — la seule qui voyage hors d'Azure DevOps, et la seule qui puisse dire la vérité au moment où elle est produite. C'est là que vivent les liens.
+- À la génération, **un seul appel groupé** lit quelles pièces jointes sont encore rattachées à la tâche. Celle qui n'y est plus affiche *Pièce jointe indisponible* au lieu de proposer un lien mort. Jamais une requête par fichier — et si cet appel échoue, rien n'est conclu et tous les liens s'affichent normalement, parce qu'un incident réseau ne doit jamais ressembler à une preuve supprimée.
+- Une image que vous avez **déposée** reste une ligne de pièce jointe plutôt qu'une vignette ; seules les captures collées sont intégrées. Cette distinction est volontaire.
+
+**Chaque ligne de session porte sa date et son heure de démarrage, et les sessions sont triées à l'intérieur de chaque story.**
+
+- Déplier une story listait ses sessions dans l'ordre où le stockage les rendait, sans aucune date affichée : sur une story portant quatre sessions, rien ne disait laquelle était la plus récente.
+- Chaque ligne indique maintenant quand la session a démarré — date **et** heure, formatées dans votre langue — de sorte que deux sessions menées le même jour se distinguent sans en ouvrir aucune.
+- Au sein d'une story, les sessions vont de la plus récente à la plus ancienne, et toute session encore **ouverte** se place en tête : c'est celle que vous revenez terminer. L'ordre **entre** stories est inchangé.
+
+**Trois correctifs autour des sessions dont la tâche de suivi n'existe plus.**
+
+- Dans l'onglet Explore de la story, la liste des sessions précédentes construisait son lien directement depuis l'identifiant stocké, sans jamais vérifier que la tâche existait encore — le clic tombait sur une page d'erreur. L'historique vérifie désormais chaque tâche de suivi en **une seule lecture groupée** : celle qui reste introuvable perd son lien et affiche *La tâche associée n'est plus disponible*. Jamais « supprimée » — un work item supprimé part à la corbeille et reste restaurable, et une lecture groupée ne distingue pas les deux cas. Restaurez-le et le lien revient au rafraîchissement suivant.
+- Dans le hub, cette même session disparaissait purement et simplement de l'inventaire. Le hub résout le testeur d'une session depuis sa tâche de suivi, et il applique **de lui-même** un filtre Testeur à l'ouverture : testeur non résolu plus filtre par défaut, la session était silencieusement retirée d'un inventaire présenté comme complet. Un filtre que vous **choisissez** est une intention et masque toujours ce qu'il doit ; un filtre appliqué **pour vous** ne retire plus rien que vous n'ayez demandé. La ligne conserve son bouton **Exporter** : l'enregistrement de la session est intact, seule sa matérialisation manque.
+- Le filtre de période excluait le jour même qu'il prétendait inclure : demander les sessions *du 31/08 au 31/08* ne renvoyait rien, même avec une session démarrée cet après-midi-là. Les deux bornes comparent maintenant des **jours calendaires tels que vous les voyez à l'écran**, dans votre propre fuseau, jamais un instant. La période imprimée sur la couverture du PDF agrégé suit la même règle.
+
+</Update>
+
 <Update label="v2.67.3" description="2026-09-01">
 
 **Relire le même plan après une réaffectation affichait l'état d'avant.** Revenir à la première étape fonctionnait et la liste des plans était bien relue, mais resélectionner le même plan ramenait exactement ce que vous aviez vu avant d'appliquer — seul un rechargement complet de la page montrait la réalité.

@@ -10,6 +10,16 @@ Une session archivée vit déjà dans Azure DevOps sous forme de Task requêtabl
 
 Une session terminée s'exporte en **PDF signé** : la charte, sa durée et son tag de campagne, la **timeline chronologique complète**, les work items créés, et une **signature du testeur avec un horodatage en pied de chaque page** — en français ou en anglais, selon la langue active. Les captures sont **embarquées en image** ; si une capture ne peut pas être récupérée (réseau, on-premises), elle est simplement **listée par son nom** — le rapport ne casse jamais. Les fichiers non-image sont toujours listés par leur nom.
 
+## Les preuves produites pendant la session
+
+Le rapport écrit dans la tâche de suivi comme le PDF exporté portent une section **Preuves** listant chaque pièce jointe de la session — fichiers déposés et captures collées confondus — avec son nom, son horodatage et sa taille, en ordre chronologique. Une session sans pièce jointe n'affiche aucune section.
+
+Les deux surfaces ne font pas le même métier. Le rapport dans la tâche est un **registre** : écrit une seule fois à la clôture et jamais repris, il liste ce qui a été produit et ne porte **aucun lien** — l'accès réel est à un onglet de là, sur le même work item, et cet onglet reflète toujours la réalité. Le **PDF** est la surface d'accès, la seule qui voyage hors d'Azure DevOps : c'est là que vivent les liens.
+
+À la génération du PDF, **un seul appel groupé** lit quelles pièces jointes sont encore rattachées à la tâche. Celle qui n'y est plus affiche *Pièce jointe indisponible* au lieu de proposer un lien qui ne mène nulle part. Si cet appel échoue, ou si la session n'a jamais été matérialisée, rien n'est conclu et tous les liens s'affichent normalement — un incident réseau ne doit jamais ressembler à une preuve supprimée.
+
+<Note>Une image que vous avez **déposée** reste une ligne de pièce jointe plutôt qu'une vignette. Seules les captures collées sont intégrées au PDF, et cette distinction est volontaire.</Note>
+
 ## Toutes les sessions closes d'une US
 
 Un second bouton, **toujours disponible** dans l'onglet, exporte **toutes les sessions closes de l'US** en un seul PDF, regroupées par work item hôte. Il lit les mêmes données archivées que la restauration de session, **sans appel Azure DevOps supplémentaire** — pratique pour un bilan de campagne ou une piste d'audit.

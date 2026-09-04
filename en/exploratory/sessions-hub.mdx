@@ -8,9 +8,9 @@ A session archived on a user story is easy to find — as long as you remember w
 
 ## Every session of the project, grouped by work item
 
-The tab lists **all exploratory sessions of the project**, grouped by the work item they were run on, most recent activity first. Each group shows its work item, its **type**, the number of sessions it carries, and the date of its last activity — then expands into **one row per session**.
+The tab lists **all exploratory sessions of the project**, grouped by the work item they were run on, most recent activity first. Each group shows its work item, its **type**, the number of sessions it carries, and the date of its last activity — then expands into **one row per session**, running from the most recent to the oldest, with any session still **open** at the top. The order **between** groups is unchanged — most recent activity first.
 
-That row is the unit that matters: **status**, charter, tester, duration, counts of notes, captures, files and bugs, and a link — to the archived Task once the session is closed, or to the work item itself while it is still running, where the Explore tab picks it back up.
+That row is the unit that matters: **status**, charter, **start date and time**, tester, duration, counts of notes, captures, files and bugs, and a link — to the archived Task once the session is closed, or to the work item itself while it is still running, where the Explore tab picks it back up.
 
 For an active session, that link tells you whether it is **yours**: your own shows your name and offers to resume it, a colleague's only opens the work item. Azure DevOps restores a session solely to the account that started it, so promising more would be promising something that cannot happen. A story explored three times shows three distinct rows, not a pile of merged badges.
 
@@ -32,7 +32,7 @@ Filters cover **area path, iteration path, campaign tag, tester, period and verd
 
 Each filter option carries **its own result count**, so you can judge how selective a choice is before making it.
 
-The **Tester** filter pre-sets itself to you when the hub opens, with a visible **"Filtered to my sessions"** chip you can remove in one click. **Active sessions are exempt from it**: a session only gets a tracking Task — and with it a resolvable tester name — at closure, so filtering by tester would otherwise hide every session in progress, your own included. Every other filter still applies to them.
+The **Tester** filter pre-sets itself to you when the hub opens, with a visible **"Filtered to my sessions"** chip you can remove in one click. **Active sessions are exempt from it**: a session only gets a tracking Task — and with it a resolvable tester name — at closure, so filtering by tester would otherwise hide every session in progress, your own included. Every other filter still applies to them. **A session whose tester cannot be resolved is exempt too, as long as the filter is the one applied for you**: a filter you did not ask for never removes anything from the inventory. Pick a tester explicitly and filtering is strict again.
 
 <Warning>This filter reduces noise; it grants no confidentiality. Sessions are stored at **project scope** and readable by anyone with access to the project, regardless of Azure DevOps teams.</Warning>
 

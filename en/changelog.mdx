@@ -6,6 +6,30 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.68.0" description="2026-09-04">
+
+**Session evidence is now listed in the report, and the PDF makes it reachable.** A file dropped into an exploratory session is uploaded to Azure DevOps as an attachment of the work item — but the report only mentioned it in passing, announcing a proof without giving any way to open it.
+
+- Both surfaces now carry an **Evidence** section listing every attachment of the session, dropped files and pasted captures alike, with name, time and size, in chronological order. No attachments, no section.
+- The report written into the tracking Task is a **register**: written once at closing and never revisited, it lists what was produced and carries **no link**. Real access is one tab away on the same work item, and that tab always reflects reality.
+- The **PDF** is the access surface — the only one that travels outside Azure DevOps, and the only one that can tell the truth at the moment it is produced. That is where the links live.
+- At generation, **one grouped call** reads which attachments are still linked to the Task. One that is no longer there reads *Attachment unavailable* rather than offering a dead link. Never one request per file — and if that call fails, nothing is concluded and every link renders as usual, because a network incident must never look like evidence being deleted.
+- An image you **dropped** stays an attachment line rather than becoming a thumbnail; only pasted captures are embedded. That distinction is deliberate.
+
+**Every session row now carries its start date and time, and sessions are ordered inside each story.**
+
+- Expanding a story listed its sessions in whatever order storage returned them, with no date shown at all: on a story carrying four sessions, nothing said which one was the most recent.
+- Each row now shows when the session started — date **and** time, formatted in your language — so two sessions run on the same day are told apart without opening either.
+- Within a story, sessions run from the most recent to the oldest, and any session still **open** sits at the top: that is the one you came back to finish. The order **between** stories has not changed.
+
+**Three fixes around sessions whose tracking Task no longer exists.**
+
+- On the story's Explore tab, the previous-sessions list built its link straight from the stored identifier without ever checking the Task still existed — clicking it landed on an error page. The history now checks every tracking Task in a **single grouped read**: one that cannot be found loses its link and reads *The linked task is no longer available*. Never "deleted" — a deleted work item goes to the recycle bin and stays restorable, and a grouped read cannot tell the two apart. Restore it and the link comes back on the next refresh.
+- In the hub, the same session vanished from the inventory altogether. The hub resolves a session's tester from its tracking Task, and it applies a Tester filter **by itself** when it opens: unresolved plus filtered-by-default meant a silent drop from an inventory presented as complete. A filter you **chose** is an intention and still hides what it must; a filter applied **for you** no longer removes anything you did not ask it to remove. The row keeps its **Export** button — the session record is intact, only its materialisation is missing.
+- The period filter excluded the very day it claimed to include: asking for sessions *from 31/08 to 31/08* returned nothing, even with a session started that afternoon. Both bounds now compare **calendar days as you see them on screen**, in your own time zone, never an instant. The period printed on the aggregated PDF cover follows the same rule.
+
+</Update>
+
 <Update label="v2.67.3" description="2026-09-01">
 
 **Reading the same plan after a reassignment showed the state from before.** Returning to the first step worked and the plan list was read again, but picking the same plan brought back exactly what you had seen before applying — only a full page reload showed reality.
