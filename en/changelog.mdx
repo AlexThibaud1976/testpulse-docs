@@ -6,6 +6,25 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.70.0" description="2026-09-07">
+
+**The file drop zone of an exploratory session is now hard to miss, and a missed drop no longer costs you the session.** Dropping a Win+G recording or a log onto the timeline meant aiming at a strip about 40 px high, with no visual feedback of any kind and no alternative to dragging. Miss it and the browser did what a browser does with a file dropped on a page: it opened the file in the tab, and the session you were running left the screen.
+
+- The zone now follows the pattern the Import tab has used for months — a dashed border, an icon, a title, an explanatory line and a **Browse…** button, at least 100 px tall. Its size never changes during a session: a target that moves is a target you have to find again.
+- While you drag a file, **the whole timeline panel becomes the target**. An overlay covers it and says what dropping will do, and releasing anywhere on the panel is treated exactly as if you had aimed at the zone. Crossing an element inside the panel does not make that overlay flicker, and dragging selected **text** does not raise it at all — only files do.
+- A file released **beside** the panel is now swallowed: the browser does not navigate, nothing is attached, and your session stays on screen. That guard lives in the Explore tab alone and leaves with it — the Repository tab's drag & drop is untouched.
+- The **Browse…** button opens the native picker, for a file you cannot reach by dragging or simply if you prefer a dialog. **No type filter is applied**: the size limit remains Azure DevOps's to enforce, not ours to guess.
+
+**Dropping several files at once now attaches all of them, and a failure part-way through is named.** The timeline accepted one file per drop. Files are now uploaded one after another, each entry computed from the session as it stands **at that moment** — a note you type while the batch is still uploading is kept, not overwritten. A progress line shows the rank, the total and the name of the file being sent, and a second drop attempted during a batch is ignored without an error.
+
+- If the second of three files is refused, the first and the third stay attached, and the message names the second one with Azure DevOps's own wording, unchanged. Nothing is rolled back — what is attached stays attached.
+- The one failure that stops a batch is a **permission** failure: the re-approval banner is raised, and the remaining files are not attempted.
+- A file released on the drop zone itself was also being uploaded **twice**, the zone and the panel each handling the drop. The panel is now the only handler.
+
+See [Capture & create](/en/exploratory/capture-and-create).
+
+</Update>
+
 <Update label="v2.69.0" description="2026-09-04">
 
 **In the standard report, the name of an attached file is now a link, and its type is readable.** A file attached to a test result already appeared in the PDF, in a File / Type / Size table — but the name was dead text, and the only way to open it was to go and find it by hand in Azure DevOps. The HTML report has carried the link since it existed: the gap was between our own surfaces.

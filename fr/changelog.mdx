@@ -6,6 +6,25 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.70.0" description="2026-09-07">
+
+**La zone de dépôt d'une session exploratoire est désormais impossible à rater, et un dépôt manqué ne coûte plus la session.** Déposer un enregistrement Win+G ou un log sur la frise revenait à viser un bandeau d'environ 40 px de haut, sans le moindre retour visuel et sans alternative au glisser. À côté, le navigateur faisait ce qu'un navigateur fait d'un fichier lâché sur une page : il l'ouvrait dans l'onglet, et la session en cours quittait l'écran.
+
+- La zone reprend le motif que l'onglet Import emploie depuis des mois — bordure pointillée, icône, titre, ligne d'explication et bouton **Parcourir…**, sur au moins 100 px de haut. Sa taille ne change jamais pendant la session : une cible qui bouge est une cible à retrouver.
+- Pendant que vous glissez un fichier, **tout le panneau de frise devient la cible**. Une superposition le couvre et annonce ce que le dépôt va faire, et lâcher n'importe où sur le panneau est traité exactement comme si vous aviez visé la zone. Traverser un élément interne au panneau ne fait pas clignoter cette superposition, et glisser du **texte** sélectionné ne la fait pas apparaître du tout — seuls les fichiers la lèvent.
+- Un fichier lâché **à côté** du panneau est désormais avalé : le navigateur ne navigue pas, rien n'est joint, et votre session reste à l'écran. Ce garde vit dans le seul onglet Explore et disparaît avec lui — le glisser-déposer de l'onglet Référentiel n'est pas touché.
+- Le bouton **Parcourir…** ouvre le sélecteur natif, pour un fichier que le glisser n'atteint pas ou simplement si vous préférez une boîte de dialogue. **Aucun filtre de type n'est appliqué** : la limite de taille reste celle d'Azure DevOps, pas une devinette de notre part.
+
+**Déposer plusieurs fichiers d'un coup les joint désormais tous, et un échec en cours de route est nommé.** La frise n'acceptait qu'un fichier par dépôt. Les fichiers partent maintenant l'un après l'autre, chaque entrée calculée depuis la session telle qu'elle est **à cet instant** — une note saisie pendant que le lot part est conservée, pas écrasée. Une ligne de progression indique le rang, le total et le nom du fichier en cours, et un second dépôt tenté pendant un lot est ignoré, sans erreur.
+
+- Si le deuxième de trois fichiers est refusé, le premier et le troisième restent joints, et le message nomme le deuxième avec le libellé d'Azure DevOps tel quel. Rien n'est annulé — ce qui est joint reste joint.
+- Le seul échec qui interrompt un lot est un échec de **permission** : le bandeau de ré-approbation est levé, et les fichiers restants ne sont pas tentés.
+- Un fichier lâché sur la zone elle-même était par ailleurs envoyé **deux fois**, la zone et le panneau traitant chacun le dépôt. Le panneau est désormais le seul à le faire.
+
+Voir [Capturer & créer](/fr/exploratory/capture-and-create).
+
+</Update>
+
 <Update label="v2.69.0" description="2026-09-04">
 
 **Dans le rapport standard, le nom d'un fichier joint est désormais un lien, et son type est lisible.** Un fichier attaché à un résultat de test apparaissait déjà dans le PDF, dans un tableau Fichier / Type / Taille — mais le nom était du texte mort, et le seul moyen de l'ouvrir était d'aller le chercher à la main dans Azure DevOps. Le rapport HTML, lui, porte ce lien depuis toujours : l'écart était entre nos propres surfaces.
