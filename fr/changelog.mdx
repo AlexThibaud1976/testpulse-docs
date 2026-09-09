@@ -6,6 +6,18 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.71.1" description="2026-09-09">
+
+**Une ligne de rapport PDF pouvait sortir illisible, lettre à lettre, dès qu'elle portait un caractère que la police du PDF ne sait pas dessiner.** La décision de passage d'une session exploratoire — la ligne qu'un comité de changement lit en premier — s'imprimait `Q U A L !' P R O D — O K` au lieu de `QUAL > PROD — OK`.
+
+- La cause tenait à une seule flèche. Le moteur PDF bascule la chaîne **entière** dans un encodage sur deux octets dès qu'un caractère sort du répertoire de la police, puis l'écrit dans une police incapable de la relire : chaque lettre se retrouve précédée d'un octet qui ne dessine rien, et le caractère fautif se lit comme deux glyphes parasites. Un seul caractère suffisait à casser toute une ligne.
+- **Sept endroits portaient le même défaut, quatre d'entre eux depuis des mois** : la bande de décision et la plage de dates du rapport de sessions agrégé, l'override de décision humaine et la table des tests instables du rapport standard, le détail des pas, les lignes Epic de la traçabilité et le marqueur *exigence périmée*.
+- Les sept sont corrigés d'un coup et **par un mécanisme unique** plutôt qu'un rustine chacun : chaque rapport fait désormais passer son texte par un seul endroit avant de le dessiner, tables comprises. Un nouvel écran ne peut plus rendre un rapport illisible en oubliant de le faire.
+- **La typographie française n'est pas touchée.** Tirets cadratins, points de suspension, apostrophes courbes, guillemets, puces, `œ` et `€` font tous partie de ce que la police du PDF sait dessiner, et s'impriment exactement comme avant — vérifié caractère par caractère. Seule change la poignée de symboles qu'elle n'a jamais su dessiner : une flèche s'imprime `>`, le marqueur de pas `->`, le marqueur Epic `-`, le panneau d'avertissement `(!)`. Partout ailleurs dans le produit — le commentaire de la fiche, le dialogue de clôture, le rapport HTML — une flèche reste une flèche. Le PDF est la surface contrainte, c'est lui qui s'adapte.
+- Un caractère auquel nous n'avons pas donné de forme imprimée devient désormais un `?` visible plutôt que de disparaître : un trou muet dans un rapport signé est pire qu'un point d'interrogation qu'on peut voir et signaler. **Un tel caractère subsiste aujourd'hui** — le `≈` de la ligne *charge restante* de la page métriques, qui s'imprime `Reliquat ? 1 j-testeur`. Il était illisible avant cette version, il n'est plus qu'imparfait ; lui donner une forme imprimée est une décision distincte.
+
+</Update>
+
 <Update label="v2.71.0" description="2026-09-09">
 
 **À la clôture d'une session exploratoire, vous pouvez désormais acter si la livraison peut passer au palier d'environnement suivant — et cette décision atterrit là où le comité de changement regarde vraiment.** Jusqu'ici cette conclusion se prenait hors de l'outil et n'apparaissait nulle part sur la fiche que le comité examine. Voir [Décision de passage](/fr/exploratory/promotion-decision).

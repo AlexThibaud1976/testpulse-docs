@@ -6,6 +6,18 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.71.1" description="2026-09-09">
+
+**A line of a PDF report could come out unreadable, letter by letter, whenever it carried a character the PDF font cannot draw.** The promotion decision of an exploratory session — the one line a change board reads first — printed as `Q U A L !' P R O D — O K` instead of `QUAL > PROD — OK`.
+
+- The cause was a single arrow. The PDF engine switches an **entire** string to a two-byte encoding as soon as one character falls outside the font's repertoire, then writes it into a font that cannot read it back: every letter ends up preceded by a byte that draws nothing, and the offending character reads as two stray glyphs. One character was enough to break a whole line.
+- **Seven places carried the same defect, four of them for months**: the promotion band and the date range of the aggregated session report, the human decision override and the unstable-tests table of the standard report, the step detail, the Epic lines of the traceability, and the *outdated requirement* marker.
+- All seven are fixed at once and **by a single mechanism** rather than one patch each: every report now passes its text through one place before drawing it, tables included. A new screen cannot make a report unreadable again by forgetting to.
+- **French typography is untouched.** Em dashes, ellipses, curly apostrophes, guillemets, bullets, `œ` and `€` are all part of what the PDF font can draw, and they print exactly as before — verified character by character. Only the handful of symbols the font never could draw change: an arrow prints as `>`, the step marker as `->`, the Epic marker as `-`, the warning sign as `(!)`. Everywhere else in the product — the work item comment, the closing dialog, the HTML report — an arrow is still an arrow. The PDF is the constrained surface, and it is the one that adapts.
+- A character we have not given a printed form to now becomes a visible `?` rather than vanishing: a mute gap in a signed report is worse than a question mark you can see and report. **One such character remains today** — the `≈` on the *remaining effort* line of the metrics page, which prints `Reliquat ? 1 tester-day`. It was unreadable before this release and is merely imperfect now; giving it a printed form is a separate decision.
+
+</Update>
+
 <Update label="v2.71.0" description="2026-09-09">
 
 **When you close an exploratory session, you can now record whether the delivery may move to the next environment stage — and that decision lands where the change board actually looks.** Until now that conclusion was taken outside the tool and appeared nowhere on the work item the change board reviews. See [Promotion decision](/en/exploratory/promotion-decision).
