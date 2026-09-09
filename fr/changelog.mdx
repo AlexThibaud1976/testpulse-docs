@@ -6,6 +6,18 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.71.0" description="2026-09-09">
+
+**À la clôture d'une session exploratoire, vous pouvez désormais acter si la livraison peut passer au palier d'environnement suivant — et cette décision atterrit là où le comité de changement regarde vraiment.** Jusqu'ici cette conclusion se prenait hors de l'outil et n'apparaissait nulle part sur la fiche que le comité examine. Voir [Décision de passage](/fr/exploratory/promotion-decision).
+
+- Chaque projet démarre sur une échelle proposée — **TEST → QUAL → PROD** — qu'un administrateur peut renommer, réordonner, allonger ou raccourcir dans **Réglages › Environnements**. Choisir le palier au démarrage d'une session est **facultatif** et rien n'est pré-sélectionné ; sans palier, aucune décision n'est proposée et la session se comporte exactement comme avant. Vider l'échelle **désactive la fonctionnalité pour tout le projet**.
+- À la clôture, un bloc **Décision de passage** apparaît sous le verdict, avec la transition (**QUAL → PROD**, ou **Validé en PROD** sur le dernier palier) et trois valeurs : **OK**, **Réservé**, **Bloqué** — un commentaire est obligatoire pour les deux dernières. La décision est facultative, **définitive** une fois la session close, et **comptée nulle part** : ni taux de réussite, ni score qualité, ni GO / NO-GO, ni export de campagne.
+- Elle est écrite à trois endroits : un **tag requêtable** sur la tâche de session (`Passage:QUAL>PROD:OK`), une **bande colorée** sur la page de garde du PDF de session avec le commentaire et une ligne d'audit, et — nouveau pour TestPulse — un **tag et un commentaire de discussion sur la fiche depuis laquelle la session a été menée**.
+- Cette dernière écriture est bornée de tous les côtés : **une seule cible** (la fiche depuis laquelle la session a été menée), **deux champs** (ses tags et un commentaire — jamais un état, une affectation ou un lien), **un seul déclencheur** (votre clic sur *Clôturer* avec une décision sélectionnée, après qu'un encadré a nommé la fiche et montré le tag exact), **un seul interrupteur** (un administrateur peut la désactiver). Seule une décision précédente sur la **même transition** est remplacée.
+- Elle n'est par ailleurs **jamais bloquante**. Si la fiche porte des modifications non enregistrées, l'écriture est sautée plutôt que de risquer un conflit avec votre propre enregistrement — on vous dit quoi faire. Si Azure DevOps la refuse, la session se clôt quand même, la tâche est créée, la décision est enregistrée et exportée, et le message reprend le libellé d'Azure DevOps tel quel. Le cas survenu est imprimé sur la ligne d'audit du PDF : un rapport ne revendique jamais une écriture qui n'a pas eu lieu.
+
+</Update>
+
 <Update label="v2.70.0" description="2026-09-07">
 
 **La zone de dépôt d'une session exploratoire est désormais impossible à rater, et un dépôt manqué ne coûte plus la session.** Déposer un enregistrement Win+G ou un log sur la frise revenait à viser un bandeau d'environ 40 px de haut, sans le moindre retour visuel et sans alternative au glisser. À côté, le navigateur faisait ce qu'un navigateur fait d'un fichier lâché sur une page : il l'ouvrait dans l'onglet, et la session en cours quittait l'écran.

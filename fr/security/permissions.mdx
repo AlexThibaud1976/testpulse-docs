@@ -4,7 +4,7 @@ description: "Les scopes Azure DevOps demandés par TestPulse, pourquoi chacun e
 icon: "key"
 ---
 
-TestPulse ne demande que les scopes dont il a besoin. Il **n'écrit jamais de lui-même** : chaque écriture est déclenchée par un geste explicite de votre part, et chacune est bornée à ce qu'elle crée.
+TestPulse ne demande que les scopes dont il a besoin. Il **n'écrit jamais de lui-même** : chaque écriture est déclenchée par un geste explicite de votre part, et chacune est bornée à ce qu'elle crée — ou, dans deux cas confirmés, à exactement ce que vous avez sélectionné.
 
 | Scope | Lecture / Écriture | Pourquoi il est demandé |
 | --- | --- | --- |
@@ -13,7 +13,7 @@ TestPulse ne demande que les scopes dont il a besoin. Il **n'écrit jamais de lu
 | `vso.identity` | lecture | Résoudre testeurs et assignés par leur nom. |
 | `vso.build` | lecture | Le build associé à un rapport. |
 | `vso.test_write` | **écriture** | Créer plans de test et suites depuis le Coverage Builder, et réaffecter testeurs ou configurations depuis la réaffectation en masse. |
-| `vso.work_write` | **écriture** | Test exploratoire uniquement — créer bugs, cas de test et la tâche de session, téléverser leurs pièces jointes, et poser l'état de cette tâche à la clôture. |
+| `vso.work_write` | **écriture** | Test exploratoire uniquement — créer bugs, cas de test et la tâche de session, téléverser leurs pièces jointes, poser l'état de cette tâche à la clôture, et — quand vous actez une décision de passage — ajouter un tag et un commentaire de discussion sur la fiche depuis laquelle la session a été menée. |
 
 ## Les deux scopes d'écriture
 
@@ -29,9 +29,9 @@ Alimente deux actions, toutes deux déclenchées par vous.
 
 ### `vso.work_write` — test exploratoire
 
-Alimente **uniquement** ce qu'une session exploratoire dépose à votre demande : un bug, un cas de test, la tâche de suivi de la session, et leurs pièces jointes. Tout est créé, jamais modifié — TestPulse relie un nouveau work item à votre exigence, il ne touche pas à l'exigence.
+Alimente **uniquement** ce qu'une session exploratoire dépose à votre demande : un bug, un cas de test, la tâche de suivi de la session, et leurs pièces jointes. Tout est créé — TestPulse relie un nouveau work item à votre exigence. La seule chose qu'il peut écrire en retour sur l'exigence elle-même est la décision de passage décrite ci-dessous.
 
-Une exception étroite : à la clôture d'une session, un dialogue facultatif peut poser l'état de **la tâche que TestPulse vient de créer**, dans le même geste. C'est la seule écriture postérieure à une création dans le produit, et elle ne s'applique jamais à quoi que ce soit d'antérieur.
+Deux exceptions étroites, toutes deux à la clôture d'une session et derrière le même dialogue. La première peut poser l'état de **la tâche que TestPulse vient de créer**, dans le même geste. La seconde, quand vous actez une **décision de passage**, ajoute un tag et un commentaire de discussion sur **la fiche depuis laquelle la session a été menée** — une seule cible, deux champs, jamais un état, une affectation ou un lien ; sautée si la fiche porte des modifications non enregistrées, jamais bloquante, et désactivable par un administrateur. Voir [Décision de passage](/fr/exploratory/promotion-decision).
 
 <Note>Ajouter un scope d'écriture au manifeste est une action d'**administrateur** et déclenche une **ré-approbation de l'extension** pour l'organisation. Jusque-là, tout ce qui est en lecture continue de fonctionner — seule l'action de création correspondante est indisponible.</Note>
 

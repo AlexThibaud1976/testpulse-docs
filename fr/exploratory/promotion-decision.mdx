@@ -1,0 +1,67 @@
+---
+title: "Décision de passage"
+description: "Actez, à la clôture d'une session exploratoire, si la livraison peut passer au palier d'environnement suivant — écrit sur la tâche de session, dans le PDF et sur la fiche elle-même."
+icon: "milestone"
+---
+
+Une session exploratoire est souvent le dernier regard humain sur une livraison avant qu'elle change d'environnement. Jusqu'ici cette conclusion se prenait hors de l'outil et n'apparaissait nulle part sur la fiche que le comité de changement examine. Depuis la v2.71.0, vous l'actez **là où vous clôturez la session**, et elle atterrit là où les gens regardent vraiment.
+
+## L'échelle des environnements
+
+Chaque projet démarre sur une échelle proposée — **TEST → QUAL → PROD**. Un administrateur peut la renommer, la réordonner, l'allonger ou la raccourcir dans **Réglages › Environnements**. Un nom de palier ne peut pas être vide, ne peut pas répéter un palier existant (casse ignorée) et ne peut pas contenir `;`, `,`, `>` ni `:` — le message nomme la règle enfreinte. **Rétablir l'échelle proposée** ramène la valeur par défaut.
+
+Vider l'échelle **désactive la fonctionnalité pour tout le projet** : ni sélecteur au démarrage, ni bloc à la clôture, ni bande dans le rapport. Une échelle vide et un projet jamais configuré sont deux choses différentes et sont stockées comme deux choses différentes — une configuration illisible retombe sur l'échelle proposée, jamais sur *désactivé*.
+
+## Choisir le palier au démarrage
+
+Au démarrage d'une session, un sélecteur **Environnement** propose les paliers dans l'ordre de l'échelle, **sans rien pré-sélectionner** : vous seul savez où vous testez. Le palier est **facultatif** — sans lui, aucune décision n'est proposée à la clôture, et la session se comporte exactement comme avant.
+
+## Décider à la clôture
+
+Dans le dialogue de clôture, un bloc **Décision de passage** apparaît sous le verdict. Il affiche la transition concernée — **QUAL → PROD**, ou **Validé en PROD** sur le dernier palier de l'échelle — et trois valeurs :
+
+| Valeur | Sens | Commentaire |
+| --- | --- | --- |
+| **OK** | La livraison peut passer au palier suivant. | Facultatif |
+| **Réservé** | Elle peut passer, sous les conditions que vous énoncez. | Obligatoire |
+| **Bloqué** | Elle ne doit pas passer. | Obligatoire |
+
+Cliquer à nouveau la valeur active la désélectionne. Un encadré dit ensuite **exactement ce qui sera écrit et où** avant que vous confirmiez ; sans décision, il indique qu'aucune écriture n'aura lieu à ce titre.
+
+<Warning>La décision est **définitive** une fois la session close. Une erreur se corrige par une nouvelle session, jamais par une édition.</Warning>
+
+<Note>Comme le verdict de session, la décision de passage est **comptée nulle part** : elle n'entre ni dans un taux de réussite, ni dans un score qualité, ni dans un verdict GO / NO-GO, ni dans un export de campagne. Elle vit dans le seul domaine exploratoire.</Note>
+
+## Où elle est écrite
+
+- **Sur la tâche de session** — un tag requêtable, `Passage:QUAL>PROD:OK` (`Passage:PROD:OK` sur le dernier palier), ajouté dans le même appel de création que le reste de la tâche. Le rapport figé de la tâche porte l'environnement, la transition, la décision, le commentaire, l'auteur et l'heure.
+- **Sur le PDF de session** — la grille de la page de garde gagne une ligne **Environnement**, et une bande colorée en dessous porte la transition et la décision, le commentaire, et une ligne d'audit : *posée par …, le …, définitive*, plus ce qui s'est passé sur la fiche hôte.
+- **Sur la fiche depuis laquelle la session a été menée** — le même tag, et **un commentaire de discussion** signé TestPulse, horodaté et attribué par Azure DevOps lui-même. Le tag est l'état courant et se requête (`Tags Contient Passage:QUAL>PROD:OK` fait une query *prêts pour la production*) ; le commentaire est l'historique, et n'est jamais écrasé.
+
+## Une écriture bornée — la première sur une fiche que TestPulse n'a pas créée
+
+Jusqu'à cette version, l'extension n'écrivait que sur ce qu'elle créait elle-même. Reporter une décision de passage sur la fiche hôte est la seconde exception, et elle est bornée de tous les côtés :
+
+- **Une seule cible** — la fiche depuis laquelle la session a été menée, jamais une autre.
+- **Deux champs** — ses tags et un commentaire de discussion. Jamais un état, une affectation ou un lien.
+- **Un seul déclencheur** — votre clic sur *Clôturer*, avec une décision sélectionnée, après que l'encadré a nommé la fiche et montré le tag exact.
+- **Un seul interrupteur** — un administrateur peut la désactiver pour tout le projet dans Réglages › Environnements.
+
+Seule une décision précédente **sur la même transition** est remplacée : une décision posée sur un palier antérieur reste sur la fiche, et l'échelle garde son historique.
+
+## Jamais bloquant
+
+- Si la fiche que vous avez sous les yeux porte des **modifications non enregistrées**, l'écriture est **sautée** plutôt que de risquer un conflit de révision qui ferait échouer votre propre enregistrement — on vous le dit, et on vous dit quoi faire (enregistrer la fiche, rejouer une session).
+- Si Azure DevOps **refuse** l'écriture, la session se clôt quand même, la tâche est créée, la décision est enregistrée et exportée, et le message reprend le libellé d'Azure DevOps tel quel. Un refus de droits ne lève **pas** le bandeau de ré-approbation : la permission est déjà accordée, ce qui manque est un droit sur cette fiche-là.
+- Reprendre une clôture interrompue **ne poste pas un second commentaire**.
+
+Lequel de ces cas s'est produit est enregistré avec la décision et imprimé sur la ligne d'audit du PDF : un rapport ne revendique jamais une écriture qui n'a pas eu lieu.
+
+## Voir aussi
+
+<CardGroup cols={2}>
+  <Card title="Capturer, annoter & créer" icon="pencil" href="/fr/exploratory/capture-and-create">Le dialogue de clôture et la tâche de session.</Card>
+  <Card title="Rapport de session" icon="file-text" href="/fr/exploratory/session-report">Le PDF qui porte la décision.</Card>
+  <Card title="Lecture seule par défaut" icon="lock" href="/fr/concepts/read-only">Toutes les écritures que TestPulse peut faire, et quand.</Card>
+  <Card title="Permissions" icon="shield" href="/fr/security/permissions">À quoi sert chaque scope.</Card>
+</CardGroup>

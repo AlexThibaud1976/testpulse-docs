@@ -24,9 +24,11 @@ La clôture archive la session sous forme de Task. Depuis la v2.60.0, le dialogu
 
 Deux choses qu'il n'est délibérément pas. Il est **définitif** — une session close est un enregistrement, pas un brouillon. Et il n'est **compté nulle part** : aucun indicateur de rapport, aucun quality gate. Le vocabulaire est emprunté aux résultats de test pour que les testeurs le lisent sans mode d'emploi ; la contrepartie est cette note, qui dit franchement ce qu'il ne fait pas.
 
+Depuis la v2.71.0, le même dialogue propose aussi une **décision de passage** — si la livraison peut passer au palier d'environnement suivant (TEST → QUAL → PROD par défaut, configurable par projet). Même contrat que le verdict : facultative, définitive, comptée nulle part. À la différence du verdict, elle est aussi écrite sur la **fiche depuis laquelle la session a été menée**, en tag et en un commentaire de discussion, pour que le comité de changement la trouve sans ouvrir TestPulse. Voir [Décision de passage](/fr/exploratory/promotion-decision).
+
 ## Tout reste dans votre tenant
 
-Les sessions exploratoires **écrivent dans Azure DevOps** — pièces jointes et work items — mais uniquement sur **action explicite** (attacher une capture, créer un bug, archiver la session). C'est la capacité qui a introduit la **permission d'écriture des work items** ; son ajout déclenche une **ré-approbation administrateur** unique de l'extension. Les lectures sont inchangées, chaque écriture est isolée dans un module dédié, et **rien ne quitte votre tenant ADO** — aucune télémétrie, aucune dépendance ajoutée. Si la permission n'est pas encore approuvée, un **bandeau explicatif** remplace l'erreur brute sur toute écriture refusée.
+Les sessions exploratoires **écrivent dans Azure DevOps** — pièces jointes et work items — mais uniquement sur **action explicite** (attacher une capture, créer un bug, archiver la session, acter une décision de passage). C'est la capacité qui a introduit la **permission d'écriture des work items** ; son ajout déclenche une **ré-approbation administrateur** unique de l'extension. Les lectures sont inchangées, chaque écriture est isolée dans un module dédié, et **rien ne quitte votre tenant ADO** — aucune télémétrie, aucune dépendance ajoutée. Si la permission n'est pas encore approuvée, un **bandeau explicatif** remplace l'erreur brute sur toute écriture refusée.
 
 ## Voir aussi
 

@@ -4,7 +4,7 @@ description: "The Azure DevOps scopes TestPulse requests, why each is needed, an
 icon: "key"
 ---
 
-TestPulse requests only the scopes it needs. It **never writes on its own**: every write is triggered by an explicit gesture on your part, and each one is bounded to what it creates.
+TestPulse requests only the scopes it needs. It **never writes on its own**: every write is triggered by an explicit gesture on your part, and each one is bounded to what it creates — or, in two confirmed cases, to exactly what you selected.
 
 | Scope | Read / Write | Why it is requested |
 | --- | --- | --- |
@@ -13,7 +13,7 @@ TestPulse requests only the scopes it needs. It **never writes on its own**: eve
 | `vso.identity` | read | Resolve testers and assignees by name. |
 | `vso.build` | read | The associated build for a report. |
 | `vso.test_write` | **write** | Create Test Plans and suites from the Coverage Builder, and reassign testers or configurations from Bulk reassignment. |
-| `vso.work_write` | **write** | Exploratory testing only — create Bugs, Test Cases and the session Task, upload their attachments, and set that Task's state at closure. |
+| `vso.work_write` | **write** | Exploratory testing only — create Bugs, Test Cases and the session Task, upload their attachments, set that Task's state at closure, and — when you record a promotion decision — add a tag and one discussion comment on the work item the session was run from. |
 
 ## The two write scopes
 
@@ -29,9 +29,9 @@ Powers two actions, both triggered by you.
 
 ### `vso.work_write` — exploratory testing
 
-Powers **only** what an exploratory session files at your request: a Bug, a Test Case, the session's tracking Task, and their attachments. All created, never modified — TestPulse links a new work item to your story, it does not touch the story.
+Powers **only** what an exploratory session files at your request: a Bug, a Test Case, the session's tracking Task, and their attachments. All created — TestPulse links a new work item to your story. The only thing it may write back on the story itself is the promotion decision described below.
 
-One narrow exception: at session closure, an optional dialog can set the state of **the Task TestPulse just created**, in the same gesture. That is the only post-creation write in the product, and it never applies to anything that existed before.
+Two narrow exceptions, both at session closure and both behind the same dialog. The first can set the state of **the Task TestPulse just created**, in the same gesture. The second, when you record a **promotion decision**, adds a tag and one discussion comment on **the work item the session was run from** — one target, two fields, never a state, an assignment or a link; skipped if the form carries unsaved changes, never blocking, and switchable off by an administrator. See [Promotion decision](/en/exploratory/promotion-decision).
 
 <Note>Adding a write scope to the manifest is an **administrator** action and triggers an **extension re-approval** for the organisation. Until then, everything read-only keeps working — only the corresponding create action is unavailable.</Note>
 

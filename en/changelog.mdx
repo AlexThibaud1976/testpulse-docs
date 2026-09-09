@@ -6,6 +6,18 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.71.0" description="2026-09-09">
+
+**When you close an exploratory session, you can now record whether the delivery may move to the next environment stage — and that decision lands where the change board actually looks.** Until now that conclusion was taken outside the tool and appeared nowhere on the work item the change board reviews. See [Promotion decision](/en/exploratory/promotion-decision).
+
+- Every project starts with a suggested ladder — **TEST → QUAL → PROD** — that an administrator can rename, reorder, extend or shorten under **Settings › Environment stages**. Picking the stage when you start a session is **optional** and nothing is preselected; without a stage, no decision is offered and the session behaves exactly as before. Emptying the ladder **disables the feature for the whole project**.
+- At closing, a **Promotion decision** block appears under the verdict, showing the transition (**QUAL → PROD**, or **Validated in PROD** on the last stage) and three values: **OK**, **Reserved**, **Blocked** — a comment is required for the last two. The decision is optional, **final** once the session is closed, and **counted nowhere**: no pass rate, no quality score, no GO / NO-GO, no campaign export.
+- It is written in three places: a queryable **tag** on the session task (`Passage:QUAL>PROD:OK`), a **coloured band** on the session PDF cover page with the comment and an audit line, and — new for TestPulse — a **tag and one discussion comment on the work item the session was run from**.
+- That last write is bounded on every side: **one target** (the work item the session was run from), **two fields** (its tags and one comment — never a state, an assignment or a link), **one trigger** (your click on *Close* with a decision selected, after a preview box has named the work item and shown the exact tag), **one switch** (an administrator can turn it off). It only replaces a previous decision on the **same transition**.
+- It is also **never blocking**. If the work item form carries unsaved changes, the write is skipped rather than risking a conflict with your own save — you are told what to do. If Azure DevOps refuses it, the session still closes, the task is still created, the decision is still recorded and exported, and the message quotes Azure DevOps's own wording. Which outcome occurred is printed on the PDF audit line, so a report never claims a write that did not happen.
+
+</Update>
+
 <Update label="v2.70.0" description="2026-09-07">
 
 **The file drop zone of an exploratory session is now hard to miss, and a missed drop no longer costs you the session.** Dropping a Win+G recording or a log onto the timeline meant aiming at a strip about 40 px high, with no visual feedback of any kind and no alternative to dragging. Miss it and the browser did what a browser does with a file dropped on a page: it opened the file in the tab, and the session you were running left the screen.

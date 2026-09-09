@@ -1,0 +1,67 @@
+---
+title: "Promotion decision"
+description: "Record, when you close an exploratory session, whether the delivery may move to the next environment stage — written on the session task, in the PDF, and on the work item itself."
+icon: "milestone"
+---
+
+An exploratory session is often the last human look at a delivery before it moves from one environment to the next. Until now that conclusion was taken outside the tool and appeared nowhere on the work item the change board reviews. Since v2.71.0 you can record it **where you close the session**, and it lands where people actually look.
+
+## The environment ladder
+
+Every project starts with a suggested ladder — **TEST → QUAL → PROD**. An administrator can rename, reorder, extend or shorten it under **Settings › Environment stages**. A stage name may not be empty, may not repeat an existing one (case ignored), and may not contain `;`, `,`, `>` or `:` — the message names which rule you hit. **Restore the suggested ladder** brings the default back.
+
+Emptying the ladder **disables the feature for the whole project**: no selector when starting a session, no block when closing, no band in the report. An empty ladder and a project that was never configured are two different things and are stored as two different things — a configuration that cannot be read falls back to the suggested ladder, never to *disabled*.
+
+## Pick the stage when you start
+
+When you start a session, an **Environment** selector offers the stages in ladder order, with **nothing preselected**: only you know where you are testing. The stage is **optional** — without it, no decision is offered when you close, and the session behaves exactly as before.
+
+## Decide when you close
+
+In the closing dialog, a **Promotion decision** block appears under the verdict. It shows the transition it applies to — **QUAL → PROD**, or **Validated in PROD** on the last stage of the ladder — and three values:
+
+| Value | Meaning | Comment |
+| --- | --- | --- |
+| **OK** | The delivery may move to the next stage. | Optional |
+| **Reserved** | It may move, under conditions you state. | Required |
+| **Blocked** | It must not move. | Required |
+
+Clicking the active value again clears it. A preview box then says **exactly what will be written and where** before you confirm; with no decision, it says that nothing will be written on that account.
+
+<Warning>The decision is **final** once the session is closed. A mistake is corrected by running another session, never by editing.</Warning>
+
+<Note>Like the session verdict, the promotion decision is **counted nowhere**: it never reaches a pass rate, a quality score, a GO / NO-GO verdict or any campaign export. It lives in the exploratory domain only.</Note>
+
+## Where it is written
+
+- **On the session task** — a queryable tag, `Passage:QUAL>PROD:OK` (`Passage:PROD:OK` on the last stage), added in the same creation call as the rest of the task. The task's frozen report carries the environment, the transition, the decision, the comment, the author and the time.
+- **On the session PDF** — the cover grid gains an **Environment** line, and a coloured band under it carries the transition and the decision, the comment, and an audit line: *recorded by …, on …, final*, plus what happened on the host work item.
+- **On the work item the session was run from** — the same tag, and **one discussion comment** signed by TestPulse, timestamped and attributed by Azure DevOps itself. The tag is the current state and can be queried (`Tags Contains Passage:QUAL>PROD:OK` makes a *ready for production* query); the comment is the history, and is never overwritten.
+
+## A bounded write — the first on a work item TestPulse did not create
+
+Until this release, the extension only ever wrote to what it created itself. Reporting a promotion decision on the host work item is the second exception, and it is bounded on every side:
+
+- **One target** — the work item the session was run from, never another.
+- **Two fields** — its tags and one discussion comment. Never a state, an assignment or a link.
+- **One trigger** — your click on *Close*, with a decision selected, after the preview box has named the work item and shown the exact tag.
+- **One switch** — an administrator can turn it off for the whole project under Settings › Environment stages.
+
+It only replaces a previous decision **on the same transition**: a decision recorded on an earlier stage stays on the work item, so the ladder keeps its history.
+
+## Never blocking
+
+- If the work item form you are looking at carries **unsaved changes**, the write is **skipped** rather than risking a revision conflict that would make your own save fail — you are told, and told what to do (save the form, run another session).
+- If Azure DevOps **refuses** the write, the session still closes, the task is still created, the decision is still recorded and exported, and the message quotes Azure DevOps's own wording. A permission failure here does **not** raise the re-approval banner: the scope was already granted, what is missing is a right on that particular work item.
+- Resuming an interrupted closing **does not post a second comment**.
+
+Which of these outcomes occurred is stored with the decision and printed on the PDF audit line, so a report never claims a write that did not happen.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Capture, annotate & create" icon="pencil" href="/en/exploratory/capture-and-create">The closing dialog and the session task.</Card>
+  <Card title="Session report" icon="file-text" href="/en/exploratory/session-report">The PDF that carries the decision.</Card>
+  <Card title="Read-only by default" icon="lock" href="/en/concepts/read-only">Every write TestPulse can make, and when.</Card>
+  <Card title="Permissions" icon="shield" href="/en/security/permissions">What each scope is used for.</Card>
+</CardGroup>

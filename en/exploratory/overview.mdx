@@ -24,9 +24,11 @@ Closing archives the session as a Task. Since v2.60.0 the closure dialog also of
 
 Two things it deliberately is not. It is **final** — a closed session is a record, not a draft. And it is **counted nowhere**: no report indicator, no quality gate. The vocabulary is borrowed from test outcomes so that testers read it without a manual; the trade-off is this note, saying plainly what it does not do.
 
+Since v2.71.0 the same dialog also offers a **promotion decision** — whether the delivery may move to the next environment stage (TEST → QUAL → PROD by default, configurable per project). Same contract as the verdict: optional, final, counted nowhere. Unlike the verdict, it is also written on the **work item the session was run from**, as a tag and one discussion comment, so the change board finds it without opening TestPulse. See [Promotion decision](/en/exploratory/promotion-decision).
+
 ## Everything stays in your tenant
 
-Exploratory sessions **write to Azure DevOps** — attachments and work items — but only on **explicit action** (attach a capture, create a bug, archive the session). This is the capability that introduced the **work-items write permission**; adding it triggers a one-time **administrator re-approval** of the extension. Reads are unchanged, every write is isolated in a dedicated module, and **nothing leaves your ADO tenant** — no telemetry, no added dependency. If the permission isn't approved yet, an **explanatory banner** replaces the raw error on any refused write.
+Exploratory sessions **write to Azure DevOps** — attachments and work items — but only on **explicit action** (attach a capture, create a bug, archive the session, record a promotion decision). This is the capability that introduced the **work-items write permission**; adding it triggers a one-time **administrator re-approval** of the extension. Reads are unchanged, every write is isolated in a dedicated module, and **nothing leaves your ADO tenant** — no telemetry, no added dependency. If the permission isn't approved yet, an **explanatory banner** replaces the raw error on any refused write.
 
 ## Related
 

@@ -21,20 +21,20 @@ TestPulse is **read-only by default**. It reads Test Plans, results and work ite
 These add new objects and never touch what already exists.
 
 - **Coverage Builder** creates Test Plans and requirement-based suites from a set of requirements, behind a confirmation dialog. It never overwrites or deletes, warns on a name collision, and reports partial failures honestly. Scope: `vso.test_write`.
-- **Exploratory testing** files a **Bug** or a **Test Case** from what you observed, and closing a session creates a **Task** carrying the whole session — report, captures, files, and links to everything you filed. All created, never modified: TestPulse links the new work item to your story, it does not touch the story itself. Scope: `vso.work_write`.
+- **Exploratory testing** files a **Bug** or a **Test Case** from what you observed, and closing a session creates a **Task** carrying the whole session — report, captures, files, and links to everything you filed. All created, never modified: TestPulse links the new work item to your story, it does not touch the story itself — except when you record a **promotion decision**, described below. Scope: `vso.work_write`.
 - **Session closure** can set the state of the tracking Task it just created, if you ask for it in the closing dialog. This write is bounded to that Task, in the same gesture, and never retried. Scope: `vso.work_write`.
 
 ### Actions that modify what you selected
 
-One action modifies data that existed before your gesture, because that is precisely what you asked it for.
+Two actions modify data that existed before your gesture, because that is precisely what you asked for.
 
-- **Bulk reassignment** changes the **tester** or the **configuration** of the test points in the scope you defined — a plan, a suite and its children, or one value replaced by another. It is the only place where TestPulse modifies existing test data, it never runs without an explicit confirmation, and it always shows a full impact review first: points affected, suites touched, points already run, cases skipped. Scope: `vso.test_write`.
+- **Bulk reassignment** changes the **tester** or the **configuration** of the test points in the scope you defined — a plan, a suite and its children, or one value replaced by another. It is the only place where TestPulse modifies existing **test** data, it never runs without an explicit confirmation, and it always shows a full impact review first: points affected, suites touched, points already run, cases skipped. Scope: `vso.test_write`.
 
 <Warning>
 Bulk reassignment **cannot be undone**. Azure DevOps offers no undo and TestPulse keeps no prior state — a deliberate choice, stated on screen above the apply button. Changing a **configuration** rewrites the test case's assignments, which Azure DevOps may implement by recreating the test point, taking its execution result with it; the review screen says so and lets you exclude points that already carry a result. Export the prior state as CSV before applying if you want a trace.
 </Warning>
 
-<Note>Outside that action, TestPulse never modifies or deletes a work item, plan, suite or test case that existed before your gesture.</Note>
+<Note>Outside those two actions, TestPulse never modifies or deletes a work item, plan, suite or test case that existed before your gesture.</Note>
 
 ## Permission scopes (reference)
 
@@ -45,7 +45,7 @@ Bulk reassignment **cannot be undone**. Azure DevOps offers no undo and TestPuls
 | `vso.identity` | Resolve testers and assignees by name. |
 | `vso.build` | Read the associated build for a report. |
 | `vso.test_write` | Create plans and suites from the Coverage Builder, and reassign testers or configurations from Bulk reassignment. |
-| `vso.work_write` | Used **only** by exploratory testing: create Bugs, Test Cases and the session Task, upload their attachments, and set that Task's state at closure. |
+| `vso.work_write` | Used **only** by exploratory testing: create Bugs, Test Cases and the session Task, upload their attachments, set that Task's state at closure, and — when you record a promotion decision — add a tag and one discussion comment on the work item the session was run from. |
 
 <Note>Nothing reads comments or personal data beyond what a report needs. See the Permissions page for the full breakdown.</Note>
 
