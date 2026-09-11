@@ -6,6 +6,40 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.72.2" description="2026-09-11">
+
+**Une session exploratoire close pouvait revenir active, indéfiniment, et ne plus pouvoir être clôturée.** La tâche existait dans Azure DevOps, correcte et fermée ; seule l’extension n’était pas d’accord. Voir [Sessions exploratoires](/fr/exploratory/overview).
+
+- La clôture écrit deux choses : le document de session, et une projection d’index légère qui sert à lister les sessions. La seconde est **best-effort par conception** — le document fait foi et l’index est reconstructible — si bien que son échec était avalé.
+- Mais la restauration décidait sur le **seul index**. Un index resté sur la projection du démarrage annonçait *active* alors que le document disait *close*, et l’onglet Explore remettait ce document clos à l’écran comme une session en cours, rechargement après rechargement.
+- Cliquer sur *Clôturer* ne faisait alors rien du tout : la machine de session refuse de clore un document non actif, et le code sortait en silence, réactivant le bouton comme si le clic n’avait pas eu lieu.
+- La restauration tranche désormais sur le **document**, qu’elle lisait déjà — un index périmé ne peut plus ressusciter une session close ou abandonnée. **Les sessions actuellement bloquées se réparent au prochain chargement**, sans rien à faire de votre part, et leurs tâches dans Azure DevOps étaient correctes depuis le début.
+- Une clôture qui trouve un document déjà clos bascule sur la vue post-session au lieu de sortir en silence. Et un échec d’écriture d’index n’est plus muet : un avertissement non bloquant indique que la session est bien close mais que la liste du hub peut encore l’afficher active — le hub lit cet index, et il serait sinon le seul endroit à mentir encore.
+
+</Update>
+
+<Update label="v2.72.1" description="2026-09-11">
+
+**Le réglage qui permettait à un projet de faire de la tâche de session un *enfant* de l’exigence, livré quelques heures plus tôt en v2.72.0, est retiré.** Voir [Sessions exploratoires](/fr/exploratory/overview).
+
+- C’était la seule chose de cette version qui n’avait jamais été éprouvée sur une instance Azure DevOps réelle. Son chemin de dégradation — la hiérarchie refusée, la tâche repliée sur un lien *Related*, l’avertissement qui le dit — n’était démontré que par des tests, et c’est précisément le chemin que prennent les process Agile et Scrum, qui interdisent tous deux une tâche enfant d’une Feature ou d’un Epic.
+- **Rien de ce que vous avez n’est abîmé.** Le lien vers l’exigence est de nouveau `Related` pour toute nouvelle session, exactement comme en v2.71.1 et dans toutes les versions antérieures. Une session déjà close conserve le lien qui lui a été donné — rien n’est relu ni réécrit.
+- Si vous aviez choisi *enfant de l’exigence*, le choix enregistré n’est simplement plus lu ; si le réglage revient un jour, après vérification sur une instance réelle, il sera retrouvé là où vous l’aviez laissé. **Réglages › Sessions exploratoires** disparaît et le rail des réglages retrouve ses huit groupes.
+- Les quatre autres correctifs de la v2.72.0 — la frise du PDF de session, le titre de couverture, le nommage des fichiers exportés et les libellés d’abandon en anglais — sont **intacts et toujours là**.
+
+</Update>
+
+<Update label="v2.72.0" description="2026-09-11">
+
+**Quatre correctifs de rapport et de session.** Cette version introduisait aussi un réglage du type de lien de la tâche de session, retiré quelques heures plus tard en v2.72.1 — voir l’entrée ci-dessus. Voir [Exports](/fr/exports/formats).
+
+- **Une note longue sortait illisible dans le PDF de session : les lignes s’écrivaient les unes sur les autres.** Le rendu demandait au moteur PDF de replier la note à la largeur de page, et le moteur le faisait — mais le curseur descendait de 6 mm fixes quel qu’en soit le résultat. Une note de dix lignes occupait dix lignes sur la page et six millimètres dans le calcul, si bien que l’entrée suivante atterrissait par-dessus. Chaque entrée de la frise est désormais **mesurée avant d’être dessinée** : sa hauteur réelle décide de sa position et de la nécessité d’une nouvelle page, et une entrée qui ne tiendrait pas démarre la page suivante entière. Une note courte est rendue exactement comme avant — une ligne consomme toujours exactement 6 mm, aux mêmes coordonnées.
+- **Un titre de rapport long sortait de la page de garde.** Le titre était dessiné en 24 pt sans jamais être mesuré. Il **se réduit maintenant par paliers**, de 24 pt jusqu’à un plancher de 14 pt, jusqu’à tenir dans la largeur utile ; s’il ne tient toujours pas à 14 pt, il est tronqué par une ellipse. La largeur utile tient compte du gabarit complet du logo, si bien qu’un logo étroit aujourd’hui ne peut pas autoriser un titre qui passerait sous un logo plus large demain. Cela couvre les **trois** rapports d’un coup — standard, session et périmètre du hub — et un titre qui tenait déjà n’est pas touché : même taille, mêmes coordonnées, même bandeau de 45 mm.
+- **Les PDF de session exportés portent désormais le nom de leur rapport plutôt qu’un identifiant interne.** Les quatre exports produisent `[session exploratoire] <titre>.pdf` ou `[sessions exploratoires] <titre>.pdf`, le préfixe suivant la langue de l’onglet. Le titre est une saisie libre et il est traité comme telle : les caractères interdits par Windows deviennent un tiret, les caractères de contrôle sont retirés, les suites d’espaces sont réduites, et le nom est borné à 120 caractères. Un titre qui finit vide retombe sur le nom historique. Le PDF joint à la tâche de suivi suit la même règle.
+- **Les libellés anglais de l’abandon d’une session se lisaient comme une traduction du français.** L’action se lit désormais **Discard** partout — *Discard this session?*, *Discard session*, *Keep testing* — et les deux dialogues disent Azure DevOps plutôt que l’abréviation interne `ADO`. Le **statut** d’une session terminée reste **Abandonnée** : il est affiché dans le hub, utilisé dans les filtres et imprimé dans des rapports déjà émis, et le renommer réécrirait le sens de documents déjà envoyés. L’action dit *discard*, l’état dit *abandoned*.
+
+</Update>
+
 <Update label="v2.71.1" description="2026-09-09">
 
 **Une ligne de rapport PDF pouvait sortir illisible, lettre à lettre, dès qu'elle portait un caractère que la police du PDF ne sait pas dessiner.** La décision de passage d'une session exploratoire — la ligne qu'un comité de changement lit en premier — s'imprimait `Q U A L !' P R O D — O K` au lieu de `QUAL > PROD — OK`.

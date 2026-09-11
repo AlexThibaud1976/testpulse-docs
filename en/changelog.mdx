@@ -6,6 +6,40 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.72.2" description="2026-09-11">
+
+**A closed exploratory session could come back as active, indefinitely, and could not be closed again.** The Task existed in Azure DevOps, correct and closed; only the extension disagreed. See [Exploratory sessions](/en/exploratory/overview).
+
+- Closing a session writes two things: the session document, and a lightweight index projection used to list sessions. The second is **best-effort by design** — the document is the source of truth and the index is rebuildable — so its failure was swallowed.
+- But the restore path decided **on the index alone**. An index left on the projection of the session start said *active* while the document said *closed*, and the Explore tab put that closed document back on screen as a running session, reload after reload.
+- Clicking *End session* then did nothing at all: the session machine refuses to close a document that is not active, and the code returned in silence, re-enabling the button as if the click had never happened.
+- The restore path now decides on the **document**, which it was already reading — a stale index cannot resurrect a closed or abandoned session. **Sessions currently stuck repair themselves at the next load**, with nothing for you to do, and their Tasks in Azure DevOps were correct all along.
+- A closing that finds an already-closed document switches to the post-session view instead of returning in silence. And an index write failure is no longer mute: a non-blocking warning says the session did close but the hub list may still show it as active — the hub reads that index, and it would otherwise be the only place still lying.
+
+</Update>
+
+<Update label="v2.72.1" description="2026-09-11">
+
+**The setting that let a project make the session Task a *child* of the requirement, shipped hours earlier in v2.72.0, is withdrawn.** See [Exploratory sessions](/en/exploratory/overview).
+
+- It was the one thing in that release never exercised against a real Azure DevOps instance. Its degradation path — the hierarchy being refused, the Task falling back to a related link, the warning saying so — was proven by tests alone, and that path is precisely the one the Agile and Scrum processes take, since both forbid a Task as a child of a Feature or an Epic.
+- **Nothing you have is damaged.** The link to the requirement is again `Related` for every new session, exactly as in v2.71.1 and every version before it. A session already closed keeps the link it was given — nothing is re-read or rewritten.
+- If you had selected *a child of the requirement*, the stored choice is simply no longer read; should the setting ever come back after being verified against a real instance, it will be found where you left it. **Settings › Exploratory sessions** disappears and the settings rail returns to its eight groups.
+- The four other fixes of v2.72.0 — the session PDF timeline, the cover title, the naming of exported files and the English discard wording — are **untouched and still there**.
+
+</Update>
+
+<Update label="v2.72.0" description="2026-09-11">
+
+**Four report and session fixes.** This release also introduced a setting for the link type of the session Task, withdrawn hours later in v2.72.1 — see the entry above. See [Exports](/en/exports/formats).
+
+- **A long note came out unreadable in the session PDF: the lines wrote over each other.** The renderer asked the PDF engine to wrap a note to the page width, and the engine did — but the cursor moved down by a fixed 6 mm whatever the result. A ten-line note occupied ten lines on the page and six millimetres in the arithmetic, so the next entry landed on top of it. Every timeline entry is now **measured before it is drawn**: its real height decides both where it goes and whether a new page is needed, and an entry that would not fit starts the next page whole. A short note is rendered exactly as before — one line still consumes exactly 6 mm, at the same coordinates.
+- **A long report title ran off the cover page.** The title was drawn at 24 pt without ever being measured. It now **shrinks in steps**, from 24 pt down to a floor of 14 pt, until it fits the usable width; if it still does not fit at 14 pt it is truncated with an ellipsis. The usable width accounts for the logo's full template, so a narrow logo today cannot authorise a title that would slide under a wider one tomorrow. This covers the **three** reports at once — standard, session and hub scope — and a title that already fitted is untouched: same size, same coordinates, same 45 mm band.
+- **Exported session PDFs are now named after their report instead of an internal identifier.** The four exports produce `[exploratory session] <title>.pdf` or `[exploratory sessions] <title>.pdf`, the prefix following the language of the tab. The title is free text and treated as such: characters Windows forbids become a dash, control characters are dropped, runs of spaces are collapsed, and the name is capped at 120 characters. A title that ends up empty falls back to the historical name. The PDF attached to the tracking Task follows the same rule.
+- **The English wording for discarding a session read as a translation of the French.** The action now reads **Discard** throughout — *Discard this session?*, *Discard session*, *Keep testing* — and both dialogs say Azure DevOps rather than the internal `ADO`. The **status** of a finished session stays **Abandoned**: it is displayed in the hub, used in the filters and printed in reports already issued, and renaming it would rewrite the meaning of documents already sent. The action says *discard*, the state says *abandoned*.
+
+</Update>
+
 <Update label="v2.71.1" description="2026-09-09">
 
 **A line of a PDF report could come out unreadable, letter by letter, whenever it carried a character the PDF font cannot draw.** The promotion decision of an exploratory session — the one line a change board reads first — printed as `Q U A L !' P R O D — O K` instead of `QUAL > PROD — OK`.

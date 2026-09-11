@@ -16,7 +16,7 @@ A session is meant to survive real life:
 
 - **Debounced autosave** (≤ 2 s) into the extension's own storage — you don't save by hand.
 - **Automatic restore** when you reopen the work item, with the elapsed time recomputed.
-- **Abandon** asks for confirmation, and a failed close is **non-destructive and replayable** — a session is never silently lost or left in a phantom state.
+- **Discard** asks for confirmation, and a failed close is **non-destructive and replayable** — a session is never silently lost or left in a phantom state. The status of a discarded session reads **Abandoned**: the action says *discard*, the state says *abandoned*.
 
 ## Close with a verdict — or without one
 
