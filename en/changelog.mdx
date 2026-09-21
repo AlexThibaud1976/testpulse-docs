@@ -6,6 +6,18 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.72.4" description="2026-09-21">
+
+**The Cockpit tab is rebuilt for the test manager's morning stand-up.** It used to show numbers and leave the reading to you; it now **answers first, in one sentence, then justifies**. See [Execution Cockpit](/en/cockpit/execution-cockpit).
+
+- **The answer first** — the observed pace (tests per working day, over the last three working days that saw executions), the projected end, the gap to the target in working days, and the **pace needed** to finish on time. The target is the plan's end date or one typed in the screen, kept for the project and never written to Azure DevOps. With fewer than three working days of history there is no projection, and the sentence says so; a campaign finished, not started, without a date or stalled each has its own sentence.
+- **Four blocks for the four questions of a stand-up.** *Since the last stand-up* — tests run, passed and failed, new failures, bugs opened and resolved, tests unblocked, scope changes, compared with the last snapshot of a previous working day. *Will the date hold?* — a full-width burndown with target and *this morning* mark, and a simulator (testers × tests per tester per day) that moves the projection for the session only. *What to run today* — grouped by reason: failures to re-run, tests unblocked, high-priority tests never run, suites behind, other tests never run. *What is blocking* — tests blocked by an open bug, failures without a linked bug, tests without a tester.
+- **Load per tester**, with a link to Bulk reassignment — the Cockpit itself reassigns nothing. Because this card names people and their pace, a project can turn it off in **Settings › Cockpit**: it then disappears for everyone and the testers are not even read.
+- **What it costs**: no new permission and no new dependency. The only added read fetches the links between test cases, bugs and requirements, after the headline is on screen. On a plan with more than **1,000 test cases** those signals are not read, and the screen says so rather than showing zeros.
+- **Removed**: the profile selector (**Strict / Standard / Onboarding**), the scored list, the KPI tiles and the remaining-effort sliders. A test now appears for a reason you can read rather than a weight. The profile a project had chosen is no longer read, and it is **not deleted**; earlier snapshots are read without migration. Reports, exports and the widget are unchanged.
+
+</Update>
+
 <Update label="v2.72.2" description="2026-09-11">
 
 **A closed exploratory session could come back as active, indefinitely, and could not be closed again.** The Task existed in Azure DevOps, correct and closed; only the extension disagreed. See [Exploratory sessions](/en/exploratory/overview).

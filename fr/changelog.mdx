@@ -6,6 +6,18 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.72.4" description="2026-09-21">
+
+**L'onglet Cockpit est reconstruit pour le point du matin du responsable de test.** Il affichait des chiffres et vous laissait la lecture ; il **répond désormais d'abord, en une phrase, puis justifie**. Voir [Cockpit d'exécution](/fr/cockpit/execution-cockpit).
+
+- **La réponse d'abord** — le rythme observé (tests par jour ouvré, sur les trois derniers jours ouvrés ayant vu des exécutions), la fin projetée, l'écart à la cible en jours ouvrés, et le **rythme nécessaire** pour finir à temps. La cible est la date de fin du plan ou une date saisie dans l'écran, conservée pour le projet et jamais écrite dans Azure DevOps. Avec moins de trois jours ouvrés d'historique, aucune projection, et la phrase le dit ; une campagne terminée, pas démarrée, sans date ou à l'arrêt a chacune sa propre phrase.
+- **Quatre blocs pour les quatre questions d'un point du matin.** *Depuis le dernier point* — tests exécutés, réussis et échoués, nouveaux échecs, bugs ouverts et résolus, tests débloqués, changements de périmètre, comparés au dernier snapshot d'un jour ouvré précédent. *La date tient-elle ?* — un burndown pleine largeur avec cible et repère *ce matin*, et un simulateur (testeurs × tests par testeur et par jour) qui déplace la projection le temps de la session. *Quoi exécuter aujourd'hui* — regroupé par raison : échecs à rejouer, tests débloqués, tests prioritaires jamais exécutés, suites en retard, autres tests jamais exécutés. *Ce qui bloque* — tests bloqués par un bug ouvert, échecs sans bug lié, tests sans testeur.
+- **Charge par testeur**, avec un lien vers la Réaffectation en masse — le Cockpit lui-même ne réaffecte rien. Parce que cette carte nomme des personnes et leur rythme, un projet peut la désactiver dans **Paramètres › Cockpit** : elle disparaît alors pour tous, et les testeurs ne sont même pas lus.
+- **Ce que ça coûte** : aucune nouvelle permission, aucune nouvelle dépendance. La seule lecture ajoutée récupère les liens entre cas de test, bugs et exigences, après l'affichage de l'en-tête. Sur un plan de plus de **1 000 cas de test**, ces signaux ne sont pas lus, et l'écran le dit plutôt que d'afficher des zéros.
+- **Retirés** : le sélecteur de profil (**Strict / Standard / Onboarding**), la liste scorée, les tuiles KPI et les curseurs de charge restante. Un test apparaît désormais pour une raison lisible plutôt que pour un poids. Le profil qu'un projet avait choisi n'est plus lu, et il n'est **pas supprimé** ; les snapshots antérieurs sont lus sans migration. Les rapports, les exports et le widget sont inchangés.
+
+</Update>
+
 <Update label="v2.72.2" description="2026-09-11">
 
 **Une session exploratoire close pouvait revenir active, indéfiniment, et ne plus pouvoir être clôturée.** La tâche existait dans Azure DevOps, correcte et fermée ; seule l’extension n’était pas d’accord. Voir [Sessions exploratoires](/fr/exploratory/overview).
