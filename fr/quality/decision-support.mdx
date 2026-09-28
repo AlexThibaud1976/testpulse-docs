@@ -16,7 +16,7 @@ Chaque entrée renvoie au work item. *« Bloquant »* repose sur une définition
 
 ## Échecs sans défaut
 
-TestPulse signale chaque test dont le dernier résultat est **Failed** mais qui n'a **aucun bug lié** (quel que soit l'état du bug, même Closed) — en lecture seule, sans appel API supplémentaire. Il apparaît comme une section dédiée (chaque test est un lien, avec un bouton **Ouvrir un bug** qui ouvre le formulaire de bug natif Azure DevOps, pré-rempli — jamais une écriture), comme compteur sur le widget, et comme critère du Quality Gate. Depuis la **v2.64.0 il est actif par défaut** sur les trois barèmes : si le compteur est supérieur à 0, le verdict passe **NO-GO** et la note est **plafonnée à C**. L'hygiène des anomalies n'a jamais compté que les bugs *déclarés* : un test en échec sans bug lié obtenait la note maximale, alors que déclarer le bug correctement coûtait des points — l'incitation fonctionnait à l'envers.
+TestPulse signale chaque test dont le dernier résultat est **Failed** mais qui n'a **aucun bug** (quel que soit l'état du bug, même Closed) — avec la [source des bugs](/fr/reports/campaign-bugs) par défaut, aucun bug rattaché à l'un de ses résultats d'exécution ; en mode *Liens des cas de test et des User Stories*, aucun bug lié par *Tested By*. C'est en lecture seule, sans appel API supplémentaire. Il apparaît comme une section dédiée (chaque test est un lien, avec un bouton **Ouvrir un bug** qui ouvre le formulaire de bug natif Azure DevOps, pré-rempli — jamais une écriture), comme compteur sur le widget, et comme critère du Quality Gate. Depuis la **v2.64.0 il est actif par défaut** sur les trois barèmes : si le compteur est supérieur à 0, le verdict passe **NO-GO** et la note est **plafonnée à C**. L'hygiène des anomalies n'a jamais compté que les bugs *déclarés* : un test en échec sans bug lié obtenait la note maximale, alors que déclarer le bug correctement coûtait des points — l'incitation fonctionnait à l'envers.
 
 ## Override GO/NO-GO audité
 
@@ -24,7 +24,7 @@ Le verdict GO/NO-GO est déterministe. Vous pouvez y **superposer une décision 
 
 Quand votre décision **diffère** du calcul, une **justification est obligatoire**, et l'auteur et l'horodatage sont capturés. Le rapport affiche **calculé → décidé** côte à côte (en-tête, widget, PDF, Word). Un **GO manuel franchissant un plancher dur** (un bug bloquant ouvert, une US non testée, un échec sans défaut) est **signalé en rouge avec les raisons exactes**. Le **grade A–E reste toujours celui du calcul** — seul le verdict est superposé.
 
-<Note>Un bloc **Bugs ouverts** apparaît aussi en tête de rapport dès qu'il existe au moins un bug ouvert — trié par sévérité puis priorité, et cohérent en comptage avec les Points de vigilance.</Note>
+<Note>Un bloc **Bugs ouverts** apparaît aussi en tête de rapport dès qu'il existe au moins un bug ouvert — trié par sévérité, puis priorité, puis date de création (du plus récent au plus ancien), et cohérent en comptage avec les Points de vigilance.</Note>
 
 ## À suivre
 

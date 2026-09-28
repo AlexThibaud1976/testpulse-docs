@@ -12,7 +12,7 @@ TestPulse reconstruit la chaîne complète **Epic → Feature → User Story / P
 | --- | --- | --- |
 | **Tested By** | User Story → Cas de test | Quels tests couvrent une exigence — alimente l'[onglet Test coverage](/fr/work-item/test-coverage-tab) et le rapport de couverture. |
 | **Suite basée sur exigence** | Suite → User Story | Relie une suite à la story qu'elle valide. |
-| **Bug derrière un échec** | Cas de test → Bug | Le défaut lié à un test en échec, affiché à côté de son résultat. |
+| **Bug derrière un échec** | Résultat d'exécution → Bug | Le bug rattaché à un résultat des exécutions du plan, affiché à côté de son cas de test — ou, avec la [source des bugs](/fr/reports/campaign-bugs) *Liens des cas de test et des User Stories*, le bug lié au cas de test ou à la story. |
 
 ## Deux sources, et comment les restreindre
 
@@ -29,11 +29,11 @@ C'est la seconde source qui donne leur traçabilité à la plupart des équipes 
 
 ## Où ça apparaît
 
-- **Traçabilité** dans les rapports — l'arbre **Epic → User Story → Cas de test → Bug**.
+- **Traçabilité** dans les rapports — l'arbre **Epic → User Story → Cas de test → Bug**. Un cas de test exécuté dans plusieurs suites ou configurations n'apparaît **qu'une fois**, avec un statut regroupé et *n/m réussis · k suites* ; à l'écran, la ligne se déplie pour lister le chemin et le résultat de chaque suite.
 - **Couverture** — quelles exigences sont couvertes et lesquelles sont des trous.
 - **Sur la fiche** — l'[onglet Test coverage](/fr/work-item/test-coverage-tab) lit *Tested By* pour afficher les tests liés d'une story et le bug derrière chaque échec.
 
-<Note>Un test en échec **sans** bug lié est signalé *échec sans défaut* — un trou à combler, jamais masqué.</Note>
+<Note>Un test en échec **sans** bug est signalé *échec sans défaut* — un trou à combler, jamais masqué.</Note>
 
 ## À suivre
 

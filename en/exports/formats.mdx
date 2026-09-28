@@ -8,6 +8,8 @@ TestPulse exports the same report to five formats, each optimised for a differen
 
 <Note>All five formats follow the language selected in the extension — sheet names, column headers and labels included.</Note>
 
+<Note>Every format shows a suite by its **path** — `CH › SALES › Pre-Payment` rather than `Pre-Payment`. In PDF, Word, HTML and PowerPoint a long path is cut in the middle and keeps its first level and its last two; Excel keeps the full path in its own **Suite path** column.</Note>
+
 ## At a glance
 
 | Format | Use case | Key features |
@@ -24,11 +26,11 @@ Up to **13 configurable sections**, reorderable by drag-and-drop (**Settings →
 
 - **Cover page** — project info grid, logo (PNG/JPEG/SVG), environment badge
 - **Executive summary** — the automated verdict, or a per-report custom summary
-- **KPI cards** — pass rate, execution rate, passed/failed/blocked, linked bugs
+- **KPI cards** — pass rate, execution rate, passed/failed/blocked, bugs of the report ([where they come from](/en/reports/campaign-bugs))
 - **Results table** — latest outcome per test case; a multi-config matrix when 2–3 configurations are detected
 - **Suite × configuration grid** — the execution matrix for multi-configuration plans, **off by default** (enable it in Settings → Report sections); auto-hidden when no configuration is declared
-- **Traceability** — Epic → User Story → Test Case → Bug (3-column table) + untraced suites
-- **Bugs** — all linked bugs with state and severity
+- **Traceability** — Epic → User Story → Test Case → Bug (3-column table, one line per test case with a grouped status) + untraced suites
+- **Bugs** — the bugs of the report, newest first, with creation date, test cases, state and severity, under a line naming their source
 - **Flaky tests** — tests with a high outcome-flip rate
 - **Charts** — pass/fail donut + results-by-suite bar, rendered locally (works offline)
 - **Attachments** — PNG/JPEG inline; every other file listed in a table with a readable type and its **name as a link** to the attachment. Shown by default since v2.69.0.
@@ -52,13 +54,13 @@ Fully **editable in Microsoft Word**, with six sections: cover page, KPI metrics
 
 ## Excel (.xlsx) — data
 
-Four worksheets: **KPIs**, **Results** (outcome, suite, date, tester, configuration), **Traceability** (Test Case → User Story → Epic → Bug), and **Bugs** (state, severity, priority, assignee).
+Four worksheets: **KPIs**, **Results** (outcome, suite, suite path, date, tester, configuration), **Traceability** (Test Case → User Story → Epic → Bug), and **Bugs** (state, severity, priority, assignee, created, test cases — newest first).
 
 When the report consolidates **several test plans**, two more sheets are added: **Per plan breakdown** (totals, pass rate and execution rate plan by plan) and **Quality per plan** (verdict, requirement coverage and marked steps per plan, with a consolidated row).
 
 ## PowerPoint (.pptx) — slides
 
-A **five-slide** presentation: Cover, KPIs, Results, Traceability, Bugs.
+A **five-slide** presentation: Cover, KPIs, Results, Traceability, Bugs. The Bugs slide lists the **15 most recent** bugs.
 
 ## Signatures
 

@@ -1,0 +1,61 @@
+---
+title: "Bugs of a report"
+description: "Where the bugs of a report come from, how they are sorted, and how to attach a forgotten bug — the Bug source setting explained."
+icon: "bug"
+---
+
+A regression plan is often **copied** from the previous campaign. The copy inherits the links of its test cases and requirements — including links to bugs found months ago. Since v2.73.0, a report shows by default only **the bugs its campaign produced**.
+
+## Where the bugs come from
+
+**Settings › Thresholds & quality › Bug source** offers two sources:
+
+| Source | A bug is in the report when… |
+| --- | --- |
+| **Bugs from the plan runs** (default) | it is attached to a result of a run of the selected plans, in the selected suites — across **all** the runs read, not only the latest result. |
+| **Test case and User Story links** | it is linked to a test case of the report (*Tested By*) or to one of its requirements — the behavior before v2.73.0. |
+
+It is a **project** setting: the whole team gets the same report. It is not locked; the screen shows who changed it last and when. It is read at every generation.
+
+With the default source, each bug appears **once** and lists the **test cases** whose results carry it. Only the `Bug` work item type is counted.
+
+<Note>No new permission and no write: TestPulse adds one parameter to the run results call it already makes. Reading the results takes a little longer.</Note>
+
+## One list for the whole report
+
+The same list feeds the bug list and its counters, the Quality Score and the **GO / NO-GO** verdict (open blocking bugs), **failures without defect**, the bug column of the traceability matrix, the multi-plan report and the five exports.
+
+## What changes with the default source
+
+- A bug linked to a test case only by *Tested By*, or only to the requirement, **is no longer in the report**.
+- If its test failed, that test becomes a **failure without defect** — and when the gate *Block the release while failures without defect remain* is on, the verdict can turn **NO-GO**.
+- The **Bugs** curve of the history trends shows a **break** at the first report built with the new source.
+- A bug attached to a run whose results were **deleted** is not counted.
+
+## Attach a forgotten bug
+
+A bug found during execution is created from the **Test Runner**: it is attached to the result automatically. If it was created elsewhere (from Boards, for example), open the run in Azure DevOps and **link the bug to the run result** — from the run, or with a *Test Result* link from the bug. It is counted at the next generation.
+
+## Order and columns
+
+The bug list is sorted by **creation date, newest first**, then by ID — on screen and in every export — with a **Created** column and a **Test cases** column. Column headers stay sortable on screen. The **Open bugs** block keeps its triage order: severity, priority, then creation date. The PowerPoint deck keeps the **15 most recent** bugs.
+
+## The source is always written
+
+- A banner above the bug list names the source and the number of runs read, with a link to Settings.
+- Every export carries a source line under the title of its bug page.
+- Each saved report shows a **Source: runs** or **Source: links** chip in the [history](/en/collaboration/history); comparing two reports built from different sources shows a warning.
+- When a plan has **more runs than the number read**, a warning says so on screen and in the exports.
+
+## What does not change
+
+- The **[Cockpit](/en/cockpit/execution-cockpit)** still reads the *Tested By* links of the test cases.
+- The **[Test coverage tab](/en/work-item/test-coverage-tab)** of a User Story is untouched.
+- **Saved reports** keep the bugs they had, and open, compare and export as before.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Decision support" icon="circle-check-big" href="/en/quality/decision-support">Failures without a defect and open blocking bugs.</Card>
+  <Card title="Export formats" icon="file-output" href="/en/exports/formats">What each format contains.</Card>
+</CardGroup>

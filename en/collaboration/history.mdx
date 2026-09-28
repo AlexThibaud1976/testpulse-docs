@@ -22,11 +22,15 @@ Personal history is stored per user across the **whole organisation**, so anyone
 
 Reports saved since v2.63.0 record their project. Older ones are **derived at display time** from the Azure DevOps links they already carry — underlined with a dotted rule, naming their source on hover, so a derived value never carries the authority of a stored one. Where neither is possible they are grouped under **Unknown project**, an entry of its own with its count. Nothing is dropped, and no report is rewritten.
 
+## Which bugs a report counted
+
+Each entry shows the **bug source** it was built with — *Source: runs* or *Source: links*. Reports saved before v2.73.0 show *links*: they keep the bugs they had and are never rewritten. See [Bugs of a report](/en/reports/campaign-bugs).
+
 ## Compare two reports
 
 Select **two** reports from history to compare them side by side:
 
-- **Metrics diff** — pass-rate delta, totals, passed / failed / blocked / bugs.
+- **Metrics diff** — pass-rate delta, totals, passed / failed / blocked / bugs. When the two reports were built from different [bug sources](/en/reports/campaign-bugs), a warning says the bug difference may come from that change rather than from the campaign.
 - **Improved** — tests that moved to Passed.
 - **Regressed** — tests that moved from Passed to Failed / Blocked.
 - **Added / Removed** — test cases new to, or missing from, the newer report.

@@ -1,0 +1,61 @@
+---
+title: "Les bugs du rapport"
+description: "D'où viennent les bugs d'un rapport, comment ils sont triés, et comment rattacher un bug oublié — le réglage Source des bugs expliqué."
+icon: "bug"
+---
+
+Un plan de non-régression est souvent **copié** depuis la campagne précédente. La copie hérite des liens de ses cas de test et de ses exigences — y compris des liens vers des bugs trouvés il y a des mois. Depuis la v2.73.0, un rapport ne montre par défaut que **les bugs produits par sa campagne**.
+
+## D'où viennent les bugs
+
+**Paramètres › Seuils & qualité › Source des bugs** propose deux sources :
+
+| Source | Un bug figure dans le rapport quand… |
+| --- | --- |
+| **Bugs des exécutions du plan** (par défaut) | il est rattaché à un résultat d'un run des plans sélectionnés, dans les suites sélectionnées — sur **tous** les runs lus, pas seulement le dernier résultat. |
+| **Liens des cas de test et des User Stories** | il est lié à un cas de test du rapport (*Tested By*) ou à l'une de ses exigences — le comportement d'avant la v2.73.0. |
+
+C'est un réglage **projet** : toute l'équipe obtient le même rapport. Il n'est pas verrouillé ; l'écran indique qui l'a modifié en dernier et quand. Il est relu à chaque génération.
+
+Avec la source par défaut, chaque bug n'apparaît **qu'une fois** et liste les **cas de test** dont les résultats le portent. Seul le type de work item `Bug` est compté.
+
+<Note>Aucune nouvelle permission, aucune écriture : TestPulse ajoute un paramètre à l'appel des résultats de run qu'il fait déjà. La lecture des résultats prend un peu plus de temps.</Note>
+
+## Une seule liste pour tout le rapport
+
+La même liste alimente la liste des bugs et ses compteurs, le Quality Score et le verdict **GO / NO-GO** (bugs bloquants ouverts), les **échecs sans défaut**, la colonne des bugs de la matrice de traçabilité, le rapport multi-plans et les cinq exports.
+
+## Ce qui change avec la source par défaut
+
+- Un bug lié à un cas de test seulement par *Tested By*, ou seulement à l'exigence, **ne figure plus dans le rapport**.
+- Si son test a échoué, ce test devient un **échec sans défaut** — et quand la porte *Bloquer la release s'il reste des échecs sans défaut* est active, le verdict peut passer **NO-GO**.
+- La courbe **Bugs** des tendances de l'historique marque une **rupture** au premier rapport construit avec la nouvelle source.
+- Un bug rattaché à un run dont les résultats ont été **supprimés** n'est pas compté.
+
+## Rattacher un bug oublié
+
+Un bug trouvé pendant l'exécution se crée depuis le **Test Runner** : il est rattaché automatiquement au résultat. S'il a été créé ailleurs (depuis Boards, par exemple), ouvrez le run dans Azure DevOps et **liez le bug au résultat du run** — depuis le run, ou par un lien *Test Result* depuis le bug. Il est compté à la génération suivante.
+
+## Ordre et colonnes
+
+La liste des bugs est triée par **date de création, du plus récent au plus ancien**, puis par ID — à l'écran et dans chaque export — avec une colonne **Créé le** et une colonne **Cas de test**. À l'écran, les en-têtes restent triables. Le bloc **Bugs ouverts** garde son ordre de tri : sévérité, priorité, puis date de création. La présentation PowerPoint garde les **15 bugs les plus récents**.
+
+## La source est toujours écrite
+
+- Un bandeau au-dessus de la liste des bugs nomme la source et le nombre de runs lus, avec un lien vers les Paramètres.
+- Chaque export porte une ligne de source sous le titre de sa page des bugs.
+- Chaque rapport enregistré affiche une puce **Source : exécutions** ou **Source : liens** dans l'[historique](/fr/collaboration/history) ; comparer deux rapports construits avec des sources différentes affiche un avertissement.
+- Quand un plan a **plus de runs que le nombre lu**, un avertissement le signale à l'écran et dans les exports.
+
+## Ce qui ne change pas
+
+- Le **[Cockpit](/fr/cockpit/execution-cockpit)** lit toujours les liens *Tested By* des cas de test.
+- L'**[onglet Test coverage](/fr/work-item/test-coverage-tab)** d'une User Story n'est pas modifié.
+- Les **rapports enregistrés** gardent les bugs qu'ils avaient, et s'ouvrent, se comparent et s'exportent comme avant.
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Aide à la décision" icon="circle-check-big" href="/fr/quality/decision-support">Échecs sans défaut et bugs bloquants ouverts.</Card>
+  <Card title="Formats d'export" icon="file-output" href="/fr/exports/formats">Ce que contient chaque format.</Card>
+</CardGroup>

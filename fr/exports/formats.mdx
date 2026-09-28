@@ -8,6 +8,8 @@ TestPulse exporte le même rapport vers cinq formats, chacun optimisé pour un u
 
 <Note>Les cinq formats suivent la langue sélectionnée dans l'extension — noms d'onglets, en-têtes de colonnes et libellés compris.</Note>
 
+<Note>Chaque format affiche une suite par son **chemin** — `CH › SALES › Pre-Payment` plutôt que `Pre-Payment`. En PDF, Word, HTML et PowerPoint, un chemin long est coupé au milieu et garde son premier niveau et ses deux derniers ; Excel garde le chemin complet dans sa propre colonne **Chemin de la suite**.</Note>
+
 ## En un coup d'œil
 
 | Format | Cas d'usage | Points clés |
@@ -24,11 +26,11 @@ Jusqu'à **13 sections configurables**, réordonnables par drag-and-drop (**Para
 
 - **Page de garde** — grille d'infos projet, logo (PNG/JPEG/SVG), badge environnement
 - **Résumé exécutif** — le verdict automatisé, ou un résumé personnalisé par rapport
-- **KPI cards** — taux de succès, taux d'exécution, passés/échoués/bloqués, bugs liés
+- **KPI cards** — taux de succès, taux d'exécution, passés/échoués/bloqués, bugs du rapport ([d'où ils viennent](/fr/reports/campaign-bugs))
 - **Tableau des résultats** — dernier résultat par cas de test ; matrice multi-config si 2–3 configurations détectées
 - **Grille suite × configuration** — la matrice d'exécution des plans multi-configurations, **désactivée par défaut** (à activer dans Paramètres → Sections d'export) ; auto-masquée si aucune configuration n'est déclarée
-- **Traçabilité** — Epic → User Story → Cas de test → Bug (tableau 3 colonnes) + suites non tracées
-- **Bugs** — tous les bugs liés avec état et sévérité
+- **Traçabilité** — Epic → User Story → Cas de test → Bug (tableau 3 colonnes, une ligne par cas de test avec un statut regroupé) + suites non tracées
+- **Bugs** — les bugs du rapport, du plus récent au plus ancien, avec date de création, cas de test, état et sévérité, sous une ligne qui nomme leur source
 - **Tests flaky** — tests avec un fort taux de bascule de résultat
 - **Graphiques** — donut pass/fail + barres par suite, rendus localement (fonctionne hors-ligne)
 - **Pièces jointes** — images PNG/JPEG intégrées ; tout autre fichier listé en tableau avec un type lisible et son **nom en lien** vers la pièce jointe. Affichée par défaut depuis la v2.69.0.
@@ -52,13 +54,13 @@ Entièrement **éditable dans Microsoft Word**, avec six sections : page de gard
 
 ## Excel (.xlsx) — données
 
-Quatre onglets : **KPIs**, **Résultats** (outcome, suite, date, testeur, configuration), **Traçabilité** (Cas de test → User Story → Epic → Bug), et **Bugs** (état, sévérité, priorité, assigné).
+Quatre onglets : **KPIs**, **Résultats** (outcome, suite, chemin de la suite, date, testeur, configuration), **Traçabilité** (Cas de test → User Story → Epic → Bug), et **Bugs** (état, sévérité, priorité, assigné, créé le, cas de test — du plus récent au plus ancien).
 
 Lorsque le rapport consolide **plusieurs plans de test**, deux onglets s'ajoutent : **Détail par plan** (totaux, taux de réussite et taux d'exécution plan par plan) et **Qualité par plan** (verdict, couverture des exigences et étapes marquées par plan, avec une ligne consolidée).
 
 ## PowerPoint (.pptx) — diapositives
 
-Une présentation de **cinq diapositives** : Couverture, KPIs, Résultats, Traçabilité, Bugs.
+Une présentation de **cinq diapositives** : Couverture, KPIs, Résultats, Traçabilité, Bugs. La diapositive Bugs liste les **15 bugs les plus récents**.
 
 ## Signatures
 

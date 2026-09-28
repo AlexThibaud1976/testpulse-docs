@@ -6,6 +6,19 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.73.0" description="2026-09-28">
+
+**Les bugs du rapport viennent désormais des exécutions de vos plans de test.** Un plan copié hérite des liens de ses cas de test et de ses exigences : un rapport listait donc les bugs de campagnes précédentes — parfois plus de vieux bugs fermés que de bugs trouvés dans la campagne. Voir [Les bugs du rapport](/fr/reports/campaign-bugs).
+
+- **Bugs des exécutions du plan, par défaut** — un bug compte dès qu'il est rattaché à un résultat d'un run des plans sélectionnés, dans les suites sélectionnées, sur tous les runs lus. Chaque bug n'apparaît qu'une fois et liste ses cas de test. La même liste alimente la liste des bugs, le Quality Score et le verdict GO / NO-GO, les échecs sans défaut, la matrice de traçabilité, le rapport multi-plans et les cinq exports. Aucune nouvelle permission.
+- **Ce qui change, dit clairement** — un bug lié seulement par *Tested By*, ou seulement à l'exigence, ne figure plus dans le rapport ; si son test a échoué, ce test devient un échec sans défaut. La courbe Bugs des tendances marque une rupture au changement de source. Un bug oublié se rattache après coup au résultat du run dans Azure DevOps. Pour revenir en arrière : **Paramètres › Seuils & qualité › Source des bugs** — un réglage projet, estampillé de qui l'a modifié et quand. Le Cockpit et l'onglet Test coverage ne changent pas ; les rapports enregistrés gardent leurs bugs.
+- **Tri par date de création, du plus récent au plus ancien**, avec les colonnes **Créé le** et **Cas de test** à l'écran et dans chaque export. Le bloc *Bugs ouverts* est trié par sévérité, priorité, puis date de création ; la présentation PowerPoint garde les 15 bugs les plus récents.
+- **La source est écrite sur chaque rapport** — un bandeau au-dessus de la liste des bugs, une ligne dans les exports, une puce **Source** dans l'historique, et un avertissement quand on compare deux rapports construits avec des sources différentes. Quand un plan a plus de runs que le nombre lu, le rapport le dit.
+- **Chaque suite s'affiche par son chemin** — `CH › SALES › Pre-Payment` — à l'écran et dans les exports ; un chemin long est coupé au milieu et garde son premier niveau. Excel ajoute une colonne **Chemin de la suite**.
+- **Corrigé : les suites homonymes ne partagent plus leurs chiffres.** Les compteurs se font désormais par suite, et la colonne des *Suites incluses* devient **Résultats (derniers)**.
+- **La matrice de traçabilité montre une ligne par cas de test**, avec un statut regroupé et *n/m réussis · k suites* ; à l'écran, la ligne se déplie pour montrer chaque suite. Les statuts d'exigence et les KPIs de la matrice ne changent pas.
+
+</Update>
 <Update label="v2.72.4" description="2026-09-21">
 
 **L'onglet Cockpit est reconstruit pour le point du matin du responsable de test.** Il affichait des chiffres et vous laissait la lecture ; il **répond désormais d'abord, en une phrase, puis justifie**. Voir [Cockpit d'exécution](/fr/cockpit/execution-cockpit).

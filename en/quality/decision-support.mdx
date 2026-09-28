@@ -16,7 +16,7 @@ Each entry links to the work item. *"Blocking"* uses one shared definition (an o
 
 ## Failures without a defect
 
-TestPulse flags every test whose latest result is **Failed** but that has **no linked bug** (any bug state, even Closed) — read-only, with no extra API call. It appears as a dedicated section (each test links out, with an **Open a bug** button that opens the native Azure DevOps bug form, pre-filled — never a write), as a counter on the widget, and as a Quality Gate criterion. Since **v2.64.0 it is on by default** on all three scales: when the count is greater than 0, the verdict becomes **NO-GO** and the grade is **capped at C**. Defect hygiene only ever counted *declared* bugs, so a failed test with no linked bug used to score full marks while declaring the bug properly cost points — the incentive ran backwards.
+TestPulse flags every test whose latest result is **Failed** but that has **no bug** (any bug state, even Closed) — with the default [bug source](/en/reports/campaign-bugs), no bug attached to any of its run results; in the *Test case and User Story links* mode, no bug linked by *Tested By*. It is read-only, with no extra API call. It appears as a dedicated section (each test links out, with an **Open a bug** button that opens the native Azure DevOps bug form, pre-filled — never a write), as a counter on the widget, and as a Quality Gate criterion. Since **v2.64.0 it is on by default** on all three scales: when the count is greater than 0, the verdict becomes **NO-GO** and the grade is **capped at C**. Defect hygiene only ever counted *declared* bugs, so a failed test with no linked bug used to score full marks while declaring the bug properly cost points — the incentive ran backwards.
 
 ## Audited GO/NO-GO override
 
@@ -24,7 +24,7 @@ The GO/NO-GO verdict is deterministic. You can **overlay a human decision** on t
 
 When your decision **differs** from the computation, a **justification is mandatory**, and the author and timestamp are captured. The report shows **computed → decided** side by side (header, widget, PDF, Word). A manual **GO that crosses a hard floor** (an open blocking bug, an untested story, a failure without a defect) is **flagged in red with the exact reasons**. The **A–E grade always stays the computed one** — only the verdict is overlaid.
 
-<Note>An **Open bugs** block also appears at the top of the report whenever there is at least one open bug — sorted by severity then priority, and count-consistent with Watch points.</Note>
+<Note>An **Open bugs** block also appears at the top of the report whenever there is at least one open bug — sorted by severity, then priority, then creation date (newest first), and count-consistent with Watch points.</Note>
 
 ## Related
 

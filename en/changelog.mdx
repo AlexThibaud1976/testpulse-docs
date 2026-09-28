@@ -6,6 +6,19 @@ icon: "clock"
 
 <Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
 
+<Update label="v2.73.0" description="2026-09-28">
+
+**The bugs of a report now come from the runs of your test plans.** A copied plan inherits the links of its test cases and requirements, so a report used to list the bugs of earlier campaigns — sometimes more old, closed bugs than bugs found in the campaign. See [Bugs of a report](/en/reports/campaign-bugs).
+
+- **Bugs from the plan runs, by default** — a bug counts once it is attached to a result of a run of the selected plans, in the selected suites, across all the runs read. Each bug appears once and lists its test cases. The same list feeds the bug list, the Quality Score and the GO / NO-GO verdict, failures without defect, the traceability matrix, the multi-plan report and the five exports. No new permission.
+- **What changes, said plainly** — a bug linked only by *Tested By*, or only to the requirement, is no longer in the report; if its test failed, that test becomes a failure without defect. The Bugs curve of the trends shows a break where the source changed. A forgotten bug is attached afterwards to the run result in Azure DevOps. To go back: **Settings › Thresholds & quality › Bug source** — a project setting, stamped with who changed it and when. The Cockpit and the Test coverage tab are unchanged; saved reports keep their bugs.
+- **Sorted by creation date, newest first**, with **Created** and **Test cases** columns on screen and in every export. The *Open bugs* block is ordered by severity, priority, then creation date; the PowerPoint deck keeps the 15 most recent bugs.
+- **The source is written on every report** — a banner above the bug list, a line in the exports, a **Source** chip in the history, and a warning when comparing two reports built from different sources. When a plan has more runs than the number read, the report says so.
+- **Every suite is shown by its path** — `CH › SALES › Pre-Payment` — on screen and in the exports; a long path is cut in the middle and keeps its first level. Excel adds a **Suite path** column.
+- **Fixed: suites with the same name no longer share their figures.** Counts now go by suite, and the *Included test suites* column becomes **Results (latest)**.
+- **The traceability matrix shows one line per test case**, with a grouped status and *n/m passed · k suites*; on screen the line expands to show each suite. Requirement statuses and matrix KPIs do not change.
+
+</Update>
 <Update label="v2.72.4" description="2026-09-21">
 
 **The Cockpit tab is rebuilt for the test manager's morning stand-up.** It used to show numbers and leave the reading to you; it now **answers first, in one sentence, then justifies**. See [Execution Cockpit](/en/cockpit/execution-cockpit).

@@ -12,7 +12,7 @@ TestPulse reconstructs the full chain **Epic → Feature → User Story / PBI �
 | --- | --- | --- |
 | **Tested By** | User Story → Test Case | Which tests cover a requirement — powers the [Test coverage tab](/en/work-item/test-coverage-tab) and the coverage report. |
 | **Requirement-based suite** | Suite → User Story | Maps a suite back to the story it validates. |
-| **Bug behind a failure** | Test Case → Bug | The defect linked to a failing test, surfaced next to its result. |
+| **Bug behind a failure** | Run result → Bug | The bug attached to a result of the plan's runs, surfaced next to its test case — or, with the *Test case and User Story links* [bug source](/en/reports/campaign-bugs), the bug linked to the test case or to the story. |
 
 ## Two sources, and how to narrow them
 
@@ -29,11 +29,11 @@ The second source is what gives most teams their traceability: plans organised b
 
 ## Where it shows up
 
-- **Traceability** in reports — the **Epic → User Story → Test Case → Bug** tree.
+- **Traceability** in reports — the **Epic → User Story → Test Case → Bug** tree. A test case run in several suites or configurations appears **once**, with a grouped status and *n/m passed · k suites*; on screen the line expands to list each suite path and result.
 - **Coverage** — which requirements are covered and which are gaps.
 - **On the work item** — the [Test coverage tab](/en/work-item/test-coverage-tab) reads *Tested By* to show a story's linked tests and the bug behind each failure.
 
-<Note>A failing test with **no** linked bug is flagged as *failing-with-no-defect* — a gap worth closing, never hidden.</Note>
+<Note>A failing test with **no** bug is flagged as *failing-with-no-defect* — a gap worth closing, never hidden.</Note>
 
 ## Related
 

@@ -22,11 +22,15 @@ L'historique personnel est stocké par utilisateur à l'échelle de **toute l'or
 
 Les rapports enregistrés depuis la v2.63.0 retiennent leur projet. Les plus anciens sont **déduits à l'affichage** des liens Azure DevOps qu'ils portent déjà — soulignés en pointillés, avec leur source au survol, pour qu'une valeur déduite n'ait jamais l'autorité d'une valeur enregistrée. Quand ni l'un ni l'autre n'est possible, ils sont regroupés sous **Projet inconnu**, une entrée à part entière avec son compte. Rien n'est écarté, aucun rapport n'est réécrit.
 
+## Quels bugs un rapport a comptés
+
+Chaque entrée affiche la **source des bugs** avec laquelle elle a été construite — *Source : exécutions* ou *Source : liens*. Les rapports enregistrés avant la v2.73.0 affichent *liens* : ils gardent les bugs qu'ils avaient et ne sont jamais réécrits. Voir [Les bugs du rapport](/fr/reports/campaign-bugs).
+
 ## Comparer deux rapports
 
 Sélectionnez **deux** rapports de l'historique pour les comparer côte à côte :
 
-- **Diff métriques** — delta de taux de réussite, totaux, passés / échoués / bloqués / bugs.
+- **Diff métriques** — delta de taux de réussite, totaux, passés / échoués / bloqués / bugs. Quand les deux rapports ont été construits avec des [sources de bugs](/fr/reports/campaign-bugs) différentes, un avertissement signale que l'écart de bugs peut venir de ce changement plutôt que de la campagne.
 - **Améliorés** — tests passés à Passed.
 - **Régressés** — tests passés de Passed à Failed / Blocked.
 - **Ajoutés / Supprimés** — cas de test nouveaux dans, ou absents de, le rapport le plus récent.
