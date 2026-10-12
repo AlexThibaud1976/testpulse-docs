@@ -33,11 +33,11 @@ Si vous avez déjà créé les trois cas dans la racine, ajoutez ces **cas exist
   Pour TestPulse 2.73.1, placez les cas dans cette sous-suite plutôt qu'uniquement à la racine. Sur un plan ne contenant que sa racine, le rapport peut se rabattre sur les runs existants : un cas non exécuté peut alors manquer et le taux d'exécution paraître complet. La sous-suite permet de sélectionner et de contrôler les trois points de l'exercice.
 </Note>
 
-Vous pouvez aussi télécharger le [fichier CSV des trois cas](/examples/tp-doc-test-cases-fr.csv). L’import s’effectue dans **Azure Test Plans**, pas dans l’onglet Import XML de TestPulse. Adaptez les champs éventuellement exigés par votre processus ; gardez les identifiants vides pour créer de nouveaux cas. Une nouvelle importation avec des identifiants vides crée de nouveaux work items.
+Vous pouvez aussi télécharger le [kit de démonstration ZIP](https://raw.githubusercontent.com/AlexThibaud1976/testpulse-docs/main/examples/tp-doc-boutique-kit.zip), puis le décompresser : il contient le fichier facultatif **tp-doc-test-cases-fr.csv** avec les trois cas. L’import s’effectue dans **Azure Test Plans**, pas dans l’onglet Import XML de TestPulse. Adaptez les champs éventuellement exigés par votre processus ; gardez les identifiants vides pour créer de nouveaux cas. Une nouvelle importation avec des identifiants vides crée de nouveaux work items.
 
 ## 2. Préparer les résultats pédagogiques
 
-Téléchargez la [boutique fictive](/examples/boutique-demo.html) et ouvrez ce fichier dans votre navigateur. Elle fonctionne hors ligne, sans serveur ni paiement. Aucun renseignement personnel n’est nécessaire.
+Téléchargez le [kit de démonstration ZIP](https://raw.githubusercontent.com/AlexThibaud1976/testpulse-docs/main/examples/tp-doc-boutique-kit.zip) depuis le dépôt public de la documentation, si vous ne l’avez pas déjà fait. Sous Windows, faites un clic droit sur le ZIP, puis **Extraire tout**. Dans le dossier extrait, ouvrez **boutique-demo.html** dans votre navigateur. La boutique fonctionne hors ligne, sans installation, serveur ni paiement. Aucun renseignement personnel n’est nécessaire.
 
 1. Cliquez sur **Ajouter au panier** : un article et 20 EUR apparaissent. Le cas TP-DOC-01 est **Passed**.
 2. Laissez l’adresse vide, puis cliquez sur **Valider la commande** : la boutique accepte la commande. C’est l’anomalie volontaire de l’exercice. Le cas TP-DOC-02 est **Failed**.
