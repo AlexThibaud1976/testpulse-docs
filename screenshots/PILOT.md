@@ -49,3 +49,11 @@ Ces constats sont documentés ou conservés pour investigation produit. Ils ne s
 Pour la prévisualisation locale : `mint dev --port 3337 --telemetry false`. Le démonstrateur `examples/boutique-demo.html` s'ouvre également hors ligne. Le CSV fourni est facultatif : adapter les champs imposés par le processus Azure DevOps avant import.
 
 Publication : publier les nouvelles routes Mintlify avant une version de l'extension contenant les trois nouveaux liens d'aide. Ne pas annoncer le lot pilote comme une couverture complète de tous les usages : les ateliers Repository, Couverture, Cockpit, Dérive, Import, partage et réaffectation restent le lot suivant.
+
+## Téléchargement du jeu pédagogique
+
+Le contrôle en production du 12 octobre 2026 a révélé que les liens `/examples/boutique-demo.html` et `/examples/tp-doc-test-cases-fr.csv` répondaient 404 malgré leur fonctionnement dans la prévisualisation locale. Mintlify ne sert pas HTML et réserve CSV et ZIP aux offres Enterprise ; déplacer les fichiers dans `assets/` ne change pas cette règle. Références officielles : [formats servis](https://www.mintlify.com/docs/create/files) et [diagnostic des fichiers 404](https://www.mintlify.com/docs/help-center/static-file-not-served).
+
+Le dépôt `AlexThibaud1976/testpulse-docs` étant public, les ateliers proposent désormais `examples/tp-doc-boutique-kit.zip` via le domaine de téléchargement GitHub. Le kit contient seulement `boutique-demo.html`, `tp-doc-test-cases-fr.csv` et `LIRE-MOI-README.txt`. Il ne nécessite aucun autre hébergement ni installation. Le lecteur doit extraire le ZIP puis ouvrir le HTML ; le CSV reste facultatif.
+
+Après toute modification des trois sources, régénérer le kit avec `powershell -File scripts/build-demo-kit.ps1`. Après publication, vérifier le téléchargement HTTPS du ZIP et comparer ses trois entrées aux sources. La validation locale des liens ne prouve pas la disponibilité des fichiers dans le CDN de production.
