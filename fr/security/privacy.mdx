@@ -1,33 +1,46 @@
 ---
-title: "Confidentialité & données"
-description: "100% côté client, aucun backend, et aucune donnée ne quitte jamais votre tenant Azure DevOps."
+title: "Confidentialité et données"
+description: "Traitement dans le navigateur, stockage Azure DevOps, fichiers exportés et notifications vers vos webhooks."
 icon: "shield"
 ---
 
-TestPulse est **100% côté client**. Les rapports sont construits **dans votre navigateur** — il n'y a **aucun serveur backend**, et **aucune donnée ne quitte jamais votre tenant Azure DevOps**.
+TestPulse construit les rapports **dans votre navigateur**. Il n'a pas de backend TestPulse qui reçoit ou analyse vos données de projet. Les données circulent néanmoins entre le navigateur et Azure DevOps ; vos actions d'export ou de notification peuvent aussi les faire sortir de cet environnement.
 
 ## Où vivent vos données
 
-- **Rapports & historique** — sauvegardés dans Azure DevOps **Extension Data** (user-scoped ; au niveau projet uniquement quand vous *partagez au projet*). Rien n'est envoyé à un tiers.
-- **Préférences** — stockées de la même façon, ou dans le navigateur pour les choix purement UI (par exemple la langue de l'onglet fiche).
-- **Pièces jointes** — les images sont cachées en mémoire et rechargées depuis Azure DevOps au besoin ; elles sont retirées de l'historique sauvegardé pour respecter le quota de stockage.
-- **Sessions exploratoires** — stockées au **scope projet**, afin qu'une session démarrée depuis un écran soit retrouvable depuis un autre et listée dans le hub.
+| Données | Stockage et visibilité |
+| --- | --- |
+| **Rapports et historique personnel** | Azure DevOps **Extension Data**, par utilisateur à l'échelle de l'organisation. |
+| **Rapports partagés** | Copie du rapport dans Extension Data au niveau projet, quand vous choisissez **Partager avec le projet**. |
+| **Préférences et réglages** | Extension Data, avec portée utilisateur ou projet selon le réglage ; certains choix purement visuels sont conservés dans le navigateur. |
+| **Repository et snapshots Cockpit** | Données propres à l'extension dans Azure DevOps ; l'organisation du référentiel et les données partagées de suivi ne sont pas des modifications des résultats de test. |
+| **Sessions exploratoires** | Documents et index dans Extension Data au niveau projet ; sauvegarde automatique pendant la session. |
+| **Captures et fichiers Explore** | Pièces jointes téléversées dans Azure DevOps, puis liées aux work items selon vos actions de création ou de clôture. |
+| **Images d'un rapport** | Chargées depuis Azure DevOps et mises en cache en mémoire ; retirées de l'instantané d'historique pour respecter son quota, puis relues si nécessaire. |
+| **Exports** | Fichiers téléchargés sur votre appareil. Ils suivent ensuite les règles de stockage et de partage de cet appareil et de vos destinataires. |
+| **Notifications** | Message envoyé depuis le navigateur à l'URL de webhook configurée, quand vous choisissez **Tester** ou **Notifier**. |
 
 <Warning>
-Le scope projet signifie exactement cela : **toute personne ayant accès au projet peut lire les notes et captures de n'importe quelle session**, quelle que soit son équipe Azure DevOps. La ségrégation par équipes ne s'applique pas à ce stockage. Le filtre Testeur du hub réduit le bruit ; il n'apporte aucune confidentialité. N'écrivez pas dans une note de session ce que vous ne mettriez pas dans un commentaire de work item.
+Le scope projet des sessions n'est pas une frontière de confidentialité entre équipes : les documents de session sont partagés au niveau projet. Le filtre **Testeur** du hub sert à retrouver des sessions ; il ne constitue pas un contrôle d'accès. La reprise d'une session active réservée à son auteur ne rend pas son contenu privé. Évitez d'y placer des informations qui ne doivent pas être accessibles aux membres du projet.
 </Warning>
 
-## Aucune télémétrie par défaut
+## Ce qui sort par export ou notification
 
-TestPulse ne fait pas de remontée. Il n'y a pas de backend d'analytics — les seuls appels sortants vont vers **votre** Azure DevOps et, si vous les configurez, **vos** webhooks Teams / Slack.
+Un PDF, un document Word, un classeur Excel, un HTML ou une présentation PowerPoint devient un **fichier local**. TestPulse ne contrôle plus sa diffusion une fois que vous le partagez.
 
-## On-premise
+Pour Teams ou Slack, le message de rapport contient son **titre**, son **environnement**, son **taux de réussite**, son **taux d'exécution** et son **nombre de bugs**. Le bouton **Tester** envoie un message d'exemple. Le destinataire est l'URL enregistrée dans vos réglages ; le contenu n'est pas envoyé à un serveur TestPulse. Voir [Notifications](/fr/collaboration/notifications-and-scheduling).
 
-Sur Azure DevOps Server, tout fonctionne de la même façon contre votre serveur. La seule limitation navigateur est le CORS sur les webhooks sortants — TestPulse bascule sur un payload à copier-coller (voir [Notifications](/fr/collaboration/notifications-and-scheduling)).
+## Télémétrie et services externes
+
+TestPulse n'intègre pas de backend d'analytics pour collecter vos rapports. Les accès aux données du produit passent par Azure DevOps et les notifications que vous déclenchez utilisent vos webhooks. Cette description concerne TestPulse ; elle ne remplace pas les politiques propres à Azure DevOps, Teams, Slack ou à votre navigateur.
+
+## Azure DevOps Server
+
+Les données Azure DevOps sont lues et enregistrées contre votre serveur. Les notifications restent des requêtes sortantes du navigateur : selon la politique réseau et CORS, elles peuvent être refusées. TestPulse propose alors le payload à copier pour un traitement manuel. Les exports locaux restent possibles.
 
 ## À suivre
 
 <CardGroup cols={2}>
-  <Card title="Permissions & scopes" icon="key" href="/fr/security/permissions">Ce à quoi TestPulse accède.</Card>
-  <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">Où il écrit, et où il n'écrit jamais.</Card>
+  <Card title="Permissions et scopes" icon="key" href="/fr/security/permissions">Ce à quoi TestPulse accède.</Card>
+  <Card title="Matrice des actions" icon="lock" href="/fr/concepts/read-only">Lectures, sauvegardes, créations et modifications.</Card>
 </CardGroup>

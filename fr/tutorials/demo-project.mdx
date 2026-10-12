@@ -1,0 +1,79 @@
+---
+title: "Préparer la boutique de démonstration"
+description: "Un jeu de données fictif et reproductible pour les trois ateliers TestPulse."
+icon: "flask-conical"
+---
+
+Vous allez préparer un petit plan avec **trois cas de test**, puis utiliser une boutique fictive pour l’atelier exploratoire. Ce jeu est réservé à l’apprentissage : ses résultats ne décrivent pas la qualité d’un produit réel.
+
+## Avant de commencer
+
+- Utilisez un projet Azure DevOps de démonstration où vous pouvez créer des work items, des plans et des cas de test.
+- Vérifiez l’[installation et les prérequis](/fr/getting-started/installation). Le droit de lire un rapport ne donne pas automatiquement le droit de préparer ce jeu.
+- Prévoyez une seule configuration pour les trois cas. Son nom dépend de votre projet.
+- Si vous avez déjà un petit plan avec des résultats variés, vous pouvez l’utiliser : comparez les proportions, pas les identifiants de nos captures.
+
+## 1. Créer le plan et ses cas
+
+Dans **Test Plans**, ouvrez la liste de tous les plans, puis **New Test Plan**. Nommez-le **TP-DOC — Boutique démo**. Conservez une aire et une itération de votre projet de démonstration.
+
+Sous la suite racine du même nom, créez une **sous-suite statique** nommée **TP-DOC — Parcours de commande**. Sélectionnez cette sous-suite, ouvrez **Define**, puis **New Test Case**. Créez ces trois cas avec une étape chacun :
+
+| Cas | Action | Résultat attendu |
+|---|---|---|
+| TP-DOC-01 — Ajouter un produit au panier | Ajouter un article à 20 EUR. | Le panier contient un article et le sous-total est de 20 EUR. |
+| TP-DOC-02 — Refuser une adresse vide | Laisser l’adresse de livraison vide et valider la commande. | La commande est refusée et un message demande une adresse. |
+| TP-DOC-03 — Appliquer un code promotionnel | Saisir DEMO10 pour un panier de 20 EUR. | La remise est de 2 EUR et le total est de 18 EUR. |
+
+**À vérifier :** la sous-suite **TP-DOC — Parcours de commande** contient trois cas distincts. Dans **Execute**, cette même sous-suite affiche trois points de test si chacun possède une seule configuration.
+
+Si vous avez déjà créé les trois cas dans la racine, ajoutez ces **cas existants** à la sous-suite, sans recréer leurs work items. Les nouveaux points de cette sous-suite ont leurs propres résultats : renseignez leurs états à l'étape suivante, même si les cas ont déjà été exécutés ailleurs.
+
+<Note>
+  Pour TestPulse 2.73.1, placez les cas dans cette sous-suite plutôt qu'uniquement à la racine. Sur un plan ne contenant que sa racine, le rapport peut se rabattre sur les runs existants : un cas non exécuté peut alors manquer et le taux d'exécution paraître complet. La sous-suite permet de sélectionner et de contrôler les trois points de l'exercice.
+</Note>
+
+Vous pouvez aussi télécharger le [fichier CSV des trois cas](/examples/tp-doc-test-cases-fr.csv). L’import s’effectue dans **Azure Test Plans**, pas dans l’onglet Import XML de TestPulse. Adaptez les champs éventuellement exigés par votre processus ; gardez les identifiants vides pour créer de nouveaux cas. Une nouvelle importation avec des identifiants vides crée de nouveaux work items.
+
+## 2. Préparer les résultats pédagogiques
+
+Téléchargez la [boutique fictive](/examples/boutique-demo.html) et ouvrez ce fichier dans votre navigateur. Elle fonctionne hors ligne, sans serveur ni paiement. Aucun renseignement personnel n’est nécessaire.
+
+1. Cliquez sur **Ajouter au panier** : un article et 20 EUR apparaissent. Le cas TP-DOC-01 est **Passed**.
+2. Laissez l’adresse vide, puis cliquez sur **Valider la commande** : la boutique accepte la commande. C’est l’anomalie volontaire de l’exercice. Le cas TP-DOC-02 est **Failed**.
+3. Ne jouez pas le cas TP-DOC-03 ; conservez-le non exécuté.
+
+Enregistrez ces résultats dans **Execute** d'Azure Test Plans, en gardant **TP-DOC — Parcours de commande** sélectionnée, avec le menu de résultat de chaque ligne ou le test runner. Si vous utilisez le marquage direct, il s'agit de statuts préparés pour l'atelier ; ne les présentez pas comme des exécutions automatiques.
+
+**État de départ attendu :** 1 Passed, 1 Failed, 1 non exécuté. Les tests terminés sont 2 sur 3 ; le taux de réussite des tests terminés est 1 sur 2, soit 50 %. Le troisième test n’est pas un succès.
+
+<Note>
+  Une suite statique suffit pour ces premiers ateliers. Sans exigence reliée, certaines mesures de couverture seront absentes ou peu représentatives : c’est une limite du périmètre, pas une preuve d’absence de risque. L’atelier NO-GO vous apprend à la repérer.
+</Note>
+
+## 3. Préparer le support de la session exploratoire
+
+Créez une **User Story** intitulée **TP-DOC — Sécuriser la livraison** (ou le type d’exigence de votre processus).
+
+Description à recopier :
+
+> En tant qu’acheteur, je dois renseigner une adresse avant de confirmer ma commande. Une adresse vide doit empêcher la validation et produire un message explicite. Scénario fictif utilisé pour la documentation TestPulse.
+
+L’atelier Explore ajoutera des notes, une preuve et un bug associé à ce work item. Notez son identifiant ; chaque projet lui attribue le sien.
+
+## Si votre résultat diffère
+
+- **Plus de trois points :** vérifiez les configurations et les doublons de cas. Ne comparez pas les chiffres tant que le périmètre diffère.
+- **Aucun droit de création :** demandez à l’administrateur de préparer le jeu ; les tutoriels de lecture restent utilisables avec un plan existant.
+- **Trois résultats non exécutés dans TestPulse :** assurez-vous d’avoir enregistré les résultats ADO, puis régénérez le rapport.
+- **Deux cas et 100 % d'exécution malgré le troisième non exécuté :** vérifiez que les trois cas sont dans **TP-DOC — Parcours de commande**, que cette sous-suite est sélectionnée dans TestPulse et que ses propres points portent les résultats attendus. Un plan limité à sa racine peut produire ce résultat incomplet en 2.73.1.
+- **Pas de User Story dans votre processus :** utilisez le type d’exigence disponible et relevez les différences de vocabulaire.
+- **La boutique n’est plus dans son état initial :** cliquez sur **Recommencer**. Les résultats Azure DevOps, eux, restent enregistrés.
+
+## Prêt pour les ateliers
+
+<CardGroup cols={3}>
+  <Card title="Premier rapport" icon="file-output" href="/fr/tutorials/first-report">Générer, comprendre et exporter.</Card>
+  <Card title="Comprendre un NO-GO" icon="shield-check" href="/fr/tutorials/understand-no-go">Expliquer le verdict à partir des preuves.</Card>
+  <Card title="Session exploratoire" icon="compass" href="/fr/tutorials/exploratory-session">Documenter l’anomalie de livraison.</Card>
+</CardGroup>

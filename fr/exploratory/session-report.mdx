@@ -1,14 +1,25 @@
 ---
 title: "Rapport de session"
-description: "Exportez un PDF signé d'une session exploratoire — charte, timeline, work items créés, captures embarquées — ou toutes les sessions closes d'une US en un seul document."
+description: "Exportez un PDF avec attribution et horodatage d'une session exploratoire — charte, timeline, work items créés, captures embarquées — ou toutes les sessions closes d'une US en un seul document."
 icon: "file-text"
 ---
 
 Une session archivée vit déjà dans Azure DevOps sous forme de Task requêtable. Quand vous avez besoin de quelque chose à **partager ou faire signer**, exportez-la en PDF.
 
-## Un PDF signé d'une session
+## Un PDF attribué et horodaté
 
-Une session terminée s'exporte en **PDF signé** : la charte, sa durée et son tag de campagne, la **timeline chronologique complète**, les work items créés, et une **signature du testeur avec un horodatage en pied de chaque page** — en français ou en anglais, selon la langue active. Les captures sont **embarquées en image** ; si une capture ne peut pas être récupérée (réseau, on-premises), elle est simplement **listée par son nom** — le rapport ne casse jamais. Les fichiers non-image sont toujours listés par leur nom. Depuis la v2.71.0, la grille de la page de garde affiche aussi le **palier d'environnement** quand il a été choisi, et une bande colorée porte la **décision de passage** — transition, valeur, commentaire, et une ligne d'audit nommant qui l'a posée, quand, et ce qui s'est passé sur la fiche hôte. Sans décision, la page de garde est inchangée.
+Une session terminée s'exporte en **PDF avec attribution et horodatage** : la charte, sa durée et son tag de campagne, la **timeline chronologique complète**, les work items créés, et une **signature du testeur avec un horodatage en pied de chaque page** — en français ou en anglais, selon la langue active. Les captures sont **embarquées en image** ; si une capture ne peut pas être récupérée (réseau, on-premises), elle est simplement **listée par son nom** — le rapport ne casse jamais. Les fichiers non-image sont toujours listés par leur nom. Depuis la v2.71.0, la grille de la page de garde affiche aussi le **palier d'environnement** quand il a été choisi, et une bande colorée porte la **décision de passage** — transition, valeur, commentaire, et une ligne d'audit nommant qui l'a posée, quand, et ce qui s'est passé sur la fiche hôte. Sans décision, la page de garde est inchangée.
+
+<Note>La signature affichée est une attribution textuelle avec horodatage. Elle n'est pas une signature numérique fondée sur un certificat.</Note>
+
+## Retrouver une session close depuis sa tâche
+
+1. Depuis **Sessions précédentes** sur la fiche d'origine ou depuis le [hub Explore](/fr/exploratory/sessions-hub), ouvrez la tâche de suivi de la session.
+2. Ouvrez l'onglet **Explore** de cette tâche. Vous devez voir **Session terminée**, sa charte et les actions de création et d'export. La chronologie complète se consulte dans le rapport de la tâche ou le PDF.
+3. Exportez le rapport PDF. Vous pouvez aussi créer un bug ou un cas de test à partir des éléments de la session : cela crée un nouveau work item, sans rouvrir la frise.
+4. Vérifiez la charte, les preuves et l'attribution dans le document téléchargé.
+
+Si le formulaire de démarrage apparaît à tort, vérifiez que TestPulse est en **2.73.1 ou ultérieure**, puis rechargez la fiche. Si le message désigne **Explore AI**, ouvrez cet onglet de **TestPulse Studio** : les deux produits ne partagent pas ce stockage de session. N'ouvrez pas une nouvelle session pour remplacer une session que vous cherchez à relire.
 
 ## Les preuves produites pendant la session
 
@@ -26,7 +37,7 @@ Un second bouton, **toujours disponible** dans l'onglet, exporte **toutes les se
 
 ## Clôture fiabilisée
 
-Clôturer une session est **fiable** : une session restaurée ne reste plus bloquée en « active », l'autosave en attente est annulé avant l'écriture de clôture pour éviter un writer concurrent, et les erreurs Azure DevOps sont affichées **clairement** au lieu d'un objet brut. Si une clôture échoue, la session reste active et rejouable plutôt que de risquer une restauration fantôme plus tard.
+Depuis la **2.73.1**, la clôture attend la fin d'une sauvegarde déjà engagée avant d'enregistrer la session close. Un conflit d'écriture de l'index est réessayé une fois et la fiche hôte n'est rafraîchie qu'après la sauvegarde complète. Si une erreur apparaît, lisez le message et vérifiez les objets déjà créés avant de relancer : une écriture partielle ne signifie pas que rien n'a été enregistré.
 
 ## Votre charte, votre titre
 

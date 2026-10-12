@@ -1,59 +1,54 @@
 ---
-title: "Quickstart : votre premier rapport en 5 minutes"
-description: "Un parcours guidé : d'un plan de test Azure DevOps à un rapport soigné en cinq minutes."
+title: "Démarrage rapide : votre premier rapport"
+description: "Sélectionnez un plan, complétez le formulaire, générez le rapport à l'écran puis exportez-le."
 icon: "play"
 ---
 
-Ce parcours guidé vous mène d'un plan de test à un rapport partageable — sans aucune configuration.
+Ce parcours résume les gestes essentiels. Pour le faire avec des données d'exercice et des points de contrôle détaillés, suivez [Mon premier rapport, du plan au PDF](/fr/tutorials/first-report).
 
-<Frame caption="L'onglet Rapport à l'arrivée : la sélection des plans à gauche, le panneau de rapport à droite.">
-  <img src="/images/fr/quickstart-01-report.png" alt="Onglet Rapport de TestPulse, formulaire de sélection des plans et panneau de rapport vide" />
+## Avant de commencer
+
+Vous devez pouvoir ouvrir TestPulse et lire un plan contenant des cas de test. Des résultats d'exécution sont nécessaires pour observer autre chose qu'une campagne non exécutée. Prévoyez aussi les informations demandées par votre projet : titre, environnement et champs métier visibles et obligatoires.
+
+<Frame caption="L'onglet Rapport à l'arrivée : la sélection à gauche, le panneau de rapport encore vide à droite.">
+  <img src="/images/fr/quickstart-01-report.png" alt="Onglet Rapport de TestPulse avant génération, avec formulaire de sélection et panneau vide" />
 </Frame>
 
 <Steps>
   <Step title="Ouvrir TestPulse" icon="rocket">
-    Dans votre projet, allez dans **Test Plans** et ouvrez le hub **TestPulse**. Si vous ne le voyez pas, vérifiez que l'extension est installée (voir [Installation](/fr/getting-started/installation)).
+    Dans votre projet, allez dans **Test Plans** et ouvrez **TestPulse**, puis l'onglet **Rapport**. Si le hub manque, vérifiez l'[installation](/fr/getting-started/installation).
   </Step>
-  <Step title="Sélectionner un plan de test" icon="list">
-    Choisissez le plan de test à rapporter dans le sélecteur. TestPulse charge ses suites, cas de test et derniers résultats — en lecture seule.
-    <Note>Rien n'est encore généré : TestPulse ne fait que lire. Vous pouvez explorer avant d'exporter.</Note>
+  <Step title="Choisir le périmètre" icon="list">
+    Sélectionnez un plan, puis vérifiez les suites incluses. Pour ce premier essai, gardez un seul plan.
+
+    **Vous devez voir :** le nom du plan choisi et les suites à inclure. Sélectionner le plan ne télécharge aucun document.
   </Step>
-  <Step title="Vérifier les valeurs par défaut" icon="eye">
-    TestPulse pré-remplit un rapport pertinent : titre, page de garde, hiérarchie suites/cas, résultats et traçabilité. Pour un premier essai, acceptez les valeurs par défaut.
+  <Step title="Compléter le formulaire" icon="pen">
+    Renseignez les champs obligatoires affichés : par exemple un titre **Premier rapport de campagne** et l'environnement réellement testé. Les autres champs requis dépendent de votre configuration ; ne supposez pas qu'ils sont préremplis.
+
+    Si une valeur manque ou ne respecte pas le format demandé, le message de validation indique le champ à corriger.
   </Step>
-  <Step title="Choisir un format d'export" icon="file-output">
-    Sélectionnez un format :
-    <CardGroup cols={2}>
-      <Card title="PDF" icon="printer">Soigné, imprimable, signé.</Card>
-      <Card title="Word" icon="file-pen">Éditable, signé.</Card>
-      <Card title="Excel" icon="file-spreadsheet">Orienté données.</Card>
-      <Card title="HTML / PowerPoint" icon="presentation">Partage web / slides.</Card>
-    </CardGroup>
+  <Step title="Générer et lire le rapport" icon="eye">
+    Cliquez sur **Générer** et attendez la fin du chargement. Le rapport apparaît **à l'écran**.
+
+    **Vous devez voir :** le bon titre, le bon périmètre et les résultats de vos tests. Vérifiez ces éléments avant tout export. La génération sauvegarde aussi un instantané dans votre historique personnel ; elle ne modifie pas les résultats des tests.
   </Step>
-  <Step title="Générer" icon="zap">
-    Cliquez sur **Générer**. TestPulse construit le document **dans votre navigateur** et le télécharge. Voilà votre premier rapport.
+  <Step title="Exporter le PDF" icon="file-output">
+    Dans la barre d'export du rapport généré, cliquez sur **PDF**. Ouvrez le fichier téléchargé et comparez son titre, son périmètre et ses compteurs au rapport affiché.
+
+    Les autres boutons produisent **Word, Excel, HTML ou PowerPoint**. Si PDF est masqué, vérifiez les [boutons d'export visibles](/fr/exports/button-visibility).
   </Step>
 </Steps>
 
 ## Ce que vous venez de produire
 
-Par défaut, votre rapport inclut la **hiérarchie suites → cas** du plan, le **dernier résultat** par cas, la **traçabilité** vers les exigences et une **page de garde**. Tout cela s'affine ensuite.
+Vous disposez d'un rapport consultable dans TestPulse, d'un instantané personnel dans l'historique et d'un PDF local. Le contenu reflète les suites choisies, les données disponibles et les options du rapport au moment de sa génération. Partager ce fichier ou [partager le rapport au projet](/fr/collaboration/history) est une action distincte.
 
 ## Où aller ensuite
 
 <CardGroup cols={2}>
-  <Card title="Couverture & qualité" icon="shield-check">
-    Ajoutez un grade Quality Gate et un verdict GO/NO-GO à votre rapport.
-  </Card>
-  <Card title="Le signal sur la fiche" icon="list-checks">
-    Découvrez l'onglet « Test coverage » et le verdict d'exécution sur une user story.
-  </Card>
-  <Card title="Les exports en détail" icon="file-output">
-    Ce que contient chaque format et comment contrôler les boutons d'export.
-  </Card>
-  <Card title="Templates & vues sauvegardées" icon="bookmark">
-    Sauvegardez une configuration de rapport et réutilisez-la en un clic.
-  </Card>
+  <Card title="Le premier rapport, pas à pas" icon="file-text" href="/fr/tutorials/first-report">Refaire le parcours avec un exercice et ses points de contrôle.</Card>
+  <Card title="Comprendre un NO-GO" icon="shield-check" href="/fr/tutorials/understand-no-go">Lire les causes du verdict et retrouver les preuves.</Card>
+  <Card title="Une exploration complète" icon="compass" href="/fr/tutorials/exploratory-session">Aller de la charte à la tâche de suivi et au PDF.</Card>
+  <Card title="Les formats d'export" icon="file-output" href="/fr/exports/formats">Choisir le bon document pour son destinataire.</Card>
 </CardGroup>
-
-<Note>Ces sections sont en cours de publication — le parcours guidé ci-dessus vous donne déjà un rapport complet aujourd'hui.</Note>

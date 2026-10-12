@@ -1,0 +1,4 @@
+﻿"ID","Work Item Type","Title","Test Step","Step Action","Step Expected","Area Path","Assigned To","State"
+"","Test Case","TP-DOC-01 — Ajouter un produit au panier","1","Ajouter un article à 20 EUR dans la boutique fictive.","Le panier contient un article et le sous-total est de 20 EUR.","","","Design"
+"","Test Case","TP-DOC-02 — Refuser une adresse vide","1","Laisser l’adresse de livraison vide et valider la commande.","La commande est refusée et un message demande une adresse.","","","Design"
+"","Test Case","TP-DOC-03 — Appliquer un code promotionnel","1","Saisir le code DEMO10 pour un panier de 20 EUR.","La remise est de 2 EUR et le total est de 18 EUR.","","","Design"

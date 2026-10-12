@@ -1,47 +1,58 @@
 ---
-title: "Permissions & scopes"
-description: "The Azure DevOps scopes TestPulse requests, why each is needed, and exactly what it writes."
+title: "Permissions and scopes"
+description: "The six Azure DevOps scopes requested by TestPulse and the rights needed to read, create or modify data."
 icon: "key"
 ---
 
-TestPulse requests only the scopes it needs. It **never writes on its own**: every write is triggered by an explicit gesture on your part, and each one is bounded to what it creates — or, in two confirmed cases, to exactly what you selected.
+A **scope** allows the extension to request a family of operations. Your **account rights**, access level, and permissions on the project and area path then determine what you can actually do. Installing TestPulse does not grant administrator rights to users.
 
-| Scope | Read / Write | Why it is requested |
-| --- | --- | --- |
-| `vso.test` | read | Test Plans, suites, cases, points and results. |
-| `vso.work` | read | Work items (requirements, bugs) for traceability, and a work item type's available states. |
-| `vso.identity` | read | Resolve testers and assignees by name. |
-| `vso.build` | read | The associated build for a report. |
-| `vso.test_write` | **write** | Create Test Plans and suites from the Coverage Builder, and reassign testers or configurations from Bulk reassignment. |
-| `vso.work_write` | **write** | Exploratory testing only — create Bugs, Test Cases and the session Task, upload their attachments, set that Task's state at closure, and — when you record a promotion decision — add a tag and one discussion comment on the work item the session was run from. |
+## The six manifest scopes
 
-## The two write scopes
+| Scope | Usage |
+| --- | --- |
+| `vso.test` | Read Test Plans, suites, cases, points and results. |
+| `vso.work` | Read work items, links, classifications and available states needed by the features used. |
+| `vso.identity` | Resolve tester and assignee names. |
+| `vso.build` | Read the build associated with the report. |
+| `vso.test_write` | Create plans and suites from Coverage Builder or Repository, add cases to a target from Repository, reassign testers or configurations. |
+| `vso.work_write` | Explore: create bugs, cases and the tracking Task, upload their attachments, set the Task's state at closure if requested, and report a promotion decision on the host work item if enabled. |
 
-### `vso.test_write` — Coverage Builder and Bulk reassignment
+Reports, settings, Repository and session saves also use **Azure DevOps Extension Data**. They do not modify test results; several saves are automatic. The [action matrix](/en/concepts/read-only) lists targets and triggers.
 
-Powers two actions, both triggered by you.
+## Writing to plans and points
 
-**Coverage Builder — create.** Creates Test Plans and requirement-based suites. Create-only: it never overwrites or deletes an existing plan or suite.
+**Coverage Builder** creates a new plan and requirement-based suites after confirmation. It does not replace an existing plan.
 
-**Bulk reassignment — modify.** Changes the **tester** or the **configuration** of the test points in a scope you defined. This is the only place in the product where TestPulse modifies test data that existed before your gesture, and it is exactly what the action is for. It always shows a full impact review first — points affected, suites touched, points already run, cases skipped — and the apply button stays disabled while the impact is nil.
+**Repository** can create a plan or add cases to an existing target. Its preview distinguishes creations, reused structures, additions and skipped cases. An existing target may be shared with other users: check it before confirming.
 
-<Warning>Bulk reassignment cannot be undone: Azure DevOps offers no undo and TestPulse keeps no prior state. Changing a **configuration** rewrites the test case's assignments, which Azure DevOps may implement by recreating the test point, taking its execution result with it. The review screen states this and lets you exclude points that already carry a result; the prior state can be exported as CSV first. See [Read-only by default](/en/concepts/read-only).</Warning>
+**Bulk reassignment** modifies testers or configurations for points in the selected scope. It first displays the impact: affected points, suites, points already run and skipped cases.
 
-### `vso.work_write` — exploratory testing
+<Warning>
+Reassignment has no built-in undo. A configuration change can recreate a point and lose its associated result. Review the preview and the option to exclude executed points; export the previous state as CSV if needed. See [Bulk reassignment](/en/reports/bulk-reassignment).
+</Warning>
 
-Powers **only** what an exploratory session files at your request: a Bug, a Test Case, the session's tracking Task, and their attachments. All created — TestPulse links a new work item to your story. The only thing it may write back on the story itself is the promotion decision described below.
+## Writing from Explore
 
-Two narrow exceptions, both at session closure and both behind the same dialog. The first can set the state of **the Task TestPulse just created**, in the same gesture. The second, when you record a **promotion decision**, adds a tag and one discussion comment on **the work item the session was run from** — one target, two fields, never a state, an assignment or a link; skipped if the form carries unsaved changes, never blocking, and switchable off by an administrator. See [Promotion decision](/en/exploratory/promotion-decision).
+A capture is uploaded to Azure DevOps **when you confirm it in the capture editor**; cancelling that editor does not transmit the capture. Dropping a file also triggers its upload as an attachment. Creating a **Bug**, **Test Case** or **closure Task** creates that object with the selected entries. Closure can also set the state of the Task it just created.
 
-<Note>Adding a write scope to the manifest is an **administrator** action and triggers an **extension re-approval** for the organisation. Until then, everything read-only keeps working — only the corresponding create action is unavailable.</Note>
+When a **promotion decision** is recorded and host reporting is enabled, TestPulse adds a tag and comment to the **host work item**. It does not change its state or assignee. Reporting is skipped if the form has unsaved changes and can be disabled at project level. See [Promotion decision](/en/exploratory/promotion-decision).
 
-## Permission ≠ scope
+## Re-approving an updated extension
 
-A **403** when creating a plan is almost always an **area-path ACL** — the *Manage test plans* permission is granted **per area path** — **not** a missing scope. See [Create the plan in Azure DevOps](/en/coverage-builder/create-plan).
+When a release adds a scope, an organisation administrator must approve the extension's new permissions. A user cannot resolve this by changing TestPulse options. Ask the administrator to check the approval status.
+
+This approval does not replace the Azure DevOps rights required by an action. Do not change the manifest to fix a user's permission.
+
+## Diagnosing denied access
+
+1. Record the **action**, **target** and **complete message** displayed, without copying a token or webhook URL.
+2. If the message mentions scopes or re-approval, ask the administrator to check the extension.
+3. If plan creation returns a 403 mentioning management of plans under an area path, check **Manage test plans** on the **selected area path**.
+4. For other denials, have the rights on the affected object and the user's Azure DevOps access level checked. A 401 or 403 code alone does not identify the cause.
 
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Privacy & data" icon="shield" href="/en/security/privacy">Where data lives.</Card>
-  <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">The read/write boundary in detail.</Card>
+  <Card title="Privacy and data" icon="shield" href="/en/security/privacy">Where data lives and travels.</Card>
+  <Card title="Action matrix" icon="lock" href="/en/concepts/read-only">What each feature reads or writes.</Card>
 </CardGroup>

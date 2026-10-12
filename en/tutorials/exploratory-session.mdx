@@ -1,0 +1,179 @@
+---
+title: "An exploratory session from start to finish"
+description: "Turn a charter into a documented session: notes, an annotated capture, a linked bug, an archive task and a PDF."
+icon: "compass"
+---
+
+By the end of this workshop, you will have an **exploratory session you can find again in Azure DevOps**, with a charter, observations, illustrated evidence, a linked bug and a PDF. You will also learn to distinguish a session verdict from a report's Quality Gate.
+
+## Before you start
+
+- Prepare the [demo dataset](/en/tutorials/demo-project) and find the **TP-DOC — Sécuriser la livraison** user story.
+- Use TestPulse 2.73.1 or later for reopening the session from its Task.
+- Check that you can edit work items and create bugs and tasks in the demo scope. An administrator must have approved the extension's write permissions; [project permissions](/en/security/permissions) are still required.
+- Use the training scenario and fictional data only. Sessions are stored at project level: the “my sessions” filter does not make them private.
+
+We will document the **empty delivery address accepted** scenario. This is a fictional exercise, and created objects must say so explicitly. Work item names remain the same in both documentation languages.
+
+Download the [training shop](/examples/boutique-demo.html) and open the HTML file in your browser. Select English. This page runs locally, without a server or real payment; it deliberately accepts an empty address to make the defect reproducible.
+
+| Your action | What is saved |
+| --- | --- |
+| Start a session and write notes | Session and notes automatically saved in TestPulse's Azure DevOps storage. |
+| Confirm a capture | Attachment uploaded to Azure DevOps and entry added to the session. |
+| Click **Create** in the work item panel | New bug with the selected links and attachments. |
+| End the session and confirm closure | Tracking Task containing the report, links and session evidence. |
+| Export to PDF | File downloaded to your computer. Attaching it to the Task is a separate action. |
+
+## 1. Open Explore from the item you want to test
+
+Open the **TP-DOC — Sécuriser la livraison** user story in Azure DevOps and save any pending form changes first. On this work item, open TestPulse's **Explore** tab.
+
+**You should see:** the **Start an exploratory session** form. If one of your sessions is already active, it may be restored: check its charter before continuing. An existing session on another subject does not become a demo exercise just because you change its notes.
+
+<Tip>
+  There are two **Explore** entry points. The work item's tab is where you run a session; the TestPulse hub's Explore tab is where you find project sessions. To start, use the work item form.
+</Tip>
+
+## 2. Define a charter you can check
+
+Complete the form:
+
+| Field | Exercise value |
+| --- | --- |
+| **Session charter** | `TP-DOC — Explore delivery-address validation; record what is needed to reproduce the finding.` |
+| **Timer (minutes, optional)** | `10`, as an exploration budget; leaving it empty is also valid. |
+| **Campaign tag (optional)** | `TP-DOC` |
+| **Environment (optional)** | Leave empty for this first workshop. |
+| **Area path / Iteration path** | Keep the scope inherited from the demo user story. |
+
+Click **Start session**.
+
+**You should see:** **Session running**, your charter, a timer and an empty Timeline. Without an environment selected, closure does not offer a promotion decision to another stage. That decision has a [separate guide](/en/exploratory/promotion-decision).
+
+## 3. Explore and record what happened
+
+In the training shop, add the product to the cart and check the **EUR 20** amount. Leave the delivery address empty, then click **Place order**. The page deliberately accepts this input: that is the behaviour to document. Keep this screen ready for the next step's capture, then return to Explore.
+
+<Frame caption="The fictional shop accepts a EUR 20 order without an address: this defect is intentional and only serves the exercise.">
+  <img src="/images/en/tutorial-shop-defect.jpg" alt="Training shop in English: empty delivery address, EUR 20 cart and the message Demonstration order accepted." />
+</Frame>
+
+Add three separate notes. Select the type, enter the text and click **Add note** for each one.
+
+| Type | Training text |
+| --- | --- |
+| **Observation** | `Fictional TP-DOC exercise: cart containing one product at EUR 20; opening the delivery step.` |
+| **Anomaly** | `Training scenario: an empty address is accepted. Expected: remain on the delivery step and request an address.` |
+| **Question** | `To investigate in a real application: does the server also validate the address?` |
+
+Wait until **Saving…** disappears and check that there is no save error before leaving the form.
+
+**You should see:** three timestamped entries. An observation provides context, an anomaly compares actual and expected behaviour, and a question separates an investigation lead from an established fact.
+
+While the session is active, correct a note with **Edit**, then **Save**. These corrections are no longer available once the session is closed.
+
+## 4. Add a capture that explains the finding
+
+Return to the training shop and prepare a capture showing **the empty address and the accepted order**. Keep the demo label visible. This image proves the exercise page's behaviour; it does not concern a real shop.
+
+<Steps>
+  <Step title="Copy the image">
+    On Windows, use **Win+Shift+S** to select the useful area. Return to the work item's Explore tab and paste with **Ctrl+V**.
+
+    **You should see:** the **Annotate the capture** editor. The image is not attached yet.
+  </Step>
+  <Step title="Highlight the relevant element">
+    Use **Rectangle** or **Arrow** to point to the relevant field or result. Add the text **TP-DOC exercise — fictional data**. If the image contains information that should be masked, apply **Blur (mask)** and inspect the result before confirming.
+
+    For **What does this capture show?**, select **Result obtained** when it shows the training result. Cancelling the editor does not upload the image.
+  </Step>
+  <Step title="Attach and check">
+    Click **Attach to session**, then wait for the upload to complete.
+
+    **You should see:** a capture in the Timeline with your annotations. Resolve upload errors before treating the evidence as attached.
+  </Step>
+</Steps>
+
+A confirmed capture is flattened: its annotations are no longer editable layers. Removing its Timeline entry does not delete the file already uploaded to Azure DevOps. To correct only the accompanying text, edit its caption.
+
+## 5. Turn the finding into an actionable bug
+
+Click **Create bug / work item** and select **Bug**.
+
+1. Replace the prefilled title with **TP-DOC — Adresse vide acceptée à la livraison — exercice**. The initial title comes from the last note, which may be a question rather than the defect you intend to describe.
+2. Choose an appropriate exercise severity, for example **3 - Medium** if your process offers it.
+3. Review **Repro steps (HTML, generated from notes)**. Keep the context, action, actual and expected results; make the fictional nature explicit.
+4. Under **Attachments to include**, select the exercise capture.
+5. Check the proposed user-story and session links, and inherited classification.
+6. Click **Create**. This actually creates a bug in your demo project.
+
+**You should see:** a work item entry with an Azure DevOps ID. Open the bug and check its title, steps, attachment and link to the story. Record its number so you can find it in the final report.
+
+<Frame caption="Example in TestPulse 2.73.1: the running session counts one note, one capture and one bug. This condensed illustration uses one note; the workshop asks you to write three. The example note remains in French.">
+  <img src="/images/en/tutorial-explore-session.jpg" alt="Explore in English with a running session and Timeline counts showing one note, one capture and one bug." />
+</Frame>
+
+<Note>
+  This bug is linked to the explored subject and session. That does not automatically associate it with a test-run result. Do not expect this exercise to remove a campaign report's “failure without defect”; [bug sources](/en/reports/campaign-bugs) have different contracts.
+</Note>
+
+## 6. Close the session and find its Task
+
+Review the notes and capture one last time. Click **End session**, then **End and archive** in the confirmation.
+
+A second dialog lets you choose the Task's assignee, initial state and an optional **Verdict**. For this exercise, select **Failed**, since the scenario describes an anomaly, then click **Confirm**. Keep the proposed state unless you are deliberately exercising a particular transition.
+
+**Skip** also closes the session, but does not retain a verdict or promotion decision prepared in that dialog.
+
+**You should see:** **Session ended — Task #… created**. Open that Task and check:
+
+- the session report and charter;
+- the `exploratory-session` tag and your `TP-DOC` campaign tag;
+- the user-story link, created bug and attached evidence.
+
+<Frame caption="The closure confirmation reports that the session Task was created. Its number belongs to the demonstration project; this capture does not confirm a PDF download.">
+  <img src="/images/en/tutorial-explore-archived.jpg" alt="Explore in English after closure: Session ended — Task #3070 created, with actions to export and attach the report." />
+</Frame>
+
+The Task is the session's archive. Returning to the user story or changing a hub filter does not delete it.
+
+<Note>
+  **Failed** describes the tester's judgement of this session. It does not add a Failed result in Azure Test Plans or change any Quality Gate metric. The verdict is final for that closed session.
+</Note>
+
+## 7. Export and find your session again
+
+From the closed session, click **Export PDF report**. Check or adjust the proposed title, then click **Export**.
+
+Open the PDF and find the charter, three notes, capture and bug number. If the image could not be retrieved, it may appear by name: read any unavailable-evidence notices before sharing the document.
+
+Return to the TestPulse hub's **Explore** tab. Filter by campaign **TP-DOC**, expand the user story and find your session. A closed session's link leads to its Task. On that Task, the **Explore** tab lets you read the saved session.
+
+**Final check:** you should be able to start from the hub, find the Task, open the bug and read the PDF. The downloaded export is not automatically attached to the Task; use **Attach report to task** only if you want to store it there too.
+
+## If your screen differs
+
+| Symptom | Check and action |
+| --- | --- |
+| I see a session list instead of the form. | You are in the Explore hub. Open the demo user story, then its Explore tab. |
+| The capture does not paste. | Check that the clipboard contains an image and Explore has focus. **Browse…** also accepts files, but a dropped image is a file attachment rather than a capture embedded in the PDF. |
+| Azure DevOps rejects an attachment or creation. | Read the message: scope re-approval and work item permissions are different checks. Have the relevant issue checked, then retry the failed action. |
+| A save error appears. | Keep the form open and check connectivity. Visible entries do not prove that they were saved. |
+| Some files did not upload. | Identify the failures named in the message. Successfully attached files remain; retry only those that are missing. |
+| Closure fails. | The session stays active and can be retried. Resolve the stated cause, then retry closure instead of starting another session. |
+| The Task exists but its requested state was not applied. | Closure succeeded; only the transition failed. Open the Task and handle its state using the project's rules. Do not duplicate the session. |
+| The hub still shows the session as active after closure. | If a message says the index was not refreshed, reload the hub and check the Task that already exists. |
+| I cannot find a colleague's session. | Remove **Filtered to my sessions**, check other filters and include archived sessions if needed. Resuming an active session belongs to the account that started it. |
+| The Task tab cannot find the session. | Check the TestPulse version and the Task's origin. A session created in TestPulse Studio's Explore AI belongs in that other tab, not in TestPulse. |
+
+## Try it yourself
+
+Start another demo session with a charter that explores the limits of promotion code **DEMO10**. Record an observation, a question and a test idea, then create a **Test case** rather than a bug.
+
+Review the proposed steps before creation: notes and capture meaning affect how they are built. You have succeeded when a colleague can understand the scenario from the created case without having attended the session.
+
+<CardGroup cols={2}>
+  <Card title="Captures and work item creation" icon="pencil" href="/en/exploratory/capture-and-create">Go further with annotations, attachments and test cases.</Card>
+  <Card title="Find project sessions" icon="layout-list" href="/en/exploratory/sessions-hub">Understand filters, statuses and scope reports.</Card>
+</CardGroup>

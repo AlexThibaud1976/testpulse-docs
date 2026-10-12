@@ -4,7 +4,20 @@ description: "Ce que TestPulse a livré, version par version."
 icon: "clock"
 ---
 
-<Note>Les versions récentes sont détaillées ci-dessous. L'historique complet depuis la toute première version vit dans le [changelog du dépôt](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
+<Note>Les versions récentes sont détaillées sur cette page. Les versions antérieures à 2.25.0 sont résumées en fin de page ; les guides liés décrivent le fonctionnement actuel.</Note>
+
+<Update label="v2.73.1" description="2026-10-02">
+
+**Retrouver une session close depuis sa tâche de suivi.** L'onglet Explore d'une Task ouverte depuis *Sessions précédentes* pouvait afficher le formulaire de démarrage au lieu de la session, empêchant l'export du rapport ou la création d'un bug ou d'un cas depuis celle-ci.
+
+- La Task retrouve désormais sa session grâce à son tag **explore-session** et au document de session enregistré. Les tâches antérieures à ce tag restent prises en charge.
+- Quand la session est retrouvée de cette manière, son entrée dans la liste des sessions est réparée en arrière-plan.
+- La clôture attend la fin d'une sauvegarde déjà engagée, réessaie une fois un conflit d'écriture de la liste et rafraîchit la fiche hôte après la sauvegarde complète.
+- Si la Task désigne une session d'**Explore AI dans TestPulse Studio**, TestPulse l'indique et oriente vers cet onglet, au lieu de présenter un nouveau démarrage ou une erreur de lecture générique.
+
+Voir [Retrouver une session close et exporter son rapport](/fr/exploratory/session-report).
+
+</Update>
 
 <Update label="v2.73.0" description="2026-09-28">
 
@@ -640,5 +653,5 @@ La grille livrée en v2.30.0 apparaissait dans les exports PDF et Word sans poss
 </Update>
 
 <Update label="Versions antérieures">
-La génération de rapports et les cinq exports, la traçabilité Epic→US→TC→Bug, le Quality Gate (note A–E, verdict GO/NO-GO, profils et pondération risk-based), le widget dashboard, la Dérive d'exigences, le Coverage Builder, la profondeur de couverture, les imports, les notifications, la planification et bien plus — voir le [changelog complet sur GitHub](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).
+La génération de rapports et les cinq exports, la traçabilité Epic→US→TC→Bug, le Quality Gate (note A–E, verdict GO/NO-GO, profils et pondération risk-based), le widget dashboard, la Dérive d'exigences, le Coverage Builder, la profondeur de couverture, les imports, les notifications, la planification et bien plus — consultez les guides de [rapport](/fr/reports/generate-a-report), de [qualité](/fr/quality/quality-gate) et de [configuration](/fr/configuration/settings-and-import) pour leur fonctionnement actuel.
 </Update>

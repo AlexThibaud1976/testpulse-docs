@@ -27,15 +27,15 @@ A third state — *covered but unplanned* (a test exists but is in no plan, so y
 
 With the Planning scan on, a **Plans** column shows per requirement where its linked tests are planned: the plan name if unique, **"N plans"** if several, **"—"** for a gap (or scan off). **Expand a row** to list each (plan, suite) pair with a one-click **Run in Azure DevOps** link opening the **execute view**, plus an **n/m run** execution progress fetched lazily on expand only (once per suite, cached for the session, degrading silently — a date the server cannot provide is hidden, never invented). The plan detail is extracted from the responses the scan already receives — **no extra API call at table load**.
 
-## Preview & export (no permission needed)
+## Preview and export (no write permission required)
 
 TestPulse builds a **plan spec**: one requirement-based suite per requirement, each with its expected test cases and a gap flag. A **preview** shows what would be created (e.g. *"9 requirement-based suites, 34 test cases"*).
 
-The **Export spec** button is **always available and needs no permission** — it serialises the spec to **JSON, Markdown or CSV**, so a quality lead without write rights keeps the full read value. The export reflects the preview exactly.
+The **Export spec** button is **available without write permission** — it serialises the spec to **JSON, Markdown or CSV**, so a quality lead without write rights keeps the full read value. The export reflects the preview exactly. Azure DevOps read permissions are still needed to load requirements and cases.
 
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Create the plan in Azure DevOps" icon="square-pen" href="/en/coverage-builder/create-plan">The one place TestPulse writes.</Card>
+  <Card title="Create the plan in Azure DevOps" icon="square-pen" href="/en/coverage-builder/create-plan">Create a new plan after confirmation.</Card>
   <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">What it writes, and what it never touches.</Card>
 </CardGroup>

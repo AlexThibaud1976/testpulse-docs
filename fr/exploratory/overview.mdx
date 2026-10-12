@@ -1,6 +1,6 @@
 ---
 title: "Tests exploratoires — l'onglet Explore"
-description: "Menez une session de test exploratoire complète depuis l'US elle-même : charte, notes horodatées, autosave résilient — et tout reste dans votre tenant Azure DevOps."
+description: "Menez une session de test exploratoire complète depuis l'US elle-même : charte, notes horodatées, sauvegarde dans Azure DevOps et export PDF local."
 icon: "compass"
 ---
 
@@ -26,9 +26,11 @@ Deux choses qu'il n'est délibérément pas. Il est **définitif** — une sessi
 
 Depuis la v2.71.0, le même dialogue propose aussi une **décision de passage** — si la livraison peut passer au palier d'environnement suivant (TEST → QUAL → PROD par défaut, configurable par projet). Même contrat que le verdict : facultative, définitive, comptée nulle part. À la différence du verdict, elle est aussi écrite sur la **fiche depuis laquelle la session a été menée**, en tag et en un commentaire de discussion, pour que le comité de changement la trouve sans ouvrir TestPulse. Voir [Décision de passage](/fr/exploratory/promotion-decision).
 
-## Tout reste dans votre tenant
+## Stockage Azure DevOps et export local
 
-Les sessions exploratoires **écrivent dans Azure DevOps** — pièces jointes et work items — mais uniquement sur **action explicite** (attacher une capture, créer un bug, archiver la session, acter une décision de passage). C'est la capacité qui a introduit la **permission d'écriture des work items** ; son ajout déclenche une **ré-approbation administrateur** unique de l'extension. Les lectures sont inchangées, chaque écriture est isolée dans un module dédié, et **rien ne quitte votre tenant ADO** — aucune télémétrie, aucune dépendance ajoutée. Si la permission n'est pas encore approuvée, un **bandeau explicatif** remplace l'erreur brute sur toute écriture refusée.
+Les sessions sont **sauvegardées automatiquement dans Azure DevOps Extension Data**. Vos actions de capture, dépôt de fichier, création de bug ou de cas, clôture et décision de passage peuvent aussi écrire des pièces jointes et des work items dans Azure DevOps. Elles utilisent la **permission d'écriture des work items** ; lorsqu'une version ajoute cette permission, un administrateur doit approuver les nouvelles permissions de l'extension. Si elle n'est pas approuvée, un **bandeau explicatif** accompagne le refus d'écriture.
+
+L'export PDF est construit dans le navigateur puis **téléchargé sur votre appareil**. Aucun backend TestPulse ne reçoit la session, mais le fichier exporté sort d'Azure DevOps et peut ensuite être partagé par vos soins. Voir la [matrice des actions](/fr/concepts/read-only) pour distinguer sauvegardes, créations et exports.
 
 ## Voir aussi
 
@@ -36,5 +38,5 @@ Les sessions exploratoires **écrivent dans Azure DevOps** — pièces jointes e
   <Card title="Capturer, annoter & créer" icon="pencil" href="/fr/exploratory/capture-and-create">Collez une capture, annotez-la, créez un bug.</Card>
   <Card title="Rapport de session" icon="file-text" href="/fr/exploratory/session-report">Exportez un PDF signé de la session.</Card>
   <Card title="Permissions" icon="shield-check" href="/fr/security/permissions">Le périmètre d'écriture des work items, et quand il sert.</Card>
-  <Card title="Confidentialité" icon="lock" href="/fr/security/privacy">Ce qui reste dans votre tenant.</Card>
+  <Card title="Confidentialité" icon="lock" href="/fr/security/privacy">Stockage, visibilité et fichiers exportés.</Card>
 </CardGroup>

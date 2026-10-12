@@ -1,0 +1,134 @@
+---
+title: "Mon premier rapport, du plan au PDF"
+description: "Générez un rapport sur une petite campagne, contrôlez ses résultats et retrouvez votre PDF et votre historique."
+icon: "file-text"
+---
+
+À la fin de cet atelier, vous aurez **un rapport que vous pouvez expliquer**, un PDF sur votre ordinateur et un instantané retrouvé dans votre historique. Vous travaillerez sur trois cas de test : un réussi, un en échec et un non exécuté.
+
+## Avant de commencer
+
+- Ouvrez le projet Azure DevOps dans lequel TestPulse est installé. Vous devez pouvoir ouvrir son hub et lire les plans et résultats de tests.
+- Préparez ou faites préparer le [jeu de démonstration](/fr/tutorials/demo-project). Retrouvez le plan **TP-DOC — Boutique démo** et ses trois cas dans Azure Test Plans avant d'ouvrir TestPulse.
+- Utilisez l'interface TestPulse en français pour retrouver les libellés de cette page. La [version anglaise](/en/tutorials/first-report) décrit le même exercice.
+- Gardez à portée de main le nom du projet et les identités que vous êtes autorisé à utiliser pour les contacts du rapport.
+
+<Note>
+  Générer ce rapport lit les données de test et sauvegarde un instantané dans votre historique personnel TestPulse. Cela ne crée pas d'exécution et ne change pas le résultat des tests. Le clic **PDF**, plus tard, télécharge un fichier sur votre ordinateur.
+</Note>
+
+## 1. Choisir exactement ce que le rapport doit couvrir
+
+<Steps>
+  <Step title="Ouvrir le bon projet et le bon écran">
+    Dans Azure DevOps, ouvrez **Test Plans → TestPulse**, puis l'onglet **Rapport**.
+
+    **Vous devriez voir :** un sélecteur de plan à gauche, le formulaire du rapport et le bouton **Générer le rapport**. Il n'est pas nécessaire de choisir un format de fichier à ce stade.
+  </Step>
+  <Step title="Sélectionner le plan de démonstration">
+    Dans **Plan de test**, recherchez **TP-DOC — Boutique démo** et sélectionnez-le. Attendez le chargement de l'arbre des suites.
+
+    Dans le jeu minimal, sélectionnez la sous-suite statique **TP-DOC — Parcours de commande** : elle contient les trois cas. Si vous avez adapté le jeu avec d'autres suites, conservez uniquement ce périmètre et vérifiez le chemin complet des suites homonymes. Ne placez pas les cas uniquement à la racine : consultez la note de préparation du [jeu de démonstration](/fr/tutorials/demo-project).
+
+    **Vous devriez voir :** la suite **TP-DOC — Parcours de commande** cochée, avec le compteur **3**. Un plan est le conteneur de la campagne ; une suite regroupe les cas. Vous ne choisissez pas encore un format d'export.
+
+    Si vous venez d'ajouter la sous-suite dans Azure DevOps, **Actualiser** recharge la liste des plans, mais ne suffit pas toujours à recharger les suites du plan déjà sélectionné en **2.73.1**. Sélectionnez réellement **un autre plan**, puis revenez au plan de démonstration. Vider le sélecteur puis choisir le même plan ne suffit pas à forcer ce rechargement.
+  </Step>
+</Steps>
+
+## 2. Donner un contexte au rapport
+
+Renseignez les champs visibles et requis. Le projet peut personnaliser leurs libellés, leur visibilité et les règles de validation : le formulaire de votre environnement fait foi.
+
+Voici les valeurs de l'exercice. Pour un champ masqué ou facultatif dont vous n'avez pas besoin, passez à la ligne suivante.
+
+| Champ | Valeur d'exercice |
+| --- | --- |
+| **Titre du rapport** | `TP-DOC — Premier rapport — Boutique démo` |
+| **Environnement** | Choisissez l'environnement de démonstration disponible, par exemple `QA`. |
+| **Référence projet** | `TP-DOC` |
+| **Application** | `Boutique démo` |
+| **Domaine fonctionnel** | `Panier, livraison et promotions` |
+| **Fonctionnalités testées** | `Ajout au panier, refus d'une adresse vide, application d'un code promotionnel` |
+| **Périmètre des tests** | `Trois cas de démonstration, une configuration ; aucune commande réelle.` |
+| **Objectifs** | `Vérifier le parcours de commande et rendre visibles les tests restant à exécuter.` |
+| **Critères d'entrée** | `Jeu pédagogique disponible ; aucune donnée client réelle.` |
+| **Critères de sortie** | `Tous les cas exécutés ; chaque anomalie analysée ; décision de release justifiée.` |
+| **Rôle approbateur** | `Responsable QA — exercice documentaire` |
+| **Date du rapport** | Conservez la date de l'exercice. |
+
+Dans **Contacts & validation**, renseignez **Contact IT**, **Contact Business**, **Testeur en charge** et **Approbateur** lorsqu'ils sont requis. Saisissez au moins deux caractères puis choisissez une identité proposée. Ces noms décrivent les contacts du rapport ; les renseigner ne constitue pas une approbation.
+
+Si **Numéro de change**, **Incident**, **Demande** ou un champ personnalisé est obligatoire, utilisez une référence de démonstration conforme à la règle indiquée. Ne copiez pas un identifiant de production pour faire disparaître une erreur.
+
+**Vous devriez voir :** un formulaire renseigné sans erreur bloquante. Une indication orange de longueur signale un risque de débordement sur la page de garde ; elle ne tronque pas le texte.
+
+## 3. Générer, puis contrôler
+
+Cliquez sur **Générer le rapport** et attendez la fin de la progression. Le résultat s'affiche dans TestPulse ; aucun PDF n'est encore demandé.
+
+<Frame caption="Rapport de démonstration dans TestPulse 2.73.1 : 3 cas, 50 % de réussite et 67 % d'exécution. Le profil Strict donne ici D, 67/100 et NO-GO.">
+  <img src="/images/fr/tutorial-report-overview.jpg" alt="Rapport TestPulse en français sur les trois cas de la boutique fictive, avec réussite à 50 %, exécution à 67 % et verdict NO-GO sous le profil Strict." />
+</Frame>
+
+Contrôlez ces quatre points avant d'exporter :
+
+1. **Le périmètre.** Le plan et les suites sont bien ceux de l'exercice.
+2. **Les résultats.** Retrouvez **TP-DOC-01 — Ajouter un produit au panier** réussi, **TP-DOC-02 — Refuser une adresse vide** en échec et **TP-DOC-03 — Appliquer un code promotionnel** non exécuté. Ce sont des résultats pédagogiques, pas les résultats d'une boutique réelle. Enlevez un éventuel filtre de résultat avant de comparer les totaux.
+3. **Les données incomplètes.** Lisez les éventuels bandeaux concernant les suites, les cas, les points ou l'historique. Un rapport affiché ne garantit pas que toutes les lectures ont abouti.
+4. **La provenance.** Dans **Résultats**, ouvrez le lien de la colonne **Run** du cas en échec. Vérifiez dans Azure DevOps que le résultat ouvert est celui que vous cherchiez, puis revenez au rapport.
+
+<Tip>
+  **Résultats** montre le dernier résultat par cas de test. **Historique complet** peut comporter plusieurs lignes pour le même cas. Lors de la vérification du jeu en **2.73.1**, les deux cas exécutés avaient été rejoués : l'écran affichait **Résultats (3)** et **Historique complet (5)**. L'en-tête **5 résultats** correspondait à ce compte historique, pas à cinq cas distincts. Comparer le nombre de lignes de ces deux vues n'est donc pas un contrôle d'égalité.
+</Tip>
+
+Sur ce même jeu vérifié, **Cas total = 3**, **réussite = 50 %** (un réussi parmi deux exécutés) et **exécution = 67 %** (deux exécutés parmi trois cas, arrondi). Avec le profil **Strict** appliqué lors de cette vérification, le rapport affichait **D / 67**, avec un verdict **NO-GO**. Le score et le grade dépendent du barème et des données du rapport ; ne les transposez pas à un autre profil.
+
+<Note>
+  En **2.73.1**, le troisième cas non exécuté peut afficher **None** comme résultat et **Invalid Date** pour la date. Une infobulle laissant entendre qu'un run existe ne constitue pas une preuve d'exécution. Vérifiez le troisième point dans Azure Test Plans : il doit être **Active**, sans run associé, puis contrôlez l'absence de **Run** sur cette ligne du rapport. Ces libellés ne remplacent pas la vérification de la source.
+</Note>
+
+Le **NO-GO** est normal pour ce jeu : il a été conçu avec un échec et un test restant à exécuter. Le [deuxième atelier](/fr/tutorials/understand-no-go) vous apprend à en retrouver les raisons. Ne modifiez pas le barème pour obtenir un badge vert.
+
+## 4. Télécharger et ouvrir le PDF
+
+Dans la barre au-dessus du rapport généré, cliquez sur **PDF**. Attendez le téléchargement puis ouvrez le fichier dans votre lecteur PDF.
+
+**Contrôle du fichier :** retrouvez le titre, la date, le bon plan et les résultats du scénario dans les sections activées. Si une section manque, consultez la [configuration des exports](/fr/exports/formats) avant de conclure que les données ont disparu.
+
+Le PDF reflète le rapport généré. Une nouvelle exécution dans Azure DevOps après cette génération ne met pas à jour le fichier déjà téléchargé : il faut régénérer puis exporter de nouveau.
+
+## 5. Retrouver l'instantané
+
+Ouvrez **Historique**, recherchez le titre **TP-DOC — Premier rapport — Boutique démo** et contrôlez la date de génération. Cliquez sur **Charger** pour relire le rapport enregistré.
+
+**Vous devriez voir :** le même rapport, avec ses données sauvegardées. Charger un instantané ne relit pas automatiquement les dernières exécutions. Pour un état actuel, retournez au parcours de génération.
+
+La sauvegarde d'historique peut échouer indépendamment de la génération. Si l'entrée manque, conservez votre PDF, vérifiez votre accès et réessayez la génération ; ne présentez pas le rapport comme archivé tant que vous ne l'avez pas retrouvé.
+
+## Si vous voyez autre chose
+
+| Symptôme | Vérification et action |
+| --- | --- |
+| Le plan n'apparaît pas. | Vérifiez le projet, cliquez sur **Actualiser** pour recharger la liste des plans et recherchez son nom ou son ID. Incluez les plans inactifs s'il a été marqué inactif. Confirmez ensuite votre accès au plan dans Azure Test Plans. |
+| Une suite nouvellement ajoutée n'apparaît pas. | En 2.73.1, sélectionnez réellement un autre plan, puis revenez au plan de démonstration. **Actualiser** recharge la liste des plans ; vider le sélecteur puis reprendre le même plan ne suffit pas à recharger ses suites. |
+| La génération indique des champs manquants. | Remplissez les champs nommés par le message, y compris les champs personnalisés. Une règle bloquante peut imposer un format précis. |
+| Le rapport est vide ou ne contient pas les trois cas. | Vérifiez les suites cochées, le contenu du plan et les filtres actifs. Comparez aux objets du jeu de démonstration. |
+| Le rapport compte deux cas et 100 % d'exécution. | En 2.73.1, un plan limité à sa racine peut ne représenter que les runs existants. Utilisez la sous-suite **TP-DOC — Parcours de commande** contenant les trois cas et vérifiez les résultats de ses propres points. Régénérez avec cette sous-suite sélectionnée. |
+| Le troisième cas affiche None ou Invalid Date. | Vérifiez dans Azure DevOps que son point est **Active** et qu'aucun run ne lui est associé. Contrôlez aussi l'absence de **Run** sur sa ligne du rapport ; ne vous fiez pas à l'infobulle pour prouver une exécution. |
+| L'en-tête annonce 5 résultats pour 3 cas. | Comparez **Résultats (3)** et **Historique complet (5)** : les deux cas exécutés peuvent avoir été rejoués. L'en-tête compte l'historique ; **Cas total** reste le nombre de cas distincts. |
+| Aucun test n'est évalué. | Confirmez que les résultats ont été enregistrés dans Azure Test Plans. Ajouter des cas à une suite ne les exécute pas. |
+| Un bandeau signale une lecture incomplète. | Relevez la dimension concernée, vérifiez les droits ou la connexion puis régénérez. N'utilisez pas l'export seul pour prouver la complétude. |
+| Le bouton PDF manque. | Vérifiez les formats autorisés dans les paramètres d'export ; le bouton n'apparaît qu'après génération et si le format est activé. |
+| Les chiffres ont changé au rejeu. | Vérifiez les nouvelles exécutions, les suites, la configuration et les filtres. Comparez des périmètres et des dates identiques. |
+
+## À vous de jouer
+
+Sans changer les résultats Azure DevOps, donnez au rapport un nouveau titre et expliquez dans **Objectifs** ce que vous feriez avant une release. Régénérez, exportez et retrouvez la nouvelle entrée d'historique.
+
+Vous avez réussi si vous pouvez montrer **d'où vient chaque résultat**, expliquer ce qui reste à exécuter et distinguer le rapport affiché, le fichier téléchargé et l'instantané sauvegardé.
+
+<CardGroup cols={2}>
+  <Card title="Comprendre le NO-GO" icon="shield-check" href="/fr/tutorials/understand-no-go">Retrouvez les causes du verdict sur ce même jeu.</Card>
+  <Card title="Référence du formulaire" icon="list" href="/fr/reports/generate-a-report">Tous les champs, les suites et les validations.</Card>
+</CardGroup>

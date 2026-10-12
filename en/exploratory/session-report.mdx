@@ -1,14 +1,25 @@
 ---
 title: "Session report"
-description: "Export a signed PDF of an exploratory session — charter, timeline, created work items, embedded screenshots — or all closed sessions of a story in one document."
+description: "Export a PDF with attribution and timestamp for an exploratory session — charter, timeline, created work items, embedded screenshots — or all closed sessions of a story in one document."
 icon: "file-text"
 ---
 
 An archived session already lives in Azure DevOps as a queryable Task. When you need something to **share or sign off**, export it as a PDF.
 
-## A signed PDF of one session
+## A PDF with attribution and timestamp
 
-A finished session exports to a **signed PDF**: the charter, its duration and campaign tag, the **full chronological timeline**, the work items you created, and a **tester signature with a timestamp in the footer of every page** — in French or English, following the active language. Screenshots are **embedded as images**; if a capture can't be fetched (network, on-premises), it is simply **listed by name** — the report never breaks. Non-image files are always listed by name. Since v2.71.0 the cover grid also shows the **environment stage** when one was chosen, and a coloured band carries the **promotion decision** — transition, value, comment, and an audit line naming who recorded it, when, and what happened on the host work item. Without a decision, the cover is unchanged.
+A finished session exports to a **PDF with attribution and timestamp**: the charter, its duration and campaign tag, the **full chronological timeline**, the work items you created, and a **tester signature with a timestamp in the footer of every page** — in French or English, following the active language. Screenshots are **embedded as images**; if a capture can't be fetched (network, on-premises), it is simply **listed by name** — the report never breaks. Non-image files are always listed by name. Since v2.71.0 the cover grid also shows the **environment stage** when one was chosen, and a coloured band carries the **promotion decision** — transition, value, comment, and an audit line naming who recorded it, when, and what happened on the host work item. Without a decision, the cover is unchanged.
+
+<Note>The displayed signature is textual attribution with a timestamp. It is not a certificate-based digital signature.</Note>
+
+## Find a closed session from its Task
+
+1. From **Previous sessions** on the original work item or the [Explore hub](/en/exploratory/sessions-hub), open the session's tracking Task.
+2. Open that Task's **Explore** tab. You should see **Session ended**, its charter and the creation and export actions. Read the full chronology in the Task's report or the PDF.
+3. Export the PDF report. You can also create a bug or test case from session entries: this creates a new work item without reopening the timeline.
+4. Check the charter, evidence and attribution in the downloaded document.
+
+If the start form appears incorrectly, check that TestPulse is **2.73.1 or later**, then reload the work item. If the message names **Explore AI**, open that tab in **TestPulse Studio**: the products do not share this session storage. Do not start a new session to replace one you are trying to reread.
 
 ## Evidence produced during the session
 
@@ -26,7 +37,7 @@ A second button, **always available** in the tab, exports **every closed session
 
 ## Reliable close
 
-Closing a session is **reliable**: a restored session no longer gets stuck in an "active" state, the pending autosave is cancelled before the closing write to avoid a concurrent writer, and Azure DevOps errors are shown **clearly** instead of a raw object. If a close fails, the session stays active and replayable rather than risking a phantom restore later.
+Since **2.73.1**, closure waits for an in-flight save to finish before saving the closed session. An index write conflict is retried once and the host form is refreshed only after the full save. If an error appears, read the message and check objects already created before retrying: a partial write does not mean nothing was saved.
 
 ## Your branding, your title
 

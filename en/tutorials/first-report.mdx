@@ -1,0 +1,134 @@
+---
+title: "Your first report, from plan to PDF"
+description: "Generate a report from a small campaign, check its results and find both your PDF and your saved history."
+icon: "file-text"
+---
+
+By the end of this workshop, you will have **a report you can explain**, a PDF on your computer and a snapshot you can find in your history. You will use three test cases: one passed, one failed and one not executed.
+
+## Before you start
+
+- Open the Azure DevOps project where TestPulse is installed. You need access to its hub and permission to read test plans and results.
+- Prepare, or ask someone to prepare, the [demo dataset](/en/tutorials/demo-project). Find the **TP-DOC — Boutique démo** plan and its three cases in Azure Test Plans before opening TestPulse.
+- Use the English TestPulse interface to match the labels on this page. The [French version](/fr/tutorials/first-report) covers the same exercise.
+- Have the project name and the identities you are allowed to use as report contacts ready.
+
+<Note>
+  Generating this report reads test data and saves a snapshot in your personal TestPulse history. It does not create a test run or change test outcomes. Clicking **PDF**, later, downloads a file to your computer.
+</Note>
+
+## 1. Choose exactly what the report should cover
+
+<Steps>
+  <Step title="Open the right project and screen">
+    In Azure DevOps, open **Test Plans → TestPulse**, then the **Report** tab.
+
+    **You should see:** a plan selector on the left, the report form and the **Generate report** button. You do not need to choose a file format yet.
+  </Step>
+  <Step title="Select the demo plan">
+    Under **Test Plan**, search for **TP-DOC — Boutique démo** and select it. Wait for the suite tree to load.
+
+    In the minimal dataset, select the static child suite **TP-DOC — Parcours de commande**: it contains the three cases. If you adapted the dataset with additional suites, keep only this scope and check the full paths of suites with the same name. Do not place cases only in the root: see the preparation note in the [demo dataset](/en/tutorials/demo-project).
+
+    **You should see:** the **TP-DOC — Parcours de commande** suite checked, with a count of **3**. A plan is the campaign's container; a suite groups cases. You are not selecting an export format yet.
+
+    If you just added the child suite in Azure DevOps, **Refresh** reloads the plan list but does not always reload the selected plan's suites in **2.73.1**. Actually select **a different plan**, then return to the demo plan. Clearing the selector and selecting the same plan is not enough to force that reload.
+  </Step>
+</Steps>
+
+## 2. Give the report some context
+
+Complete the visible, required fields. Your project may customize labels, visibility and validation rules: use the form in your environment as the authority.
+
+Use the following exercise values. Skip fields that are hidden, or optional and unnecessary for your report.
+
+| Field | Exercise value |
+| --- | --- |
+| **Report title** | `TP-DOC — First report — Boutique démo` |
+| **Environment** | Choose the available demo environment, for example `QA`. |
+| **Project reference** | `TP-DOC` |
+| **Application** | `Boutique démo` |
+| **Functional domain** | `Cart, delivery and promotions` |
+| **Tested features** | `Add to cart, reject an empty address, apply a promotion code` |
+| **Test scope** | `Three demo cases, one configuration; no real order.` |
+| **Objectives** | `Check the checkout journey and make outstanding tests visible.` |
+| **Entry criteria** | `Training dataset available; no real customer data.` |
+| **Exit criteria** | `All cases executed; every anomaly investigated; release decision justified.` |
+| **Approver role** | `QA lead — documentation exercise` |
+| **Report date** | Keep the exercise date. |
+
+Under **Contacts & validation**, complete **IT Contact**, **Business Contact**, **Tester in charge** and **Approver** when required. Type at least two characters, then select a suggested identity. These names describe the report's contacts; entering them does not constitute an approval.
+
+If **Change number**, **Incident**, **Request** or a custom field is required, use a demo reference that matches its stated rule. Do not copy a production identifier just to dismiss an error.
+
+**You should see:** a completed form without blocking errors. An orange length hint warns that text may overflow on the cover page; it does not truncate the value.
+
+## 3. Generate, then check
+
+Click **Generate report** and wait for progress to finish. The report appears inside TestPulse; you have not requested a PDF yet.
+
+<Frame caption="Demo report in TestPulse 2.73.1: 3 cases, a 50% pass rate and a 67% execution rate. The Strict profile gives D, 67/100 and NO-GO for this dataset. The header's 5 results include history from several executions, not 5 distinct cases. Case names stay in French because both workshops share the same fictional dataset.">
+  <img src="/images/en/tutorial-report-overview.jpg" alt="TestPulse report in English for the fictional shop's three cases, with a 50% pass rate, a 67% execution rate and a NO-GO verdict under the Strict profile." />
+</Frame>
+
+Check these four points before exporting:
+
+1. **Scope.** The plan and suites are the ones intended for the exercise.
+2. **Results.** Find **TP-DOC-01 — Ajouter un produit au panier** passed, **TP-DOC-02 — Refuser une adresse vide** failed and **TP-DOC-03 — Appliquer un code promotionnel** not executed. These are training results, not results from a real shop. Remove any result filter before comparing totals.
+3. **Incomplete data.** Read any warnings about suites, test cases, points or run history. A visible report does not guarantee that every read completed.
+4. **Provenance.** Under **Results**, open the failed case's **Run** link. Check that Azure DevOps opens the exact result you intended, then return to the report.
+
+<Tip>
+  **Results** shows the latest result per test case. **Full history** may contain several rows for the same case. When the dataset was checked in **2.73.1**, the two executed cases had been rerun: the screen showed **Results (3)** and **Full history (5)**. The **5 results** header referred to this history count, not five distinct cases. The row counts of these views are therefore not expected to match.
+</Tip>
+
+In that same verified dataset, **Total cases = 3**, **pass rate = 50%** (one passed out of two executed) and **execution rate = 67%** (two executed out of three cases, rounded). With the **Strict** profile applied during that check, the report displayed **D / 67**, with a **NO-GO** verdict. The score and grade depend on the scale and report data; do not transfer them to another profile.
+
+<Note>
+  In **2.73.1**, the third, unexecuted case may display **None** as its outcome and **Invalid Date** as its date. A tooltip suggesting that a run exists is not evidence of execution. Check the third point in Azure Test Plans: it should be **Active**, without an associated run, then check that this report row has no **Run**. These labels do not replace verification of the source.
+</Note>
+
+A **NO-GO** is normal for this dataset: it deliberately includes a failure and an outstanding test. The [second workshop](/en/tutorials/understand-no-go) helps you trace its reasons. Do not change the scoring profile to obtain a green badge.
+
+## 4. Download and open the PDF
+
+In the toolbar above the generated report, click **PDF**. Wait for the download, then open the file in your PDF reader.
+
+**Check the file:** find the title, date, correct plan and scenario results in the enabled sections. If a section is missing, check the [export configuration](/en/exports/formats) before concluding that data was lost.
+
+The PDF reflects the generated report. A new Azure DevOps execution after generation does not update an already downloaded file: generate and export again to obtain a new version.
+
+## 5. Find the snapshot
+
+Open **History**, search for **TP-DOC — First report — Boutique démo** and check the generation date. Click **Load** to read the saved report.
+
+**You should see:** the same report with its saved data. Loading a snapshot does not automatically read the latest executions. Generate a new report when you need the current state.
+
+History saving can fail independently of report generation. If the entry is missing, keep your PDF, check your access and try generating again; do not describe the report as archived until you can find it.
+
+## If your screen differs
+
+| Symptom | Check and action |
+| --- | --- |
+| The plan is missing. | Check the project, click **Refresh** to reload the plan list and search by name or ID. Include inactive plans if it was marked inactive. Then confirm access to it in Azure Test Plans. |
+| A newly added suite is missing. | In 2.73.1, actually select a different plan, then return to the demo plan. **Refresh** reloads the plan list; clearing the selector and choosing the same plan is not enough to reload its suites. |
+| Generation reports missing fields. | Complete the named fields, including custom fields. A blocking rule may require a particular format. |
+| The report is empty or does not contain the three cases. | Check selected suites, plan contents and active filters. Compare them with the demo dataset. |
+| The report counts two cases and 100% execution. | In 2.73.1, a root-only plan may show only existing runs. Use the **TP-DOC — Parcours de commande** child suite containing all three cases and check its own points' outcomes. Regenerate with that child suite selected. |
+| The third case displays None or Invalid Date. | Verify in Azure DevOps that its point is **Active** and has no associated run. Also check that its report row has no **Run**; do not rely on the tooltip as evidence of execution. |
+| The header says 5 results for 3 cases. | Compare **Results (3)** and **Full history (5)**: the two executed cases may have been rerun. The header counts history; **Total cases** remains the number of distinct cases. |
+| No tests are evaluated. | Confirm that results were saved in Azure Test Plans. Adding cases to a suite does not execute them. |
+| A warning reports an incomplete read. | Note the affected data type, check permissions or connectivity, then regenerate. The export alone does not prove completeness. |
+| The PDF button is missing. | Check enabled formats in export settings; the button appears only after generation and when the format is enabled. |
+| Figures have changed on replay. | Check new executions, suites, configuration and filters. Compare matching scopes and dates. |
+
+## Try it yourself
+
+Without changing Azure DevOps results, give the report a new title and use **Objectives** to explain what you would do before a release. Generate it again, export it and find the new history entry.
+
+You have succeeded when you can show **where each result came from**, explain what remains to be executed and distinguish the displayed report, downloaded file and saved snapshot.
+
+<CardGroup cols={2}>
+  <Card title="Understand the NO-GO" icon="shield-check" href="/en/tutorials/understand-no-go">Trace the verdict's causes using the same dataset.</Card>
+  <Card title="Form reference" icon="list" href="/en/reports/generate-a-report">All fields, suite options and validation rules.</Card>
+</CardGroup>

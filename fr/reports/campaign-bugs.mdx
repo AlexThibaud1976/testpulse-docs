@@ -4,7 +4,7 @@ description: "D'où viennent les bugs d'un rapport, comment ils sont triés, et 
 icon: "bug"
 ---
 
-Un plan de non-régression est souvent **copié** depuis la campagne précédente. La copie hérite des liens de ses cas de test et de ses exigences — y compris des liens vers des bugs trouvés il y a des mois. Depuis la v2.73.0, un rapport ne montre par défaut que **les bugs produits par sa campagne**.
+Un plan de non-régression est souvent **copié** depuis la campagne précédente. La copie hérite des liens de ses cas de test et de ses exigences — y compris des liens vers des bugs trouvés il y a des mois. Depuis la v2.73.0, un rapport ne montre par défaut que **les bugs rattachés aux résultats lus de sa campagne**.
 
 ## D'où viennent les bugs
 
@@ -15,7 +15,7 @@ Un plan de non-régression est souvent **copié** depuis la campagne précédent
 | **Bugs des exécutions du plan** (par défaut) | il est rattaché à un résultat d'un run des plans sélectionnés, dans les suites sélectionnées — sur **tous** les runs lus, pas seulement le dernier résultat. |
 | **Liens des cas de test et des User Stories** | il est lié à un cas de test du rapport (*Tested By*) ou à l'une de ses exigences — le comportement d'avant la v2.73.0. |
 
-C'est un réglage **projet** : toute l'équipe obtient le même rapport. Il n'est pas verrouillé ; l'écran indique qui l'a modifié en dernier et quand. Il est relu à chaque génération.
+C'est un réglage **projet** : toute l'équipe utilise cette source lors d'une nouvelle génération. Il n'est pas verrouillé ; l'écran indique qui l'a modifié en dernier et quand. Il est relu à chaque génération.
 
 Avec la source par défaut, chaque bug n'apparaît **qu'une fois** et liste les **cas de test** dont les résultats le portent. Seul le type de work item `Bug` est compté.
 

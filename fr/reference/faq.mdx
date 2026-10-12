@@ -4,6 +4,27 @@ description: "Questions fréquentes et solutions rapides."
 icon: "circle-help"
 ---
 
+## Mon rapport est vide ou Générer ne produit pas de fichier
+
+**Générer** affiche d'abord le rapport à l'écran ; le téléchargement se fait ensuite avec un bouton d'export.
+
+1. Vérifiez le projet, le plan et les suites incluses.
+2. Complétez les champs obligatoires ou invalides indiqués par le message de validation.
+3. Si le rapport contient des cas mais aucun test exécuté, vérifiez les résultats dans le périmètre choisi. Une campagne non exécutée n'est pas un défaut de génération.
+4. Une fois le rapport affiché, cliquez sur **PDF**. Si le bouton manque, vérifiez les [boutons d'export visibles](/fr/exports/button-visibility).
+
+Voir le [premier rapport pas à pas](/fr/tutorials/first-report).
+
+## Un bug connu n'apparaît pas dans mon rapport
+
+Lisez d'abord le bandeau **Source des bugs**. Avec **Bugs des exécutions du plan**, le bug doit être rattaché à un **résultat de run** des plans et suites sélectionnés ; un simple lien vers le cas ou l'exigence ne suffit pas.
+
+Vérifiez le rattachement dans Azure DevOps, le périmètre et l'éventuel avertissement de limite des runs lus, puis **régénérez** le rapport. Charger un ancien rapport conserve son ancien instantané. Voir [Les bugs du rapport](/fr/reports/campaign-bugs).
+
+## La tâche de session ouvre un formulaire de démarrage
+
+Vérifiez la version **2.73.1 ou ultérieure**, puis rechargez l'onglet **Explore** de la tâche de suivi. Cette version corrige la restauration depuis la Task. Si le message désigne **Explore AI**, la session appartient à **TestPulse Studio** : ouvrez cet onglet. Voir [Rapport de session](/fr/exploratory/session-report).
+
 ## L'onglet « Test coverage » n'apparaît pas sur une fiche
 
 Une contribution toute neuve peut mettre un peu de temps à être ingérée par Azure DevOps. Faites un **rafraîchissement à froid** (Ctrl+Shift+R) sur la fiche. L'onglet est placé automatiquement et se monte au clic — voir [L'onglet Test coverage](/fr/work-item/test-coverage-tab).
@@ -14,7 +35,7 @@ Mettez à jour vers la dernière version — la résolution plan/suite lit corre
 
 ## La création d'un plan renvoie un 403
 
-C'est une **permission d'area path**, pas un scope. Choisissez une area path où vous avez *Manage test plans* — voir [Créer le plan](/fr/coverage-builder/create-plan).
+Si le message mentionne la gestion des plans sous une area path, vérifiez **Manage test plans** sur cette area path. Le code 403 seul ne suffit pas à conclure : faites aussi vérifier l'approbation de l'extension et vos droits par l'administrateur. Voir [Créer le plan](/fr/coverage-builder/create-plan).
 
 ## Les notifications sont bloquées en on-premise
 
@@ -34,7 +55,7 @@ Les sessions exploratoires écrivent dans Azure DevOps — pièces jointes, work
 
 ## Je ne peux pas reprendre la session active d'un collègue
 
-C'est impossible, et ce n'est pas un défaut. Une session en cours vit dans l'Extension Data d'Azure DevOps, qui ne la restaure qu'au **compte qui l'a démarrée**. Le hub distingue les deux cas : votre session propose une reprise, celle d'un collègue ouvre seulement la fiche. Une session devient pleinement partagée une fois close et archivée en Task.
+TestPulse propose la reprise d'une session active uniquement à **son auteur**. Le hub offre une reprise pour votre session ; celle d'un collègue ouvre seulement la fiche. Il s'agit d'une règle de reprise de TestPulse, pas d'une garantie de confidentialité : les documents de session sont dans Extension Data au niveau projet. Une session close peut être consultée depuis sa tâche de suivi. Voir [Confidentialité](/fr/security/privacy).
 
 ## Je ne peux pas supprimer une capture de la frise
 

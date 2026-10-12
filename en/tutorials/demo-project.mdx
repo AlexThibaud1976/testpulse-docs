@@ -1,0 +1,79 @@
+---
+title: "Prepare the demo shop"
+description: "A fictional, reproducible dataset for the three TestPulse workshops."
+icon: "flask-conical"
+---
+
+Prepare a small plan with **three test cases**, then use a fictional shop for the exploratory workshop. This dataset is for learning: its results do not describe the quality of a real product.
+
+## Before you start
+
+- Use an Azure DevOps demonstration project where you can create work items, plans and test cases.
+- Check the [installation prerequisites](/en/getting-started/installation). Permission to read a report does not automatically allow you to prepare this dataset.
+- Use one configuration for all three cases. Its name depends on your project.
+- If you already have a small plan with varied results, you can use it: compare proportions rather than the identifiers in our screenshots.
+
+## 1. Create the plan and cases
+
+In **Test Plans**, open the list of all plans, then **New Test Plan**. Name it **TP-DOC — Boutique démo**. Keep an area and iteration belonging to your demonstration project.
+
+Under the root suite with the same name, create a **static child suite** named **TP-DOC — Parcours de commande**. Select that child suite, open **Define**, then **New Test Case**. Create these three cases with one step each. Their French titles are kept in both languages so the examples can be compared using the TP-DOC identifiers.
+
+| Case | Action | Expected result |
+|---|---|---|
+| TP-DOC-01 — Ajouter un produit au panier | Add one item priced at EUR 20. | The cart contains one item and the subtotal is EUR 20. |
+| TP-DOC-02 — Refuser une adresse vide | Leave the delivery address empty and place the order. | The order is refused and a message requests an address. |
+| TP-DOC-03 — Appliquer un code promotionnel | Enter DEMO10 for a EUR 20 cart. | The discount is EUR 2 and the total is EUR 18. |
+
+**Check:** the **TP-DOC — Parcours de commande** child suite contains three separate cases. Under **Execute**, that same suite shows three test points if each case has a single configuration.
+
+If you already created the three cases in the root, add those **existing cases** to the child suite rather than recreating their work items. The child suite's new points have their own results: set their outcomes in the next step, even if the cases were already executed elsewhere.
+
+<Note>
+  For TestPulse 2.73.1, place the cases in this child suite rather than only in the root. With a root-only plan, the report may fall back to existing runs: a not-executed case can then be missing and the execution rate can appear complete. The child suite lets you select and check all three exercise points.
+</Note>
+
+You can also download the [three-case CSV file](/examples/tp-doc-test-cases-fr.csv). Import it in **Azure Test Plans**, not in the TestPulse XML Import tab. Adjust any fields required by your process; keep IDs empty to create new cases. Importing again with empty IDs creates new work items.
+
+## 2. Prepare the learning results
+
+Download the [fictional shop](/examples/boutique-demo.html), open it in your browser and click **English**. It works offline, without a server or payment. No personal information is needed.
+
+1. Click **Add to cart**: one item and EUR 20 appear. TP-DOC-01 is **Passed**.
+2. Leave the address empty, then click **Place order**: the shop accepts the order. This is the intentional defect in the exercise. TP-DOC-02 is **Failed**.
+3. Do not run TP-DOC-03; leave it not executed.
+
+Record these results under **Execute** in Azure Test Plans, keeping **TP-DOC — Parcours de commande** selected, using each row's outcome menu or the test runner. If you mark outcomes directly, these are prepared learning statuses; do not present them as automated executions.
+
+**Expected starting state:** 1 Passed, 1 Failed, 1 not executed. Two of three tests are completed; one of the two completed tests passed, giving a 50% pass rate. The third test is not a success.
+
+<Note>
+  A static suite is enough for these first workshops. With no linked requirement, some coverage measures will be absent or unrepresentative: this is a scope limitation, not evidence of low risk. The NO-GO workshop teaches you to recognise it.
+</Note>
+
+## 3. Prepare the exploratory session work item
+
+Create a **User Story** named **TP-DOC — Sécuriser la livraison** (or the requirement type used by your process).
+
+Copy this description:
+
+> As a buyer, I must provide an address before confirming my order. An empty address must prevent confirmation and produce an explicit message. Fictional scenario used for the TestPulse documentation.
+
+The Explore workshop adds notes, evidence and a bug linked to this work item. Keep its identifier; every project assigns its own.
+
+## If your result differs
+
+- **More than three points:** check configurations and duplicate cases. Do not compare counters while the scope differs.
+- **No creation permission:** ask an administrator to prepare the dataset; reading tutorials still work with an existing plan.
+- **Three unexecuted results in TestPulse:** ensure the ADO results were saved, then regenerate the report.
+- **Two cases and 100% execution despite the third being outstanding:** check that all three cases belong to **TP-DOC — Parcours de commande**, that this child suite is selected in TestPulse and that its own points have the expected outcomes. A root-only plan can produce this incomplete result in 2.73.1.
+- **No User Story type:** use your process’s requirement type and note the terminology difference.
+- **The shop is no longer in its initial state:** click **Reset exercise**. Azure DevOps results remain saved separately.
+
+## Ready for the workshops
+
+<CardGroup cols={3}>
+  <Card title="First report" icon="file-output" href="/en/tutorials/first-report">Generate, understand and export.</Card>
+  <Card title="Understand a NO-GO" icon="shield-check" href="/en/tutorials/understand-no-go">Explain the verdict using evidence.</Card>
+  <Card title="Exploratory session" icon="compass" href="/en/tutorials/exploratory-session">Document the delivery defect.</Card>
+</CardGroup>
