@@ -1,6 +1,6 @@
 ---
-title: "Settings & results import"
-description: "A map of the Settings screen, importing external test results, and consolidated multi-plan reports."
+title: "Settings & imports"
+description: "Settings, XML results import, CSV test-case import and consolidated multi-plan reports."
 icon: "settings"
 ---
 
@@ -28,13 +28,19 @@ Most settings persist **per user** via Azure DevOps Extension Data; a few (a sha
 
 ## Import external results
 
-Open the **Import** tab and drag-and-drop (or pick) an `.xml` file produced by **Cypress, Playwright, Surefire / Maven, NUnit 3 or xUnit 2**. The format is auto-detected from the root tag. Parsed results are previewed (name, outcome, duration, mapped) and **auto-mapped to Azure DevOps test cases by name** (case-insensitive contains); unmapped rows get a manual dropdown. Pick the target plan and click **Import** — a report is saved to History with an **[AUTO]** badge.
+Open **Import → Automated XML results** and drag-and-drop (or pick) an `.xml` file produced by **Cypress, Playwright, Surefire / Maven, NUnit 3 or xUnit 2**. The format is auto-detected from the root tag. Parsed results are previewed (name, outcome, duration, mapped) and **auto-mapped to Azure DevOps test cases by name** (case-insensitive contains); unmapped rows get a manual dropdown. Pick the target plan and click **Import** — a report is saved to History with an **[AUTO]** badge.
 
 <Frame caption="The import drop zone: JUnit, Cypress, Playwright, Surefire, NUnit 3 and xUnit 2 XML files.">
   <img src="/images/en/import-dropzone.png" alt="Results import drop zone listing the supported XML formats" />
 </Frame>
 
-<Note>The XML is parsed **in the browser**. Loading the plan and cases for mapping reads Azure DevOps; saving the report writes to Extension Data. Import **does not publish any run or test result to Azure Test Plans**.</Note>
+<Note>The XML is parsed **in the browser**. Loading the plan and cases for mapping reads Azure DevOps; saving the report writes to Extension Data. XML import **does not publish any run or test result to Azure Test Plans**.</Note>
+
+## Import CSV test cases
+
+The new **Import → CSV test cases** choice prepares cases, their steps and their placement in a plan. It can reuse existing **static** suites or create missing levels, with a preview before confirmation. An existing **ID** reuses a case without replacing its steps. This workflow **writes objects and memberships to Azure DevOps**; its recovery journal stays local to the browser.
+
+This workflow is available from **2.74.0**. Follow the [complete CSV tutorial](/en/tutorials/import-csv-test-cases) for the file format, a mixed-mapping example and recovery after an interruption. The XML workflow above remains dedicated to automated results and **AUTO** reports.
 
 ## Consolidated multi-plan reports
 

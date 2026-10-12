@@ -6,6 +6,18 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées sur cette page. Les versions antérieures à 2.25.0 sont résumées en fin de page ; les guides liés décrivent le fonctionnement actuel.</Note>
 
+<Update label="v2.74.0" description="2026-10-12">
+
+**Importer des cas de test CSV et organiser leurs suites.** Un assistant distinct de l'import XML permet de préparer les colonnes, choisir un plan existant ou nouveau, associer chaque groupe à une suite statique existante ou à un chemin à créer, puis vérifier l'aperçu avant toute écriture Azure DevOps. Les IDs existants sont réutilisés sans modification du contenu des tests. Un journal local permet la vérification avant reprise ; le bilan JSON garde la trace des opérations. [Tutoriel complet et fichiers d'exercice](/fr/tutorials/import-csv-test-cases).
+
+L'assistant présente **cinq étapes** : fichier et colonnes, plan de test, suites, aperçu et résultat. Les suites statiques peuvent être réutilisées et créées dans le même import. Un nouveau plan exige des configurations choisies explicitement. La validation des nouveaux cas pendant l'aperçu utilise Azure DevOps sans enregistrer de work item ; seule la confirmation déclenche les créations.
+
+**Une reprise après contrôle.** En cas de réponse incertaine, vérifiez les objets avant de reprendre. Si une opération n'a réellement pas abouti, une action explicite permet d'en confirmer l'absence après votre contrôle ; TestPulse relit Azure DevOps, trace la résolution et attend une reprise séparée. Aucun succès n'est annulé. Le journal reste dans ce navigateur pour cette organisation, ce projet et cet utilisateur ; stockage local et Web Locks sont requis. Le bilan JSON n'est pas une sauvegarde réimportable.
+
+L'aide embarquée propose **onze guides pratiques** avec l'ajout du parcours CSV. Aucun scope ou dépendance supplémentaire n'est ajouté ; les droits Azure DevOps de création restent nécessaires. L'import de résultats XML, qui sauvegarde un rapport **AUTO**, reste distinct. Voir [Permissions](/fr/security/permissions) et [Lectures et écritures](/fr/concepts/read-only).
+
+</Update>
+
 <Update label="v2.73.3" description="2026-10-12">
 
 **Dix guides pratiques directement dans l'aide embarquée.** Dans **TestPulse → Documentation**, un nouvel accueil permet de choisir sa tâche : premier rapport, recommandation NO-GO, Explore, Repository, Couverture, Cockpit, dérive des exigences, import XML, historique et partage, ou réaffectation en masse. Chaque guide court donne prérequis, étapes, résultats attendus et dépannage en français et en anglais. La référence détaillée et ses liens de navigation restent accessibles.

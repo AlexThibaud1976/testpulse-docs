@@ -13,6 +13,7 @@ TestPulse construit les rapports **dans votre navigateur**. Il n'a pas de backen
 | **Rapports et historique personnel** | Azure DevOps **Extension Data**, par utilisateur à l'échelle de l'organisation. |
 | **Rapports partagés** | Copie du rapport dans Extension Data au niveau projet, quand vous choisissez **Partager avec le projet**. |
 | **Préférences et réglages** | Extension Data, avec portée utilisateur ou projet selon le réglage ; certains choix purement visuels sont conservés dans le navigateur. |
+| **Journal d'import CSV** | Dans le navigateur, lié à l'organisation, au projet et à l'utilisateur. Contient les données nécessaires à la reprise ; il n'est ni partagé au projet ni synchronisé entre appareils. |
 | **Repository et snapshots Cockpit** | Données propres à l'extension dans Azure DevOps ; l'organisation du référentiel et les données partagées de suivi ne sont pas des modifications des résultats de test. |
 | **Sessions exploratoires** | Documents et index dans Extension Data au niveau projet ; sauvegarde automatique pendant la session. |
 | **Captures et fichiers Explore** | Pièces jointes téléversées dans Azure DevOps, puis liées aux work items selon vos actions de création ou de clôture. |
@@ -25,6 +26,8 @@ Le scope projet des sessions n'est pas une frontière de confidentialité entre 
 </Warning>
 
 ## Ce qui sort par export ou notification
+
+L'[import CSV](/fr/tutorials/import-csv-test-cases) conserve un journal de progression local. Le nettoyer ou changer de navigateur fait perdre la possibilité de reprendre depuis ce journal. Le **bilan JSON** téléchargé reste un fichier à protéger selon son contenu ; il ne remplace pas le journal et ne permet pas de le réimporter. Ce parcours est disponible à partir de **2.74.0**.
 
 Un PDF, un document Word, un classeur Excel, un HTML ou une présentation PowerPoint devient un **fichier local**. TestPulse ne contrôle plus sa diffusion une fois que vous le partagez.
 

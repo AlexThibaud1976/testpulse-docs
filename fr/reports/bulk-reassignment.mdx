@@ -6,7 +6,7 @@ icon: "users"
 
 Azure DevOps sait assigner des testeurs au niveau d'une suite, mais **l'action ne cascade pas vers les suites enfants**. Sur un plan de 172 suites portant 296 test points, réaffecter un testeur impose d'ouvrir jusqu'à 172 suites à la main.
 
-L'import CSV et la grille d'édition en masse n'aident pas davantage : ils modifient des **champs du work item Cas de test**, alors que le testeur et la configuration appartiennent au **test point**. Aucun contournement natif n'existe.
+L'import CSV natif et la grille d'édition en masse portent sur les **champs du work item Cas de test**, alors que le testeur et la configuration appartiennent au **test point**. Le [parcours CSV de TestPulse](/fr/tutorials/import-csv-test-cases) crée ou rattache des cas à des suites statiques avec leurs configurations cibles ; il ne réaffecte pas les testeurs ni les configurations des points existants. Utilisez **Réaffectation en masse** pour cette modification.
 
 L'onglet **Réaffectation en masse** comble ce trou. Il parcourt le plan, montre ce qui s'y trouve réellement, et applique le changement en une passe.
 

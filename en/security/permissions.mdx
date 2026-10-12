@@ -14,12 +14,16 @@ A **scope** allows the extension to request a family of operations. Your **accou
 | `vso.work` | Read work items, links, classifications and available states needed by the features used. |
 | `vso.identity` | Resolve tester and assignee names. |
 | `vso.build` | Read the build associated with the report. |
-| `vso.test_write` | Create plans and suites from Coverage Builder or Repository, add cases to a target from Repository, reassign testers or configurations. |
-| `vso.work_write` | Explore: create bugs, cases and the tracking Task, upload their attachments, set the Task's state at closure if requested, and report a promotion decision on the host work item if enabled. |
+| `vso.test_write` | Create plans and suites from Coverage Builder, Repository or CSV import, add cases to their target suites, reassign testers or configurations. |
+| `vso.work_write` | Create CSV-imported cases. Explore: create bugs, cases and the tracking Task, upload their attachments, set the Task's state at closure if requested, and report a promotion decision on the host work item if enabled. |
 
 Reports, settings, Repository and session saves also use **Azure DevOps Extension Data**. They do not modify test results; several saves are automatic. The [action matrix](/en/concepts/read-only) lists targets and triggers.
 
 ## Writing to plans and points
+
+**CSV test-case import:** the workflow uses existing `vso.work_write` to create cases and `vso.test_write` to create a plan or static suites and add their cases. No additional scope is added. User rights on cases, plans, suites and area paths are still required. Cases identified by ID are reused without changing their fields. See the [CSV tutorial](/en/tutorials/import-csv-test-cases), available from **2.74.0**.
+
+To create new cases, your account also needs **Create tag definition** at project level. TestPulse adds a technical `testpulse-csv:` tag to each new case so it can find a creation after a lost response. Cases reused by ID do not receive this tag. If tag creation is denied, ask a project administrator to check this permission; no new extension scope is needed.
 
 **Coverage Builder** creates a new plan and requirement-based suites after confirmation. It does not replace an existing plan.
 

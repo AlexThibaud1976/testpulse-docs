@@ -6,7 +6,7 @@ icon: "users"
 
 Azure DevOps can assign testers at the level of a single suite, but **the action does not cascade into child suites**. On a plan of 172 suites holding 296 test points, reassigning a tester means opening up to 172 suites by hand.
 
-CSV import and the bulk-edit grid cannot help either: they edit **Test Case work item fields**, while the tester and the configuration belong to the **test point**. There is no native way around it.
+Native CSV import and the bulk-edit grid operate on **Test Case work item fields**, while the tester and configuration belong to the **test point**. [TestPulse CSV import](/en/tutorials/import-csv-test-cases) creates or attaches cases to static suites with their target configurations; it does not reassign testers or configurations of existing points. Use **Bulk reassignment** for that change.
 
 The **Bulk reassignment** tab closes that gap. It walks the plan, shows what is actually there, and applies the change in one pass.
 

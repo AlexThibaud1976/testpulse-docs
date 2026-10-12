@@ -24,11 +24,14 @@ Distinguish **Azure DevOps business data** — plans, suites, points, work items
 | Close an Explore session | Session and selected entries. | Tracking Task with report, links and attachments; that Task's state if requested. The session is saved as closed. | Confirmed closure dialog. |
 | Record a promotion decision | Environment, transition and decision. | Decision in the session; when host reporting is enabled, a tag and comment on the host work item. Its state and assignee are unchanged. | Decision recorded at closure. |
 | Import XML | File parsed in the browser; Azure DevOps reads for the plan and test-case mapping. | **[AUTO]** report in Extension Data history. No run or result is published to Test Plans. | **Import** after preview. |
+| Import CSV test cases | Local parsing and reading of targets and IDs; new case contents sent to Azure DevOps for validation without saving during preview. | After confirmation: new cases/plans/suites and memberships in Azure DevOps; recovery journal in the browser. Reused cases are not modified. | **Confirm and import** after preview. |
 | Share, annotate or approve a report | Saved snapshot. | Project-shared copy, notes and status transitions in Extension Data. | Corresponding history action. |
 | Export | Report, analysis or session; some images are read again from Azure DevOps. | File downloaded to your device. | Chosen format's button. |
 | Test a webhook or notify | Message built in the browser. | Sample message or title, environment and KPIs sent to the configured Teams/Slack URL. | **Test** or **Notify**. |
 
 ## Writes to existing objects
+
+[CSV test-case import](/en/tutorials/import-csv-test-cases), available from **2.74.0**, adds cases to static suites. It publishes no execution result and does not replace the steps of reused IDs. Its JSON report is not an undo mechanism: after an interruption, keep the journal and verify before resuming.
 
 [Generation from Repository](/en/test-repository/generate-a-plan) can add cases to an existing shared structure. [Bulk reassignment](/en/reports/bulk-reassignment) changes testers or configurations. A [promotion decision](/en/exploratory/promotion-decision) can add a tag and comment to the host work item. These actions have different effects: check the target and preview of the action you use.
 

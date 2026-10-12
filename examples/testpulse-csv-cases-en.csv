@@ -1,0 +1,4 @@
+External Key,ID,Title,Test Step,Step Action,Step Expected,Suite Path,Priority
+SHOP-001,,Sign in with a valid account,1,Open the sign-in page,The sign-in form appears,Sign-in,2
+SHOP-001,,Sign in with a valid account,2,Enter a valid demo account and submit,The account dashboard appears,Sign-in,2
+SHOP-002,,Pay for an order,1,Confirm a simulated payment in the demo shop,The demo order is confirmed,Orders > Payment,2
