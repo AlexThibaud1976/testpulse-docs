@@ -5,7 +5,7 @@ icon: "file-spreadsheet"
 ---
 
 <Info>
-**Available from TestPulse 2.74.0.** This guide describes the **CSV test cases** workflow. XML results import remains a separate workflow.
+**Available from TestPulse 2.74.0.** Use **2.74.1 or later** for the preview preparation fix described in troubleshooting. This guide describes the **CSV test cases** workflow. XML results import remains a separate workflow.
 </Info>
 
 ## What you will achieve
@@ -127,6 +127,18 @@ After an interruption or uncertain outcome, keep the journal and report. Do not 
 This action handles a verified absence; it does not replace investigation of an ambiguous outcome or undo any successful operation.
 
 ## Troubleshooting
+
+### A 403 while preparing the preview in 2.74.0
+
+Version **2.74.1** fixes a service-address resolution defect: the validation request could go to the extension hosting address instead of the Azure DevOps service. This error occurred before any case or suite was created. Granting more permissions does not fix this routing defect.
+
+1. After updating, **reload the Azure DevOps tab** and check that **Documentation** shows **2.74.1 or later**.
+2. Select the CSV again if needed, review mappings and destinations, then click **Prepare preview**.
+3. If an earlier import already performed writes, preserve its journal and use **Verify and resume** instead of starting a new import.
+
+A different 403 can have another cause. If the issue persists after reloading, record the step and complete message for diagnosis without sharing a token. Azure DevOps field rules and permissions still apply.
+
+### Other situations
 
 | Symptom | Check or action |
 | --- | --- |

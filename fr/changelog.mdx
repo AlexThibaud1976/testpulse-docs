@@ -6,6 +6,14 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées sur cette page. Les versions antérieures à 2.25.0 sont résumées en fin de page ; les guides liés décrivent le fonctionnement actuel.</Note>
 
+<Update label="v2.74.1" description="2026-10-12">
+
+**Corriger l'erreur 403 à la préparation de l'aperçu CSV.** En 2.74.0, une adresse de service mal résolue pouvait envoyer la validation vers l'hébergement de l'extension et empêcher l'aperçu, avant toute création de cas ou de suite. TestPulse résout et contrôle maintenant l'adresse Azure DevOps avant la requête. Aucun scope supplémentaire n'est ajouté.
+
+Après la mise à jour, **rechargez l'onglet Azure DevOps**, vérifiez la version dans **Documentation**, puis contrôlez le fichier et ses correspondances avant **Préparer l'aperçu**. Si un import avait déjà effectué des écritures, conservez son journal et utilisez **Vérifier et reprendre**. Les autres erreurs de permission ou de validation des champs restent à diagnostiquer selon leur message. Voir le [dépannage du tutoriel CSV](/fr/tutorials/import-csv-test-cases).
+
+</Update>
+
 <Update label="v2.74.0" description="2026-10-12">
 
 **Importer des cas de test CSV et organiser leurs suites.** Un assistant distinct de l'import XML permet de préparer les colonnes, choisir un plan existant ou nouveau, associer chaque groupe à une suite statique existante ou à un chemin à créer, puis vérifier l'aperçu avant toute écriture Azure DevOps. Les IDs existants sont réutilisés sans modification du contenu des tests. Un journal local permet la vérification avant reprise ; le bilan JSON garde la trace des opérations. [Tutoriel complet et fichiers d'exercice](/fr/tutorials/import-csv-test-cases).

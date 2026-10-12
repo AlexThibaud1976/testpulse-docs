@@ -6,6 +6,14 @@ icon: "clock"
 
 <Note>Recent releases are detailed on this page. Releases before 2.25.0 are summarised at the end; linked guides describe current behaviour.</Note>
 
+<Update label="v2.74.1" description="2026-10-12">
+
+**Fix the 403 during CSV preview preparation.** In 2.74.0, an incorrectly resolved service address could send validation to the extension hosting address and stop the preview before any case or suite was created. TestPulse now resolves and checks the Azure DevOps address before sending the request. No additional scope is added.
+
+After updating, **reload the Azure DevOps tab**, check the version in **Documentation**, then review the file and mappings before **Prepare preview**. If an import already performed writes, preserve its journal and use **Verify and resume**. Other permission or field-validation errors still need diagnosis based on their messages. See [CSV tutorial troubleshooting](/en/tutorials/import-csv-test-cases).
+
+</Update>
+
 <Update label="v2.74.0" description="2026-10-12">
 
 **Import CSV test cases and organise their suites.** A separate assistant from XML import lets you map columns, choose an existing or new plan, map each group to an existing static suite or a path to create, and review a preview before Azure DevOps writes. Existing IDs are reused without changing test contents. A local journal supports verification before resuming; a JSON report records the operations. [Complete tutorial and practice files](/en/tutorials/import-csv-test-cases).
