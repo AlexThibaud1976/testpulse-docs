@@ -8,13 +8,17 @@ icon: "circle-help"
 
 La page **Documentation** affiche la version de l'extension chargée dans votre onglet. Après une mise à jour, rechargez l'onglet Azure DevOps, puis rouvrez **TestPulse → Documentation**. Si la version reste ancienne, demandez à votre administrateur de vérifier la version installée dans l'organisation ou la collection. Sur Server, la mise à jour passe par le package approuvé de l'extension.
 
-L'aide embarquée de la **2.74.0** comprend onze guides pratiques ; la documentation en ligne et l'extension sont mises à jour séparément. Voir le [guide d'installation](/fr/getting-started/installation) et les [notes de version](/fr/changelog).
+L'aide embarquée de la **2.74.1** comprend onze guides pratiques ; la documentation en ligne et l'extension sont mises à jour séparément. Voir le [guide d'installation](/fr/getting-started/installation) et les [notes de version](/fr/changelog).
 
 ## Je veux importer des cas CSV avec leurs suites
 
 Depuis **2.74.0**, ouvrez **Import → Cas de test CSV**. Le parcours XML voisin sert aux résultats automatisés et aux rapports AUTO. Le CSV permet de créer des cas ou de réutiliser leurs IDs, puis de les rattacher à des suites **statiques** existantes ou nouvelles. Il n'écrase pas les étapes des cas existants. Voir le [tutoriel CSV complet](/fr/tutorials/import-csv-test-cases).
 
 Après une coupure, conservez le journal local et utilisez **Vérifier et reprendre**. Ne supprimez pas les données du navigateur pour contourner un résultat incertain. Une résolution par absence demande votre propre contrôle dans Azure DevOps, puis une vérification automatique avant une reprise séparée. Le journal CSV est distinct du quota d'historique Extension Data.
+
+## La préparation de l'aperçu CSV renvoie un 403 en 2.74.0
+
+La **2.74.1** corrige un défaut d'adresse de service qui pouvait bloquer cette étape avant toute création. Après la mise à jour, rechargez l'onglet Azure DevOps, vérifiez la version dans **Documentation**, puis contrôlez le fichier et ses correspondances avant **Préparer l'aperçu**. Ajouter des permissions ne corrige pas ce défaut de routage. Pour un import ayant déjà effectué des écritures, conservez le journal et utilisez **Vérifier et reprendre**. Voir le [dépannage CSV](/fr/tutorials/import-csv-test-cases).
 
 ## Mon rapport est vide ou Générer ne produit pas de fichier
 

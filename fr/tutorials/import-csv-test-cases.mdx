@@ -5,7 +5,7 @@ icon: "file-spreadsheet"
 ---
 
 <Info>
-**Disponible à partir de TestPulse 2.74.0.** Ce guide décrit le parcours **Cas de test CSV**. L'import de résultats XML reste un parcours distinct.
+**Disponible à partir de TestPulse 2.74.0.** Utilisez **2.74.1 ou une version ultérieure** pour bénéficier du correctif de préparation de l'aperçu décrit dans le dépannage. Ce guide décrit le parcours **Cas de test CSV**. L'import de résultats XML reste un parcours distinct.
 </Info>
 
 ## Ce que vous allez obtenir
@@ -127,6 +127,18 @@ Après une interruption ou un résultat incertain, conservez le journal et le bi
 Cette action traite une absence vérifiée ; elle ne remplace pas l'examen d'un résultat encore ambigu et n'annule aucun succès.
 
 ## Dépannage
+
+### Erreur 403 pendant la préparation de l'aperçu en 2.74.0
+
+La version **2.74.1** corrige un défaut de résolution de l'adresse de service : la demande de validation pouvait partir vers l'hébergement de l'extension au lieu du service Azure DevOps. Cette erreur intervenait avant toute création de cas ou de suite. Ajouter des droits ne corrige pas ce défaut de routage.
+
+1. Après la mise à jour, **rechargez l'onglet Azure DevOps** et vérifiez que **Documentation** affiche **2.74.1 ou une version ultérieure**.
+2. Sélectionnez à nouveau le CSV si nécessaire, contrôlez les correspondances et les cibles, puis cliquez sur **Préparer l'aperçu**.
+3. Si un import antérieur avait déjà effectué des écritures, conservez son journal et utilisez **Vérifier et reprendre**, au lieu de démarrer un nouvel import.
+
+Un autre refus 403 peut avoir une cause différente. Si le blocage persiste après actualisation, relevez l'étape et le message complet pour le diagnostic, sans transmettre de jeton. Les contrôles de champs et les permissions Azure DevOps restent applicables.
+
+### Autres situations
 
 | Symptôme | Vérification ou action |
 | --- | --- |
