@@ -24,11 +24,14 @@ Il faut distinguer les **données métier Azure DevOps** — plans, suites, poin
 | Clôturer une session Explore | Session et éléments retenus. | Tâche de suivi avec rapport, liens et pièces jointes ; état de cette tâche si demandé. La session est sauvegardée comme close. | Dialogue de clôture confirmé. |
 | Acter une décision de passage | Environnement, transition et décision. | Décision dans la session ; si le report sur la fiche est activé, tag et commentaire sur la fiche hôte. Son état et son affectation ne sont pas changés. | Décision enregistrée à la clôture. |
 | Importer un XML | Analyse du fichier dans le navigateur ; lecture Azure DevOps pour le plan et le mapping des cas. | Rapport **[AUTO]** dans l'historique Extension Data. Aucun run ni résultat n'est publié dans Test Plans. | **Importer** après aperçu. |
+| Importer des cas CSV | Analyse locale, lecture des cibles et IDs ; envoi du contenu des nouveaux cas à Azure DevOps pour validation sans enregistrement pendant l'aperçu. | Après confirmation : nouveaux cas/plans/suites et rattachements dans Azure DevOps ; journal de reprise dans le navigateur. Les cas réutilisés ne sont pas modifiés. | **Confirmer et importer** après aperçu. |
 | Partager, annoter ou approuver un rapport | Instantané enregistré. | Copie partagée au projet, notes et transitions de statut dans Extension Data. | Action correspondante dans l'historique. |
 | Exporter | Rapport, analyse ou session ; certaines images sont relues depuis Azure DevOps. | Fichier téléchargé sur votre appareil. | Bouton du format choisi. |
 | Tester un webhook ou notifier | Construction d'un message dans le navigateur. | Message d'exemple ou titre, environnement et KPIs envoyés à l'URL Teams/Slack configurée. | **Tester** ou **Notifier**. |
 
 ## Les écritures sur des objets existants
+
+L'[import de cas CSV](/fr/tutorials/import-csv-test-cases), disponible à partir de **2.74.0**, ajoute des cas à des suites statiques. Il ne publie aucun résultat d'exécution et ne remplace pas les étapes des IDs réutilisés. Son bilan JSON n'est pas une annulation : après une interruption, conservez le journal et utilisez la vérification avant reprise.
 
 La [génération depuis Repository](/fr/test-repository/generate-a-plan) peut ajouter des cas à une structure partagée existante. La [réaffectation en masse](/fr/reports/bulk-reassignment) modifie testeurs ou configurations. La [décision de passage](/fr/exploratory/promotion-decision) peut ajouter un tag et un commentaire à la fiche hôte. Ces actions ont des effets différents : vérifiez la cible et l'aperçu de l'action que vous utilisez.
 

@@ -1,6 +1,6 @@
 ---
-title: "Paramètres & import de résultats"
-description: "Une carte de l'écran Paramètres, l'import de résultats de tests externes, et les rapports consolidés multi-plans."
+title: "Paramètres & imports"
+description: "Paramètres, import de résultats XML, import de cas CSV et rapports consolidés multi-plans."
 icon: "settings"
 ---
 
@@ -28,13 +28,19 @@ La plupart des paramètres sont mémorisés **par utilisateur** via Azure DevOps
 
 ## Importer des résultats externes
 
-Ouvrez l'onglet **Import** et glissez-déposez (ou choisissez) un fichier `.xml` produit par **Cypress, Playwright, Surefire / Maven, NUnit 3 ou xUnit 2**. Le format est détecté automatiquement depuis le tag racine. Les résultats analysés sont prévisualisés (nom, résultat, durée, mappé) et **auto-mappés aux cas de test Azure DevOps par nom** (contains insensible à la casse) ; les lignes non mappées reçoivent une liste manuelle. Choisissez le plan cible et cliquez sur **Importer** — un rapport est sauvegardé dans l'Historique avec un badge **[AUTO]**.
+Ouvrez **Import → Résultats automatisés XML** et glissez-déposez (ou choisissez) un fichier `.xml` produit par **Cypress, Playwright, Surefire / Maven, NUnit 3 ou xUnit 2**. Le format est détecté automatiquement depuis le tag racine. Les résultats analysés sont prévisualisés (nom, résultat, durée, mappé) et **auto-mappés aux cas de test Azure DevOps par nom** (contains insensible à la casse) ; les lignes non mappées reçoivent une liste manuelle. Choisissez le plan cible et cliquez sur **Importer** — un rapport est sauvegardé dans l'Historique avec un badge **[AUTO]**.
 
 <Frame caption="La zone de dépôt d'import : fichiers XML JUnit, Cypress, Playwright, Surefire, NUnit 3 et xUnit 2.">
   <img src="/images/fr/import-dropzone.png" alt="Zone de dépôt d'import des résultats listant les formats XML pris en charge" />
 </Frame>
 
-<Note>Le parsing du XML se fait **dans le navigateur**. Le chargement du plan et des cas pour le mapping lit Azure DevOps ; la sauvegarde du rapport écrit dans Extension Data. L'import **ne publie aucun run ni résultat de test dans Azure Test Plans**.</Note>
+<Note>Le parsing du XML se fait **dans le navigateur**. Le chargement du plan et des cas pour le mapping lit Azure DevOps ; la sauvegarde du rapport écrit dans Extension Data. L'import XML **ne publie aucun run ni résultat de test dans Azure Test Plans**.</Note>
+
+## Importer des cas de test CSV
+
+Le nouveau choix **Import → Cas de test CSV** prépare des cas, leurs étapes et leur classement dans un plan. Il permet de réutiliser des suites **statiques** existantes ou de créer les niveaux manquants, avec un aperçu avant confirmation. Un **ID** existant réutilise le cas sans en remplacer les étapes. Ce parcours **écrit des objets et rattachements dans Azure DevOps** ; son journal de reprise reste local au navigateur.
+
+Ce parcours est disponible à partir de **2.74.0**. Suivez le [tutoriel CSV complet](/fr/tutorials/import-csv-test-cases) pour le format du fichier, un exemple de correspondance mixte et la conduite à tenir après une interruption. L'import XML décrit ci-dessus reste destiné aux résultats automatisés et aux rapports **AUTO**.
 
 ## Rapports consolidés multi-plans
 

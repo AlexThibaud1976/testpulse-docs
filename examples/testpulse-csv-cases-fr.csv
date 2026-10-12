@@ -1,0 +1,4 @@
+External Key,ID,Title,Test Step,Step Action,Step Expected,Suite Path,Priority
+BOUTIQUE-001,,Se connecter avec un compte valide,1,Ouvrir la page de connexion,Le formulaire de connexion apparaît,Connexion,2
+BOUTIQUE-001,,Se connecter avec un compte valide,2,Saisir un compte de démonstration valide puis valider,Le tableau de bord du compte apparaît,Connexion,2
+BOUTIQUE-002,,Payer une commande,1,Valider le paiement simulé dans la boutique de démonstration,La commande de démonstration est confirmée,Commandes > Paiement,2

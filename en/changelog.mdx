@@ -6,6 +6,18 @@ icon: "clock"
 
 <Note>Recent releases are detailed on this page. Releases before 2.25.0 are summarised at the end; linked guides describe current behaviour.</Note>
 
+<Update label="v2.74.0" description="2026-10-12">
+
+**Import CSV test cases and organise their suites.** A separate assistant from XML import lets you map columns, choose an existing or new plan, map each group to an existing static suite or a path to create, and review a preview before Azure DevOps writes. Existing IDs are reused without changing test contents. A local journal supports verification before resuming; a JSON report records the operations. [Complete tutorial and practice files](/en/tutorials/import-csv-test-cases).
+
+The assistant has **five steps**: file and columns, test plan, suites, preview and result. Static suites can be reused and created in the same import. A new plan requires explicitly selected configurations. Previewing validates new case contents in Azure DevOps without saving a work item; only confirmation starts creation.
+
+**Recovery after verification.** After an uncertain response, check existing objects before resuming. When an operation really did not complete, an explicit action lets you confirm its absence after your own review; TestPulse reads Azure DevOps again, records the resolution and waits for a separate resume action. Successful operations are not rolled back. The journal stays in this browser for this organisation, project and user; local storage and Web Locks are required. The JSON report is not a backup that can be imported again.
+
+Embedded help offers **eleven practical guides** with the CSV workflow added. No extra scope or dependency is introduced; Azure DevOps creation rights remain necessary. XML results import, which saves an **AUTO** report, stays separate. See [Permissions](/en/security/permissions) and [Reads and writes](/en/concepts/read-only).
+
+</Update>
+
 <Update label="v2.73.3" description="2026-10-12">
 
 **Ten practical guides inside the embedded help.** In **TestPulse → Documentation**, a new home lets you choose a task: first report, NO-GO recommendation, Explore, Repository, Coverage, Cockpit, requirement drift, XML import, history and sharing, or bulk reassignment. Each short guide gives prerequisites, steps, expected results and troubleshooting in English and French. The detailed reference and its navigation links remain available.

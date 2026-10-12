@@ -13,6 +13,7 @@ TestPulse builds reports **in your browser**. It has no TestPulse backend that r
 | **Reports and personal history** | Azure DevOps **Extension Data**, per user across the organisation. |
 | **Shared reports** | Copy of the report in project-level Extension Data when you choose **Share to project**. |
 | **Preferences and settings** | Extension Data, at user or project scope depending on the setting; some visual-only choices are stored in the browser. |
+| **CSV import journal** | In the browser, scoped to the organisation, project and user. Contains the data needed to resume; not project-shared or synchronised between devices. |
 | **Repository and Cockpit snapshots** | Extension-owned data in Azure DevOps; repository organisation and shared tracking data do not modify test results. |
 | **Exploratory sessions** | Documents and index in project-level Extension Data; automatic saving during the session. |
 | **Explore captures and files** | Attachments uploaded to Azure DevOps, then linked to work items through your creation or closure actions. |
@@ -25,6 +26,8 @@ Project scope for sessions is not a confidentiality boundary between teams: sess
 </Warning>
 
 ## What leaves through exports or notifications
+
+[CSV import](/en/tutorials/import-csv-test-cases) keeps a local progress journal. Clearing it or changing browsers removes the ability to resume from that journal. A downloaded **JSON report** remains a file to protect according to its contents; it does not replace the journal and cannot be imported to restore it. This workflow is available from **2.74.0**.
 
 A PDF, Word document, Excel workbook, HTML or PowerPoint presentation becomes a **local file**. TestPulse no longer controls its distribution once you share it.
 

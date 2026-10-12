@@ -1,0 +1,150 @@
+---
+title: "Importer des cas CSV et organiser leurs suites"
+description: "Créer des tests depuis un CSV, réutiliser des suites statiques et construire les niveaux manquants après contrôle de l'aperçu."
+icon: "file-spreadsheet"
+---
+
+<Info>
+**Disponible à partir de TestPulse 2.74.0.** Ce guide décrit le parcours **Cas de test CSV**. L'import de résultats XML reste un parcours distinct.
+</Info>
+
+## Ce que vous allez obtenir
+
+Vous partez d'un petit fichier de tests d'une boutique. À la fin, un plan contient :
+
+- le test **Se connecter avec un compte valide**, avec deux étapes, dans une suite statique existante ;
+- le test **Payer une commande**, avec une étape, dans un nouveau chemin **Commandes → Paiement** ;
+- un bilan JSON permettant d'identifier les créations, les rattachements et les opérations qui nécessitent une vérification.
+
+Les suites sont de vrais objets **Azure Test Plans**. Elles sont distinctes des dossiers du [Repository](/fr/test-repository/overview).
+
+## Avant de commencer
+
+Prévoyez un projet d'exercice, un plan lisible et une suite **statique** existante nommée **Authentification**. Vous devez pouvoir créer des cas de test, gérer les suites et ajouter des tests au plan. Créer de nouveaux cas exige aussi **Create tag definition** au niveau du projet, pour les tags techniques de reprise ajoutés par TestPulse. La création d'un nouveau plan nécessite les droits correspondants sur son area path. Les droits de l'extension ne remplacent pas ceux de votre compte : voir [Permissions](/fr/security/permissions).
+
+Commencez avec le [CSV d'exercice en français](/examples/testpulse-csv-cases-fr.csv). Il contient uniquement de nouveaux tests ; aucun ID Azure DevOps fictif n'y est utilisé. Le bouton **Télécharger le modèle** dans l'assistant fournit également une base à adapter.
+
+<Warning>
+**Confirmer et importer** crée des objets et des rattachements dans Azure DevOps. Aucun retour arrière automatique n'est prévu. Le chargement du fichier et la préparation de l'aperçu ne créent rien dans le projet.
+</Warning>
+
+## Réaliser l'import
+
+<Steps>
+  <Step title="Fichier et colonnes">
+    Ouvrez **TestPulse → Import → Cas de test CSV**, puis **Choisir un fichier CSV**. Chargez le fichier d'exercice, encodé en **UTF-8**.
+
+    Vérifiez les correspondances de colonnes, notamment **External Key**, **Title**, **Test Step**, **Step Action**, **Step Expected** et **Suite Path**. Une colonne contenant des données doit être associée à un champ ou explicitement ignorée. Les messages indiquent les lignes à corriger.
+
+    Le fichier d'exercice contient **trois lignes d'étapes, mais deux cas de test**. Les deux lignes portant la clé `BOUTIQUE-001` forment un seul cas avec deux étapes. Ne modifiez pas la clé à chaque étape.
+  </Step>
+  <Step title="Plan de test">
+    Choisissez **un plan existant** et sélectionnez votre plan d'exercice. Contrôlez son nom et son ID.
+
+    L'autre option permet de **créer un nouveau plan** : renseignez ses informations et choisissez explicitement au moins une configuration de test existante et active. Les configurations inactives ne sont pas proposées. Le plan sera créé uniquement lors de l'exécution, après l'aperçu. Pour suivre ce scénario de réutilisation d'une suite, conservez le plan existant.
+  </Step>
+  <Step title="Suites">
+    Pour le groupe **Connexion**, choisissez **Suite existante**, puis votre suite **Authentification**. Vérifiez son chemin et son ID : deux suites peuvent porter le même nom sous des parents différents.
+
+    Pour le groupe **Commandes > Paiement**, choisissez **Créer ou réutiliser un chemin**, choisissez le parent statique voulu et gardez le chemin `Commandes > Paiement`. Les niveaux existants sont réutilisés lorsqu'ils sont identifiés sans ambiguïté ; les niveaux manquants sont prévus pour création.
+
+    Ces choix peuvent être combinés dans un même import. Si votre fichier n'a pas de classement, sélectionnez plusieurs cas sans groupe et utilisez **Créer un groupe**, puis affectez ce groupe à une destination.
+
+    Seules les suites **statiques** sont proposées comme cibles. Les suites basées sur une requête ou une exigence ne font pas partie de ce parcours.
+  </Step>
+  <Step title="Aperçu">
+    Cliquez sur **Préparer l'aperçu**. L'assistant lit Azure DevOps pour vérifier la cible et les cas existants. Il transmet aussi le contenu des nouveaux cas à Azure DevOps pour valider les champs et les règles du projet, **sans enregistrer de work item**. Il présente ensuite les opérations prévues.
+
+    Contrôlez le plan, les chemins complets, les tests à créer ou réutiliser, les suites à créer ou réutiliser et les rattachements. Dans ce scénario, vous attendez **deux nouveaux tests** et **deux rattachements**. Le nombre de suites à créer dépend de la présence de **Commandes** et **Paiement** dans votre plan.
+
+    Corrigez les blocages avant de continuer. Vérifiez aussi les données de chaque test : un aperçu valide ne garantit pas que le scénario métier soit correct.
+  </Step>
+  <Step title="Résultat">
+    Si l'aperçu correspond au changement voulu, cliquez sur **Confirmer et importer**. Gardez l'onglet ouvert pendant les opérations.
+
+    Lisez le bilan, puis utilisez **Télécharger le bilan JSON**. Suivez les liens vers les objets pour contrôler le résultat dans Azure DevOps.
+
+    Si vous devez interrompre l'import, **Arrêter après l'opération en cours** laisse finir la requête déjà envoyée. Les créations réussies restent présentes. Pour continuer, utilisez **Vérifier et reprendre** : la reprise vérifie l'état enregistré et relit Azure DevOps avant les opérations restantes.
+  </Step>
+</Steps>
+
+## Vérifier le résultat
+
+1. Ouvrez le plan et la suite **Authentification**. Le test **Se connecter avec un compte valide** doit apparaître une seule fois.
+2. Ouvrez sa fiche : elle doit comporter **deux étapes**, dans le bon ordre, avec leurs résultats attendus.
+3. Ouvrez le chemin **Commandes → Paiement** sous le parent choisi. Le test **Payer une commande** doit s'y trouver.
+4. Comparez les IDs et les destinations au bilan JSON. La création de tests n'exécute aucun test et ne constitue pas une preuve de réussite.
+
+## Préparer votre propre fichier
+
+La limite de fichier est **5 Mio**, avec au maximum **10 000 lignes de données** et **100 colonnes**. Utilisez l'UTF-8, avec ou sans BOM. Les séparateurs virgule, point-virgule et tabulation sont pris en charge. Encadrez de guillemets une cellule contenant le séparateur, un guillemet ou un retour à la ligne ; doublez les guillemets internes selon les règles CSV. Un fichier Excel `.xlsx` doit d'abord être exporté en CSV.
+
+| Colonne | Utilisation |
+| --- | --- |
+| **External Key** | Clé stable du test dans le fichier, par exemple `TC-001`. Répétez-la pour les étapes et les classements du même test. Elle n'est pas un ID Azure DevOps. |
+| **ID** | ID réel d'un cas de test du projet pour le réutiliser. Laissez vide pour créer un nouveau cas. |
+| **Title** | Titre du nouveau cas. Deux titres identiques ne suffisent pas à identifier un même test. |
+| **Test Step** | Numéro d'étape. Les lignes d'un même test sont regroupées et ordonnées. |
+| **Step Action / Step Expected** | Action et résultat attendu d'une étape simple. |
+| **Suite Path** | Groupe ou chemin, par exemple `Commandes > Paiement`. Le caractère `/` fait partie du nom et ne crée pas un niveau. |
+| **Area Path / Iteration Path** | Classements du nouveau cas, soumis aux chemins et droits du projet. |
+| **Assigned To / Priority / State / Tags** | Champs du nouveau cas ; les valeurs doivent être valides pour votre projet. **Assigned To** désigne le responsable du work item, pas le testeur d'un point de test. |
+| **Work Item Type** | Si renseigné, le type doit correspondre à un cas de test. L'assistant n'importe pas des bugs ou des tâches. |
+
+Pour un nom de suite contenant lui-même `>`, la valeur de **Suite Path** peut être un tableau JSON de segments, par exemple `["A > B", "Paiement"]`. Dans un fichier CSV, ces guillemets doivent aussi être échappés. Préférez le modèle et vérifiez toujours le chemin affiché.
+
+Les étapes partagées, les jeux de paramètres et les pièces jointes ne sont pas importés par ce parcours. Ne les convertissez pas silencieusement en étapes simples : conservez-les et traitez-les séparément dans Azure DevOps.
+
+### Réutiliser un test existant
+
+Renseignez son **ID** réel et vérifiez que l'aperçu retrouve le bon cas dans le projet. Le test est rattaché à la suite choisie ; son titre, ses étapes et ses champs **ne sont pas modifiés par le CSV**. Il n'existe pas de rapprochement automatique par titre.
+
+Pour placer un même nouveau test dans plusieurs groupes, conservez la même **External Key** avec des chemins de suite distincts et des données cohérentes. L'aperçu doit montrer un seul test à créer et plusieurs rattachements. Contrôlez ce point avant d'importer.
+
+La clé de fichier n'est pas un mécanisme de synchronisation permanent. Démarrer un nouvel import sans ID peut créer un nouveau cas, même si vous utilisez la même clé ou le même titre. Utilisez le journal pour reprendre l'import en cours et les IDs Azure DevOps pour des rattachements ultérieurs.
+
+Un tag technique commençant par `testpulse-csv:` est ajouté aux **nouveaux cas** afin de retrouver une création après une réponse perdue. Ne l'utilisez pas pour vos propres tags et ne le retirez pas tant que l'import n'est pas terminé. Les cas réutilisés par ID ne reçoivent pas ce tag.
+
+## Comprendre la reprise
+
+Le journal de progression est stocké **dans ce navigateur**, dans le contexte de l'organisation, du projet et de l'utilisateur. Il contient les données nécessaires à la reprise ; il n'est pas partagé avec l'équipe ni automatiquement transféré sur un autre appareil. Le bilan JSON est une trace téléchargée, pas une commande d'annulation ni une sauvegarde réimportable du journal.
+
+L'exécution nécessite le stockage local et la fonction de verrouillage **Web Locks** du navigateur, qui empêche deux onglets d'exécuter le même import simultanément. Si ces fonctions sont indisponibles, l'assistant bloque l'écriture. Utilisez un navigateur récent et gardez un seul onglet actif pour l'import.
+
+Une coupure peut survenir **après** une création côté Azure DevOps mais **avant** sa confirmation dans le navigateur. Dans ce cas, l'absence de réponse ne signifie pas que rien n'a été créé. La reprise vérifie les objets et signale les résultats qui restent ambigus. Elle ne doit pas recréer aveuglément ces objets.
+
+<Warning>
+Après une interruption ou un résultat incertain, conservez le journal et le bilan. N'effacez pas les données du navigateur et ne recommencez pas le fichier comme un nouvel import pour contourner le blocage. Vérifiez les objets présents dans Azure DevOps et le message de reprise ; si l'ambiguïté persiste, faites examiner le bilan avant une nouvelle écriture.
+</Warning>
+
+### Quand une opération incertaine n'a réellement pas abouti
+
+1. Téléchargez le bilan et examinez la ligne **À vérifier** : objet attendu, plan, suite, cas et destination. Contrôlez directement dans Azure DevOps que cette opération n'a pas abouti. Un chargement incomplet ou un accès refusé ne prouve pas l'absence d'un objet.
+2. Seulement après ce contrôle, utilisez sur cette ligne **J’ai vérifié que cette opération n’a pas abouti**. Relisez **Autoriser une nouvelle tentative ?** et cochez sa confirmation : vous autorisez la possibilité de recréer l'objet ou le rattachement lors de la prochaine reprise.
+3. Cliquez sur **Confirmer l’absence et autoriser la reprise**. TestPulse relit Azure DevOps. Si l'objet est retrouvé, si la cible ou sa configuration a changé, ou si un ID de plan ou de cas est déjà connu, la résolution par absence est refusée. Conservez le journal et vérifiez la situation ; ne contournez pas ce refus.
+4. Si l'absence est confirmée, l'opération passe à **Échec**, avec une résolution horodatée dans le journal. **Aucune création n'est déclenchée par ce seul geste.** Cliquez ensuite sur **Vérifier et reprendre** pour relancer les opérations restantes avec les contrôles habituels.
+
+Cette action traite une absence vérifiée ; elle ne remplace pas l'examen d'un résultat encore ambigu et n'annule aucun succès.
+
+## Dépannage
+
+| Symptôme | Vérification ou action |
+| --- | --- |
+| Le CSV ne se lit pas ou les accents sont incorrects | Réexportez en UTF-8 ; vérifiez le séparateur et les guillemets des cellules multilignes. |
+| Une colonne bloque la préparation | Associez-la au bon champ ou choisissez explicitement de l'ignorer. Contrôlez les données que vous abandonnez. |
+| Les étapes apparaissent comme plusieurs tests | Vérifiez la clé commune ou l'ID du test et le regroupement affiché. Ne vous fiez pas au seul titre. |
+| Une suite est absente des cibles | Vérifiez le plan, les droits de lecture et le type statique de la suite. Une suite par requête ou exigence n'est pas une cible CSV. |
+| Plusieurs suites ont le même nom | Choisissez par chemin complet et ID. Corrigez une destination ambiguë au lieu de laisser le nom décider. |
+| Un ID est rejeté | Vérifiez qu'il s'agit d'un cas de test lisible du projet choisi, et non d'un autre type de work item. |
+| La création échoue sur un champ | Lisez le message Azure DevOps : area path, itération, identité, état et champs obligatoires dépendent du projet. |
+| Le stockage local est indisponible | Autorisez le stockage pour l'extension et utilisez un navigateur où le journal peut être conservé. L'import bloque les écritures s'il ne peut pas journaliser. |
+| Le verrouillage n'est pas disponible ou un autre onglet importe | Utilisez un navigateur récent prenant en charge Web Locks. Attendez l'autre exécution et conservez son journal ; ne lancez pas un import concurrent. |
+| Une partie seulement a réussi | Conservez le journal, corrigez la cause signalée, puis **Vérifier et reprendre**. Aucun succès n'est annulé. |
+| Une opération reste **À vérifier** alors qu'elle n'a pas abouti | Contrôlez son absence dans Azure DevOps, exportez le bilan, puis utilisez l'action de résolution par absence sur cette ligne. Après confirmation et contrôle automatique, relancez séparément **Vérifier et reprendre**. |
+
+## À suivre
+
+<CardGroup cols={2}>
+  <Card title="Importer des résultats XML" icon="file-code" href="/fr/configuration/settings-and-import">Sauvegarder un rapport AUTO à partir de résultats automatisés.</Card>
+  <Card title="Lectures et écritures" icon="lock" href="/fr/concepts/read-only">Distinguer les créations CSV, l'historique et les résultats d'exécution.</Card>
+</CardGroup>

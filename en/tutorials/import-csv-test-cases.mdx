@@ -1,0 +1,150 @@
+---
+title: "Import CSV test cases and organise their suites"
+description: "Create tests from a CSV file, reuse static suites and build missing levels after reviewing the preview."
+icon: "file-spreadsheet"
+---
+
+<Info>
+**Available from TestPulse 2.74.0.** This guide describes the **CSV test cases** workflow. XML results import remains a separate workflow.
+</Info>
+
+## What you will achieve
+
+Start with a small file of shop tests. At the end, a plan contains:
+
+- **Sign in with a valid account**, a two-step test in an existing static suite;
+- **Pay for an order**, a one-step test in a new **Orders → Payment** path;
+- a JSON report identifying creations, memberships and operations that need verification.
+
+These suites are real **Azure Test Plans** objects. They are separate from [Repository folders](/en/test-repository/overview).
+
+## Before you start
+
+Use a practice project, a readable plan and an existing **static** suite named **Authentication**. You need permission to create test cases, manage suites and add tests to the plan. Creating new cases also requires **Create tag definition** at project level for the technical recovery tags added by TestPulse. Creating a new plan requires the relevant permissions on its area path. Extension scopes do not replace your account's rights: see [Permissions](/en/security/permissions).
+
+Start with the [English practice CSV](/examples/testpulse-csv-cases-en.csv). It contains only new tests; no fictional Azure DevOps ID is used. **Download template** in the assistant also provides a starting point for your own file.
+
+<Warning>
+**Confirm and import** creates objects and memberships in Azure DevOps. There is no automatic rollback. Loading the file and preparing the preview create nothing in the project.
+</Warning>
+
+## Perform the import
+
+<Steps>
+  <Step title="File and columns">
+    Open **TestPulse → Import → CSV test cases**, then **Choose a CSV file**. Load the UTF-8 practice file.
+
+    Check the column mappings, particularly **External Key**, **Title**, **Test Step**, **Step Action**, **Step Expected** and **Suite Path**. A populated column must be mapped to a field or explicitly ignored. Validation messages identify the rows to correct.
+
+    The practice file contains **three step rows but two test cases**. Both rows with key `SHOP-001` form one case with two steps. Do not assign a new key to each step.
+  </Step>
+  <Step title="Test plan">
+    Choose **an existing plan** and select your practice plan. Check its name and ID.
+
+    The other option lets you **create a new plan**: enter its details and explicitly select at least one existing active test configuration. Inactive configurations are not offered. It will be created only during execution, after the preview. Keep the existing plan for this suite-reuse exercise.
+  </Step>
+  <Step title="Suites">
+    For the **Sign-in** group, choose **Existing suite**, then your **Authentication** suite. Check its path and ID: two suites can have the same name under different parents.
+
+    For the **Orders > Payment** group, choose **Create or reuse a path**, select the intended static parent and keep the `Orders > Payment` path. Existing levels are reused when they can be identified unambiguously; missing levels are scheduled for creation.
+
+    You can combine these choices in one import. If your file has no classification, select several ungrouped cases and use **Create a group**, then assign the group to a destination.
+
+    Only **static** suites are offered as destinations. Query-based and requirement-based suites are outside this workflow.
+  </Step>
+  <Step title="Preview">
+    Click **Prepare preview**. The assistant reads Azure DevOps to verify the destination and existing cases. It also sends new case contents to Azure DevOps to validate fields and project rules **without saving a work item**. It then lists the planned operations.
+
+    Check the plan, full paths, cases to create or reuse, suites to create or reuse, and memberships. This scenario should show **two new tests** and **two memberships**. The number of suites to create depends on whether **Orders** and **Payment** already exist in your plan.
+
+    Resolve blockers before continuing. Also review each test's content: a valid preview does not establish that the business scenario is correct.
+  </Step>
+  <Step title="Result">
+    If the preview matches the intended change, click **Confirm and import**. Keep the tab open while operations run.
+
+    Read the result and use **Download JSON report**. Follow the object links to check the outcome in Azure DevOps.
+
+    To interrupt the import, **Stop after the current operation** allows the request already sent to finish. Successful creations remain. To continue, use **Verify and resume**: resuming checks the recorded state and reads Azure DevOps again before remaining operations.
+  </Step>
+</Steps>
+
+## Check the outcome
+
+1. Open the plan and **Authentication** suite. **Sign in with a valid account** should appear once.
+2. Open its work item: it should contain **two steps**, in order, with their expected results.
+3. Open **Orders → Payment** under the selected parent. **Pay for an order** should be present.
+4. Compare the IDs and destinations with the JSON report. Creating tests does not execute them and is not evidence that they pass.
+
+## Prepare your own file
+
+The file limit is **5 MiB**, with at most **10,000 data rows** and **100 columns**. Use UTF-8, with or without a BOM. Commas, semicolons and tabs are supported delimiters. Quote cells containing the delimiter, a quote or a newline; double internal quotes according to CSV rules. Export an Excel `.xlsx` file to CSV first.
+
+| Column | Purpose |
+| --- | --- |
+| **External Key** | Stable test key in the file, such as `TC-001`. Repeat it across steps and classifications of the same test. It is not an Azure DevOps ID. |
+| **ID** | Actual ID of a test case in the project to reuse. Leave empty to create a case. |
+| **Title** | New case title. Matching titles alone do not establish test identity. |
+| **Test Step** | Step number. Rows for the same case are grouped and ordered. |
+| **Step Action / Step Expected** | Action and expected result for a simple step. |
+| **Suite Path** | Group or path, such as `Orders > Payment`. `/` is part of a name and does not create a level. |
+| **Area Path / Iteration Path** | Classifications for the new case, subject to project paths and permissions. |
+| **Assigned To / Priority / State / Tags** | Fields for the new case; values must be valid for your project. **Assigned To** is the work-item assignee, not the tester assigned to a test point. |
+| **Work Item Type** | If supplied, must describe a test case. This assistant does not import bugs or tasks. |
+
+When a suite name contains `>`, **Suite Path** can contain a JSON array of segments, for example `["A > B", "Payment"]`. Those quotes must also be escaped inside a CSV cell. Prefer the template and always inspect the displayed path.
+
+Shared steps, parameter sets and attachments are not imported by this workflow. Do not silently flatten them into simple steps: keep them and handle them separately in Azure DevOps.
+
+### Reuse an existing case
+
+Supply its actual **ID** and check that the preview finds the intended case in the project. The case is added to the selected suite; its title, steps and fields **are not changed by the CSV**. There is no automatic title matching.
+
+To place one new case in several groups, keep the same **External Key**, use different suite paths and retain consistent test data. The preview should show one case to create and several memberships. Check this before importing.
+
+The file key is not a permanent synchronisation mechanism. Starting a new import without IDs can create new cases even when you reuse the same keys or titles. Use the journal to resume the current import, and Azure DevOps IDs for later memberships.
+
+A technical tag beginning with `testpulse-csv:` is added to **new cases** to find a creation after a lost response. Do not use that prefix for your own tags or remove the import tag before the import is complete. Cases reused by ID do not receive this tag.
+
+## Understand recovery
+
+The progress journal is stored **in this browser**, in the context of the organisation, project and user. It contains the data needed to resume; it is not shared with the team or automatically transferred to another device. The JSON report is a downloaded record, not an undo command or a journal backup that can be imported again.
+
+Execution requires local storage and the browser's **Web Locks** feature, which prevents two tabs from executing the same import concurrently. If these features are unavailable, the assistant blocks writes. Use a recent browser and keep only one active import tab.
+
+A connection can fail **after** Azure DevOps creates an object but **before** the browser receives confirmation. No response does not mean no creation. Recovery checks existing objects and reports outcomes that remain ambiguous. It must not blindly create those objects again.
+
+<Warning>
+After an interruption or uncertain outcome, keep the journal and report. Do not clear browser data or restart the file as a new import to bypass the blocker. Inspect Azure DevOps and the recovery message; if the ambiguity remains, have the report reviewed before further writes.
+</Warning>
+
+### When an uncertain operation really did not complete
+
+1. Download the report and inspect the **Needs checking** row: expected object, plan, suite, case and destination. Check directly in Azure DevOps that this operation did not complete. Incomplete loading or denied access is not evidence that an object is absent.
+2. Only after this check, use the row's **I have checked that this operation did not complete** action. Read **Allow another attempt?** and tick its confirmation: you are allowing the object or membership to be created during the next resume attempt.
+3. Click **Confirm absence and allow retry**. TestPulse reads Azure DevOps again. If the object is found, the target or its configuration has changed, or a plan or case ID is already known, resolving it as absent is refused. Preserve the journal and investigate; do not bypass that refusal.
+4. When absence is confirmed, the operation becomes **Failed**, with a timestamped resolution in the journal. **This action alone creates nothing.** Then click **Verify and resume** to run the remaining operations with the usual checks.
+
+This action handles a verified absence; it does not replace investigation of an ambiguous outcome or undo any successful operation.
+
+## Troubleshooting
+
+| Symptom | Check or action |
+| --- | --- |
+| The CSV cannot be read or accents look wrong | Export as UTF-8 again; check the delimiter and quoting of multiline cells. |
+| A column blocks preparation | Map it to the relevant field or explicitly ignore it. Review the data you are discarding. |
+| Steps appear as separate tests | Check the shared key or case ID and the displayed grouping. Do not rely on title alone. |
+| A suite is missing from destinations | Check the plan, read permissions and static suite type. Query-based and requirement-based suites are not CSV destinations. |
+| Several suites share a name | Select by full path and ID. Correct an ambiguous destination instead of relying on a name. |
+| An ID is rejected | Verify that it is a readable test case in the selected project, not another work-item type. |
+| Creation fails on a field | Read the Azure DevOps message: area, iteration, identity, state and required fields depend on the project. |
+| Local storage is unavailable | Allow storage for the extension and use a browser that can retain the journal. Import blocks writes when it cannot journal them. |
+| Locking is unavailable or another tab is importing | Use a recent browser with Web Locks support. Wait for the other execution and preserve its journal; do not start a concurrent import. |
+| Only part of the import succeeded | Keep the journal, resolve the reported cause, then **Verify and resume**. Successful operations are not rolled back. |
+| An operation remains **Needs checking** although it did not complete | Verify its absence in Azure DevOps, export the report, then use the row's absence-resolution action. After confirmation and the automatic check, separately select **Verify and resume**. |
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Import XML results" icon="file-code" href="/en/configuration/settings-and-import">Save an AUTO report from automated results.</Card>
+  <Card title="Reads and writes" icon="lock" href="/en/concepts/read-only">Distinguish CSV creations, history and execution results.</Card>
+</CardGroup>

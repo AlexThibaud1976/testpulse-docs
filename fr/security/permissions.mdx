@@ -14,12 +14,16 @@ Un **scope** autorise l'extension à demander une famille d'opérations. Les **d
 | `vso.work` | Lire work items, liens, classifications et états disponibles nécessaires aux fonctions utilisées. |
 | `vso.identity` | Résoudre les noms des testeurs et des personnes affectées. |
 | `vso.build` | Lire le build associé au rapport. |
-| `vso.test_write` | Créer des plans et suites depuis Coverage Builder ou Repository, ajouter des cas à une cible depuis Repository, réaffecter testeurs ou configurations. |
-| `vso.work_write` | Explore : créer bugs, cas et tâche de suivi, téléverser leurs pièces jointes, poser l'état de la tâche à la clôture si demandé et reporter une décision de passage sur la fiche hôte si activé. |
+| `vso.test_write` | Créer des plans et suites depuis Coverage Builder, Repository ou l'import CSV, ajouter des cas à leurs suites cibles, réaffecter testeurs ou configurations. |
+| `vso.work_write` | Créer les cas de l'import CSV. Explore : créer bugs, cas et tâche de suivi, téléverser leurs pièces jointes, poser l'état de la tâche à la clôture si demandé et reporter une décision de passage sur la fiche hôte si activé. |
 
 Les sauvegardes de rapports, de réglages, du Repository et de sessions utilisent aussi **Azure DevOps Extension Data**. Elles ne sont pas des modifications de résultats de test ; plusieurs sont automatiques. La [matrice des actions](/fr/concepts/read-only) indique les cibles et les déclencheurs.
 
 ## Écrire dans les plans et les points
+
+**Import de cas CSV :** le parcours utilise les scopes existants `vso.work_write` pour créer des cas et `vso.test_write` pour créer un plan ou des suites statiques et ajouter leurs cas. Aucun scope supplémentaire n'est ajouté. Les droits utilisateur sur les cas, les plans, les suites et les area paths restent nécessaires. Les cas reconnus par ID sont réutilisés sans modification de leurs champs. Voir le [tutoriel CSV](/fr/tutorials/import-csv-test-cases), disponible à partir de **2.74.0**.
+
+Pour créer de nouveaux cas, votre compte doit aussi avoir **Create tag definition** au niveau du projet. TestPulse ajoute à chaque nouveau cas un tag technique `testpulse-csv:` qui permet de retrouver une création après une réponse perdue. Les cas réutilisés par ID ne reçoivent pas ce tag. Si sa création est refusée, faites vérifier cette permission par un administrateur du projet ; aucun nouveau scope d'extension n'est nécessaire.
 
 **Coverage Builder** crée un nouveau plan et des suites basées sur exigences après confirmation. Il ne remplace pas un plan existant.
 
