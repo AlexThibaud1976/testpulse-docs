@@ -22,7 +22,7 @@ Expand a row to see the **findings** (the reasons, with links) and concrete **im
 
 The analysis is **100% deterministic and AI-free** — it counts acceptance criteria, measures step depth, looks for negative / edge keywords (FR + EN), and checks term overlap and execution. It is **advisory only**: it never blocks anything, never feeds the quality score or GO/NO-GO, and never changes an outcome. The wording stays cautious (*"possible"*, *"apparent"*) — it is a *review this* signal; **you** decide.
 
-It is **read-only** (no new API call or scope) and degrades gracefully per requirement: a test with no steps still counts, and no acceptance criteria yields *Underspecified* — never an invented verdict.
+It is **read-only**, with no write scope or new scope. Already-loaded data is reused; cases missing from the cache can require additional reads. It degrades gracefully per requirement: a test with no steps still counts, and no acceptance criteria yields *Underspecified* — never an invented verdict.
 
 ## Related
 

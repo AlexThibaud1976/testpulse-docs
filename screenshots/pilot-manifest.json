@@ -1,0 +1,23 @@
+{
+  "verifiedOn": "2026-10-12",
+  "productVersion": "2.73.1",
+  "productCommit": "6394600c1b582febff7e06cfa32941a1381e71d8",
+  "platform": "Azure DevOps Services",
+  "fixture": "TP-DOC — Boutique démo",
+  "languages": ["fr", "en"],
+  "captures": [
+    { "basename": "tutorial-report-overview.jpg", "page": "tutorials/first-report", "evidence": "3 current cases; 1 passed, 1 failed, 1 unexecuted; 50% pass rate; 67% execution rate; Strict D 67/100 NO-GO" },
+    { "basename": "tutorial-no-go-detail.jpg", "page": "tutorials/understand-no-go", "evidence": "Strict floors at 85%; one failure without linked result defect; coverage unavailable; low confidence" },
+    { "basename": "tutorial-shop-defect.jpg", "page": "tutorials/exploratory-session", "evidence": "Fictional offline shop intentionally accepts an empty delivery address" },
+    { "basename": "tutorial-explore-session.jpg", "page": "tutorials/exploratory-session", "evidence": "Session with one note, one annotated capture and one created bug; the exercise asks the learner for additional notes" },
+    { "basename": "tutorial-explore-archived.jpg", "page": "tutorials/exploratory-session", "evidence": "Session ended; archive Task created" }
+  ],
+  "pathConvention": "images/{language}/{basename}",
+  "capturePolicy": "Real UI captures; no generated interface or fabricated result. Account email excluded. Shared fictional work-item labels remain French in the English UI.",
+  "replayLimitations": [
+    "PDF attachment presence was verified on the archive Task; local PDF download and PDF content were not validated.",
+    "CSV import is optional and was not executed; cases were created manually.",
+    "The screenshot thumbnail was not displayed in the active Explore timeline; the annotated image was present on the archive Task.",
+    "These observations do not qualify Azure DevOps Server, every role, or a novice's unaided completion."
+  ]
+}

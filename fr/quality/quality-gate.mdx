@@ -8,7 +8,7 @@ Chaque rapport porte un **score qualité** noté **A → E** avec une valeur **s
 
 ## Comment la note est construite
 
-Le composite 0–100 pondère quatre composantes :
+Le composite 0–100 pondère quatre composantes. Voici les poids du profil **Standard**, sélectionné par défaut ; les profils Strict, Rodage et Personnalisé peuvent utiliser d'autres valeurs :
 
 | Composante | Poids |
 | --- | --- |
@@ -17,7 +17,7 @@ Le composite 0–100 pondère quatre composantes :
 | Couverture des exigences | 20 |
 | Hygiène des défauts | 20 |
 
-Grades : **A** ≥ 90 · **B** 75–89 · **C** 60–74 · **D** 40–59 · **E** < 40.
+Grades du profil **Standard**, avant application des plafonnements : **A** ≥ 90 · **B** 75–89 · **C** 60–74 · **D** 40–59 · **E** < 40. Les seuils des autres profils figurent plus bas.
 
 Si la traçabilité est absente, la couverture est retirée et les poids restants sont **renormalisés** (un drapeau le signale). Moins de 5 tests exécutés lève un drapeau *confiance faible*.
 
@@ -27,7 +27,7 @@ Cliquez sur **Voir le détail** pour déplier la décomposition — chaque compo
 
 ## Invariants non négociables
 
-- **≥ 1 bug bloquant ouvert** parmi les [bugs du rapport](/fr/reports/campaign-bugs) (ouvert + Critique / Élevée) plafonne la note à **C** et force **NO-GO**.
+- **≥ 1 bug bloquant ouvert** parmi les [bugs du rapport](/fr/reports/campaign-bugs) (état ouvert et sévérité bloquante **selon le barème appliqué**) plafonne la note à **C** et force **NO-GO**.
 - Une **exigence in-scope non testée** force **NO-GO**.
 - **Aucun test exécuté** affiche *non évalué* — jamais un E.
 - Le **GO** exige aussi que le composite atteigne le **seuil GO** du barème et la couverture son **minimum**.
@@ -39,13 +39,27 @@ Cliquez sur **Voir le détail** pour déplier la décomposition — chaque compo
 
 Dans les Paramètres, choisissez un barème **au niveau projet** pour que tout le monde note un rapport à l'identique :
 
-- **Strict** — une release régulée.
-- **Standard** — le barème par défaut.
-- **Rodage** — une équipe en démarrage.
+Les valeurs ci-dessous sont celles des **trois profils prédéfinis**, avant personnalisation.
+
+| Paramètre | Standard | Strict | Rodage |
+| --- | --- | --- | --- |
+| Poids réussite / exécution / couverture / hygiène | 40 / 20 / 20 / 20 | 40 / 15 / 25 / 20 | 50 / 25 / 15 / 10 |
+| Seuil A | 90 | 92 | 85 |
+| Seuil B | 75 | 80 | 70 |
+| Seuil C | 60 | 68 | 55 |
+| Seuil D | 40 | 50 | 35 |
+| Seuil GO du score composite | 75 | 85 | 65 |
+| Couverture minimale, si mesurable | 70 % | 85 % | 50 % |
+| Plancher de réussite | 75 % | 85 % | 65 % |
+| Plancher d'exécution | 75 % | 85 % | 65 % |
+| Sévérités des bugs bloquants | Critical et High | Critical et High | **Critical uniquement** |
+| États considérés ouverts | Active, New | Active, New | Active, New |
+
+Le grade est déterminé par le seuil le plus élevé atteint, puis les plafonnements s'appliquent ; en dessous du seuil D, il vaut E. Un bug **High** ouvert ne déclenche donc pas à lui seul la porte des bugs bloquants en **Rodage**. Les autres règles du verdict continuent de s'appliquer.
 
 Le seuil GO de chaque barème sert aussi de **plancher de taux de réussite** et de **plancher de taux d'exécution** — 0,85 Strict · 0,75 Standard · 0,65 Rodage — il n'y a donc aucune valeur distincte à régler.
 
-L'ajustement est **borné** (seuil GO 50–95, une couverture minimale, poids des composantes forcés à 100, seuils A > B > C > D) ; toute valeur hors preset devient un barème **Personnalisé**. Les invariants ci-dessus tiennent toujours.
+L'ajustement est **borné** (seuil GO 50–95, une couverture minimale, poids des composantes forcés à 100, seuils A > B > C > D) ; toute valeur hors preset devient un barème **Personnalisé**. Les règles ci-dessus s'appliquent avec les valeurs du barème retenu. Pour interpréter un rapport enregistré, consultez le barème capturé dans ce rapport : changer le réglage projet ne réécrit pas ses résultats.
 
 ## Pondération risk-based (optionnelle)
 

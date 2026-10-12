@@ -4,7 +4,20 @@ description: "What shipped in TestPulse, version by version."
 icon: "clock"
 ---
 
-<Note>Recent releases are detailed below. The full history since the very first version lives in the [repository changelog](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).</Note>
+<Note>Recent releases are detailed on this page. Releases before 2.25.0 are summarised at the end; linked guides describe current behaviour.</Note>
+
+<Update label="v2.73.1" description="2026-10-02">
+
+**Find a closed session from its tracking Task.** The Explore tab of a Task opened from *Previous sessions* could show the start form instead of the session, preventing report export or creation of a bug or test case from it.
+
+- The Task now finds its session through its **explore-session** tag and the saved session document. Tasks created before the tag existed remain supported.
+- When a session is found this way, its entry in the session list is repaired in the background.
+- Closure waits for an in-flight save to finish, retries a session-list write conflict once and refreshes the host form after the closed session is fully saved.
+- If the Task points to a session from **Explore AI in TestPulse Studio**, TestPulse says so and directs you to that tab instead of presenting a new start or generic read error.
+
+See [Find a closed session and export its report](/en/exploratory/session-report).
+
+</Update>
 
 <Update label="v2.73.0" description="2026-09-28">
 
@@ -640,5 +653,5 @@ The grid shipped in v2.30.0 was rendered in PDF and Word exports with no way to 
 </Update>
 
 <Update label="Earlier versions">
-Report generation and the five exports, Epic→US→TC→Bug traceability, the Quality Gate (A–E grade, GO/NO-GO verdict, profiles and risk-based weighting), the dashboard widget, Requirement Drift, the Coverage Builder, coverage depth, imports, notifications, scheduling and much more — see the [full changelog on GitHub](https://github.com/AlexThibaud1976/TFS_Reporter_Addon/blob/main/docs/CHANGELOG.md).
+Report generation and the five exports, Epic→US→TC→Bug traceability, the Quality Gate (A–E grade, GO/NO-GO verdict, profiles and risk-based weighting), the dashboard widget, Requirement Drift, the Coverage Builder, coverage depth, imports, notifications, scheduling and much more — see the [report](/en/reports/generate-a-report), [quality](/en/quality/quality-gate) and [configuration](/en/configuration/settings-and-import) guides for current behaviour.
 </Update>

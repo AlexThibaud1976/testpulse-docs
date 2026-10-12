@@ -1,62 +1,71 @@
 ---
-title: "Introduction"
-description: "Professional test reports from Azure DevOps Test Plans — 100% client-side, free, cloud and on-premises."
+title: "Succeed with TestPulse"
+description: "From your first report to an explained quality decision: guided workshops, examples and verifiable outcomes."
 icon: "sparkles"
 ---
 
-TestPulse turns your **Azure DevOps Test Plans** into professional, shareable test reports — and an embedded quality signal — **without ever sending your data anywhere**. It runs entirely in your browser, inside Azure DevOps.
+TestPulse helps you **understand test results, prepare a decision and share the evidence** from Azure DevOps. Start with a useful outcome, then explore at your own pace.
 
-<Note>
-  **100% client-side · free · no tiers.** TestPulse reads your Test Plans and renders reports locally. It is **read-only** except where you explicitly ask it to file something — starting with the **Coverage Builder**, which can create test plans/suites for you.
-</Note>
+<Card title="Your first report, from plan to PDF" icon="file-output" href="/en/tutorials/first-report" horizontal>
+  Choose a plan, generate your report, understand its counters and export your first PDF. Every step tells you what to expect.
+</Card>
 
-## What you can do
+## What do you want to achieve?
 
 <CardGroup cols={2}>
-  <Card title="Generate a report" icon="file-output">
-    Export polished reports as PDF, HTML, Word, Excel or PowerPoint from any Test Plan.
+  <Card title="Discover and get started" icon="rocket" href="/en/getting-started/quickstart">
+    Check the prerequisites and find your way around the extension.
   </Card>
-  <Card title="See coverage & quality" icon="shield-check">
-    Coverage depth, a Quality Gate grade (A–E) and a GO/NO-GO release verdict.
+  <Card title="Prepare a campaign" icon="list-checks" href="/en/coverage-builder/overview">
+    Find covered requirements and prepare a suitable test plan.
   </Card>
-  <Card title="Read the signal on the work item" icon="list-checks">
-    A "Test coverage" tab on user stories: scope selector and an execution verdict.
+  <Card title="Understand a NO-GO" icon="shield-check" href="/en/tutorials/understand-no-go">
+    Trace a verdict back to the rules and results that explain it.
   </Card>
-  <Card title="Track trends & collaborate" icon="chart-line">
-    History, trends, Teams/Slack notifications and scheduled reports.
-  </Card>
-  <Card title="Steer the campaign daily" icon="gauge">
-    An Execution Cockpit for the morning stand-up: the answer first — pace, projected end, pace needed — then what to run today and what is blocking.
-  </Card>
-  <Card title="Catch drift & stale coverage" icon="git-compare-arrows">
-    Compare two plans, spot requirements changed since the baseline ran — and the Passed that no longer prove anything.
-  </Card>  <Card title="Organize your tests, Xray-style" icon="folder-tree" href="/en/test-repository/overview">
-    A project-shared folder tree to organize and find your test cases — and generate an ADO plan from a folder.
-  </Card>
-  <Card title="Run exploratory sessions" icon="compass" href="/en/exploratory/overview">
-    A session from the user story: timestamped notes, annotated captures, bugs on the fly, and a signed PDF report.
+  <Card title="Administer and share" icon="settings" href="/en/security/permissions">
+    Understand permissions, storage and the effects of each action.
   </Card>
 </CardGroup>
 
-## Who it is for
+## Learn by doing
 
-- **Product Owners / Test Managers** — a report to share and a clear GO/NO-GO.
-- **QA & developers** — coverage, depth, failures, traceability, exports.
-- **ADO admins** — install on cloud or on-premises, control permissions.
+The three workshops use the same fictional shop. [Prepare the demo dataset](/en/tutorials/demo-project) in a dedicated project, or follow the steps with a small test plan you already know.
 
-## Supported targets
+| Workshop | Your result at the end |
+|---|---|
+| [My first report](/en/tutorials/first-report) | A reviewed report, a PDF and a report retrieved from history. |
+| [Understand a NO-GO](/en/tutorials/understand-no-go) | An explanation supported by the scope, rules and evidence. |
+| [A complete exploratory session](/en/tutorials/exploratory-session) | A documented session, a traceable bug and a shareable report. |
 
-<Columns cols={2}>
-  <Card title="Azure DevOps Services" icon="cloud">Cloud organisations.</Card>
-  <Card title="Azure DevOps Server 2022.1" icon="server">On-premises collections.</Card>
-</Columns>
+## Find a precise answer
 
-## What TestPulse is **not**
+<CardGroup cols={2}>
+  <Card title="Generate and customise" icon="file-text" href="/en/reports/generate-a-report">
+    Scope, business information, cover page and report sections.
+  </Card>
+  <Card title="Where do my bugs come from?" icon="bug" href="/en/reports/campaign-bugs">
+    Campaign run bugs, link-based mode and the limits of each source.
+  </Card>
+  <Card title="Steer the campaign" icon="gauge" href="/en/cockpit/execution-cockpit">
+    Pace, remaining work, available history and projection limits.
+  </Card>
+  <Card title="Organise test cases" icon="folder-tree" href="/en/test-repository/overview">
+    Find your tests in the Repository and prepare your plans.
+  </Card>
+  <Card title="Solve a problem" icon="circle-help" href="/en/reference/faq">
+    Missing plans, hidden exports, permissions and common questions.
+  </Card>
+  <Card title="See what is new" icon="history" href="/en/changelog">
+    Version changes that affect your workflows.
+  </Card>
+</CardGroup>
 
-- Not a test **runner** — it reports on results, it doesn't execute tests.
-- Not a paid funnel — TestPulse is completely free: every feature, for everyone.
-- Not a data processor — nothing leaves your Azure DevOps tenant.
+## Results need interpretation
 
-<Card title="Start here: your first report in 5 minutes" icon="play" href="/en/getting-started/quickstart" horizontal>
-  Follow the guided quickstart.
-</Card>
+A grade and verdict summarise rules applied to the available data. They do not replace the team’s decision: check the scope, result freshness and missing information. TestPulse **does not run your tests**.
+
+<Note>
+  TestPulse runs in your browser, without a TestPulse backend. Depending on the action, it reads or writes in Azure DevOps, saves information in Extension Data, produces local files or sends a notification to a configured webhook. See the [action matrix](/en/concepts/read-only) and [privacy guidance](/en/security/privacy).
+</Note>
+
+The documentation covers Azure DevOps Services and the Server specifics described in the [installation guide](/en/getting-started/installation). Workshop screenshots are captured on Services; your layout may vary with version, permissions and configuration.

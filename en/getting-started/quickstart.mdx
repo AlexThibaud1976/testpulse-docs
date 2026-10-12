@@ -1,59 +1,54 @@
 ---
-title: "Quickstart: your first report in 5 minutes"
-description: "A guided tour: from an Azure DevOps Test Plan to a polished report in five minutes."
+title: "Quickstart: your first report"
+description: "Select a plan, complete the form, generate the report on screen, then export it."
 icon: "play"
 ---
 
-This guided walkthrough takes you from a Test Plan to a shareable report — no configuration required.
+This path summarises the essential actions. For practice data and detailed checkpoints, follow [Your first report, from plan to PDF](/en/tutorials/first-report).
 
-<Frame caption="The Report tab on arrival: plan selection on the left, the report panel on the right.">
-  <img src="/images/en/quickstart-01-report.png" alt="TestPulse Report tab, plan selection form and empty report panel" />
+## Before you start
+
+You need to be able to open TestPulse and read a plan containing test cases. Execution results are needed to see more than an unexecuted campaign. Also prepare the information your project requests: title, environment, and visible required business fields.
+
+<Frame caption="The Report tab on arrival: selection on the left, the report panel still empty on the right.">
+  <img src="/images/en/quickstart-01-report.png" alt="TestPulse Report tab before generation, showing the selection form and empty panel" />
 </Frame>
 
 <Steps>
   <Step title="Open TestPulse" icon="rocket">
-    In your project, go to **Test Plans** and open the **TestPulse** hub. If you don't see it, confirm the extension is installed (see [Installation](/en/getting-started/installation)).
+    In your project, go to **Test Plans** and open **TestPulse**, then the **Report** tab. If the hub is missing, check the [installation](/en/getting-started/installation).
   </Step>
-  <Step title="Select a Test Plan" icon="list">
-    Pick the Test Plan you want to report on from the plan selector. TestPulse loads its suites, test cases and latest results — read-only.
-    <Note>Nothing is generated yet: TestPulse only reads. You can explore before exporting.</Note>
+  <Step title="Choose the scope" icon="list">
+    Select a plan, then check the included suites. Keep to one plan for this first attempt.
+
+    **You should see:** the selected plan's name and suites to include. Selecting a plan does not download a document.
   </Step>
-  <Step title="Review the defaults" icon="eye">
-    TestPulse pre-fills a sensible report: title, cover page, the suite/case hierarchy, results and traceability. You can accept the defaults for your first run.
+  <Step title="Complete the form" icon="pen">
+    Fill in the required fields shown: for example, the title **First campaign report** and the environment actually tested. Other required fields depend on your configuration; do not assume they are prefilled.
+
+    If a value is missing or has the wrong format, the validation message identifies the field to fix.
   </Step>
-  <Step title="Choose an export format" icon="file-output">
-    Select a format:
-    <CardGroup cols={2}>
-      <Card title="PDF" icon="printer">Polished, printable, signed.</Card>
-      <Card title="Word" icon="file-pen">Editable, signed.</Card>
-      <Card title="Excel" icon="file-spreadsheet">Data-oriented.</Card>
-      <Card title="HTML / PowerPoint" icon="presentation">Web share / slides.</Card>
-    </CardGroup>
+  <Step title="Generate and read the report" icon="eye">
+    Select **Generate** and wait for loading to finish. The report appears **on screen**.
+
+    **You should see:** the correct title, scope and test results. Check these before exporting. Generation also saves a snapshot in your personal history; it does not modify test results.
   </Step>
-  <Step title="Generate" icon="zap">
-    Select **Generate**. TestPulse builds the document **in your browser** and downloads it. That's your first report.
+  <Step title="Export the PDF" icon="file-output">
+    In the generated report's export toolbar, select **PDF**. Open the downloaded file and compare its title, scope and counters with the displayed report.
+
+    The other buttons produce **Word, Excel, HTML or PowerPoint**. If PDF is hidden, check [export button visibility](/en/exports/button-visibility).
   </Step>
 </Steps>
 
 ## What you just produced
 
-By default your report includes the plan's **suite → case hierarchy**, the **latest result** per case, **traceability** to requirements, and a **cover page**. You can refine any of this later.
+You now have a report viewable in TestPulse, a personal history snapshot and a local PDF. Its content reflects the selected suites, available data and report options at generation time. Sharing the file or [sharing the report to the project](/en/collaboration/history) is a separate action.
 
 ## Where to go next
 
 <CardGroup cols={2}>
-  <Card title="Coverage & quality" icon="shield-check">
-    Add a Quality Gate grade and a GO/NO-GO verdict to your report.
-  </Card>
-  <Card title="The work-item signal" icon="list-checks">
-    See the "Test coverage" tab and execution verdict on a user story.
-  </Card>
-  <Card title="Exports in depth" icon="file-output">
-    What each format contains and how to control export buttons.
-  </Card>
-  <Card title="Templates & saved views" icon="bookmark">
-    Save a report configuration and reuse it in one click.
-  </Card>
+  <Card title="The first report, step by step" icon="file-text" href="/en/tutorials/first-report">Repeat the path with an exercise and checkpoints.</Card>
+  <Card title="Understand a NO-GO" icon="shield-check" href="/en/tutorials/understand-no-go">Read the verdict's causes and find the evidence.</Card>
+  <Card title="A complete exploration" icon="compass" href="/en/tutorials/exploratory-session">Go from charter to tracking Task and PDF.</Card>
+  <Card title="Export formats" icon="file-output" href="/en/exports/formats">Choose the right document for your audience.</Card>
 </CardGroup>
-
-<Note>These sections are being published — the guided path above already gets you a full report today.</Note>

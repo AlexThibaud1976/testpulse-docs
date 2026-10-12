@@ -1,0 +1,179 @@
+---
+title: "Une session exploratoire de bout en bout"
+description: "Passez d'une charte à une session documentée : notes, capture annotée, bug lié, tâche d'archivage et PDF."
+icon: "compass"
+---
+
+À la fin de cet atelier, vous aurez une **session exploratoire retrouvable dans Azure DevOps**, avec une charte, des observations, une preuve illustrée, un bug lié et un PDF. Vous apprendrez aussi à distinguer le verdict de session du Quality Gate d'un rapport.
+
+## Avant de commencer
+
+- Préparez le [jeu de démonstration](/fr/tutorials/demo-project) et retrouvez la User Story **TP-DOC — Sécuriser la livraison**.
+- Utilisez TestPulse 2.73.1 ou une version ultérieure pour le parcours de réouverture depuis la Task de session.
+- Vérifiez que vous pouvez modifier les work items du périmètre de démonstration et y créer des bugs et des tâches. L'administrateur doit avoir approuvé les permissions d'écriture de l'extension ; les [droits sur le projet](/fr/security/permissions) restent nécessaires.
+- Utilisez uniquement le scénario pédagogique et des données fictives. Les sessions sont stockées au niveau du projet : le filtre « mes sessions » ne les rend pas privées.
+
+Nous allons documenter le scénario **adresse de livraison vide acceptée**. Il s'agit d'un exercice fictif ; les objets créés devront le dire explicitement. Les noms de work items restent les mêmes dans les deux langues de la documentation.
+
+Téléchargez la [boutique pédagogique](/examples/boutique-demo.html) et ouvrez le fichier HTML dans votre navigateur. Choisissez le français. Cette page fonctionne localement, sans serveur ni paiement réel ; elle accepte volontairement une adresse vide pour rendre le défaut reproductible.
+
+| Votre action | Ce qui est conservé |
+| --- | --- |
+| Démarrer et écrire des notes | Session et notes sauvegardées automatiquement dans le stockage TestPulse d'Azure DevOps. |
+| Valider une capture | Pièce jointe envoyée à Azure DevOps et entrée ajoutée à la session. |
+| Cliquer sur **Créer** dans le panneau de work item | Nouveau bug, avec les liens et pièces sélectionnées. |
+| Terminer et valider la clôture | Task de suivi portant le rapport, les liens et les pièces de la session. |
+| Exporter en PDF | Fichier téléchargé sur votre ordinateur. L'attacher à la Task demande une action distincte. |
+
+## 1. Ouvrir Explore depuis le sujet à tester
+
+Ouvrez la User Story **TP-DOC — Sécuriser la livraison** dans Azure DevOps et enregistrez d'abord toute modification en cours. Dans cette fiche, ouvrez l'onglet **Explore** de TestPulse.
+
+**Vous devriez voir :** le formulaire **Démarrer une session exploratoire**. Si une de vos sessions est déjà active, elle peut être restaurée : vérifiez sa charte avant de poursuivre. Une session existante sur un autre sujet ne devient pas un exercice de démonstration parce que vous changez ses notes.
+
+<Tip>
+  Il existe deux entrées **Explore**. L'onglet de la fiche work item sert à mener la session ; l'onglet Explore du hub TestPulse sert à retrouver les sessions du projet. Pour commencer, utilisez la fiche.
+</Tip>
+
+## 2. Définir une charte vérifiable
+
+Renseignez le formulaire :
+
+| Champ | Valeur de l'exercice |
+| --- | --- |
+| **Charte de la session** | `TP-DOC — Explorer le contrôle de l'adresse de livraison ; relever les informations utiles à la reproduction.` |
+| **Timer (minutes, optionnel)** | `10`, comme budget d'exploration ; vous pouvez aussi laisser le champ vide. |
+| **Tag de campagne (optionnel)** | `TP-DOC` |
+| **Environnement (optionnel)** | Laissez vide pour ce premier atelier. |
+| **Area path / Iteration path** | Conservez le périmètre hérité de la User Story de démonstration. |
+
+Cliquez sur **Démarrer la session**.
+
+**Vous devriez voir :** **Session active**, votre charte, un chronomètre et une Timeline vide. Sans environnement sélectionné, la clôture ne propose pas de décision de passage vers un autre palier. Cette décision fait l'objet d'un [guide distinct](/fr/exploratory/promotion-decision).
+
+## 3. Explorer et consigner ce qui s'est passé
+
+Dans la boutique pédagogique, ajoutez le produit au panier et vérifiez le montant de **20 EUR**. Laissez l'adresse de livraison vide, puis cliquez sur **Valider la commande**. La page accepte volontairement ce cas : c'est le comportement à documenter. Conservez cet écran pour la capture de l'étape suivante, puis revenez à Explore.
+
+<Frame caption="La boutique fictive accepte une commande de 20 EUR sans adresse : ce défaut est volontaire et sert uniquement à l'exercice.">
+  <img src="/images/fr/tutorial-shop-defect.jpg" alt="Boutique pédagogique en français : adresse de livraison vide, panier à 20 EUR et message Commande de démonstration acceptée." />
+</Frame>
+
+Ajoutez trois notes séparées. Choisissez leur type, saisissez le texte puis cliquez sur **Ajouter la note** pour chacune.
+
+| Type | Texte pédagogique |
+| --- | --- |
+| **Observation** | `Exercice fictif TP-DOC : panier contenant un produit à 20 EUR ; ouverture de l'étape de livraison.` |
+| **Anomalie** | `Scénario pédagogique : une adresse vide est acceptée. Attendu : rester à l'étape de livraison et demander une adresse.` |
+| **Question** | `À vérifier dans une vraie application : le contrôle est-il aussi effectué côté serveur ?` |
+
+Attendez la disparition de **Enregistrement en cours…** et l'absence d'erreur de sauvegarde avant de quitter la fiche.
+
+**Vous devriez voir :** trois entrées horodatées. Une observation décrit le contexte, une anomalie compare obtenu et attendu, une question distingue une piste d'un fait établi.
+
+Tant que la session est active, vous pouvez corriger le texte d'une note via **Modifier**, puis **Valider**. Une fois close, la session ne permet plus ces corrections.
+
+## 4. Ajouter une capture qui explique le constat
+
+Revenez à la boutique pédagogique et préparez une capture montrant **l'adresse laissée vide et la commande acceptée**. Gardez visible la mention de démonstration. Cette image prouve le comportement du support d'exercice ; elle ne concerne aucune boutique réelle.
+
+<Steps>
+  <Step title="Copier l'image">
+    Sous Windows, utilisez **Win+Maj+S** pour sélectionner la zone utile. Revenez à l'onglet Explore de la fiche et collez avec **Ctrl+V**.
+
+    **Vous devriez voir :** l'éditeur **Annoter la capture**. L'image n'est pas encore attachée.
+  </Step>
+  <Step title="Attirer l'attention sur le bon élément">
+    Utilisez **Rectangle** ou **Flèche** pour désigner le champ ou le résultat concerné. Ajoutez un texte indiquant **Exercice TP-DOC — données fictives**. Si l'image contient une information à masquer, appliquez **Flou (masquer)** et vérifiez le rendu avant validation.
+
+    Pour **Que montre cette capture ?**, choisissez **Résultat obtenu** si elle montre le résultat pédagogique. Annuler l'éditeur n'envoie pas l'image.
+  </Step>
+  <Step title="Attacher et vérifier">
+    Cliquez sur **Attacher à la session**, puis attendez la fin de l'envoi.
+
+    **Vous devriez voir :** une capture dans la Timeline, avec vos annotations. Une erreur d'envoi doit être résolue avant de considérer cette preuve attachée.
+  </Step>
+</Steps>
+
+Une capture validée est aplatie : les annotations ne restent pas des calques éditables. Retirer son entrée de la Timeline ne supprime pas le fichier déjà envoyé dans Azure DevOps. Si vous souhaitez simplement corriger le texte qui l'accompagne, modifiez sa légende.
+
+## 5. Transformer le constat en bug exploitable
+
+Cliquez sur **Créer un bug / work item** et choisissez **Bug**.
+
+1. Remplacez le titre prérempli par **TP-DOC — Adresse vide acceptée à la livraison — exercice**. Le titre initial vient de la dernière note, qui peut être une question plutôt que le défaut à décrire.
+2. Choisissez une sévérité cohérente pour cet exercice, par exemple **3 - Medium** si cette valeur existe dans votre processus.
+3. Relisez **Repro steps (HTML, généré depuis les notes)**. Gardez le contexte, l'action, l'obtenu et l'attendu ; assurez-vous que le caractère fictif est explicite.
+4. Dans **Pièces jointes à joindre**, sélectionnez la capture de l'exercice.
+5. Vérifiez les liens proposés vers la User Story et la session, ainsi que la classification héritée.
+6. Cliquez sur **Créer**. Ce clic crée réellement un bug dans votre projet de démonstration.
+
+**Vous devriez voir :** une entrée de work item avec un identifiant Azure DevOps. Ouvrez le bug et vérifiez le titre, les étapes, la pièce jointe et le lien vers l'US. Notez son numéro pour le retrouver dans le rapport final.
+
+<Frame caption="Exemple dans TestPulse 2.73.1 : la session active compte une note, une capture et un bug. Cette illustration condensée utilise une seule note ; l'atelier vous en fait rédiger trois.">
+  <img src="/images/fr/tutorial-explore-session.jpg" alt="Explore en français, avec une session active et les compteurs Timeline indiquant une note, une capture et un bug." />
+</Frame>
+
+<Note>
+  Ce bug est lié au sujet exploré et à la session. Cela ne l'associe pas automatiquement au résultat d'un run de tests. N'attendez donc pas que cet exercice fasse disparaître un « échec sans défaut » du rapport de campagne ; [les sources des bugs](/fr/reports/campaign-bugs) ont des contrats différents.
+</Note>
+
+## 6. Clôturer et retrouver la Task
+
+Relisez les notes et la capture une dernière fois. Cliquez sur **Terminer la session**, puis **Terminer et archiver** dans la confirmation.
+
+Un second dialogue permet de choisir l'affectation, l'état initial de la Task et un **Verdict (facultatif)**. Pour cet exercice, choisissez **Échoué**, puisque le scénario décrit une anomalie, puis cliquez sur **Valider**. Gardez l'état proposé si vous ne cherchez pas à exercer une transition particulière.
+
+Le bouton **Passer** clôt également la session, mais sans conserver une sélection de verdict ou de décision de passage préparée dans ce dialogue.
+
+**Vous devriez voir :** **Session terminée — Task #… créée**. Ouvrez cette Task et vérifiez :
+
+- le rapport de session et sa charte ;
+- le tag `exploratory-session` et votre tag de campagne `TP-DOC` ;
+- le lien vers la User Story, le bug créé et les preuves jointes.
+
+<Frame caption="La confirmation de clôture indique la création de la Task de session. Le numéro est propre au projet de démonstration ; cette capture ne confirme pas le téléchargement d'un PDF.">
+  <img src="/images/fr/tutorial-explore-archived.jpg" alt="Explore en français après clôture : Session terminée — Task #3070 créée, avec les actions d'export et de pièce jointe du rapport." />
+</Frame>
+
+La Task est l'archive de la session. Revenir sur la User Story ou changer le filtre du hub ne la supprime pas.
+
+<Note>
+  **Échoué** décrit le jugement du testeur sur cette session. Il n'ajoute aucun résultat Failed dans Azure Test Plans et ne modifie aucun indicateur du Quality Gate. Le verdict est définitif pour cette session close.
+</Note>
+
+## 7. Exporter puis retrouver votre session
+
+Depuis la session terminée, cliquez sur **Exporter le rapport PDF**. Vérifiez ou adaptez le titre proposé, puis cliquez sur **Exporter**.
+
+Ouvrez le PDF et retrouvez la charte, les trois notes, la capture et le numéro du bug. Si l'image n'a pas pu être récupérée, elle peut apparaître par son nom : lisez les mentions de preuve indisponible avant de partager le document.
+
+Revenez ensuite au hub TestPulse, onglet **Explore**. Filtrez sur la campagne **TP-DOC**, dépliez la User Story et retrouvez votre session. Le lien de la session close mène à sa Task. Dans cette Task, l'onglet **Explore** permet de relire la session enregistrée.
+
+**Contrôle final :** vous devez pouvoir partir du hub, retrouver la Task, ouvrir le bug et relire le PDF. L'export téléchargé n'est pas automatiquement une pièce jointe de la Task ; utilisez **Attacher le rapport à la tâche** seulement si vous souhaitez aussi l'y conserver.
+
+## Si vous voyez autre chose
+
+| Symptôme | Vérification et action |
+| --- | --- |
+| Je vois une liste de sessions, pas le formulaire. | Vous êtes dans le hub Explore. Ouvrez la User Story de démonstration puis son onglet Explore. |
+| La capture ne se colle pas. | Vérifiez que le presse-papiers contient une image et que vous avez le focus dans Explore. **Parcourir…** accepte aussi un fichier, mais une image déposée est traitée comme fichier joint et non comme capture intégrée au PDF. |
+| Azure DevOps refuse une pièce ou une création. | Lisez le message : réapprobation du scope et droits sur les work items sont deux vérifications distinctes. Faites vérifier le point concerné, puis réessayez l'action en échec. |
+| Une erreur de sauvegarde apparaît. | Gardez la fiche ouverte et vérifiez la connexion. Des saisies visibles à l'écran ne prouvent pas qu'elles sont sauvegardées. |
+| Plusieurs fichiers n'ont pas tous été envoyés. | Repérez ceux que le message nomme en échec. Les fichiers déjà joints sont conservés : ne renvoyez que ceux qui manquent. |
+| La clôture échoue. | La session reste active et peut être rejouée. Corrigez la cause indiquée, puis retentez la clôture plutôt que de démarrer une autre session. |
+| La Task est créée mais son état n'a pas été appliqué. | La clôture a abouti ; seule la transition a échoué. Ouvrez la Task et traitez son état avec les règles du projet. Ne dupliquez pas la session. |
+| La session paraît encore active dans le hub après clôture. | Si le message signale un index non actualisé, rechargez le hub et vérifiez la Task déjà créée. |
+| Je ne retrouve pas une session d'un collègue. | Retirez **Filtré sur mes sessions**, vérifiez les autres filtres et incluez les sessions archivées si nécessaire. La reprise d'une session active appartient au compte qui l'a démarrée. |
+| L'onglet de la Task ne retrouve pas la session. | Vérifiez la version de TestPulse et l'origine de la Task. Une session créée dans Explore AI de TestPulse Studio se lit dans cet autre onglet, pas dans TestPulse. |
+
+## À vous de jouer
+
+Sur une nouvelle session de démonstration, formulez une charte qui explore les limites du code promotionnel **DEMO10**. Consignez une observation, une question et une idée de test, puis créez un **Cas de test** plutôt qu'un bug.
+
+Relisez les étapes proposées avant création : les notes et le sens des captures influencent leur construction. Vous avez réussi si un collègue peut comprendre votre scénario à partir du cas créé, sans avoir assisté à la session.
+
+<CardGroup cols={2}>
+  <Card title="Captures et création de work items" icon="pencil" href="/fr/exploratory/capture-and-create">Approfondir les annotations, les pièces et les cas de test.</Card>
+  <Card title="Retrouver les sessions du projet" icon="layout-list" href="/fr/exploratory/sessions-hub">Comprendre les filtres, statuts et rapports de périmètre.</Card>
+</CardGroup>

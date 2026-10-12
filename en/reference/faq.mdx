@@ -4,6 +4,27 @@ description: "Common questions and quick fixes."
 icon: "circle-help"
 ---
 
+## My report is empty or Generate does not download a file
+
+**Generate** first displays the report on screen; downloading is a separate export action.
+
+1. Check the project, plan and included suites.
+2. Complete missing or invalid fields named by the validation message.
+3. If the report has cases but no executed tests, check the results in the selected scope. An unexecuted campaign is not a generation failure.
+4. Once the report is displayed, select **PDF**. If the button is missing, check [export button visibility](/en/exports/button-visibility).
+
+See the [first report walkthrough](/en/tutorials/first-report).
+
+## A known bug is missing from my report
+
+First read the **Bug source** banner. With **Bugs from the plan runs**, the bug must be attached to a **run result** in the selected plans and suites; a simple case or requirement link is not enough.
+
+Check that association in Azure DevOps, the scope and any warning about the number of runs read, then **regenerate** the report. Loading an old report keeps its old snapshot. See [Bugs of a report](/en/reports/campaign-bugs).
+
+## The session Task opens a start form
+
+Check for version **2.73.1 or later**, then reload the tracking Task's **Explore** tab. This release fixes restoration from the Task. If the message names **Explore AI**, the session belongs to **TestPulse Studio**: open that tab. See [Session report](/en/exploratory/session-report).
+
 ## The "Test coverage" tab doesn't appear on a work item
 
 A brand-new contribution can take a short while for Azure DevOps to ingest. Do a **cold refresh** (Ctrl+Shift+R) on the work item. The tab is auto-placed and mounts on click — see [The Test coverage tab](/en/work-item/test-coverage-tab).
@@ -14,7 +35,7 @@ Update to the latest version — the plan/suite resolution reads outcomes correc
 
 ## Creating a plan returns a 403
 
-This is an **area-path permission**, not a scope. Pick an area path where you have *Manage test plans* — see [Create the plan](/en/coverage-builder/create-plan).
+If the message mentions managing plans under an area path, check **Manage test plans** on that area path. The 403 code alone is not enough to conclude: also have your administrator check extension approval and your rights. See [Create the plan](/en/coverage-builder/create-plan).
 
 ## Notifications are blocked on-premises
 
@@ -34,7 +55,7 @@ Exploratory sessions write to Azure DevOps — attachments, work items, the arch
 
 ## I can't resume a colleague's active session
 
-You can't, and this isn't a bug. An in-progress session lives in Azure DevOps Extension Data, which restores it **only to the account that started it**. The hub tells the two cases apart: your own session offers to resume, a colleague's only opens the work item. A session becomes fully shared once it's closed and archived as a Task.
+TestPulse offers active-session resumption only to **its author**. The hub offers resume for your session; a colleague's session only opens the work item. This is a TestPulse resumption rule, not a confidentiality guarantee: session documents live in project-level Extension Data. A closed session can be viewed from its tracking Task. See [Privacy](/en/security/privacy).
 
 ## I can't delete a capture from a session timeline
 

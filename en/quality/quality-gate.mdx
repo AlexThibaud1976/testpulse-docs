@@ -8,7 +8,7 @@ Every report carries a **quality score** graded **A → E** with a **0–100** v
 
 ## How the grade is built
 
-The 0–100 composite weighs four components:
+The 0–100 composite weighs four components. These are the weights of the **Standard** profile, selected by default; Strict, Ramp-up and Custom profiles can use different values:
 
 | Component | Weight |
 | --- | --- |
@@ -17,7 +17,7 @@ The 0–100 composite weighs four components:
 | Requirements coverage | 20 |
 | Defect hygiene | 20 |
 
-Grades: **A** ≥ 90 · **B** 75–89 · **C** 60–74 · **D** 40–59 · **E** < 40.
+**Standard** profile grades, before caps are applied: **A** ≥ 90 · **B** 75–89 · **C** 60–74 · **D** 40–59 · **E** < 40. Other profiles' thresholds are listed below.
 
 When traceability is absent, coverage is dropped and the remaining weights are **renormalised** (a flag says so). Fewer than 5 executed tests raises a *low confidence* flag.
 
@@ -27,7 +27,7 @@ Click **Show details** to expand the breakdown — each component (value, points
 
 ## Non-negotiable invariants
 
-- **≥ 1 open blocking bug** among the [bugs of the report](/en/reports/campaign-bugs) (open + Critical / High) caps the grade at **C** and forces **NO-GO**.
+- **≥ 1 open blocking bug** among the [bugs of the report](/en/reports/campaign-bugs) (open state and blocking severity **according to the applied scale**) caps the grade at **C** and forces **NO-GO**.
 - An **untested in-scope requirement** forces **NO-GO**.
 - **No executed test** shows *not evaluated* — never an E.
 - **GO** also requires the composite to reach the scale's **GO threshold** and coverage to reach its **minimum**.
@@ -39,13 +39,27 @@ Click **Show details** to expand the breakdown — each component (value, points
 
 In Settings, choose a **project-level** scale so everyone scores a report identically:
 
-- **Strict** — a regulated release.
-- **Standard** — the default scale.
-- **Ramp-up** — a starting team.
+The values below belong to the **three predefined profiles**, before customisation.
+
+| Setting | Standard | Strict | Ramp-up |
+| --- | --- | --- | --- |
+| Pass / execution / coverage / hygiene weights | 40 / 20 / 20 / 20 | 40 / 15 / 25 / 20 | 50 / 25 / 15 / 10 |
+| A threshold | 90 | 92 | 85 |
+| B threshold | 75 | 80 | 70 |
+| C threshold | 60 | 68 | 55 |
+| D threshold | 40 | 50 | 35 |
+| Composite score GO threshold | 75 | 85 | 65 |
+| Minimum coverage, when measurable | 70% | 85% | 50% |
+| Pass-rate floor | 75% | 85% | 65% |
+| Execution-rate floor | 75% | 85% | 65% |
+| Blocking bug severities | Critical and High | Critical and High | **Critical only** |
+| States treated as open | Active, New | Active, New | Active, New |
+
+The grade is determined by the highest threshold reached, then caps are applied; below the D threshold it is E. An open **High** bug therefore does not, on its own, trigger the blocking-bug gate in **Ramp-up**. The verdict's other rules still apply.
 
 Each scale's GO threshold doubles as its **pass-rate floor** and its **execution-rate floor** — 0.85 Strict · 0.75 Standard · 0.65 Ramp-up — so there is no separate number to set.
 
-Tuning is **bounded** (GO threshold 50–95, a minimum coverage, component weights forced to sum to 100, A > B > C > D thresholds); any off-preset value becomes a **Custom** scale. The invariants above always hold.
+Tuning is **bounded** (GO threshold 50–95, a minimum coverage, component weights forced to sum to 100, A > B > C > D thresholds); any off-preset value becomes a **Custom** scale. The rules above apply using the selected scale's values. When interpreting a saved report, consult the scale captured in that report: changing the project setting does not rewrite its results.
 
 ## Risk-based weighting (optional)
 

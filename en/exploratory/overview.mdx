@@ -1,6 +1,6 @@
 ---
 title: "Exploratory testing — the Explore tab"
-description: "Run a full exploratory testing session from the user story itself: charter, timestamped notes, resilient autosave — and everything stays in your Azure DevOps tenant."
+description: "Run a full exploratory testing session from the user story itself: charter, timestamped notes, Azure DevOps storage and local PDF export."
 icon: "compass"
 ---
 
@@ -26,9 +26,11 @@ Two things it deliberately is not. It is **final** — a closed session is a rec
 
 Since v2.71.0 the same dialog also offers a **promotion decision** — whether the delivery may move to the next environment stage (TEST → QUAL → PROD by default, configurable per project). Same contract as the verdict: optional, final, counted nowhere. Unlike the verdict, it is also written on the **work item the session was run from**, as a tag and one discussion comment, so the change board finds it without opening TestPulse. See [Promotion decision](/en/exploratory/promotion-decision).
 
-## Everything stays in your tenant
+## Azure DevOps storage and local export
 
-Exploratory sessions **write to Azure DevOps** — attachments and work items — but only on **explicit action** (attach a capture, create a bug, archive the session, record a promotion decision). This is the capability that introduced the **work-items write permission**; adding it triggers a one-time **administrator re-approval** of the extension. Reads are unchanged, every write is isolated in a dedicated module, and **nothing leaves your ADO tenant** — no telemetry, no added dependency. If the permission isn't approved yet, an **explanatory banner** replaces the raw error on any refused write.
+Sessions are **automatically saved in Azure DevOps Extension Data**. Your capture, file-drop, bug or case creation, closure and promotion-decision actions can also write attachments and work items to Azure DevOps. They use the **work-items write permission**; when a release adds this permission, an administrator must approve the extension's new permissions. If it is not approved, an **explanatory banner** accompanies the write refusal.
+
+PDF export is built in the browser and **downloaded to your device**. No TestPulse backend receives the session, but the exported file leaves Azure DevOps and you can subsequently share it. See the [action matrix](/en/concepts/read-only) to distinguish saves, creations and exports.
 
 ## Related
 
@@ -36,5 +38,5 @@ Exploratory sessions **write to Azure DevOps** — attachments and work items �
   <Card title="Capture, annotate & create" icon="pencil" href="/en/exploratory/capture-and-create">Paste a screenshot, annotate it, raise a bug.</Card>
   <Card title="Session report" icon="file-text" href="/en/exploratory/session-report">Export a signed PDF of the session.</Card>
   <Card title="Permissions" icon="shield-check" href="/en/security/permissions">The work-items write scope, and when it's used.</Card>
-  <Card title="Privacy" icon="lock" href="/en/security/privacy">What stays in your tenant.</Card>
+  <Card title="Privacy" icon="lock" href="/en/security/privacy">Storage, visibility and exported files.</Card>
 </CardGroup>

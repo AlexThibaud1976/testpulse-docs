@@ -1,33 +1,46 @@
 ---
-title: "Privacy & data"
-description: "100% client-side, no backend, and no data ever leaves your Azure DevOps tenant."
+title: "Privacy and data"
+description: "Browser processing, Azure DevOps storage, exported files and notifications to your webhooks."
 icon: "shield"
 ---
 
-TestPulse is **100% client-side**. Reports are built **in your browser** — there is **no backend server**, and **no data ever leaves your Azure DevOps tenant**.
+TestPulse builds reports **in your browser**. It has no TestPulse backend that receives or analyses your project data. Data does travel between the browser and Azure DevOps; your export and notification actions can also take it outside that environment.
 
 ## Where your data lives
 
-- **Reports & history** — saved to Azure DevOps **Extension Data** (user-scoped; project-scoped only when you *share to project*). Nothing is sent to a third party.
-- **Preferences** — stored the same way, or in the browser for UI-only choices (for example the work-item tab's language).
-- **Attachments** — images are cached in memory and re-fetched from Azure DevOps when needed; they are stripped from saved history to respect the storage quota.
-- **Exploratory sessions** — stored at **project scope**, so that a session started on one screen can be found from another and listed in the hub.
+| Data | Storage and visibility |
+| --- | --- |
+| **Reports and personal history** | Azure DevOps **Extension Data**, per user across the organisation. |
+| **Shared reports** | Copy of the report in project-level Extension Data when you choose **Share to project**. |
+| **Preferences and settings** | Extension Data, at user or project scope depending on the setting; some visual-only choices are stored in the browser. |
+| **Repository and Cockpit snapshots** | Extension-owned data in Azure DevOps; repository organisation and shared tracking data do not modify test results. |
+| **Exploratory sessions** | Documents and index in project-level Extension Data; automatic saving during the session. |
+| **Explore captures and files** | Attachments uploaded to Azure DevOps, then linked to work items through your creation or closure actions. |
+| **Report images** | Loaded from Azure DevOps and cached in memory; removed from the history snapshot to respect its quota, then read again if needed. |
+| **Exports** | Files downloaded to your device. They then follow the storage and sharing rules of that device and your recipients. |
+| **Notifications** | Message sent from the browser to the configured webhook URL when you choose **Test** or **Notify**. |
 
 <Warning>
-Project scope means exactly that: **anyone with access to the project can read any session's notes and captures**, whatever Azure DevOps team they belong to. Team-level segregation does not apply to this storage. The hub's Tester filter reduces noise; it grants no confidentiality. Keep out of session notes anything you would not put in a work item comment.
+Project scope for sessions is not a confidentiality boundary between teams: session documents are shared at project level. The hub's **Tester** filter helps you find sessions; it is not an access control. Restricting active-session resumption to its author does not make its content private. Avoid entering information that must not be accessible to project members.
 </Warning>
 
-## No telemetry by default
+## What leaves through exports or notifications
 
-TestPulse does not phone home. There is no analytics backend — the only outbound calls are to **your** Azure DevOps and, if you configure them, **your** Teams / Slack webhooks.
+A PDF, Word document, Excel workbook, HTML or PowerPoint presentation becomes a **local file**. TestPulse no longer controls its distribution once you share it.
 
-## On-premises
+For Teams or Slack, a report message contains its **title**, **environment**, **pass rate**, **execution rate** and **bug count**. The **Test** button sends a sample message. The destination is the URL saved in your settings; the content is not sent to a TestPulse server. See [Notifications](/en/collaboration/notifications-and-scheduling).
 
-On Azure DevOps Server, everything runs the same way against your server. The only browser limitation is CORS on outbound webhooks — TestPulse falls back to a copy-paste payload (see [Notifications](/en/collaboration/notifications-and-scheduling)).
+## Telemetry and external services
+
+TestPulse does not include an analytics backend collecting your reports. Product data access uses Azure DevOps, and notifications you trigger use your webhooks. This describes TestPulse; it does not replace the policies of Azure DevOps, Teams, Slack or your browser.
+
+## Azure DevOps Server
+
+Azure DevOps data is read and saved against your server. Notifications remain outbound browser requests: network policy and CORS can prevent them. TestPulse then offers the payload to copy for manual handling. Local exports remain available.
 
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Permissions & scopes" icon="key" href="/en/security/permissions">What TestPulse can access.</Card>
-  <Card title="Read-only by design" icon="lock" href="/en/concepts/read-only">Where it writes, and where it never does.</Card>
+  <Card title="Permissions and scopes" icon="key" href="/en/security/permissions">What TestPulse can access.</Card>
+  <Card title="Action matrix" icon="lock" href="/en/concepts/read-only">Reads, saves, creations and modifications.</Card>
 </CardGroup>

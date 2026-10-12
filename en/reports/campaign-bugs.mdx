@@ -4,7 +4,7 @@ description: "Where the bugs of a report come from, how they are sorted, and how
 icon: "bug"
 ---
 
-A regression plan is often **copied** from the previous campaign. The copy inherits the links of its test cases and requirements — including links to bugs found months ago. Since v2.73.0, a report shows by default only **the bugs its campaign produced**.
+A regression plan is often **copied** from the previous campaign. The copy inherits the links of its test cases and requirements — including links to bugs found months ago. Since v2.73.0, a report shows by default only **the bugs attached to the campaign results it reads**.
 
 ## Where the bugs come from
 
@@ -15,7 +15,7 @@ A regression plan is often **copied** from the previous campaign. The copy inher
 | **Bugs from the plan runs** (default) | it is attached to a result of a run of the selected plans, in the selected suites — across **all** the runs read, not only the latest result. |
 | **Test case and User Story links** | it is linked to a test case of the report (*Tested By*) or to one of its requirements — the behavior before v2.73.0. |
 
-It is a **project** setting: the whole team gets the same report. It is not locked; the screen shows who changed it last and when. It is read at every generation.
+It is a **project** setting: the whole team uses this source when generating a new report. It is not locked; the screen shows who changed it last and when. It is read at every generation.
 
 With the default source, each bug appears **once** and lists the **test cases** whose results carry it. Only the `Bug` work item type is counted.
 

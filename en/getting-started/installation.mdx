@@ -23,7 +23,7 @@ TestPulse installs like any Azure DevOps extension. Choose your platform below.
   <Tab title="On-premises (.vsix)">
     <Steps>
       <Step title="Download the .vsix">
-        Get the packaged extension (`.vsix`) for your release.
+        Ask your administrator for the TestPulse package (`.vsix`) approved for your Server version. This documentation does not provide a public Server package download link; obtain the package before continuing.
       </Step>
       <Step title="Upload to your collection">
         In **Azure DevOps Server 2022.1**, open the **Manage extensions** area of your collection and upload the `.vsix`.
@@ -44,14 +44,14 @@ TestPulse installs like any Azure DevOps extension. Choose your platform below.
 
 ## Permissions requested
 
-TestPulse requests read scopes plus two write scopes, each bounded to a create action you trigger yourself:
+TestPulse requests four read scopes and two write scopes. Your Azure DevOps account still needs the rights for each action:
 
 | Scope | Why |
 | --- | --- |
 | `vso.work` | Read work items (requirements, bugs). |
 | `vso.test` | Read Test Plans, suites, cases and results. |
-| `vso.test_write` | **Coverage Builder only** — create test plans/suites on request. |
-| `vso.work_write` | **Exploratory testing only** — create the bugs, test cases and session Task you file, and their attachments. |
+| `vso.test_write` | Coverage Builder and Repository: create plans/suites or add cases to a target; reassignment: change testers/configurations. |
+| `vso.work_write` | Explore: create bugs, cases, tracking Task and attachments; set the Task's state at closure if requested; report a promotion decision on the host work item if enabled. |
 | `vso.build`, `vso.identity` | Associated build and assignee details. |
 
-<Tip>TestPulse never writes on its own: every write follows an explicit gesture. Outside two explicitly confirmed actions — bulk reassignment and the promotion decision — it never modifies a work item, plan, suite or result that existed before that gesture — see [Permissions & scopes](/en/security/permissions).</Tip>
+<Tip>A report does not modify test results, but its history is saved automatically in Extension Data. Creation, addition and modification features have their own effects. See [permissions](/en/security/permissions) and the [action matrix](/en/concepts/read-only).</Tip>

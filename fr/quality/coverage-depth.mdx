@@ -22,7 +22,7 @@ Dépliez une ligne pour voir les **constats** (les raisons, avec liens) et des *
 
 L'analyse est **100 % déterministe et sans IA** — elle compte les critères d'acceptation, mesure la profondeur des étapes, repère les mots-clés négatif / limite (FR + EN), vérifie le recouvrement de termes et l'exécution. Elle est **purement advisory** : elle ne bloque rien, n'alimente pas le score qualité ni le GO/NO-GO, et ne change aucun résultat. Le wording reste prudent (*« possible »*, *« apparent »*) — c'est un signal *à revoir* ; **vous** décidez.
 
-Elle est **en lecture seule** (aucun nouvel appel ni scope) et se dégrade gracieusement par exigence : un test sans étapes compte quand même, et aucun critère d'acceptation donne *Sous-spécifiée* — jamais un verdict inventé.
+Elle est **en lecture seule**, sans scope d'écriture ni nouveau scope. Les données déjà chargées sont réutilisées ; les cas absents du cache peuvent nécessiter des lectures supplémentaires. Elle se dégrade gracieusement par exigence : un test sans étapes compte quand même, et aucun critère d'acceptation donne *Sous-spécifiée* — jamais un verdict inventé.
 
 ## À suivre
 

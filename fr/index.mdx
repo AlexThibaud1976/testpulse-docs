@@ -1,62 +1,71 @@
 ---
-title: "Introduction"
-description: "Des rapports de test professionnels depuis les plans de test Azure DevOps — 100% client-side, gratuit, cloud et on-premises."
+title: "Réussir avec TestPulse"
+description: "Du premier rapport à une décision qualité expliquée : des ateliers guidés, des exemples et des résultats vérifiables."
 icon: "sparkles"
 ---
 
-TestPulse transforme vos **plans de test Azure DevOps** en rapports professionnels et partageables — et en signal qualité embarqué — **sans jamais envoyer vos données ailleurs**. Tout s'exécute dans votre navigateur, à l'intérieur d'Azure DevOps.
+TestPulse vous aide à **comprendre vos résultats de test, préparer une décision et partager les preuves** depuis Azure DevOps. Commencez par un résultat utile, puis approfondissez à votre rythme.
 
-<Note>
-  **100% client-side · gratuit · sans palier.** TestPulse lit vos plans de test et génère les rapports localement. Il est en **lecture seule** sauf là où vous lui demandez explicitement de déposer quelque chose — à commencer par l'exception opt-in près : le **Coverage Builder**, qui peut créer des plans/suites de test pour vous.
-</Note>
+<Card title="Votre premier rapport, du plan au PDF" icon="file-output" href="/fr/tutorials/first-report" horizontal>
+  Choisissez un plan, générez votre rapport, comprenez ses compteurs et exportez votre premier PDF. Chaque étape indique ce que vous devez voir.
+</Card>
 
-## Ce que vous pouvez faire
+## Que voulez-vous réussir ?
 
 <CardGroup cols={2}>
-  <Card title="Générer un rapport" icon="file-output">
-    Exportez des rapports soignés en PDF, HTML, Word, Excel ou PowerPoint depuis n'importe quel plan de test.
+  <Card title="Découvrir et démarrer" icon="rocket" href="/fr/getting-started/quickstart">
+    Vérifiez les prérequis et trouvez vos repères dans l’extension.
   </Card>
-  <Card title="Voir couverture & qualité" icon="shield-check">
-    Profondeur de couverture, un grade Quality Gate (A–E) et un verdict de release GO/NO-GO.
+  <Card title="Préparer une campagne" icon="list-checks" href="/fr/coverage-builder/overview">
+    Retrouvez les exigences couvertes et préparez un plan de test adapté.
   </Card>
-  <Card title="Lire le signal sur la fiche" icon="list-checks">
-    Un onglet « Test coverage » sur les user stories : sélecteur de portée et verdict d'exécution.
+  <Card title="Comprendre un NO-GO" icon="shield-check" href="/fr/tutorials/understand-no-go">
+    Remontez du verdict aux règles et aux résultats qui l’expliquent.
   </Card>
-  <Card title="Suivre tendances & collaborer" icon="chart-line">
-    Historique, tendances, notifications Teams/Slack et rapports planifiés.
-  </Card>
-  <Card title="Piloter la campagne au quotidien" icon="gauge">
-    Un Cockpit d'exécution pour le point du matin : la réponse d'abord — rythme, fin projetée, rythme nécessaire — puis quoi exécuter aujourd'hui et ce qui bloque.
-  </Card>
-  <Card title="Repérer dérive & couverture périmée" icon="git-compare-arrows">
-    Comparez deux plans, repérez les exigences modifiées depuis la baseline — et les Passed qui ne prouvent plus rien.
-  </Card>  <Card title="Organiser vos tests façon Xray" icon="folder-tree" href="/fr/test-repository/overview">
-    Une arborescence de dossiers partagée au projet pour organiser et retrouver vos cas de test — et générer un plan ADO depuis un dossier.
-  </Card>
-  <Card title="Mener des tests exploratoires" icon="compass" href="/fr/exploratory/overview">
-    Une session depuis l'US : notes horodatées, captures annotées, bugs créés à la volée, et un rapport PDF signé.
+  <Card title="Administrer et partager" icon="settings" href="/fr/security/permissions">
+    Comprenez les droits, les sauvegardes et les effets de chaque action.
   </Card>
 </CardGroup>
 
-## Pour qui
+## Apprendre en pratiquant
 
-- **Product Owners / Test Managers** — un rapport à partager et un GO/NO-GO clair.
-- **QA & développeurs** — couverture, profondeur, échecs, traçabilité, exports.
-- **Admins ADO** — installation cloud ou on-premises, contrôle des permissions.
+Les trois ateliers utilisent une même boutique fictive. Vous pouvez [préparer le jeu de démonstration](/fr/tutorials/demo-project) dans un projet dédié ou suivre les étapes avec un petit plan de test que vous connaissez.
 
-## Cibles supportées
+| Atelier | Votre résultat à la fin |
+|---|---|
+| [Mon premier rapport](/fr/tutorials/first-report) | Un rapport relu, un PDF et un rapport retrouvé dans l’historique. |
+| [Comprendre un NO-GO](/fr/tutorials/understand-no-go) | Une explication du verdict appuyée sur le périmètre, les règles et les preuves. |
+| [Une session exploratoire complète](/fr/tutorials/exploratory-session) | Une session documentée, un bug traçable et un compte rendu partageable. |
 
-<Columns cols={2}>
-  <Card title="Azure DevOps Services" icon="cloud">Organisations cloud.</Card>
-  <Card title="Azure DevOps Server 2022.1" icon="server">Collections on-premises.</Card>
-</Columns>
+## Retrouver une réponse précise
 
-## Ce que TestPulse **n'est pas**
+<CardGroup cols={2}>
+  <Card title="Générer et personnaliser" icon="file-text" href="/fr/reports/generate-a-report">
+    Périmètre, informations métier, page de garde et sections du rapport.
+  </Card>
+  <Card title="D’où viennent mes bugs ?" icon="bug" href="/fr/reports/campaign-bugs">
+    Bugs des exécutions de campagne, mode par liens et limites de chaque source.
+  </Card>
+  <Card title="Piloter la campagne" icon="gauge" href="/fr/cockpit/execution-cockpit">
+    Rythme, travail restant, historique disponible et limites des projections.
+  </Card>
+  <Card title="Organiser les cas de test" icon="folder-tree" href="/fr/test-repository/overview">
+    Retrouvez vos tests dans le Repository et préparez vos plans.
+  </Card>
+  <Card title="Résoudre un problème" icon="circle-help" href="/fr/reference/faq">
+    Plans absents, exports masqués, droits et questions fréquentes.
+  </Card>
+  <Card title="Voir les nouveautés" icon="history" href="/fr/changelog">
+    Les changements de version qui affectent vos usages.
+  </Card>
+</CardGroup>
 
-- Pas un **exécuteur** de tests — il rend compte des résultats, il ne lance pas les tests.
-- Pas un entonnoir payant — TestPulse est entièrement gratuit : toutes les fonctionnalités, pour tout le monde.
-- Pas un sous-traitant de données — rien ne quitte votre tenant Azure DevOps.
+## Des résultats à interpréter
 
-<Card title="Commencez ici : votre premier rapport en 5 minutes" icon="play" href="/fr/getting-started/quickstart" horizontal>
-  Suivez le quickstart guidé.
-</Card>
+Un grade et un verdict résument des règles appliquées aux données disponibles. Ils ne remplacent pas la décision de l’équipe : vérifiez le périmètre, la fraîcheur des résultats et les informations manquantes. TestPulse **ne lance pas vos tests**.
+
+<Note>
+  TestPulse s’exécute dans votre navigateur, sans backend TestPulse. Selon les actions utilisées, il lit ou écrit dans Azure DevOps, sauvegarde des informations dans Extension Data, produit des fichiers locaux ou envoie une notification au webhook configuré. Consultez la [matrice des actions](/fr/concepts/read-only) et les [règles de confidentialité](/fr/security/privacy).
+</Note>
+
+La documentation couvre Azure DevOps Services et les particularités de Server présentées dans le [guide d’installation](/fr/getting-started/installation). Les captures des ateliers sont réalisées sur Services ; votre présentation peut varier selon la version, les droits et la configuration.

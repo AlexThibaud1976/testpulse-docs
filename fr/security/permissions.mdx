@@ -1,47 +1,58 @@
 ---
-title: "Permissions & scopes"
-description: "Les scopes Azure DevOps demandés par TestPulse, pourquoi chacun est nécessaire, et exactement ce qu'il écrit."
+title: "Permissions et scopes"
+description: "Les six scopes Azure DevOps demandés par TestPulse et les droits nécessaires pour lire, créer ou modifier des données."
 icon: "key"
 ---
 
-TestPulse ne demande que les scopes dont il a besoin. Il **n'écrit jamais de lui-même** : chaque écriture est déclenchée par un geste explicite de votre part, et chacune est bornée à ce qu'elle crée — ou, dans deux cas confirmés, à exactement ce que vous avez sélectionné.
+Un **scope** autorise l'extension à demander une famille d'opérations. Les **droits de votre compte**, le niveau d'accès et les permissions sur le projet et l'area path déterminent ensuite ce que vous pouvez réellement faire. Installer TestPulse ne donne pas des droits d'administrateur aux utilisateurs.
 
-| Scope | Lecture / Écriture | Pourquoi il est demandé |
-| --- | --- | --- |
-| `vso.test` | lecture | Plans de test, suites, cas, points et résultats. |
-| `vso.work` | lecture | Work items (exigences, bugs) pour la traçabilité, et les états disponibles d'un type de work item. |
-| `vso.identity` | lecture | Résoudre testeurs et assignés par leur nom. |
-| `vso.build` | lecture | Le build associé à un rapport. |
-| `vso.test_write` | **écriture** | Créer plans de test et suites depuis le Coverage Builder, et réaffecter testeurs ou configurations depuis la réaffectation en masse. |
-| `vso.work_write` | **écriture** | Test exploratoire uniquement — créer bugs, cas de test et la tâche de session, téléverser leurs pièces jointes, poser l'état de cette tâche à la clôture, et — quand vous actez une décision de passage — ajouter un tag et un commentaire de discussion sur la fiche depuis laquelle la session a été menée. |
+## Les six scopes du manifeste
 
-## Les deux scopes d'écriture
+| Scope | Usage |
+| --- | --- |
+| `vso.test` | Lire plans, suites, cas, points et résultats de test. |
+| `vso.work` | Lire work items, liens, classifications et états disponibles nécessaires aux fonctions utilisées. |
+| `vso.identity` | Résoudre les noms des testeurs et des personnes affectées. |
+| `vso.build` | Lire le build associé au rapport. |
+| `vso.test_write` | Créer des plans et suites depuis Coverage Builder ou Repository, ajouter des cas à une cible depuis Repository, réaffecter testeurs ou configurations. |
+| `vso.work_write` | Explore : créer bugs, cas et tâche de suivi, téléverser leurs pièces jointes, poser l'état de la tâche à la clôture si demandé et reporter une décision de passage sur la fiche hôte si activé. |
 
-### `vso.test_write` — Coverage Builder et réaffectation en masse
+Les sauvegardes de rapports, de réglages, du Repository et de sessions utilisent aussi **Azure DevOps Extension Data**. Elles ne sont pas des modifications de résultats de test ; plusieurs sont automatiques. La [matrice des actions](/fr/concepts/read-only) indique les cibles et les déclencheurs.
 
-Alimente deux actions, toutes deux déclenchées par vous.
+## Écrire dans les plans et les points
 
-**Coverage Builder — création.** Crée des plans de test et des suites requirement-based. Création seule : jamais d'écrasement ni de suppression d'un plan ou d'une suite existante.
+**Coverage Builder** crée un nouveau plan et des suites basées sur exigences après confirmation. Il ne remplace pas un plan existant.
 
-**Réaffectation en masse — modification.** Change le **testeur** ou la **configuration** des test points d'un périmètre que vous avez défini. C'est le seul endroit du produit où TestPulse modifie des données de test antérieures à votre geste, et c'est précisément l'objet de l'action. Elle affiche toujours un récapitulatif d'impact complet au préalable — points concernés, suites touchées, points déjà exécutés, cas ignorés — et le bouton d'application reste désactivé tant que l'impact est nul.
+**Repository** permet de créer un plan ou d'ajouter des cas à une cible existante. L'aperçu distingue créations, réutilisations, ajouts et cas ignorés. Une cible existante peut être partagée avec d'autres utilisateurs : vérifiez-la avant de confirmer.
 
-<Warning>La réaffectation en masse est irréversible : Azure DevOps ne propose aucune annulation et TestPulse ne conserve aucun état antérieur. Changer une **configuration** réécrit les affectations du cas de test, ce qu'Azure DevOps peut implémenter en recréant le test point, emportant son résultat d'exécution. L'écran de récapitulatif l'énonce et permet d'exclure les points portant déjà un résultat ; l'état antérieur peut être exporté en CSV au préalable. Voir [Lecture seule par défaut](/fr/concepts/read-only).</Warning>
+**Réaffectation en masse** modifie les testeurs ou configurations des points du périmètre choisi. Elle affiche d'abord l'impact : points concernés, suites, points déjà exécutés et cas ignorés.
 
-### `vso.work_write` — test exploratoire
+<Warning>
+La réaffectation n'a pas d'annulation intégrée. Un changement de configuration peut recréer un point et perdre son résultat associé. Consultez l'aperçu et l'option d'exclusion des points exécutés ; exportez l'état antérieur en CSV si nécessaire. Voir [Réaffectation en masse](/fr/reports/bulk-reassignment).
+</Warning>
 
-Alimente **uniquement** ce qu'une session exploratoire dépose à votre demande : un bug, un cas de test, la tâche de suivi de la session, et leurs pièces jointes. Tout est créé — TestPulse relie un nouveau work item à votre exigence. La seule chose qu'il peut écrire en retour sur l'exigence elle-même est la décision de passage décrite ci-dessous.
+## Écrire depuis Explore
 
-Deux exceptions étroites, toutes deux à la clôture d'une session et derrière le même dialogue. La première peut poser l'état de **la tâche que TestPulse vient de créer**, dans le même geste. La seconde, quand vous actez une **décision de passage**, ajoute un tag et un commentaire de discussion sur **la fiche depuis laquelle la session a été menée** — une seule cible, deux champs, jamais un état, une affectation ou un lien ; sautée si la fiche porte des modifications non enregistrées, jamais bloquante, et désactivable par un administrateur. Voir [Décision de passage](/fr/exploratory/promotion-decision).
+Une capture est téléversée dans Azure DevOps **à sa validation dans l'éditeur de capture** ; annuler cet éditeur ne transmet pas la capture. Déposer un fichier déclenche aussi son téléversement comme pièce jointe. Créer un **Bug**, un **Test Case** ou la **Task de clôture** crée l'objet avec les éléments retenus. La clôture peut également poser l'état de la tâche qu'elle vient de créer.
 
-<Note>Ajouter un scope d'écriture au manifeste est une action d'**administrateur** et déclenche une **ré-approbation de l'extension** pour l'organisation. Jusque-là, tout ce qui est en lecture continue de fonctionner — seule l'action de création correspondante est indisponible.</Note>
+Quand une **décision de passage** est enregistrée et que son report est activé, TestPulse ajoute un tag et un commentaire à la **fiche hôte**. Il ne change pas son état ni son affectation. Le report est sauté si la fiche porte des modifications non enregistrées et peut être désactivé au niveau projet. Voir [Décision de passage](/fr/exploratory/promotion-decision).
 
-## Permission ≠ scope
+## Ré-approbation d'une extension mise à jour
 
-Un **403** à la création d'un plan est presque toujours une **ACL d'area path** — la permission *Manage test plans* se donne **par area path** — et **non** un scope manquant. Voir [Créer le plan dans Azure DevOps](/fr/coverage-builder/create-plan).
+Quand une version ajoute un scope, un administrateur de l'organisation doit approuver les nouvelles permissions de l'extension. Un utilisateur ne peut pas résoudre ce blocage en modifiant ses options TestPulse. Demandez à l'administrateur de vérifier l'état d'approbation.
+
+Cette approbation ne remplace pas les droits Azure DevOps nécessaires à l'action. Ne modifiez pas le manifeste pour corriger une permission utilisateur.
+
+## Diagnostiquer un accès refusé
+
+1. Relevez **l'action**, **la cible** et le **message complet** affiché, sans copier de jeton ni d'URL de webhook.
+2. Si le message parle de scope ou de ré-approbation, faites vérifier l'extension par l'administrateur.
+3. Si la création d'un plan renvoie un 403 mentionnant la gestion des plans sous une area path, vérifiez **Manage test plans** sur **l'area path choisie**.
+4. Pour les autres refus, faites vérifier les droits sur l'objet concerné et le niveau d'accès Azure DevOps de l'utilisateur. Un code 401 ou 403, pris seul, ne suffit pas à identifier la cause.
 
 ## À suivre
 
 <CardGroup cols={2}>
-  <Card title="Confidentialité & données" icon="shield" href="/fr/security/privacy">Où vivent les données.</Card>
-  <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">La frontière lecture/écriture en détail.</Card>
+  <Card title="Confidentialité et données" icon="shield" href="/fr/security/privacy">Où les données vivent et circulent.</Card>
+  <Card title="Matrice des actions" icon="lock" href="/fr/concepts/read-only">Ce que chaque fonction lit ou écrit.</Card>
 </CardGroup>

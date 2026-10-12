@@ -1,10 +1,10 @@
 ---
 title: "Test Repository — organisez vos cas de test"
-description: "Une arborescence de dossiers gratuite et partagée au niveau projet pour organiser et retrouver vos cas de test Azure DevOps, façon Xray — sans jamais modifier les données ADO."
+description: "Une arborescence de dossiers gratuite et partagée au niveau projet pour organiser et retrouver vos cas de test Azure DevOps, façon Xray — sans modifier le contenu des cas de test."
 icon: "folder-tree"
 ---
 
-Azure DevOps range un cas de test dans une suite, dans un plan. Il n'existe aucun endroit libre pour *organiser* vos cas comme vous les pensez, aucun moyen simple de retrouver un cas, et un cas lié à rien est de fait invisible. L'onglet **Repository** comble ce manque : une arborescence de dossiers pour organiser et retrouver vos cas de test, façon Xray pour Jira — et il ne touche jamais à vos données ADO.
+Azure DevOps range un cas de test dans une suite, dans un plan. Il n'existe aucun endroit libre pour *organiser* vos cas comme vous les pensez, aucun moyen simple de retrouver un cas, et un cas lié à rien est de fait invisible. L'onglet **Repository** comble ce manque : une arborescence de dossiers pour organiser et retrouver vos cas de test, façon Xray pour Jira — l'organisation est sauvegardée dans Extension Data, sans changer le contenu des cas.
 
 <Frame caption="Le Repository s''ouvre sur la vue Hygiène, avant toute analyse.">
   <img src="/images/fr/repository-hygiene.png" alt="Onglet Repository sur la vue Hygiène avant analyse" />
@@ -14,7 +14,7 @@ Azure DevOps range un cas de test dans une suite, dans un plan. Il n'existe aucu
 
 Le Repository est un **objet propre à TestPulse**, partagé au niveau **projet** et stocké dans l'espace de l'extension. Il range des **références** à vos cas de test (`testCaseId`), jamais des copies de leur contenu : titres, étapes et champs restent l'unique source de vérité dans Azure DevOps. Vous pouvez créer, renommer, déplacer et supprimer des dossiers à **toute profondeur**, par glisser-déposer natif ou via un menu **« Déplacer vers… »** accessible au clavier. Un cas vit dans **au plus un dossier** ; le retirer de son dossier le renvoie vers **Non classés**.
 
-<Note>Parce que le Repository ne range que des références, rien de ce que vous faites ici ne modifie un cas de test, une suite ou un plan dans Azure DevOps. Le seul endroit qui écrit est la [génération d'un plan depuis un dossier](/fr/test-repository/generate-a-plan), et uniquement après un aperçu explicite.</Note>
+<Note>Parce que le Repository ne range que des références, rien de ce que vous faites ici ne modifie un cas de test, une suite ou un plan dans Azure DevOps. Dans le Repository, l'action qui écrit dans les plans et les suites est la [génération d'un plan depuis un dossier](/fr/test-repository/generate-a-plan), et uniquement après un aperçu explicite.</Note>
 
 ## « Non classés » — les cas pas encore rangés
 
@@ -34,7 +34,7 @@ Une vue dédiée fait remonter les **orphelins** : les cas de test qui existent 
 
 ## Lecture seule par conception
 
-Tout ce qui est décrit sur cette page est **en lecture seule vis-à-vis d'Azure DevOps**, ne nécessite **aucun nouveau périmètre** et n'ajoute **aucune nouvelle dépendance**. Le Repository lit une fois les cas de test du projet et réutilise des primitives que TestPulse possédait déjà. Si une lecture échoue réellement, vous obtenez une **bannière d'erreur avec le message réel** — une panne n'est jamais déguisée en projet vide.
+L'organisation décrite sur cette page ne modifie pas les cas, suites, plans ou résultats Azure DevOps. Les dossiers, références et caches sont cependant **sauvegardés dans Extension Data**. Elle ne demande aucun nouveau scope d'écriture sur les tests. Le Repository lit une fois les cas de test du projet et réutilise des primitives que TestPulse possédait déjà. Si une lecture échoue réellement, vous obtenez une **bannière d'erreur avec le message réel** — une panne n'est jamais déguisée en projet vide.
 
 ## Voir aussi
 

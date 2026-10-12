@@ -27,15 +27,15 @@ Un troisième état — *couverte non planifiée* (un test existe mais n'est dan
 
 Avec le Scan planification activé, une colonne **Plans** montre par exigence où ses tests liés sont planifiés : le nom du plan s'il est unique, **« N plans »** s'il y en a plusieurs, **« — »** pour un trou (ou scan désactivé). **Dépliez une ligne** pour lister chaque couple (plan, suite) avec un lien **Exécuter dans Azure DevOps** ouvrant la **vue execute**, et une progression d'exécution **n/m run** récupérée paresseusement au dépliage seulement (une fois par suite, cachée en session, dégradation silencieuse — une date que le serveur ne fournit pas est masquée, jamais inventée). Le détail des plans est extrait des réponses que le scan reçoit déjà — **aucun appel API supplémentaire au chargement de la table**.
 
-## Preview & export (aucune permission requise)
+## Preview et export (sans droit d'écriture)
 
 TestPulse construit une **spec de plan** : une suite requirement-based par exigence, chacune avec ses cas de test prévus et un indicateur de trou. Une **preview** montre ce qui serait créé (ex. *« 9 suites requirement-based, 34 cas de test »*).
 
-Le bouton **Exporter la spec** est **toujours disponible et ne requiert aucune permission** — il sérialise la spec en **JSON, Markdown ou CSV**, de sorte qu'un responsable qualité sans droit d'écriture garde toute la valeur read. L'export reflète exactement la preview.
+Le bouton **Exporter la spec** est **disponible sans droit d'écriture** — il sérialise la spec en **JSON, Markdown ou CSV**, de sorte qu'un responsable qualité sans droit d'écriture garde toute la valeur read. L'export reflète exactement la preview. Les droits de lecture Azure DevOps restent nécessaires pour charger les exigences et les cas.
 
 ## À suivre
 
 <CardGroup cols={2}>
-  <Card title="Créer le plan dans Azure DevOps" icon="square-pen" href="/fr/coverage-builder/create-plan">Le seul endroit où TestPulse écrit.</Card>
+  <Card title="Créer le plan dans Azure DevOps" icon="square-pen" href="/fr/coverage-builder/create-plan">Créer un nouveau plan après confirmation.</Card>
   <Card title="Lecture seule par conception" icon="lock" href="/fr/concepts/read-only">Ce qu'il écrit, et ce qu'il ne touche jamais.</Card>
 </CardGroup>

@@ -1,0 +1,145 @@
+---
+title: "Comprendre et expliquer un NO-GO"
+description: "Remontez du verdict aux règles, puis aux résultats et aux bugs qui le justifient, sans confondre calcul et décision humaine."
+icon: "shield-check"
+---
+
+À la fin de cet atelier, vous saurez expliquer **pourquoi le rapport déconseille une release**, citer les éléments Azure DevOps qui le justifient et proposer les actions suivantes. Obtenir un GO n'est pas l'objectif de l'exercice.
+
+## Avant de commencer
+
+- Terminez [Mon premier rapport](/fr/tutorials/first-report) sur le plan **TP-DOC — Boutique démo** du [jeu de démonstration](/fr/tutorials/demo-project).
+- Générez le rapport sur la sous-suite statique **TP-DOC — Parcours de commande**. Vérifiez qu'il contient un cas réussi, un cas en échec et un cas non exécuté, avec une seule configuration.
+- Vous devez pouvoir ouvrir les résultats et work items du projet. Ce parcours de diagnostic ne nécessite pas de modifier le barème ni les résultats.
+
+<Note>
+  Le barème est partagé au niveau du projet. Lisez celui indiqué dans le rapport ; ne changez pas les seuils pour reproduire une capture ou obtenir le verdict souhaité. Un rapport chargé depuis l'historique conserve le barème capturé lors de sa génération.
+</Note>
+
+## 1. Relever le verdict et son contexte
+
+Dans **Rapport**, repérez le bloc **Qualité de la release**. Notez :
+
+- le **grade A–E** et le **score sur 100** ;
+- le verdict **GO** ou **NO-GO** ;
+- la ligne **Barème … · seuil GO …** ;
+- la date et le périmètre du rapport.
+
+Le grade résume les métriques ; le verdict applique aussi des règles de blocage. Ce ne sont pas deux façons d'écrire le même nombre.
+
+**Vous devriez voir :** un NO-GO pour le jeu minimal avec les profils Standard, Strict ou Rodage. Un message de confiance faible est également attendu : deux tests exécutés restent un échantillon réduit. Le profil de votre projet peut être Strict, comme dans l'environnement de démonstration ; conservez-le et lisez ses seuils. Si l'écran indique **Non évalué**, aucun test n'a été considéré exécuté : revenez au jeu de départ avant de chercher les raisons d'un NO-GO.
+
+## 2. Lire les règles qui ont réellement pesé
+
+Cliquez sur **Voir le détail**. Lisez d'abord les composantes, puis les plafonnements et réserves affichés.
+
+<Frame caption="Détail dans TestPulse 2.73.1 pour ce jeu de 3 cas : réussite à 50 %, exécution à 67 %, grade D et score 67/100 avec le profil Strict. Les règles affichées expliquent le NO-GO ; le faible nombre de tests exécutés limite aussi la confiance.">
+  <img src="/images/fr/tutorial-no-go-detail.jpg" alt="Détail du NO-GO en français : profil Strict, D, 67 sur 100, planchers de réussite et d'exécution non atteints, échec sans défaut lié et confiance faible." />
+</Frame>
+
+Sur notre jeu à trois cas, sans filtre ni configuration supplémentaire :
+
+| Mesure | Calcul à vérifier | Ce qu'elle vous apprend |
+| --- | --- | --- |
+| Réussite | 1 réussi sur 2 exécutés = **50 %** | Le cas non exécuté n'est pas une réussite. |
+| Exécution | 2 exécutés sur 3 = **environ 67 %** | Une partie du périmètre n'a pas été testée. |
+| Confiance | **2 tests exécutés** | Le drapeau de confiance faible est attendu sous le seuil par défaut de 5. |
+
+Comparez ces taux aux planchers du profil réellement affiché :
+
+| Profil prédéfini | Planchers réussite et exécution | Application au jeu de l'atelier |
+| --- | --- | --- |
+| **Strict** | **85 %** | Réussite à 50 % et exécution à environ 67 % : les deux planchers ne sont pas atteints. |
+| **Standard** | **75 %** | Les deux planchers ne sont pas atteints. |
+| **Rodage** | **65 %** | Le plancher de réussite n'est pas atteint ; celui d'exécution est atteint. |
+
+Un plancher non atteint peut forcer le NO-GO et plafonner le grade à C. Le grade peut rester inférieur à C ; un plafond ne remonte jamais une note. Les profils ont aussi des poids et seuils de grade différents : ne déduisez pas un score identique de ces taux identiques. Une configuration personnalisée peut produire un autre détail : recopiez les règles de votre rapport plutôt qu'un score trouvé dans un exemple.
+
+<Tip>
+  **Couverture indisponible** signifie que cette composante n'est pas mesurable dans ce rapport ; ses poids sont alors redistribués. Cela ne veut pas dire « aucune exigence n'est couverte ». Le score exact dépend donc aussi de la traçabilité et des bugs du périmètre.
+</Tip>
+
+**Contrôle :** vous devez pouvoir associer chaque ligne de plafonnement à sa règle. Un bon score sur une autre composante ne compense pas un plancher de réussite ou d'exécution non atteint.
+
+## 3. Retrouver la preuve derrière le chiffre
+
+<Steps>
+  <Step title="Examiner le cas en échec">
+    Dans **Résultats**, repérez le cas en échec du scénario. Ouvrez son lien **Run** et contrôlez dans Azure DevOps le cas, le résultat et la configuration.
+
+    Notez ce qui a été observé et ce qui était attendu. Revenez au rapport.
+
+    **Vous devriez voir :** un résultat en échec identifiable, et pas seulement le nom d'une campagne contenant plusieurs résultats.
+  </Step>
+  <Step title="Vérifier les bugs dans la bonne source">
+    Consultez les bugs du rapport et le détail de leur provenance. Par défaut, TestPulse utilise les bugs rattachés aux résultats d'exécution de la campagne, dans les runs qu'il a lus. Un bug seulement lié à une User Story ou à un cas de test n'est pas automatiquement un bug de campagne.
+
+    Si le projet utilise l'autre mode, **Liens des cas de test et des User Stories**, appliquez ce contrat à votre analyse. La page [Les bugs du rapport](/fr/reports/campaign-bugs) explique les deux modes et les limites de lecture.
+
+    **Vous devriez pouvoir dire :** « Ce bug entre dans ce rapport parce que… », en montrant le lien et la source concernés.
+  </Step>
+  <Step title="Chercher un échec sans défaut et le travail restant">
+    Consultez **Échecs sans défaut**. Dans le jeu minimal, le cas en échec y apparaît s'il n'a aucun bug reconnu par la source active. Par défaut, cette situation force également le NO-GO.
+
+    Le bouton **Ouvrir un bug** ouvre un formulaire Azure DevOps prérempli. Il ne crée pas de bug à lui seul. Si vous décidez d'en enregistrer un dans un exercice ultérieur, vérifiez son rattachement à la source attendue : un titre similaire ne constitue pas une association à un résultat.
+
+    Retrouvez ensuite le cas non exécuté. Désignez le travail à faire, sans le reclasser artificiellement pour améliorer les chiffres.
+  </Step>
+</Steps>
+
+## 4. Lire les points de vigilance sans leur demander tout le verdict
+
+Le bloc **Points de vigilance** met en avant les bugs bloquants ouverts, les exigences sans test et les User Stories du périmètre non exécutées. Il ne récapitule pas toutes les règles.
+
+Il peut donc ne présenter aucun de ces trois signaux alors que le rapport reste NO-GO à cause de son taux de réussite. Dans ce cas, revenez à **Voir le détail**.
+
+Pour un bug bloquant, vérifiez ensemble son **état** et sa **sévérité**. Avec les valeurs par défaut, un bug ouvert en sévérité Critique ou Élevée bloque la release. Le fait qu'un bug existe ne suffit pas à conclure qu'il est bloquant.
+
+**Contrôle :** aucune cause ne doit être inventée pour remplir un commentaire. Si seul le plancher de réussite est en cause dans votre périmètre, citez ce plancher et son résultat source.
+
+## 5. Formuler une conclusion utile
+
+Préparez votre conclusion en quatre phrases :
+
+1. **Périmètre :** quel plan, quelles suites et quelle date ?
+2. **Constat :** quelles règles actives empêchent le GO ?
+3. **Preuves :** quels résultats, bugs ou exigences pouvez-vous ouvrir ?
+4. **Suite :** qui analyse l'échec, qui exécute le cas restant, et quand régénérer ?
+
+Exemple à adapter aux observations réelles :
+
+> Le rapport TP-DOC porte sur trois cas et une configuration. Deux cas sont exécutés, dont un en échec : avec le profil Strict de cet exemple, les taux de réussite et d'exécution sont inférieurs aux planchers de 85 %. Le résultat en échec est consultable depuis la colonne Run ; le troisième cas reste à exécuter. Nous analysons l'échec et terminons ce périmètre, puis nous régénérons le rapport avant une nouvelle décision.
+
+Une correction de code, un bug clôturé ou une nouvelle exécution ne réécrit pas un ancien instantané. Après l'action sur les données source, **générez un nouveau rapport** pour refaire l'analyse.
+
+## Calcul et décision humaine : savoir les distinguer
+
+Certaines équipes activent **Autoriser l'override de décision GO/NO-GO** dans les paramètres du projet. La section **Décision de release** permet alors de suivre le calcul ou d'appliquer une décision différente.
+
+Ce n'est pas nécessaire pour réussir cet atelier. Si un rapport porte déjà une décision manuelle, recherchez **Calculé**, **Décidé (manuel)**, l'auteur, la date et la justification. Le grade reste celui du calcul. Un GO manuel qui franchit un plancher dur conserve un signal d'alerte.
+
+L'option est désactivée par défaut, et le profil Strict la laisse désactivée. Son absence ne constitue donc pas une panne. L'exercice de diagnostic ne demande pas de l'activer.
+
+## Si vous voyez autre chose
+
+| Symptôme | Vérification et action |
+| --- | --- |
+| Le rapport indique GO. | Vérifiez le plan, les suites, les dernières exécutions et le barème. Cherchez aussi un éventuel verdict manuel : le calcul et la décision peuvent différer. |
+| Le score n'est pas celui d'un autre rapport. | Comparez la date, le périmètre, le barème capturé, la disponibilité de la couverture et les bugs inclus. |
+| Le bug attendu manque. | Vérifiez la source active, l'association au résultat, le plan du run et la limite des runs lus. Régénérez après correction du rattachement. |
+| Un bug lié existe, mais « Échecs sans défaut » persiste. | Un lien vers l'US ne remplace pas un rattachement au résultat en mode campagne. Contrôlez la bonne relation ; un simple changement de titre ou de sévérité ne la crée pas. |
+| Les points de vigilance sont vides malgré le NO-GO. | Lisez les plafonnements dans le détail Qualité : les planchers de réussite ou d'exécution peuvent suffire. |
+| Le rapport est « Non évalué ». | Vérifiez que des résultats d'exécution sont bien présents. Une absence de données n'est pas une note E. |
+| L'exécution affiche 100 % et seulement deux cas. | Vérifiez la sous-suite **TP-DOC — Parcours de commande** et ses trois points. En 2.73.1, des cas placés uniquement à la racine peuvent conduire à un rapport limité aux runs existants ; le cas non exécuté manque alors au dénominateur. |
+| Le dernier export ne reflète pas une correction. | Régénérez depuis les données actuelles et exportez de nouveau. Charger l'historique relit un instantané. |
+
+## À vous de jouer
+
+Expliquez le NO-GO à un collègue sans commencer par la note : montrez d'abord l'échec et le cas restant, puis les règles qu'ils déclenchent. Demandez-lui quelle preuve lui manquerait pour réexaminer la release.
+
+Vous avez réussi si votre conclusion reste compréhensible **sans la couleur du badge**, si chaque cause peut être vérifiée et si vous savez distinguer une nouvelle génération d'une décision humaine sur le rapport existant.
+
+<CardGroup cols={2}>
+  <Card title="Barèmes et invariants" icon="shield-check" href="/fr/quality/quality-gate">Retrouvez le calcul et les profils de référence.</Card>
+  <Card title="Mener une session exploratoire" icon="compass" href="/fr/tutorials/exploratory-session">Consignez une observation, des preuves et un bug exploitable.</Card>
+</CardGroup>

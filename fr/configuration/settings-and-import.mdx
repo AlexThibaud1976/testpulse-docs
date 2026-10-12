@@ -34,7 +34,7 @@ Ouvrez l'onglet **Import** et glissez-déposez (ou choisissez) un fichier `.xml`
   <img src="/images/fr/import-dropzone.png" alt="Zone de dépôt d'import des résultats listant les formats XML pris en charge" />
 </Frame>
 
-<Note>L'analyse est **purement côté client** — aucun appel réseau.</Note>
+<Note>Le parsing du XML se fait **dans le navigateur**. Le chargement du plan et des cas pour le mapping lit Azure DevOps ; la sauvegarde du rapport écrit dans Extension Data. L'import **ne publie aucun run ni résultat de test dans Azure Test Plans**.</Note>
 
 ## Rapports consolidés multi-plans
 
