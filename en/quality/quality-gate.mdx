@@ -61,6 +61,8 @@ Each scale's GO threshold doubles as its **pass-rate floor** and its **execution
 
 Tuning is **bounded** (GO threshold 50–95, a minimum coverage, component weights forced to sum to 100, A > B > C > D thresholds); any off-preset value becomes a **Custom** scale. The rules above apply using the selected scale's values. When interpreting a saved report, consult the scale captured in that report: changing the project setting does not rewrite its results.
 
+<Note>If an older report has **no saved scale**, TestPulse uses the **Standard default**. It does not apply the current project profile to that report. A report with a saved scale continues to use that scale.</Note>
+
 ## Risk-based weighting (optional)
 
 An optional, orthogonal toggle shows a **weighted confidence** beside the grade. It weights execution and coverage by the **importance** of what is missing — test-case priority, story risk and story points — using transparent **additive tiers** (never a multiplication). The flat A–E score is **never** altered; a dimension whose data is absent or uniform auto-disables and says so.

@@ -22,13 +22,13 @@ TestPulse exports the same report to five formats, each optimised for a differen
 
 ## PDF — the full report
 
-Up to **13 configurable sections**, reorderable by drag-and-drop (**Settings → PDF section order**), each independently on or off:
+**Settings → PDF section order** contains **12 reorderable sections**. The **suite × configuration grid** is an additional option: it is inserted at the results position and has no separate position in that panel. PDF charts accompany the metrics when enabled. The report can contain:
 
 - **Cover page** — project info grid, logo (PNG/JPEG/SVG), environment badge
 - **Executive summary** — the automated verdict, or a per-report custom summary
 - **KPI cards** — pass rate, execution rate, passed/failed/blocked, bugs of the report ([where they come from](/en/reports/campaign-bugs))
 - **Results table** — latest outcome per test case; a multi-config matrix when 2–3 configurations are detected
-- **Suite × configuration grid** — the execution matrix for multi-configuration plans, **off by default** (enable it in Settings → Report sections); auto-hidden when no configuration is declared
+- **Suite × configuration grid** — the execution matrix for multi-configuration plans, **off by default** (enable it in Settings → Report sections); it can appear even when the results table is disabled, but is hidden when no configuration is declared
 - **Traceability** — Epic → User Story → Test Case → Bug (3-column table, one line per test case with a grouped status) + untraced suites
 - **Bugs** — the bugs of the report, newest first, with creation date, test cases, state and severity, under a line naming their source
 - **Flaky tests** — tests with a high outcome-flip rate
@@ -39,18 +39,20 @@ Up to **13 configurable sections**, reorderable by drag-and-drop (**Settings →
 
 ## HTML — standalone & interactive
 
-A **single standalone file** — no server needed to open it:
+A **single HTML file** that you can open locally: no server is needed to display its text and tables. Charts load the Chart.js library from **cdn.jsdelivr.net** and require permitted network access.
 
-- Interactive charts (donut + bar) embedded inline
-- **Clickable Azure DevOps links** for work items, bugs and test cases
+- Interactive charts (donut + bar) when the library has loaded successfully
+- **Clickable Azure DevOps links** for work items, bugs and test cases; opening them still requires Azure DevOps access
 - Full results table with outcome badges and suite grouping
 - Traceability matrix and bugs list
 
 ## Word (.docx) — editable
 
-Fully **editable in Microsoft Word**, with six sections: cover page, KPI metrics, results table, traceability (Test Case → User Story → Epic → Bug), bugs table, and a **signature page** (if enabled). The **suite × configuration grid** can also be included — opt-in, same toggle as the PDF (Settings → Report sections).
+Fully **editable in Microsoft Word**, with the following main sections depending on their settings and the available data: cover page, KPI metrics, results table, traceability (Test Case → User Story → Epic → Bug), bugs table, and a **signature page** (if enabled). The **suite × configuration grid** can also be included — opt-in, same toggle as the PDF (Settings → Report sections).
 
-<Note>Word carries neither charts nor attachments — a deliberate choice, not a gap. For chart-heavy reports, or when you need the evidence links, use PDF.</Note>
+The **Objectives, Entry criteria and Exit criteria** sections are also included when visible, enabled and filled in.
+
+<Note>Word does not include the automatic or custom **executive summary**, charts or attachments. Use PDF or HTML for the executive summary, and PDF for links to the evidence.</Note>
 
 ## Excel (.xlsx) — data
 
@@ -61,6 +63,12 @@ When the report consolidates **several test plans**, two more sheets are added: 
 ## PowerPoint (.pptx) — slides
 
 A **five-slide** presentation: Cover, KPIs, Results, Traceability, Bugs. The Bugs slide lists the **15 most recent** bugs.
+
+## Custom fields and visibility
+
+Additional form fields appear on the **PDF cover**, in the **HTML** information section and on the **Word** cover. They are not included in Excel or PowerPoint.
+
+A field's visibility setting applies to the form and to export sections that honour it. Excel and PowerPoint use their own fixed metadata fields: hiding a field in the form does not guarantee its absence from those files. Check the export before sharing it.
 
 ## Signatures
 

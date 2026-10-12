@@ -4,7 +4,7 @@ description: "Sélectionner un plan de test, remplir les champs du rapport, et g
 icon: "file-text"
 ---
 
-Générez un rapport de tests complet depuis un plan de test Azure DevOps. TestPulse lit vos données **en direct** — rien n'est jamais réécrit.
+Générez un rapport depuis un plan de test Azure DevOps. TestPulse lit les données du périmètre choisi et sauvegarde le rapport dans votre historique Extension Data ; il ne modifie pas les résultats de test.
 
 ## Sélectionner un plan de test
 
@@ -24,7 +24,7 @@ Utilisez le menu déroulant avec **autocomplétion** pour rechercher les plans p
 
 ## Champs du formulaire
 
-Tous les champs visibles sont obligatoires sauf configuration contraire dans **Paramètres → Configuration des champs**. **Contact IT**, **Contact Business**, **Testeur** et **Approbateur** proposent l'autocomplétion des utilisateurs Azure DevOps (tapez au moins 2 caractères).
+Les champs obligatoires dépendent de **Paramètres → Configuration des champs**. Numéro de change, Incident, Request, Objectifs et critères sont facultatifs par défaut ; suivez les indications de votre formulaire. **Contact IT**, **Contact Business**, **Testeur** et **Approbateur** proposent l'autocomplétion des utilisateurs Azure DevOps (tapez au moins 2 caractères).
 
 | Champ | Description |
 | --- | --- |
@@ -45,6 +45,12 @@ Tous les champs visibles sont obligatoires sauf configuration contraire dans **P
 | **Rôle approbateur** | Fonction de l'approbateur. |
 | **Date du rapport** | Pré-remplie à la date du jour. |
 | **Build associé** | Lier un build ADO — autocomplétion depuis les builds récents (branche et statut affichés) ; lien cliquable dans PDF, HTML et Word. |
+
+## Champs supplémentaires et visibilité
+
+Dans **Paramètres → Champs du formulaire**, vous pouvez ajouter jusqu'à **trois champs personnalisés**, de type texte ou liste déroulante, et choisir s'ils sont obligatoires. Leurs valeurs figurent dans PDF, HTML et Word, pas dans Excel ou PowerPoint.
+
+**Visible** contrôle le formulaire et les sections d'export qui prennent en charge ce réglage. Le toggle **Page de garde** agit seulement sur la couverture PDF. Ces réglages ne garantissent pas que les métadonnées fixes des exports Excel ou PowerPoint soient masquées ; relisez le fichier avant de le partager. Voir les [formats d'export](/fr/exports/formats).
 
 ## Validation
 

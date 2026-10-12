@@ -22,13 +22,13 @@ TestPulse exporte le même rapport vers cinq formats, chacun optimisé pour un u
 
 ## PDF — le rapport complet
 
-Jusqu'à **13 sections configurables**, réordonnables par drag-and-drop (**Paramètres → Ordre des sections PDF**), chacune activable indépendamment :
+Le panneau **Paramètres → Ordre des sections PDF** propose **12 sections réordonnables** par glisser-déposer. La **grille suite × configuration** est une option supplémentaire : elle est insérée au niveau des résultats, sans position propre dans ce panneau. Les graphiques PDF accompagnent les métriques lorsqu'ils sont activés. Le rapport peut contenir :
 
 - **Page de garde** — grille d'infos projet, logo (PNG/JPEG/SVG), badge environnement
 - **Résumé exécutif** — le verdict automatisé, ou un résumé personnalisé par rapport
 - **KPI cards** — taux de succès, taux d'exécution, passés/échoués/bloqués, bugs du rapport ([d'où ils viennent](/fr/reports/campaign-bugs))
 - **Tableau des résultats** — dernier résultat par cas de test ; matrice multi-config si 2–3 configurations détectées
-- **Grille suite × configuration** — la matrice d'exécution des plans multi-configurations, **désactivée par défaut** (à activer dans Paramètres → Sections d'export) ; auto-masquée si aucune configuration n'est déclarée
+- **Grille suite × configuration** — la matrice d'exécution des plans multi-configurations, **désactivée par défaut** (à activer dans Paramètres → Sections d'export) ; affichable même si le tableau des résultats est désactivé, mais masquée si aucune configuration n'est déclarée
 - **Traçabilité** — Epic → User Story → Cas de test → Bug (tableau 3 colonnes, une ligne par cas de test avec un statut regroupé) + suites non tracées
 - **Bugs** — les bugs du rapport, du plus récent au plus ancien, avec date de création, cas de test, état et sévérité, sous une ligne qui nomme leur source
 - **Tests flaky** — tests avec un fort taux de bascule de résultat
@@ -39,18 +39,20 @@ Jusqu'à **13 sections configurables**, réordonnables par drag-and-drop (**Para
 
 ## HTML — autonome & interactif
 
-Un **fichier unique autonome** — aucun serveur nécessaire pour l'ouvrir :
+Un **fichier HTML unique** que vous pouvez ouvrir localement : aucun serveur n'est nécessaire pour afficher son texte et ses tableaux. Les graphiques chargent leur bibliothèque Chart.js depuis **cdn.jsdelivr.net** et nécessitent un accès réseau autorisé.
 
-- Graphiques interactifs (donut + barres) intégrés
-- **Liens Azure DevOps cliquables** vers work items, bugs et cas de test
+- Graphiques interactifs (donut + barres) lorsque la bibliothèque a pu être chargée
+- **Liens Azure DevOps cliquables** vers work items, bugs et cas de test ; leur ouverture reste soumise à votre accès Azure DevOps
 - Tableau des résultats complet avec badges d'outcome et groupage par suite
 - Matrice de traçabilité et liste des bugs
 
 ## Word (.docx) — éditable
 
-Entièrement **éditable dans Microsoft Word**, avec six sections : page de garde, métriques KPI, tableau des résultats, traçabilité (Cas de test → User Story → Epic → Bug), tableau des bugs, et une **page de signature** (si activée). La **grille suite × configuration** peut aussi être incluse — opt-in, même toggle que le PDF (Paramètres → Sections d'export).
+Entièrement **éditable dans Microsoft Word**, avec les sections principales suivantes selon leur activation et les données disponibles : page de garde, métriques KPI, tableau des résultats, traçabilité (Cas de test → User Story → Epic → Bug), tableau des bugs, et une **page de signature** (si activée). La **grille suite × configuration** peut aussi être incluse — opt-in, même toggle que le PDF (Paramètres → Sections d'export).
 
-<Note>Word ne porte ni graphiques ni pièces jointes — c'est un choix délibéré, pas un manque. Pour les rapports riches en graphiques, ou lorsque vous avez besoin des liens vers les preuves, utilisez le PDF.</Note>
+Les sections de cadrage **Objectifs, Critères d'entrée et Critères de sortie** sont aussi incluses lorsqu'elles sont visibles, activées et renseignées.
+
+<Note>Word ne reprend pas le **résumé exécutif** automatique ou personnalisé, les graphiques ni les pièces jointes. Pour le résumé exécutif, utilisez PDF ou HTML ; pour les liens vers les preuves, utilisez PDF.</Note>
 
 ## Excel (.xlsx) — données
 
@@ -61,6 +63,12 @@ Lorsque le rapport consolide **plusieurs plans de test**, deux onglets s'ajouten
 ## PowerPoint (.pptx) — diapositives
 
 Une présentation de **cinq diapositives** : Couverture, KPIs, Résultats, Traçabilité, Bugs. La diapositive Bugs liste les **15 bugs les plus récents**.
+
+## Champs personnalisés et visibilité
+
+Les champs supplémentaires du formulaire sont repris dans la **page de garde PDF**, les informations du **HTML** et la couverture **Word**. Ils ne figurent pas dans Excel ou PowerPoint.
+
+Le réglage de visibilité d'un champ s'applique au formulaire et aux sections d'export qui le prennent en charge. Excel et PowerPoint utilisent leurs propres métadonnées fixes : masquer un champ dans le formulaire ne garantit pas son absence de ces fichiers. Vérifiez l'export avant de le partager.
 
 ## Signatures
 

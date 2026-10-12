@@ -4,7 +4,7 @@ description: "Select a Test Plan, fill in the report fields, and generate — ev
 icon: "file-text"
 ---
 
-Generate a complete test report from an Azure DevOps Test Plan. TestPulse reads your data **live** — nothing is ever written back.
+Generate a report from an Azure DevOps Test Plan. TestPulse reads the selected scope and saves the report to your Extension Data history; it does not modify test results.
 
 ## Select a Test Plan
 
@@ -23,7 +23,7 @@ Use the **autocomplete** dropdown to search plans by name or iteration path. Sui
 <Note>Suites, test cases, execution results and run history are each read **to exhaustion**. If any of them can't be confirmed complete, its own distinct banner says so on the report — never inside an export. A banner about case content never implies the pass rate is affected, and one about history never implies the suite list is.</Note>
 ## Form fields
 
-All visible fields are required unless configured otherwise in **Settings → Field configuration**. **IT Contact**, **Business Contact**, **Tester** and **Approver** use Azure DevOps user autocomplete (type at least 2 characters).
+Required fields depend on **Settings → Field configuration**. Change number, Incident, Request, Objectives and criteria are optional by default; follow the indications on your form. **IT Contact**, **Business Contact**, **Tester** and **Approver** use Azure DevOps user autocomplete (type at least 2 characters).
 
 | Field | Description |
 | --- | --- |
@@ -44,6 +44,12 @@ All visible fields are required unless configured otherwise in **Settings → Fi
 | **Approver role** | The approver's function. |
 | **Report date** | Pre-filled with today's date. |
 | **Associated build** | Link an ADO build — autocomplete from recent builds (branch and status shown); a clickable link in PDF, HTML and Word. |
+
+## Additional fields and visibility
+
+In **Settings → Form fields**, you can add up to **three custom fields**, using text or dropdown values, and choose whether they are required. Their values appear in PDF, HTML and Word, not in Excel or PowerPoint.
+
+**Visible** controls the form and export sections that honour this setting. The **Cover page** toggle affects the PDF cover only. These settings do not guarantee that fixed metadata fields in Excel or PowerPoint will be hidden; review the file before sharing it. See [export formats](/en/exports/formats).
 
 ## Validation
 

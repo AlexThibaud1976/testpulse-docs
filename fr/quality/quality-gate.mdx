@@ -61,6 +61,8 @@ Le seuil GO de chaque barème sert aussi de **plancher de taux de réussite** et
 
 L'ajustement est **borné** (seuil GO 50–95, une couverture minimale, poids des composantes forcés à 100, seuils A > B > C > D) ; toute valeur hors preset devient un barème **Personnalisé**. Les règles ci-dessus s'appliquent avec les valeurs du barème retenu. Pour interpréter un rapport enregistré, consultez le barème capturé dans ce rapport : changer le réglage projet ne réécrit pas ses résultats.
 
+<Note>Si un ancien rapport ne contient **aucun barème enregistré**, TestPulse utilise le barème **Standard par défaut**. Il ne lui applique pas le profil courant du projet. Un rapport qui possède son barème enregistré continue d'utiliser celui-ci.</Note>
+
 ## Pondération risk-based (optionnelle)
 
 Un toggle optionnel et orthogonal affiche une **confiance pondérée** à côté du grade. Il pondère exécution et couverture par l'**importance** de ce qui manque — priorité des cas de test, risque et story points des US — via des **paliers additifs** transparents (jamais une multiplication). Le score A–E à plat n'est **jamais** modifié ; une dimension dont la donnée est absente ou uniforme s'auto-désactive et le dit.
