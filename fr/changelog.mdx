@@ -6,6 +6,18 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées sur cette page. Les versions antérieures à 2.25.0 sont résumées en fin de page ; les guides liés décrivent le fonctionnement actuel.</Note>
 
+<Update label="v2.74.2" description="2026-10-15">
+
+**Choisir la zone des nouveaux cas dans un plan existant.** L'assistant CSV propose la zone et l'itération du plan et permet de contrôler ces valeurs par défaut. Les valeurs renseignées dans le CSV restent prioritaires. L'aperçu affiche les classements résolus ; création et reprise utilisent les mêmes valeurs. Les cas réutilisés par ID gardent leurs champs et leurs étapes.
+
+**Retrouver plans et suites en saisissant une recherche.** Recherchez les plans par nom ou ID et les suites statiques par nom, chemin complet ou ID, y compris le parent d'un chemin à créer ou réutiliser. Contrôlez chemin complet et ID avant de choisir le résultat.
+
+**Comprendre un refus de permission sur une zone.** Un message TF237111 précise le cas, ses lignes source et la zone refusée, avec le droit **Modifier les éléments de travail dans ce nœud** à vérifier. Un chemin de suite n'est pas une zone de work item. Le correctif n'ajoute aucun scope et ne contourne pas les permissions. Préparer l'aperçu ne crée rien. Un ancien journal dont les créations en attente n'ont pas de valeurs de classement figées est conservé et bloqué pour examen avant toute nouvelle écriture.
+
+Après mise à jour, rechargez l'onglet Azure DevOps. Pour un import déjà commencé, conservez son journal et consultez les indications de reprise. Voir le [tutoriel CSV actualisé](/fr/tutorials/import-csv-test-cases) et les [permissions](/fr/security/permissions).
+
+</Update>
+
 <Update label="v2.74.1" description="2026-10-12">
 
 **Corriger l'erreur 403 à la préparation de l'aperçu CSV.** En 2.74.0, une adresse de service mal résolue pouvait envoyer la validation vers l'hébergement de l'extension et empêcher l'aperçu, avant toute création de cas ou de suite. TestPulse résout et contrôle maintenant l'adresse Azure DevOps avant la requête. Aucun scope supplémentaire n'est ajouté.
