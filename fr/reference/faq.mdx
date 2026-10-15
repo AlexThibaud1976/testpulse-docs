@@ -8,13 +8,19 @@ icon: "circle-help"
 
 La page **Documentation** affiche la version de l'extension chargée dans votre onglet. Après une mise à jour, rechargez l'onglet Azure DevOps, puis rouvrez **TestPulse → Documentation**. Si la version reste ancienne, demandez à votre administrateur de vérifier la version installée dans l'organisation ou la collection. Sur Server, la mise à jour passe par le package approuvé de l'extension.
 
-L'aide embarquée de la **2.74.1** comprend onze guides pratiques ; la documentation en ligne et l'extension sont mises à jour séparément. Voir le [guide d'installation](/fr/getting-started/installation) et les [notes de version](/fr/changelog).
+L'aide embarquée de la **2.74.2** comprend onze guides pratiques ; la documentation en ligne et l'extension sont mises à jour séparément. Voir le [guide d'installation](/fr/getting-started/installation) et les [notes de version](/fr/changelog).
 
 ## Je veux importer des cas CSV avec leurs suites
 
 Depuis **2.74.0**, ouvrez **Import → Cas de test CSV**. Le parcours XML voisin sert aux résultats automatisés et aux rapports AUTO. Le CSV permet de créer des cas ou de réutiliser leurs IDs, puis de les rattacher à des suites **statiques** existantes ou nouvelles. Il n'écrase pas les étapes des cas existants. Voir le [tutoriel CSV complet](/fr/tutorials/import-csv-test-cases).
 
 Après une coupure, conservez le journal local et utilisez **Vérifier et reprendre**. Ne supprimez pas les données du navigateur pour contourner un résultat incertain. Une résolution par absence demande votre propre contrôle dans Azure DevOps, puis une vérification automatique avant une reprise séparée. Le journal CSV est distinct du quota d'historique Extension Data.
+
+## L'aperçu CSV signale TF237111 sur une zone
+
+Passez en **2.74.2 ou version ultérieure**, rechargez Azure DevOps et vérifiez **Zone des nouveaux cas de test** dans **Plan de test**. La zone du plan sert de point de départ, mais une valeur **Area Path** renseignée dans le CSV est prioritaire. Le chemin de votre suite n'est pas ce champ. L'erreur précise le cas et la zone ; corrigez la valeur ou faites vérifier **Modifier les éléments de travail dans ce nœud** sur la zone voulue. Préparer l'aperçu ne crée rien et le correctif n'accorde aucune permission. Voir le [dépannage des zones CSV](/fr/tutorials/import-csv-test-cases).
+
+Vous pouvez aussi rechercher les plans par nom ou ID et les suites statiques par nom, chemin complet ou ID. Choisissez le résultat correspondant ; saisir du texte ne sélectionne pas une cible.
 
 ## La préparation de l'aperçu CSV renvoie un 403 en 2.74.0
 

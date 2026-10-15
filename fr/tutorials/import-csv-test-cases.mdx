@@ -5,7 +5,7 @@ icon: "file-spreadsheet"
 ---
 
 <Info>
-**Disponible à partir de TestPulse 2.74.0.** Utilisez **2.74.1 ou une version ultérieure** pour bénéficier du correctif de préparation de l'aperçu décrit dans le dépannage. Ce guide décrit le parcours **Cas de test CSV**. L'import de résultats XML reste un parcours distinct.
+**Disponible à partir de TestPulse 2.74.0.** Utilisez **2.74.2 ou une version ultérieure** pour les zones par défaut dans les plans existants, la recherche des cibles et les correctifs de préparation décrits plus bas. Ce guide décrit le parcours **Cas de test CSV**. L'import de résultats XML reste un parcours distinct.
 </Info>
 
 ## Ce que vous allez obtenir
@@ -39,14 +39,16 @@ Commencez avec le [CSV d'exercice en français](https://raw.githubusercontent.co
     Le fichier d'exercice contient **trois lignes d'étapes, mais deux cas de test**. Les deux lignes portant la clé `BOUTIQUE-001` forment un seul cas avec deux étapes. Ne modifiez pas la clé à chaque étape.
   </Step>
   <Step title="Plan de test">
-    Choisissez **un plan existant** et sélectionnez votre plan d'exercice. Contrôlez son nom et son ID.
+    Choisissez **un plan existant**. Saisissez une partie de son nom ou son ID dans le sélecteur avec recherche, puis choisissez le plan d'exercice parmi les résultats. Contrôlez son nom et son ID. Saisir du texte ne sélectionne pas un plan.
+
+    Contrôlez **Zone des nouveaux cas de test** et l'itération facultative proposées depuis ce plan. Utilisez une zone où vous pouvez créer des cas. Un champ renseigné dans le CSV est prioritaire ; voir les [zones par défaut](#choisir-la-zone-des-nouveaux-cas).
 
     L'autre option permet de **créer un nouveau plan** : renseignez ses informations et choisissez explicitement au moins une configuration de test existante et active. Les configurations inactives ne sont pas proposées. Le plan sera créé uniquement lors de l'exécution, après l'aperçu. Pour suivre ce scénario de réutilisation d'une suite, conservez le plan existant.
   </Step>
   <Step title="Suites">
-    Pour le groupe **Connexion**, choisissez **Suite existante**, puis votre suite **Authentification**. Vérifiez son chemin et son ID : deux suites peuvent porter le même nom sous des parents différents.
+    Pour le groupe **Connexion**, choisissez **Suite existante**, recherchez votre suite **Authentification** par nom, chemin complet ou ID, puis sélectionnez-la. Vérifiez son chemin et son ID : deux suites peuvent porter le même nom sous des parents différents.
 
-    Pour le groupe **Commandes > Paiement**, choisissez **Créer ou réutiliser un chemin**, choisissez le parent statique voulu et gardez le chemin `Commandes > Paiement`. Les niveaux existants sont réutilisés lorsqu'ils sont identifiés sans ambiguïté ; les niveaux manquants sont prévus pour création.
+    Pour le groupe **Commandes > Paiement**, choisissez **Créer ou réutiliser un chemin**, recherchez et sélectionnez le parent statique voulu par nom, chemin ou ID, puis gardez le chemin `Commandes > Paiement`. Les niveaux existants sont réutilisés lorsqu'ils sont identifiés sans ambiguïté ; les niveaux manquants sont prévus pour création.
 
     Ces choix peuvent être combinés dans un même import. Si votre fichier n'a pas de classement, sélectionnez plusieurs cas sans groupe et utilisez **Créer un groupe**, puis affectez ce groupe à une destination.
 
@@ -55,7 +57,7 @@ Commencez avec le [CSV d'exercice en français](https://raw.githubusercontent.co
   <Step title="Aperçu">
     Cliquez sur **Préparer l'aperçu**. L'assistant lit Azure DevOps pour vérifier la cible et les cas existants. Il transmet aussi le contenu des nouveaux cas à Azure DevOps pour valider les champs et les règles du projet, **sans enregistrer de work item**. Il présente ensuite les opérations prévues.
 
-    Contrôlez le plan, les chemins complets, les tests à créer ou réutiliser, les suites à créer ou réutiliser et les rattachements. Dans ce scénario, vous attendez **deux nouveaux tests** et **deux rattachements**. Le nombre de suites à créer dépend de la présence de **Commandes** et **Paiement** dans votre plan.
+    Contrôlez le plan, les chemins complets, les tests à créer ou réutiliser, les zones et itérations résolues des nouveaux cas, les suites à créer ou réutiliser et les rattachements. Dans ce scénario, vous attendez **deux nouveaux tests** et **deux rattachements**. Le nombre de suites à créer dépend de la présence de **Commandes** et **Paiement** dans votre plan.
 
     Corrigez les blocages avant de continuer. Vérifiez aussi les données de chaque test : un aperçu valide ne garantit pas que le scénario métier soit correct.
   </Step>
@@ -87,13 +89,26 @@ La limite de fichier est **5 Mio**, avec au maximum **10 000 lignes de données*
 | **Test Step** | Numéro d'étape. Les lignes d'un même test sont regroupées et ordonnées. |
 | **Step Action / Step Expected** | Action et résultat attendu d'une étape simple. |
 | **Suite Path** | Groupe ou chemin, par exemple `Commandes > Paiement`. Le caractère `/` fait partie du nom et ne crée pas un niveau. |
-| **Area Path / Iteration Path** | Classements du nouveau cas, soumis aux chemins et droits du projet. |
+| **Area Path / Iteration Path** | Classements du nouveau cas. Les valeurs renseignées remplacent celles de l'assistant ; chemins et droits sont contrôlés par Azure DevOps. |
 | **Assigned To / Priority / State / Tags** | Champs du nouveau cas ; les valeurs doivent être valides pour votre projet. **Assigned To** désigne le responsable du work item, pas le testeur d'un point de test. |
 | **Work Item Type** | Si renseigné, le type doit correspondre à un cas de test. L'assistant n'importe pas des bugs ou des tâches. |
 
 Pour un nom de suite contenant lui-même `>`, la valeur de **Suite Path** peut être un tableau JSON de segments, par exemple `["A > B", "Paiement"]`. Dans un fichier CSV, ces guillemets doivent aussi être échappés. Préférez le modèle et vérifiez toujours le chemin affiché.
 
 Les étapes partagées, les jeux de paramètres et les pièces jointes ne sont pas importés par ce parcours. Ne les convertissez pas silencieusement en étapes simples : conservez-les et traitez-les séparément dans Azure DevOps.
+
+### Choisir la zone des nouveaux cas
+
+**Suite Path** organise les rattachements dans Test Plans. **Area Path** est le classement du work item, avec ses propres permissions : un chemin tel que `Commandes > Paiement` n'est pas une zone.
+
+Dans **Plan de test**, contrôlez **Zone des nouveaux cas de test** et **Itération des nouveaux cas de test (facultatif)**. Pour un plan existant, ses valeurs servent de point de départ. Modifiez-les si les nouveaux cas doivent utiliser un autre classement ; le plan existant n'est pas modifié. Vous pouvez effacer l'itération facultative.
+
+- Une valeur **Area Path** ou **Iteration Path** renseignée dans le CSV est prioritaire pour ce cas.
+- Sinon, la valeur choisie dans l'assistant est utilisée. Effacer l'itération facultative laisse ce champ non renseigné pour les cas sans valeur CSV.
+- Chaque nouveau cas doit avoir une zone résolue avant préparation. Si le plan n'en fournit pas, saisissez une zone valide ; TestPulse ne choisit pas silencieusement la racine du projet.
+- Contrôlez les champs résolus dans **Aperçu**. Création et reprise conservent ces valeurs même si celles du plan changent ensuite. Les cas réutilisés par ID ne sont pas reclassés.
+
+Pouvoir lire un plan ou gérer une suite ne prouve pas que vous pouvez créer un cas dans une zone. Il faut **Modifier les éléments de travail dans ce nœud** (*Edit work items in this node*) sur la zone du nouveau cas. Voir [Permissions](/fr/security/permissions).
 
 ### Réutiliser un test existant
 
@@ -128,6 +143,23 @@ Cette action traite une absence vérifiée ; elle ne remplace pas l'examen d'un 
 
 ## Dépannage
 
+### TF237111 : permission refusée sur une zone
+
+Il s'agit d'un refus Azure DevOps sur les work items, distinct de l'ancien problème d'adresse de service décrit plus bas. Depuis **2.74.2**, le message précise le cas, ses lignes source et la zone refusée.
+
+1. Dans **Plan de test**, vérifiez **Zone des nouveaux cas de test**. Le chemin de la suite sélectionnée n'est pas une zone.
+2. Contrôlez une éventuelle valeur **Area Path** associée dans le CSV : une valeur remplie remplace celle de l'assistant. Corrigez la bonne valeur au lieu de modifier une suite sans rapport avec ce refus.
+3. Choisissez la zone voulue où votre compte peut créer des cas, ou faites vérifier **Modifier les éléments de travail dans ce nœud** (*Edit work items in this node*) par un administrateur. Sélectionner un plan ou une suite ne donne pas ce droit ; ce correctif ne demande aucun nouveau scope d'extension.
+4. Préparez à nouveau l'aperçu et contrôlez la zone résolue. Un refus pendant cette préparation ne crée aucun cas, suite ou plan.
+
+Si l'exécution avait déjà commencé avant un autre échec, conservez son journal et vérifiez avant de reprendre. Aucun succès n'est annulé.
+
+### Un ancien journal demande de contrôler les classements
+
+Un journal créé avant ce correctif peut contenir de nouveaux cas en attente dont les valeurs de classement nécessaires à la création n'ont pas été figées. TestPulse le garde lisible et exportable, mais refuse toute nouvelle écriture tant que ces créations restent à faire. Il ne devine pas une autre zone à la reprise. Conservez le journal, téléchargez le bilan JSON et examinez les objets déjà présents dans Azure DevOps avant de décider comment traiter les cas restants. Ne réimportez pas tout le fichier avec des IDs vides : cela peut dupliquer les créations réussies. Ce contrôle ne reclasse pas les cas déjà créés.
+
+Si une création antérieure a un résultat incertain, TestPulse recherche d'abord son tag de reprise unique dans Azure DevOps, sans écriture. Si ce tag identifie sans ambiguïté un cas existant, ce cas peut être retrouvé et ses rattachements restants peuvent reprendre. Une correspondance absente ou ambiguë n'autorise pas la création d'un remplacement avec des classements non contrôlés.
+
 ### Erreur 403 pendant la préparation de l'aperçu en 2.74.0
 
 La version **2.74.1** corrige un défaut de résolution de l'adresse de service : la demande de validation pouvait partir vers l'hébergement de l'extension au lieu du service Azure DevOps. Cette erreur intervenait avant toute création de cas ou de suite. Ajouter des droits ne corrige pas ce défaut de routage.
@@ -145,8 +177,9 @@ Un autre refus 403 peut avoir une cause différente. Si le blocage persiste apr�
 | Le CSV ne se lit pas ou les accents sont incorrects | Réexportez en UTF-8 ; vérifiez le séparateur et les guillemets des cellules multilignes. |
 | Une colonne bloque la préparation | Associez-la au bon champ ou choisissez explicitement de l'ignorer. Contrôlez les données que vous abandonnez. |
 | Les étapes apparaissent comme plusieurs tests | Vérifiez la clé commune ou l'ID du test et le regroupement affiché. Ne vous fiez pas au seul titre. |
+| La recherche ne trouve aucun plan ou suite | Effacez ou raccourcissez la recherche ; contrôlez le plan choisi et les droits de lecture. Seules les suites statiques sont proposées. Saisir du texte ne sélectionne pas un résultat. |
 | Une suite est absente des cibles | Vérifiez le plan, les droits de lecture et le type statique de la suite. Une suite par requête ou exigence n'est pas une cible CSV. |
-| Plusieurs suites ont le même nom | Choisissez par chemin complet et ID. Corrigez une destination ambiguë au lieu de laisser le nom décider. |
+| Plusieurs suites ont le même nom | Recherchez par chemin complet ou ID, puis choisissez le résultat. Corrigez une destination ambiguë au lieu de laisser le nom décider. |
 | Un ID est rejeté | Vérifiez qu'il s'agit d'un cas de test lisible du projet choisi, et non d'un autre type de work item. |
 | La création échoue sur un champ | Lisez le message Azure DevOps : area path, itération, identité, état et champs obligatoires dépendent du projet. |
 | Le stockage local est indisponible | Autorisez le stockage pour l'extension et utilisez un navigateur où le journal peut être conservé. L'import bloque les écritures s'il ne peut pas journaliser. |

@@ -6,6 +6,18 @@ icon: "clock"
 
 <Note>Recent releases are detailed on this page. Releases before 2.25.0 are summarised at the end; linked guides describe current behaviour.</Note>
 
+<Update label="v2.74.2" description="2026-10-15">
+
+**Choose the area for new cases when importing into an existing plan.** The CSV assistant proposes the plan's area and iteration and lets you review their defaults. Populated CSV values take priority. The preview displays the resolved classifications; creation and recovery use the same values. Existing cases reused by ID keep their fields and steps.
+
+**Find plans and suites by typing.** Search plans by name or ID and static suites by name, full path or ID, including the parent for a path to create or reuse. Check the full path and ID before selecting a result.
+
+**Understand an area-permission refusal.** A TF237111 message identifies the case, source rows and refused area, with guidance about **Edit work items in this node**. A suite path is not a work-item area path. The fix adds no scope and does not bypass permissions. Preparing a preview creates nothing. An older journal whose pending creations lack frozen classification values is preserved and blocked for review before any new write.
+
+After updating, reload the Azure DevOps tab. For an import already started, keep its journal and check the recovery guidance. See the updated [CSV tutorial](/en/tutorials/import-csv-test-cases) and [permissions](/en/security/permissions).
+
+</Update>
+
 <Update label="v2.74.1" description="2026-10-12">
 
 **Fix the 403 during CSV preview preparation.** In 2.74.0, an incorrectly resolved service address could send validation to the extension hosting address and stop the preview before any case or suite was created. TestPulse now resolves and checks the Azure DevOps address before sending the request. No additional scope is added.

@@ -5,7 +5,7 @@ icon: "file-spreadsheet"
 ---
 
 <Info>
-**Available from TestPulse 2.74.0.** Use **2.74.1 or later** for the preview preparation fix described in troubleshooting. This guide describes the **CSV test cases** workflow. XML results import remains a separate workflow.
+**Available from TestPulse 2.74.0.** Use **2.74.2 or later** for area defaults in existing plans, searchable destinations and the preview fixes described below. This guide describes the **CSV test cases** workflow. XML results import remains a separate workflow.
 </Info>
 
 ## What you will achieve
@@ -39,14 +39,16 @@ Start with the [English practice CSV](https://raw.githubusercontent.com/AlexThib
     The practice file contains **three step rows but two test cases**. Both rows with key `SHOP-001` form one case with two steps. Do not assign a new key to each step.
   </Step>
   <Step title="Test plan">
-    Choose **an existing plan** and select your practice plan. Check its name and ID.
+    Choose **an existing plan**. Type part of its name or its ID in the searchable selector, then select your practice plan from the results. Check its name and ID. Typing alone does not select a plan.
+
+    Review **Area path for new test cases** and the optional iteration proposed from that plan. Use an area where you can create cases. A populated CSV field takes priority; see [area defaults](#choose-the-area-for-new-cases).
 
     The other option lets you **create a new plan**: enter its details and explicitly select at least one existing active test configuration. Inactive configurations are not offered. It will be created only during execution, after the preview. Keep the existing plan for this suite-reuse exercise.
   </Step>
   <Step title="Suites">
-    For the **Sign-in** group, choose **Existing suite**, then your **Authentication** suite. Check its path and ID: two suites can have the same name under different parents.
+    For the **Sign-in** group, choose **Existing suite**, search for your **Authentication** suite by name, full path or ID, then select it. Check its path and ID: two suites can have the same name under different parents.
 
-    For the **Orders > Payment** group, choose **Create or reuse a path**, select the intended static parent and keep the `Orders > Payment` path. Existing levels are reused when they can be identified unambiguously; missing levels are scheduled for creation.
+    For the **Orders > Payment** group, choose **Create or reuse a path**, search for and select the intended static parent by name, path or ID, and keep the `Orders > Payment` path. Existing levels are reused when they can be identified unambiguously; missing levels are scheduled for creation.
 
     You can combine these choices in one import. If your file has no classification, select several ungrouped cases and use **Create a group**, then assign the group to a destination.
 
@@ -55,7 +57,7 @@ Start with the [English practice CSV](https://raw.githubusercontent.com/AlexThib
   <Step title="Preview">
     Click **Prepare preview**. The assistant reads Azure DevOps to verify the destination and existing cases. It also sends new case contents to Azure DevOps to validate fields and project rules **without saving a work item**. It then lists the planned operations.
 
-    Check the plan, full paths, cases to create or reuse, suites to create or reuse, and memberships. This scenario should show **two new tests** and **two memberships**. The number of suites to create depends on whether **Orders** and **Payment** already exist in your plan.
+    Check the plan, full paths, cases to create or reuse, resolved areas and iterations for new cases, suites to create or reuse, and memberships. This scenario should show **two new tests** and **two memberships**. The number of suites to create depends on whether **Orders** and **Payment** already exist in your plan.
 
     Resolve blockers before continuing. Also review each test's content: a valid preview does not establish that the business scenario is correct.
   </Step>
@@ -87,13 +89,26 @@ The file limit is **5 MiB**, with at most **10,000 data rows** and **100 columns
 | **Test Step** | Step number. Rows for the same case are grouped and ordered. |
 | **Step Action / Step Expected** | Action and expected result for a simple step. |
 | **Suite Path** | Group or path, such as `Orders > Payment`. `/` is part of a name and does not create a level. |
-| **Area Path / Iteration Path** | Classifications for the new case, subject to project paths and permissions. |
+| **Area Path / Iteration Path** | Classifications for the new case. Populated values override the assistant defaults; paths and permissions are checked by Azure DevOps. |
 | **Assigned To / Priority / State / Tags** | Fields for the new case; values must be valid for your project. **Assigned To** is the work-item assignee, not the tester assigned to a test point. |
 | **Work Item Type** | If supplied, must describe a test case. This assistant does not import bugs or tasks. |
 
 When a suite name contains `>`, **Suite Path** can contain a JSON array of segments, for example `["A > B", "Payment"]`. Those quotes must also be escaped inside a CSV cell. Prefer the template and always inspect the displayed path.
 
 Shared steps, parameter sets and attachments are not imported by this workflow. Do not silently flatten them into simple steps: keep them and handle them separately in Azure DevOps.
+
+### Choose the area for new cases
+
+The **Suite Path** organises membership inside Test Plans. **Area Path** is a work-item classification with its own permissions: a path such as `Orders > Payment` is not an area path.
+
+In **Test plan**, review **Area path for new test cases** and **Iteration path for new test cases (optional)**. With an existing plan, its values are proposed as a starting point. Change them if the new cases should use another classification; the existing plan is not changed. You may clear the optional iteration.
+
+- A populated **Area Path** or **Iteration Path** in the CSV takes priority for that case.
+- Otherwise, the value chosen in the assistant is used. Clearing the optional iteration leaves it unset for cases without a CSV value.
+- Each new case needs a resolved area before preparation. If the plan provides none, enter a valid area; TestPulse does not silently choose the project root.
+- Inspect the resolved fields in **Preview**. Creation and recovery retain these values even if the plan's defaults later change. Cases reused by ID are not reclassified.
+
+Being able to read a plan or manage a suite does not prove you can create a case in an area. You need **Edit work items in this node** on the area used for the new case. See [Permissions](/en/security/permissions).
 
 ### Reuse an existing case
 
@@ -128,6 +143,23 @@ This action handles a verified absence; it does not replace investigation of an 
 
 ## Troubleshooting
 
+### TF237111: permission denied on an area path
+
+This is an Azure DevOps work-item permission refusal, distinct from the old service-address issue below. From **2.74.2**, the message identifies the case, source rows and area that was refused.
+
+1. In **Test plan**, check **Area path for new test cases**. The selected suite's path is not an area path.
+2. Inspect any mapped **Area Path** value in the CSV: a populated value overrides the assistant default. Correct the relevant value rather than changing an unrelated suite.
+3. Choose the intended area where your account may create cases, or have an administrator check **Edit work items in this node** there. Selecting a plan or suite does not grant this right; no new extension scope is needed for this fix.
+4. Prepare the preview again and inspect the resolved area. A refusal during this preparation creates no case, suite or plan.
+
+If execution had already started before a separate failure, preserve its journal and verify before resuming. Successful operations are not undone.
+
+### An older journal asks for classification review
+
+A journal created before this fix can contain pending new cases whose required classification values were not frozen. TestPulse keeps it readable and exportable but refuses further writes when those unresolved creations remain. It does not guess a different area on resume. Preserve the journal, download the JSON report and review what Azure DevOps already contains before deciding how to handle the remaining cases. Do not reimport the whole file with empty IDs: that can duplicate successful creations. Cases already created are not reclassified by this check.
+
+If an earlier creation has an uncertain outcome, TestPulse first checks its unique recovery tag in Azure DevOps without writing. When that tag identifies an existing case unambiguously, the case can be recovered and its remaining memberships can continue. An absent or ambiguous match does not permit creating a replacement with unreviewed classifications.
+
 ### A 403 while preparing the preview in 2.74.0
 
 Version **2.74.1** fixes a service-address resolution defect: the validation request could go to the extension hosting address instead of the Azure DevOps service. This error occurred before any case or suite was created. Granting more permissions does not fix this routing defect.
@@ -145,8 +177,9 @@ A different 403 can have another cause. If the issue persists after reloading, r
 | The CSV cannot be read or accents look wrong | Export as UTF-8 again; check the delimiter and quoting of multiline cells. |
 | A column blocks preparation | Map it to the relevant field or explicitly ignore it. Review the data you are discarding. |
 | Steps appear as separate tests | Check the shared key or case ID and the displayed grouping. Do not rely on title alone. |
+| Search finds no plan or suite | Clear or shorten the search; check the selected plan and read permissions. Only static suites are offered. Typing is not selection. |
 | A suite is missing from destinations | Check the plan, read permissions and static suite type. Query-based and requirement-based suites are not CSV destinations. |
-| Several suites share a name | Select by full path and ID. Correct an ambiguous destination instead of relying on a name. |
+| Several suites share a name | Search by full path or ID, then select the result. Correct an ambiguous destination instead of relying on a name. |
 | An ID is rejected | Verify that it is a readable test case in the selected project, not another work-item type. |
 | Creation fails on a field | Read the Azure DevOps message: area, iteration, identity, state and required fields depend on the project. |
 | Local storage is unavailable | Allow storage for the extension and use a browser that can retain the journal. Import blocks writes when it cannot journal them. |

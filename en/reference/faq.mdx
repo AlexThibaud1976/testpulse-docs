@@ -8,13 +8,19 @@ icon: "circle-help"
 
 The **Documentation** page displays the extension version loaded in your tab. After an update, reload the Azure DevOps tab, then reopen **TestPulse → Documentation**. If the version remains old, ask your administrator to check the version installed in the organisation or collection. On Server, updating requires the approved extension package.
 
-Embedded help in **2.74.1** includes eleven practical guides; the online documentation and the extension are updated separately. See the [installation guide](/en/getting-started/installation) and [release notes](/en/changelog).
+Embedded help in **2.74.2** includes eleven practical guides; the online documentation and the extension are updated separately. See the [installation guide](/en/getting-started/installation) and [release notes](/en/changelog).
 
 ## I want to import CSV cases with their suites
 
 From **2.74.0**, open **Import → CSV test cases**. The separate XML choice is for automated results and AUTO reports. CSV can create cases or reuse their IDs, then attach them to existing or new **static** suites. It does not overwrite existing case steps. See the [complete CSV tutorial](/en/tutorials/import-csv-test-cases).
 
 After an interruption, keep the local journal and use **Verify and resume**. Do not clear browser data to bypass an uncertain outcome. Resolving an operation as absent requires your own Azure DevOps check, then an automatic verification before a separate resume action. The CSV journal is distinct from the Extension Data history quota.
+
+## CSV preview reports TF237111 on an area path
+
+Update to **2.74.2 or later**, reload Azure DevOps and review **Area path for new test cases** in **Test plan**. The plan's area is proposed as a starting point, but any populated CSV **Area Path** takes priority. Your selected suite's path is not that field. The error identifies the case and area; correct the value or have **Edit work items in this node** checked on the intended area. Preparing the preview creates nothing and the fix does not grant permissions. See [CSV area troubleshooting](/en/tutorials/import-csv-test-cases).
+
+You can also search plans by name or ID and static suites by name, full path or ID. Choose the matching result; typing alone does not select a destination.
 
 ## CSV preview preparation returns a 403 in 2.74.0
 

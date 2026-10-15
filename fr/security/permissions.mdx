@@ -23,6 +23,8 @@ Les sauvegardes de rapports, de réglages, du Repository et de sessions utilisen
 
 **Import de cas CSV :** le parcours utilise les scopes existants `vso.work_write` pour créer des cas et `vso.test_write` pour créer un plan ou des suites statiques et ajouter leurs cas. Aucun scope supplémentaire n'est ajouté. Les droits utilisateur sur les cas, les plans, les suites et les area paths restent nécessaires. Les cas reconnus par ID sont réutilisés sans modification de leurs champs. Voir le [tutoriel CSV](/fr/tutorials/import-csv-test-cases), disponible à partir de **2.74.0**.
 
+**Zones des cas CSV :** créer un cas nécessite **Modifier les éléments de travail dans ce nœud** (*Edit work items in this node*) sur son **Area Path** résolu. Gérer une suite ou lire le plan ne donne pas ce droit. Depuis **2.74.2**, contrôlez la zone proposée depuis le plan existant dans l'assistant ; une zone renseignée dans le CSV est prioritaire. L'aperçu précise le cas et la zone si Azure DevOps renvoie TF237111. Aucun nouveau scope OAuth ni contournement de permission n'est introduit.
+
 Pour créer de nouveaux cas, votre compte doit aussi avoir **Create tag definition** au niveau du projet. TestPulse ajoute à chaque nouveau cas un tag technique `testpulse-csv:` qui permet de retrouver une création après une réponse perdue. Les cas réutilisés par ID ne reçoivent pas ce tag. Si sa création est refusée, faites vérifier cette permission par un administrateur du projet ; aucun nouveau scope d'extension n'est nécessaire.
 
 **Coverage Builder** crée un nouveau plan et des suites basées sur exigences après confirmation. Il ne remplace pas un plan existant.
@@ -52,7 +54,8 @@ Cette approbation ne remplace pas les droits Azure DevOps nécessaires à l'acti
 1. Relevez **l'action**, **la cible** et le **message complet** affiché, sans copier de jeton ni d'URL de webhook.
 2. Si le message parle de scope ou de ré-approbation, faites vérifier l'extension par l'administrateur.
 3. Si la création d'un plan renvoie un 403 mentionnant la gestion des plans sous une area path, vérifiez **Manage test plans** sur **l'area path choisie**.
-4. Pour les autres refus, faites vérifier les droits sur l'objet concerné et le niveau d'accès Azure DevOps de l'utilisateur. Un code 401 ou 403, pris seul, ne suffit pas à identifier la cause.
+4. Si la validation CSV indique **TF237111**, vérifiez **Area Path** résolu du cas et **Modifier les éléments de travail dans ce nœud** sur cette zone, séparément des droits de gestion des suites.
+5. Pour les autres refus, faites vérifier les droits sur l'objet concerné et le niveau d'accès Azure DevOps de l'utilisateur. Un code 401 ou 403, pris seul, ne suffit pas à identifier la cause.
 
 ## À suivre
 

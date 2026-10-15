@@ -23,6 +23,8 @@ Reports, settings, Repository and session saves also use **Azure DevOps Extensio
 
 **CSV test-case import:** the workflow uses existing `vso.work_write` to create cases and `vso.test_write` to create a plan or static suites and add their cases. No additional scope is added. User rights on cases, plans, suites and area paths are still required. Cases identified by ID are reused without changing their fields. See the [CSV tutorial](/en/tutorials/import-csv-test-cases), available from **2.74.0**.
 
+**CSV area paths:** creating a case requires **Edit work items in this node** on its resolved **Area Path**. Managing a suite or reading the plan does not grant this permission. From **2.74.2**, review the area proposed from the existing plan in the assistant; a populated CSV area takes priority. The preview names the case and area when Azure DevOps returns TF237111. No new OAuth scope or permission bypass is introduced.
+
 To create new cases, your account also needs **Create tag definition** at project level. TestPulse adds a technical `testpulse-csv:` tag to each new case so it can find a creation after a lost response. Cases reused by ID do not receive this tag. If tag creation is denied, ask a project administrator to check this permission; no new extension scope is needed.
 
 **Coverage Builder** creates a new plan and requirement-based suites after confirmation. It does not replace an existing plan.
@@ -52,7 +54,8 @@ This approval does not replace the Azure DevOps rights required by an action. Do
 1. Record the **action**, **target** and **complete message** displayed, without copying a token or webhook URL.
 2. If the message mentions scopes or re-approval, ask the administrator to check the extension.
 3. If plan creation returns a 403 mentioning management of plans under an area path, check **Manage test plans** on the **selected area path**.
-4. For other denials, have the rights on the affected object and the user's Azure DevOps access level checked. A 401 or 403 code alone does not identify the cause.
+4. If CSV validation reports **TF237111**, check the case’s resolved **Area Path** and **Edit work items in this node** there, separately from suite-management rights.
+5. For other denials, have the rights on the affected object and the user's Azure DevOps access level checked. A 401 or 403 code alone does not identify the cause.
 
 ## Related
 
