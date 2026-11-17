@@ -39,10 +39,12 @@ TestPulse exports the same report to five formats, each optimised for a differen
 
 ## HTML — standalone & interactive
 
-A **single HTML file** that you can open locally: no server is needed to display its text and tables. Charts load the Chart.js library from **cdn.jsdelivr.net** and require permitted network access.
+A **single HTML file** that you can open locally, with no server. The chart library is embedded in the file, so the report opens with its charts **offline**, without any network request. A strict security policy only lets the file run its own scripts.
 
-- Interactive charts (donut + bar) when the library has loaded successfully
-- **Clickable Azure DevOps links** for work items, bugs and test cases; opening them still requires Azure DevOps access
+- Interactive charts (donut + bar)
+- Report data always appears as plain text, including custom field labels
+- The theme colour from Settings is applied when it is a hexadecimal colour; otherwise the default blue is used
+- **Clickable Azure DevOps links** for work items, bugs and test cases; opening them still requires Azure DevOps access. The associated build is a link only when its address starts with `http` or `https`
 - Full results table with outcome badges and suite grouping
 - Traceability matrix and bugs list
 
