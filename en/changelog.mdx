@@ -6,6 +6,40 @@ icon: "clock"
 
 <Note>Recent releases are detailed on this page. Releases before 2.25.0 are summarised at the end; linked guides describe current behaviour.</Note>
 
+<Update label="v2.74.6" description="2026-11-17">
+
+**HTML report protection completed.** This completes the 2.74.4 HTML fix. The HTML report now also shows custom field labels and bug priorities as plain text. The theme colour is used only when it is a hexadecimal colour (`#rgb`, `#rrggbb` and their alpha forms), and any other value falls back to the default blue. The associated build becomes a link only when its address starts with `http` or `https`; otherwise its name is shown without a link.
+
+**Empty fields show a dash.** An empty change reference, functional domain or test case shows `—` in the HTML report, instead of the text `&mdash;`.
+
+**Reset restores the default colour.** **Reset** in the export settings sets the theme colour back to the default blue again. Before this fix, it stored a value the HTML report could not display, so the report banner had no colour. If you used **Reset** before 2.74.6, pick your colour again or click **Reset** once more.
+
+PDF, Word, PowerPoint, Excel and CSV exports are unchanged. No scope or dependency is added. See [export formats](/en/exports/formats).
+
+</Update>
+
+<Update label="v2.74.5" description="2026-11-17">
+
+**Every suite named in the Bulk reassignment tree.** In the **A suite and its children** mode, the starting-suite tree now shows the name of every suite, including folders that hold no test case directly. They used to be listed by ID only. Searching the tree finds them by name. The tree keeps the same suites, order and counts, and no new Azure DevOps request is made. See [Bulk reassignment](/en/reports/bulk-reassignment).
+
+</Update>
+
+<Update label="v2.74.4" description="2026-10-20">
+
+**Names and exported values always shown as text.** In History, plan names and report titles, including those of reports shared in the project, are displayed literally, with or without a search; matches are still highlighted. Every value written into the HTML report and the comparison file appears literally and can no longer add markup or script.
+
+**An HTML report that works offline.** The chart library is now embedded in the exported file. The report opens with its interactive charts without any network request. A strict security policy only lets the file run its own scripts, and the comparison file runs none.
+
+**Formula-safe CSV files.** In the History, Bulk reassignment and coverage CSV exports, a cell that starts with `=`, `+`, `-`, `@`, a tab or a carriage return gets a leading apostrophe, so a spreadsheet keeps it as text. Other cells are unchanged. No scope or dependency is added. See [export formats](/en/exports/formats).
+
+</Update>
+
+<Update label="v2.74.3" description="2026-10-19">
+
+**Updated PDF export libraries.** Two libraries bundled with the PDF export are updated to close published advisories. TestPulse never called the affected functions, and reports and exports are unchanged. Packaging now refuses to build the extension while a high or critical production advisory is neither fixed nor accepted with its proof. No scope or Azure DevOps request is added.
+
+</Update>
+
 <Update label="v2.74.2" description="2026-10-15">
 
 **Choose the area for new cases when importing into an existing plan.** The CSV assistant proposes the plan's area and iteration and lets you review their defaults. Populated CSV values take priority. The preview displays the resolved classifications; creation and recovery use the same values. Existing cases reused by ID keep their fields and steps.

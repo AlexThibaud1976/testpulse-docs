@@ -6,6 +6,40 @@ icon: "clock"
 
 <Note>Les versions récentes sont détaillées sur cette page. Les versions antérieures à 2.25.0 sont résumées en fin de page ; les guides liés décrivent le fonctionnement actuel.</Note>
 
+<Update label="v2.74.6" description="2026-11-17">
+
+**Protection du rapport HTML complétée.** Cette version complète le correctif HTML de la 2.74.4. Le rapport HTML affiche désormais aussi comme du texte les libellés des champs personnalisés et la priorité des bugs. La couleur du thème n'est appliquée que si elle est hexadécimale (`#rgb`, `#rrggbb` et leurs formes avec transparence) ; toute autre valeur est remplacée par le bleu par défaut. Le build associé ne devient un lien que si son adresse commence par `http` ou `https` ; sinon son nom s'affiche sans lien.
+
+**Un tiret pour les champs vides.** Une référence de changement, un domaine fonctionnel ou un cas de test vide affiche `—` dans le rapport HTML, au lieu du texte `&mdash;`.
+
+**Réinitialiser rétablit la couleur par défaut.** **Réinitialiser** dans les réglages d'export remet de nouveau la couleur du thème sur le bleu par défaut. Avant ce correctif, il enregistrait une valeur que le rapport HTML ne savait pas afficher, et le bandeau du rapport restait sans couleur. Si vous avez utilisé **Réinitialiser** avant la 2.74.6, choisissez de nouveau votre couleur ou cliquez une fois de plus sur **Réinitialiser**.
+
+Les exports PDF, Word, PowerPoint, Excel et CSV sont inchangés. Aucun scope ni aucune dépendance n'est ajouté. Voir les [formats d'export](/fr/exports/formats).
+
+</Update>
+
+<Update label="v2.74.5" description="2026-11-17">
+
+**Chaque suite nommée dans l'arbre de la Réaffectation en masse.** En mode **Une suite et ses enfants**, l'arborescence de la suite de départ affiche désormais le nom de chaque suite, y compris les dossiers qui ne portent aucun cas de test en propre. Ils apparaissaient jusqu'ici sous leur seul identifiant. La recherche les trouve par leur nom. L'arbre garde les mêmes suites, le même ordre et les mêmes compteurs, sans aucune requête Azure DevOps supplémentaire. Voir la [Réaffectation en masse](/fr/reports/bulk-reassignment).
+
+</Update>
+
+<Update label="v2.74.4" description="2026-10-20">
+
+**Noms et valeurs exportées toujours affichés comme du texte.** Dans l'Historique, les noms de plans et les titres de rapports, y compris ceux des rapports partagés dans le projet, s'affichent littéralement, avec ou sans recherche ; les correspondances restent surlignées. Toute valeur écrite dans le rapport HTML et le fichier de comparaison apparaît littéralement et ne peut plus y ajouter de balisage ni de script.
+
+**Un rapport HTML qui fonctionne hors ligne.** La bibliothèque de graphiques est désormais intégrée au fichier exporté. Le rapport s'ouvre avec ses graphiques interactifs sans aucune requête réseau. Une politique de sécurité stricte n'autorise que les scripts propres au fichier, et le fichier de comparaison n'en exécute aucun.
+
+**Des fichiers CSV sans formule active.** Dans les exports CSV de l'Historique, de la Réaffectation en masse et de la couverture, une cellule qui commence par `=`, `+`, `-`, `@`, une tabulation ou un retour chariot reçoit une apostrophe en tête : le tableur la garde comme du texte. Les autres cellules sont inchangées. Aucun scope ni aucune dépendance n'est ajouté. Voir les [formats d'export](/fr/exports/formats).
+
+</Update>
+
+<Update label="v2.74.3" description="2026-10-19">
+
+**Bibliothèques de l'export PDF mises à jour.** Deux bibliothèques embarquées par l'export PDF sont mises à jour pour clore des avis de sécurité publiés. TestPulse n'appelait jamais les fonctions concernées ; rapports et exports sont inchangés. Le packaging refuse désormais de construire l'extension tant qu'un avis de production élevé ou critique n'est ni corrigé ni accepté avec sa preuve. Aucun scope ni aucune requête Azure DevOps n'est ajouté.
+
+</Update>
+
 <Update label="v2.74.2" description="2026-10-15">
 
 **Choisir la zone des nouveaux cas dans un plan existant.** L'assistant CSV propose la zone et l'itération du plan et permet de contrôler ces valeurs par défaut. Les valeurs renseignées dans le CSV restent prioritaires. L'aperçu affiche les classements résolus ; création et reprise utilisent les mêmes valeurs. Les cas réutilisés par ID gardent leurs champs et leurs étapes.

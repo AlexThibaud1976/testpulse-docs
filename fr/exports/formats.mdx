@@ -39,10 +39,12 @@ Le panneau **Paramètres → Ordre des sections PDF** propose **12 sections réo
 
 ## HTML — autonome & interactif
 
-Un **fichier HTML unique** que vous pouvez ouvrir localement : aucun serveur n'est nécessaire pour afficher son texte et ses tableaux. Les graphiques chargent leur bibliothèque Chart.js depuis **cdn.jsdelivr.net** et nécessitent un accès réseau autorisé.
+Un **fichier HTML unique** que vous pouvez ouvrir localement, sans serveur. La bibliothèque des graphiques est intégrée au fichier : le rapport s'ouvre avec ses graphiques **hors ligne**, sans aucune requête réseau. Une politique de sécurité stricte n'autorise que les scripts propres au fichier.
 
-- Graphiques interactifs (donut + barres) lorsque la bibliothèque a pu être chargée
-- **Liens Azure DevOps cliquables** vers work items, bugs et cas de test ; leur ouverture reste soumise à votre accès Azure DevOps
+- Graphiques interactifs (donut + barres)
+- Les données du rapport s'affichent toujours comme du texte, libellés des champs personnalisés compris
+- La couleur du thème choisie dans les Réglages s'applique si elle est hexadécimale ; sinon le bleu par défaut est utilisé
+- **Liens Azure DevOps cliquables** vers work items, bugs et cas de test ; leur ouverture reste soumise à votre accès Azure DevOps. Le build associé n'est un lien que si son adresse commence par `http` ou `https`
 - Tableau des résultats complet avec badges d'outcome et groupage par suite
 - Matrice de traçabilité et liste des bugs
 
